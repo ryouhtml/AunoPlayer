@@ -1,0 +1,66 @@
+[package]
+name = "auno-player"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+description = "Offline, low-footprint, bit-perfect audiophile music player"
+license = "MIT OR Apache-2.0"
+
+# The rlib is used by the desktop TUI; the cdylib is loaded by the Android app
+# as `libauno_player.so` via System.loadLibrary("auno_player").
+[lib]
+name = "auno_player"
+crate-type = ["rlib", "cdylib"]
+
+[[bin]]
+name = "auno-player"
+path = "src/main.rs"
+
+[dependencies]
+# Audio output. cpal 0.18 = WASAPI / ALSA / PipeWire / CoreAudio / AAudio.
+cpal = "0.18"
+
+# Decoding. 0.5.5 pinned: stable `Decoder` + `SampleBuffer` API.
+# Default features disabled on purpose: only the lossless formats we need.
+symphonia = { version = "0.5.5", default-features = false, features = [
+    "flac",   # FLAC (native)
+    "wav",    # WAV / RF64 (native)
+    "aiff",   # AIFF / AIFC
+    "alac",   # ALAC codec
+    "isomp4", # ALAC container (.m4a/.mp4)
+    "pcm",    # raw PCM
+] }
+
+# Lock-free SPSC ring buffer, allocated once, no allocator in the audio callback.
+ringbuf = "0.6"
+
+# Tags: Vorbis comments, ID3v2, MP4 ilst, APE.
+lofty = "0.25"
+
+# Native DSD (DSF/DFF) readers + DSD->PCM decimator.
+dsd-reader = "0.4"
+dsd-pcm = "0.1"
+
+# Messaging between UI / decoder / callback.
+crossbeam-channel = "0.5"
+
+# TUI (ultra-light: no GPU, no window manager, no font stack).
+ratatui = "0.30"
+crossterm = "0.29"
+
+thiserror = "2"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# JNI bridge. Kept as normal deps (not target-gated) so a plain `cargo check`
+# on the host validates the Android entrypoints too. They add no runtime cost
+# to the desktop binary beyond a few kB of FFI glue.
+jni = "0.21.1"
+ndk-context = "0.1.1"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+panic = "abort"
+strip = "symbols"
