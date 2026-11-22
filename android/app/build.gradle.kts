@@ -16,7 +16,7 @@ if (keystoreFile.exists()) {
 
 android {
     namespace = "com.aunoplayer.auno"
-    compileSdk = 37
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
