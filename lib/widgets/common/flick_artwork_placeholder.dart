@@ -27,9 +27,8 @@ class FlickArtworkPlaceholder extends StatelessWidget {
       width: size,
       height: size,
       fit: BoxFit.contain,
-      colorFilter: color != null
-          ? ColorFilter.mode(color!, BlendMode.srcIn)
-          : null,
+      color: color,
+      colorBlendMode: BlendMode.srcIn,
     );
 
     if (opacity >= 1.0) {

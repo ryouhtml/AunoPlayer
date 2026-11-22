@@ -108,7 +108,7 @@ class _StreakPopupState extends State<StreakPopup>
     return Dialog(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      child: AunoDialogSurface(
+      child: FlickDialogSurface(
         width: 340,
         padding: const EdgeInsets.fromLTRB(
           AppConstants.spacingLg,

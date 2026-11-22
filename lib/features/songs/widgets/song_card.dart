@@ -682,7 +682,7 @@ class _SongCardState extends State<SongCard> {
         ),
       ),
       child: const Center(
-        child: AunoArtworkPlaceholder(size: 36, opacity: 0.9),
+        child: FlickArtworkPlaceholder(size: 36, opacity: 0.9),
       ),
     );
   }

@@ -126,9 +126,9 @@ class LatestReleaseUpdates {
 
 class GitHubReleaseService {
   static const String releasesUri =
-      'https://api.github.com/repos/moss-apps/Auno Player/releases?per_page=100';
+      'https://api.github.com/repos/ryouhtml/AunoPlayer/releases?per_page=100';
   static const String _releaseTagUrl =
-      'https://github.com/moss-apps/Auno Player/releases/tag';
+      'https://github.com/ryouhtml/AunoPlayer/releases/tag';
 
   /// Picks the newest stable and pre-release builds newer than
   /// [currentVersion]. Releases without an attached APK are ignored.

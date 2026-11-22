@@ -39,10 +39,10 @@ class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen>
   // Follow GitHub's "latest release" instead of a pinned tag so the patch
   // notes stay current without a code change on every release.
   static final Uri _releaseNotesApiUri = Uri.parse(
-    'https://api.github.com/repos/moss-apps/Auno Player/releases/latest',
+    'https://api.github.com/repos/ryouhtml/AunoPlayer/releases/latest',
   );
   static const String _releaseNotesUrl =
-      'https://github.com/moss-apps/Auno Player/releases/latest';
+      'https://github.com/ryouhtml/AunoPlayer/releases/latest';
 
   late final AnimationController _donationPulseController;
   late final Animation<double> _donationPulseAnimation;
@@ -74,7 +74,7 @@ class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen>
 
   void _showToast(String message) {
     final messenger = ScaffoldMessenger.of(context);
-    messenger.showAunoSnackBar(
+    messenger.showFlickSnackBar(
       SnackBar(content: Text(message), behavior: SnackBarBehavior.floating),
     );
   }
@@ -158,7 +158,7 @@ class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen>
         title: l10n.englishForFilipino.checkingForUpdates,
         subtitle: isPlay
             ? l10n.lookingForTheLatestPlayStore
-            : l10n.lookingForTheLatestAunoRelease,
+            : l10n.lookingForTheLatestFlickRelease,
       );
     }
     if (updateState.hasUpdateForChannel(channel)) {
@@ -169,7 +169,7 @@ class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen>
             ? l10n.openThePlayStoreToInstall
             : channel == UpdateChannel.beta
             ? l10n.betaUpdateSubtitle
-            : l10n.downloadTheLatestApkFromAuno Player,
+            : l10n.downloadTheLatestApkFromFlick,
       );
     }
     if (updateState.errorMessage != null) {
@@ -192,7 +192,7 @@ class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen>
         title: l10n.englishForFilipino.noUpdateAvailable,
         subtitle: isPlay
             ? l10n.youAlreadyHaveTheLatestPlay
-            : l10n.youAlreadyHaveTheLatestAuno Player,
+            : l10n.youAlreadyHaveTheLatestFlick,
       );
     }
     return (
@@ -200,7 +200,7 @@ class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen>
       title: l10n.englishForFilipino.automaticUpdateChecks,
       subtitle: isPlay
           ? l10n.flickScansForPlayStoreUpdates
-          : l10n.flickChecksAunoPlayerSiteFor,
+          : l10n.flickChecksFlickPlayerSiteFor,
     );
   }
 
@@ -449,7 +449,7 @@ class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen>
   void _showAboutBottomSheet() {
     GlassBottomSheet.show(
       context: context,
-      title: l10n.englishForFilipino.aboutAunoPlayer,
+      title: l10n.englishForFilipino.aboutFlickPlayer,
       maxHeightRatio: 0.5,
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -516,7 +516,7 @@ class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen>
             children: [
               TextButton.icon(
                 onPressed: () =>
-                    _launchUrl('https://github.com/moss-apps/Auno Player'),
+                    _launchUrl('https://github.com/ryouhtml/AunoPlayer'),
                 icon: const Icon(LucideIcons.squareCode, size: 18),
                 label: Text(
                   l10n.github,
@@ -546,7 +546,7 @@ class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen>
     );
   }
 
-  static String get _flickLicenseText => l10n.mitLicenseCopyrightC2026Auno Player;
+  static String get _flickLicenseText => l10n.mitLicenseCopyrightC2026Flick;
 
   static bool _flickLicenseRegistered = false;
 
@@ -647,7 +647,7 @@ class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen>
             : l10n.englishForFilipino.downloadUpdate,
         subtitle: release.isPrerelease
             ? l10n.getBetaUpdate
-            : l10n.getTheLatestApkFromAuno Player,
+            : l10n.getTheLatestApkFromFlick,
         onTap: () => _launchUrl(release.downloadUrl),
       ),
     ];
@@ -707,7 +707,7 @@ class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen>
                 ActionButton(
                   icon: LucideIcons.externalLink,
                   title: l10n.englishForFilipino.openInPlayStore,
-                  subtitle: l10n.jumpToTheAunoListingAnd,
+                  subtitle: l10n.jumpToTheFlickListingAnd,
                   onTap: _openPlayStoreListing,
                 ),
               ],
@@ -759,7 +759,7 @@ class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen>
             children: [
               NavigationSetting(
                 icon: LucideIcons.info,
-                title: l10n.englishForFilipino.aboutAunoPlayer,
+                title: l10n.englishForFilipino.aboutFlickPlayer,
                 subtitle: l10n.version(kAppVersion),
                 onTap: _showAboutBottomSheet,
               ),

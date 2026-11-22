@@ -758,7 +758,7 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
           ('updateChannelBoth', l10n.updateChannelBoth),
         ], keywords: 'beta prerelease testing channel updates'),
         _section('about', l10n.about, [
-          ('aboutAunoPlayer', l10n.aboutFlickPlayer),
+          ('aboutFlickPlayer', l10n.aboutFlickPlayer),
           ('buildFlavor', l10n.buildFlavor),
           ('licenses', l10n.licenses),
           ('viewOnboarding', l10n.viewOnboarding),

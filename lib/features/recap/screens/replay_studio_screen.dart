@@ -242,7 +242,7 @@ class _ReplayStudioScreenState extends ConsumerState<ReplayStudioScreen> {
       }
       if (!mounted) return;
       setState(() => _saved = format == null);
-      ScaffoldMessenger.of(context).showAunoSnackBar(
+      ScaffoldMessenger.of(context).showFlickSnackBar(
         SnackBar(
           content: Text(
             format == null
@@ -776,7 +776,7 @@ class _ReplayStudioScreenState extends ConsumerState<ReplayStudioScreen> {
                 PopupMenuItem(value: 'TXT', child: Text(l10n.exportTxt)),
                 PopupMenuItem(
                   value: 'support',
-                  child: Text(l10n.supportAunoOnKoFi),
+                  child: Text(l10n.supportFlickOnKoFi),
                 ),
               ],
             ),

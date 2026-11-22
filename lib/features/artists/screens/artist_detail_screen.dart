@@ -372,7 +372,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen>
       await widget.playerService.addToQueue(song);
     }
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showAunoSnackBar(
+    ScaffoldMessenger.of(context).showFlickSnackBar(
       SnackBar(
         content: Text(l10n.englishForFilipino.queuedSongs(widget.songs.length)),
         action: SnackBarAction(
@@ -406,7 +406,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen>
       }
     }
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showAunoSnackBar(
+    ScaffoldMessenger.of(context).showFlickSnackBar(
       SnackBar(
         content: Text(
           isAll ? l10n.removedFromFavorites3 : l10n.addedToFavorites,
@@ -419,7 +419,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen>
 
   Future<void> _editDescription() async {
     final current = ref.read(detailDescriptionProvider(_descriptionKey));
-    final result = await AunoDialogs.input(
+    final result = await FlickDialogs.input(
       context,
       title: current.isEmpty ? l10n.addDescription : l10n.editDescription,
       hintText: l10n.writeADescription,
@@ -500,14 +500,14 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen>
 
   Future<void> _refreshAppleMusic() async {
     final messenger = ScaffoldMessenger.of(context);
-    messenger.showAunoSnackBar(
+    messenger.showFlickSnackBar(
       SnackBar(content: Text(l10n.englishForFilipino.refreshingAppleMusicData)),
     );
     final updated = await ref
         .read(appleMusicArtistProvider(widget.artistName).notifier)
         .refresh();
     if (!mounted) return;
-    messenger.showAunoSnackBar(
+    messenger.showFlickSnackBar(
       SnackBar(
         content: Text(
           updated
@@ -1148,8 +1148,8 @@ class _MostPlayedCardState extends State<_MostPlayedCard>
                     imagePath: widget.song.albumArt,
                     audioSourcePath: widget.song.filePath,
                     fit: BoxFit.cover,
-                    placeholder: const AunoArtworkPlaceholder(size: 22, opacity: 0.9),
-                    errorWidget: const AunoArtworkPlaceholder(size: 22, opacity: 0.9),
+                    placeholder: const FlickArtworkPlaceholder(size: 22, opacity: 0.9),
+                    errorWidget: const FlickArtworkPlaceholder(size: 22, opacity: 0.9),
                   ),
                 ),
               ),

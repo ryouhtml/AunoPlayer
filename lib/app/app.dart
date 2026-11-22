@@ -490,14 +490,14 @@ class _MainShellState extends ConsumerState<MainShell>
     if (!mounted) return;
     final desynced = _playerService.playbackDesyncedNotifier.value;
     if (!desynced) {
-      ScaffoldMessenger.of(context).hideAunoSnackBar(id: 'playback-desync');
+      ScaffoldMessenger.of(context).hideFlickSnackBar(id: 'playback-desync');
       return;
     }
 
-    ScaffoldMessenger.of(context).showAunoSnackBar(
+    ScaffoldMessenger.of(context).showFlickSnackBar(
       SnackBar(
         // The global accessor, not `context.l10n`: this listener runs outside
-        // build, and it is what the rest of `_AunoAppState` already reads.
+        // build, and it is what the rest of `_FlickAppState` already reads.
         content: Text(l10n.englishForFilipino.playbackDesynced),
         duration: const Duration(days: 1),
         action: SnackBarAction(
@@ -520,12 +520,12 @@ class _MainShellState extends ConsumerState<MainShell>
     final messenger = ScaffoldMessenger.of(context);
     if (count <= 0) {
       if (prevCount > 0) {
-        messenger.hideAunoSnackBar(id: 'metadata-warmup');
+        messenger.hideFlickSnackBar(id: 'metadata-warmup');
       }
       return;
     }
 
-    messenger.showAunoSnackBar(
+    messenger.showFlickSnackBar(
       SnackBar(
         content: Text(l10n.englishForFilipino.finishingMetadataForSongs(count)),
         duration: const Duration(days: 1),
@@ -1067,7 +1067,7 @@ class _MainShellState extends ConsumerState<MainShell>
                         bottom: 0,
                         child: TutorialTargetAnchor(
                           target: TutorialTarget.navBar,
-                          child: AunoNavRail(
+                          child: FlickNavRail(
                             currentIndex: ref.watch(navigationIndexProvider),
                             config: ref.watch(navBarConfigProvider),
                             onTap: _handleNavigationTap,

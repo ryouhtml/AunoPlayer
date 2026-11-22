@@ -325,7 +325,7 @@ class _NetworkServerEditScreenState extends State<NetworkServerEditScreen> {
     final server = widget.server;
     if (server == null) return;
     AppHaptics.tap();
-    final confirmed = await AunoDialogs.confirm(
+    final confirmed = await FlickDialogs.confirm(
       context,
       title: l10n.englishForFilipino.removeServer,
       message:

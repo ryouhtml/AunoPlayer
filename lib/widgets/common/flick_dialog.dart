@@ -5,7 +5,7 @@ import 'package:auno_player/l10n/l10n.dart';
 
 /// Flick's standard dialog entrance: fade + scale-up with a slight
 /// overshoot, on top of the shared scrim.
-Future<T?> showAunoDialog<T>({
+Future<T?> showFlickDialog<T>({
   required BuildContext context,
   required WidgetBuilder builder,
   bool barrierDismissible = true,
@@ -34,18 +34,18 @@ Future<T?> showAunoDialog<T>({
   );
 }
 
-enum AunoDialogButtonStyle { primary, secondary, destructive }
+enum FlickDialogButtonStyle { primary, secondary, destructive }
 
-class AunoDialogButton extends StatelessWidget {
+class FlickDialogButton extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;
-  final AunoDialogButtonStyle style;
+  final FlickDialogButtonStyle style;
 
-  const AunoDialogButton({
+  const FlickDialogButton({
     super.key,
     required this.label,
     this.onPressed,
-    this.style = AunoDialogButtonStyle.secondary,
+    this.style = FlickDialogButtonStyle.secondary,
   });
 
   @override
@@ -54,15 +54,15 @@ class AunoDialogButton extends StatelessWidget {
     final Border? border;
     final Color foreground;
     switch (style) {
-      case AunoDialogButtonStyle.primary:
+      case FlickDialogButtonStyle.primary:
         background = AppColors.textPrimary;
         border = null;
         foreground = AppColors.background;
-      case AunoDialogButtonStyle.secondary:
+      case FlickDialogButtonStyle.secondary:
         background = AppColors.glassBackgroundStrong;
         border = Border.all(color: AppColors.glassBorder);
         foreground = AppColors.textPrimary;
-      case AunoDialogButtonStyle.destructive:
+      case FlickDialogButtonStyle.destructive:
         background = AppColors.error;
         border = null;
         foreground = AppColors.backgroundDark;
@@ -102,7 +102,7 @@ class AunoDialogButton extends StatelessWidget {
 }
 
 /// Glass-styled text field used inside dialogs.
-class AunoTextField extends StatelessWidget {
+class FlickTextField extends StatelessWidget {
   final TextEditingController controller;
   final String? hint;
   final bool autofocus;
@@ -112,7 +112,7 @@ class AunoTextField extends StatelessWidget {
   final int? maxLength;
   final bool enabled;
 
-  const AunoTextField({
+  const FlickTextField({
     super.key,
     required this.controller,
     this.hint,
@@ -158,14 +158,14 @@ class AunoTextField extends StatelessWidget {
 
 /// The shared Auno Player dialog surface: near-opaque dark gradient, radius 24,
 /// glass border, soft shadow. Use directly for custom popup content
-/// (celebration cards etc.) or through [AunoDialog].
-class AunoDialogSurface extends StatelessWidget {
+/// (celebration cards etc.) or through [FlickDialog].
+class FlickDialogSurface extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;
   final double? width;
   final double? maxHeight;
 
-  const AunoDialogSurface({
+  const FlickDialogSurface({
     super.key,
     required this.child,
     this.padding = const EdgeInsets.all(AppConstants.spacingLg),
@@ -206,8 +206,8 @@ class AunoDialogSurface extends StatelessWidget {
 }
 
 /// The standard Auno Player dialog: title, optional icon, scrollable content and
-/// actions on the shared [AunoDialogSurface].
-class AunoDialog extends StatelessWidget {
+/// actions on the shared [FlickDialogSurface].
+class FlickDialog extends StatelessWidget {
   final String title;
   final IconData? icon;
   final bool destructive;
@@ -216,7 +216,7 @@ class AunoDialog extends StatelessWidget {
   final List<Widget> actions;
   final double? width;
 
-  const AunoDialog({
+  const FlickDialog({
     super.key,
     required this.title,
     this.icon,
@@ -242,7 +242,7 @@ class AunoDialog extends StatelessWidget {
         vertical: AppConstants.spacingXl,
       ),
       alignment: Alignment.center,
-      child: AunoDialogSurface(
+      child: FlickDialogSurface(
         maxHeight: maxHeight,
         width: width,
         child: Column(
@@ -317,8 +317,8 @@ class AunoDialog extends StatelessWidget {
 }
 
 /// One-call helpers for the two most common dialog shapes.
-class AunoDialogs {
-  AunoDialogs._();
+class FlickDialogs {
+  FlickDialogs._();
 
   /// Confirmation dialog. Returns true only when [confirmLabel] was tapped.
   ///
@@ -339,10 +339,10 @@ class AunoDialogs {
     final effectiveIcon =
         icon ?? (destructive ? Icons.warning_amber_rounded : null);
     final cancelText = cancelLabel ?? l10n.cancel;
-    return showAunoDialog<bool>(
+    return showFlickDialog<bool>(
       context: context,
       barrierLabel: title,
-      builder: (dialogContext) => AunoDialog(
+      builder: (dialogContext) => FlickDialog(
         title: title,
         icon: effectiveIcon,
         destructive: destructive,
@@ -354,15 +354,15 @@ class AunoDialogs {
                 style: TextStyle(color: AppColors.textSecondary, height: 1.45),
               ),
         actions: [
-          AunoDialogButton(
+          FlickDialogButton(
             label: cancelText,
             onPressed: () => Navigator.of(dialogContext).pop(false),
           ),
-          AunoDialogButton(
+          FlickDialogButton(
             label: confirmLabel,
             style: destructive
-                ? AunoDialogButtonStyle.destructive
-                : AunoDialogButtonStyle.primary,
+                ? FlickDialogButtonStyle.destructive
+                : FlickDialogButtonStyle.primary,
             onPressed: () => Navigator.of(dialogContext).pop(true),
           ),
         ],

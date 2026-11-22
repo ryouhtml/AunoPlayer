@@ -181,7 +181,7 @@ class LocaleController extends ValueNotifier<Locale?> {
   /// Points the global accessor at [locale] without a BuildContext. Used during
   /// startup, before any Localizations widget exists.
   void bindLocale(Locale locale) {
-    _current = lookupAunoLocalizations(locale);
+    _current = lookupFlickLocalizations(locale);
   }
 
   Locale _deviceLocale() {

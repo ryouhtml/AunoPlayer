@@ -1598,7 +1598,7 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
     if (songs.isEmpty || !mounted) return;
 
     final l10n = context.l10n.englishForFilipino;
-    final name = await AunoDialogs.input(
+    final name = await FlickDialogs.input(
       context,
       title: l10n.createPlaylist,
       hintText: l10n.playlistName,
@@ -1726,10 +1726,10 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
 
     if (!mounted) return;
 
-    final action = await showAunoDialog<String>(
+    final action = await showFlickDialog<String>(
       context: context,
       barrierLabel: l10n.deleteSongs2,
-      builder: (dialogContext) => AunoDialog(
+      builder: (dialogContext) => FlickDialog(
         title: l10n.deleteSongs(songs.length),
         icon: Icons.warning_amber_rounded,
         destructive: true,
@@ -1740,18 +1740,18 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
           style: TextStyle(color: AppColors.textSecondary, height: 1.45),
         ),
         actions: [
-          AunoDialogButton(
+          FlickDialogButton(
             label: l10n.cancel,
             onPressed: () => Navigator.pop(dialogContext, null),
           ),
-          AunoDialogButton(
+          FlickDialogButton(
             label: l10n.removeFromLibrary,
             onPressed: () => Navigator.pop(dialogContext, 'remove'),
           ),
           if (canDeleteFiles)
-            AunoDialogButton(
+            FlickDialogButton(
               label: l10n.deleteFiles,
-              style: AunoDialogButtonStyle.destructive,
+              style: FlickDialogButtonStyle.destructive,
               onPressed: () => Navigator.pop(dialogContext, 'files'),
             ),
         ],
@@ -1901,7 +1901,7 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final messenger = ScaffoldMessenger.of(context);
-      messenger.showAunoSnackBar(
+      messenger.showFlickSnackBar(
         SnackBar(
           content: Text(message),
           action: onUndo == null
@@ -2408,11 +2408,11 @@ class _SongListTile extends StatelessWidget {
                     thumbnailHeight: 92,
                     placeholder: const ColoredBox(
                       color: AppColors.surface,
-                      child: AunoArtworkPlaceholder(size: 22, opacity: 0.9),
+                      child: FlickArtworkPlaceholder(size: 22, opacity: 0.9),
                     ),
                     errorWidget: const ColoredBox(
                       color: AppColors.surface,
-                      child: AunoArtworkPlaceholder(size: 22, opacity: 0.9),
+                      child: FlickArtworkPlaceholder(size: 22, opacity: 0.9),
                     ),
                   ),
                 ),

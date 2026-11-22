@@ -563,7 +563,7 @@ class _LibrarySettingsScreenState extends ConsumerState<LibrarySettingsScreen>
     } catch (error, stackTrace) {
       debugPrint('Scan session "$title" failed: $error\n$stackTrace');
       if (mounted) {
-        ScaffoldMessenger.of(context).showAunoSnackBar(
+        ScaffoldMessenger.of(context).showFlickSnackBar(
           SnackBar(content: Text(l10n.scanFailedPleaseTryAgain)),
         );
       }

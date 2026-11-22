@@ -492,7 +492,7 @@ const List<ChangelogEntry> kChangelogEntries = [
         title: 'Navigation & UI Refresh',
         bullets: [
           'Nested navigators per tab; full player and queue via root navigator; bottom nav restored via route observer.',
-          'New **AunoDialog** system and **AunoArtworkPlaceholder**; shared detail headers with glass blur back buttons.',
+          'New **FlickDialog** system and **FlickArtworkPlaceholder**; shared detail headers with glass blur back buttons.',
           'Landscape mode; system **reduced-motion** respected globally; full-text sheet for fetched descriptions.',
         ],
       ),
@@ -1270,7 +1270,7 @@ const List<ChangelogEntry> kChangelogEntries = [
       ChangelogSection(
         title: 'Nav Bar & Bottom Sheet Polish',
         bullets: [
-          '`AunoNavBar` converted to `StatefulWidget` with directional slide animation on item select/deselect.',
+          '`FlickNavBar` converted to `StatefulWidget` with directional slide animation on item select/deselect.',
           'Removed sliding animation from nav bar items for simpler interaction.',
           'Bottom sheets dismiss on tap outside.',
           'Optional tag badge on `SettingsSectionHeader` for marking experimental features.',
@@ -1514,7 +1514,7 @@ const List<ChangelogEntry> kChangelogEntries = [
       ChangelogSection(
         title: 'Navigation Bar Auto-Collapse',
         bullets: [
-          'AunoNavBar auto-collapse with animated transitions after idle timer.',
+          'FlickNavBar auto-collapse with animated transitions after idle timer.',
           'Configurable auto-collapse behavior and timer duration via preferences.',
           'Collapsed state with smooth animated reveal on interaction.',
         ],

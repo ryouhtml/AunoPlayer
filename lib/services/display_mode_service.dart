@@ -18,7 +18,7 @@ import 'package:auno_player/core/utils/dev_log.dart';
 ///
 /// Forced modes are verified shortly after they are requested. Some firmware
 /// acknowledges the request and then drops the panel into a low-power state
-/// (reported on the Fairphone 6, see moss-apps/Auno Player#210); when the active
+/// (reported on the Fairphone 6, see moss-apps/Flick#210); when the active
 /// mode does not match the request the service falls back to `auto` and stops
 /// forcing for the rest of the session, so later screens and resumes do not
 /// keep poking the display driver.

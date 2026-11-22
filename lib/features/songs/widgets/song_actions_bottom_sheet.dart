@@ -791,7 +791,7 @@ class SongActionsBottomSheet extends ConsumerWidget {
     }
 
     if (rootContext.mounted) {
-      ScaffoldMessenger.of(rootContext).showAunoSnackBar(
+      ScaffoldMessenger.of(rootContext).showFlickSnackBar(
         SnackBar(
           content: Text(
             deleteFile

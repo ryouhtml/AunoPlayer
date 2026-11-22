@@ -437,7 +437,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'A newer Auno Player build is on the Play Store.'**
-  String get aNewerAunoBuildIsOn;
+  String get aNewerFlickBuildIsOn;
 
   /// lib/features/playlists/screens/playlists_screen.dart:444
   ///
@@ -509,7 +509,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'About Auno Player'**
-  String get aboutAunoPlayer;
+  String get aboutFlickPlayer;
 
   /// lib/features/albums/screens/album_detail_screen.dart:519
   ///
@@ -1187,7 +1187,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Allow Auno Player to run without aggressive background limits so rescans and background features keep working'**
-  String get allowAunoToRunWithoutAggressive;
+  String get allowFlickToRunWithoutAggressive;
 
   /// lib/features/player/widgets/bit_perfect_indicator.dart:683
   ///
@@ -2723,7 +2723,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Claimed by Auno Player'**
-  String get claimedByAuno Player;
+  String get claimedByFlick;
 
   /// lib/models/progress_bar_style.dart:27
   ///
@@ -5273,7 +5273,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Download the latest APK from github.com/ryouhtml/AunoPlayer/releases'**
-  String get downloadTheLatestApkFromAuno Player;
+  String get downloadTheLatestApkFromFlick;
 
   /// lib/features/settings/screens/app_info_settings_screen.dart:638
   ///
@@ -6269,7 +6269,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Auno Player checks github.com/ryouhtml/AunoPlayer/releases for updates whenever you are online'**
-  String get flickChecksAunoPlayerSiteFor;
+  String get flickChecksFlickPlayerSiteFor;
 
   /// lib/features/settings/screens/support_flick_screen.dart:138
   ///
@@ -6671,7 +6671,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Get the latest APK from github.com/ryouhtml/AunoPlayer/releases'**
-  String get getTheLatestApkFromAuno Player;
+  String get getTheLatestApkFromFlick;
 
   /// lib/features/settings/widgets/lastfm_settings_tile.dart:404
   ///
@@ -7355,7 +7355,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Jump to the Auno Player listing and update from there'**
-  String get jumpToTheAunoListingAnd;
+  String get jumpToTheFlickListingAnd;
 
   /// lib/features/milestone/screens/milestones_screen.dart:507
   ///
@@ -7421,7 +7421,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Keep listening with Auno Player'**
-  String get keepListeningWithAuno Player;
+  String get keepListeningWithFlick;
 
   /// lib/features/settings/screens/playback_display_settings_screen.dart:143
   ///
@@ -7799,7 +7799,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Lets Auno Player scan your entire library directly, including DSD/DSF/WavPack files some devices hide from the system media index'**
-  String get letsAunoScanYourEntireLibrary;
+  String get letsFlickScanYourEntireLibrary;
 
   /// lib/features/settings/screens/audio_settings_screen.dart:511
   ///
@@ -7990,7 +7990,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Listening to {arg1} by {arg2} on Auno Player'**
-  String listeningToByOnAuno Player(Object arg1, Object arg2);
+  String listeningToByOnFlick(Object arg1, Object arg2);
 
   /// lib/features/settings/screens/uac2_preferences_screen.dart:1847
   ///
@@ -8134,7 +8134,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Looking for the latest Auno Player release right now'**
-  String get lookingForTheLatestAunoRelease;
+  String get lookingForTheLatestFlickRelease;
 
   /// lib/features/settings/screens/app_info_settings_screen.dart:135
   ///
@@ -8536,7 +8536,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'\nMIT License\n\nCopyright (c) 2026 Auno Player Contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n'**
-  String get mitLicenseCopyrightC2026Auno Player;
+  String get mitLicenseCopyrightC2026Flick;
 
   /// lib/features/settings/screens/equalizer_screen.dart:3641
   ///
@@ -8812,7 +8812,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Native Auno Player preset format'**
-  String get nativeAunoPresetFormat;
+  String get nativeFlickPresetFormat;
 
   /// lib/features/settings/screens/visualizer_settings_screen.dart:178
   ///
@@ -11224,7 +11224,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Restarting Auno Player'**
-  String get restartingAuno Player;
+  String get restartingFlick;
 
   /// lib/features/settings/screens/ui_customization_settings_screen.dart
   ///
@@ -11494,7 +11494,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Save in Auno Player'**
-  String get saveInAuno Player;
+  String get saveInFlick;
 
   /// lib/features/settings/screens/logs_screen.dart:207
   ///
@@ -13564,13 +13564,13 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Support Auno Player'**
-  String get supportAuno Player;
+  String get supportFlick;
 
   /// lib/features/recap/screens/replay_studio_screen.dart:775
   ///
   /// In en, this message translates to:
   /// **'Support Auno Player on Ko-fi'**
-  String get supportAunoOnKoFi;
+  String get supportFlickOnKoFi;
 
   /// lib/features/recap/screens/replay_studio_screen.dart:674
   ///
@@ -14708,7 +14708,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'A newer Auno Player build is available on GitHub.'**
-  String get aNewerAunoBuildOnGithub;
+  String get aNewerFlickBuildOnGithub;
 
   /// GitHub update banner title for pre-releases.
   ///
@@ -15482,7 +15482,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Welcome to Auno Player!'**
-  String get welcomeToAuno Player;
+  String get welcomeToFlick;
 
   /// lib/features/manual/data/manual_data.dart
   ///
@@ -15692,7 +15692,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'You already have the latest Auno Player release'**
-  String get youAlreadyHaveTheLatestAuno Player;
+  String get youAlreadyHaveTheLatestFlick;
 
   /// lib/features/settings/screens/app_info_settings_screen.dart:167
   ///

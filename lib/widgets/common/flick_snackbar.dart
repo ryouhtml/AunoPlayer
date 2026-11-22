@@ -144,7 +144,7 @@ class _SnackBarQueue {
         MediaQuery.disableAnimationsOf(messenger.context) ||
         MediaQuery.accessibleNavigationOf(messenger.context);
     final controller = messenger.showSnackBar(
-      _AunoSnackBar(
+      _FlickSnackBar(
         SnackBar(
           key: original.key,
           content: notice.routine
@@ -211,8 +211,8 @@ class _SnackBarQueue {
 /// Keeps the native snackbar intact, but animates its entire surface rather
 /// than Material 3's narrow fade interval (only 20% of the controller timeline).
 /// The messenger still supplies the sole animation controller and owns layout.
-class _AunoSnackBar extends SnackBar {
-  _AunoSnackBar(this.bar, {Key? key, super.animation})
+class _FlickSnackBar extends SnackBar {
+  _FlickSnackBar(this.bar, {Key? key, super.animation})
     : super(
         key: key ?? bar.key,
         content: bar.content,
@@ -227,13 +227,13 @@ class _AunoSnackBar extends SnackBar {
 
   @override
   SnackBar withAnimation(Animation<double> newAnimation, {Key? fallbackKey}) =>
-      _AunoSnackBar(bar, key: key ?? fallbackKey, animation: newAnimation);
+      _FlickSnackBar(bar, key: key ?? fallbackKey, animation: newAnimation);
 
   @override
-  State<SnackBar> createState() => _AunoSnackBarState();
+  State<SnackBar> createState() => _FlickSnackBarState();
 }
 
-class _AunoSnackBarState extends State<_AunoSnackBar> {
+class _FlickSnackBarState extends State<_FlickSnackBar> {
   late CurvedAnimation _movement;
   bool _wasVisible = false;
 
@@ -267,7 +267,7 @@ class _AunoSnackBarState extends State<_AunoSnackBar> {
   }
 
   @override
-  void didUpdateWidget(_AunoSnackBar oldWidget) {
+  void didUpdateWidget(_FlickSnackBar oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.animation != oldWidget.animation) {
       oldWidget.animation!.removeStatusListener(_onStatusChanged);
