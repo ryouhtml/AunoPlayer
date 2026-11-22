@@ -1,0 +1,404 @@
+import 'package:flutter/material.dart';
+import 'package:auno_player/widgets/common/flick_snackbar.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:auno_player/services/player_service.dart';
+import 'package:auno_player/models/song.dart';
+import 'package:auno_player/models/shuffle_mode.dart';
+import 'package:auno_player/models/album_color_mode.dart';
+import 'package:auno_player/core/theme/app_colors.dart';
+import 'package:auno_player/core/utils/app_haptics.dart';
+import 'package:auno_player/core/utils/responsive.dart';
+import 'package:auno_player/features/player/widgets/album_color_helpers.dart';
+import 'package:auno_player/features/player/widgets/shuffle_mode_sheet.dart';
+import 'package:auno_player/features/player/widgets/loop_mode_sheet.dart';
+
+import 'package:auno_player/l10n/l10n.dart';
+
+class PlayerControls extends StatelessWidget {
+  final PlayerService playerService;
+  final String Function(Duration) formatDuration;
+  final Song? currentSong;
+
+  /// Playback clock used for the time labels. Defaults to the engine clock.
+  final ValueNotifier<Duration>? positionNotifier;
+  final Future<void> Function() onPrevious;
+  final Future<void> Function() onNext;
+  final double timelineHorizontalPadding;
+  final AlbumColorMode albumColorMode;
+  final Color? albumColor;
+  final bool showTimeLabels;
+
+  /// Tighter metrics for the right pane of the landscape player.
+  final bool compact;
+
+  const PlayerControls({
+    super.key,
+    required this.playerService,
+    required this.formatDuration,
+    required this.currentSong,
+    this.positionNotifier,
+    required this.onPrevious,
+    required this.onNext,
+    this.timelineHorizontalPadding = 0,
+    this.albumColorMode = AlbumColorMode.off,
+    this.albumColor,
+    this.showTimeLabels = true,
+    this.compact = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final surfaceBlend = albumColorMode.surfaceBlend;
+    final accentBlend = albumColorMode.accentBlend;
+    final hasAlbumTint = albumColor != null && surfaceBlend > 0;
+
+    final buttonSurface = hasAlbumTint
+        ? albumSurface(albumColor!, surfaceBlend)
+        : const Color(0xFF121212);
+    final activeAccent = hasAlbumTint
+        ? albumAccent(albumColor!, accentBlend)
+        : AppColors.accent;
+    final sideSize = compact ? 44.0 : context.responsive(40.0, 44.0, 48.0);
+    final iconSize = compact ? 18.0 : context.responsive(18.0, 20.0, 22.0);
+    final gap = compact ? 4.0 : context.responsive(14.0, 18.0, 22.0);
+
+    return RepaintBoundary(
+      child: ValueListenableBuilder<Duration>(
+        valueListenable: positionNotifier ?? playerService.positionNotifier,
+        builder: (context, position, _) {
+          return ValueListenableBuilder<Duration>(
+            valueListenable: playerService.durationNotifier,
+            builder: (context, engineDuration, _) {
+              final duration = engineDuration.inMilliseconds > 0
+                  ? engineDuration
+                  : (currentSong?.duration ?? Duration.zero);
+
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AnimatedSize(
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.easeInOut,
+                    alignment: Alignment.bottomCenter,
+                    child: AnimatedOpacity(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      opacity: showTimeLabels ? 1.0 : 0.0,
+                      child: showTimeLabels
+                          ? Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                PlaybackTimeLabels(
+                                  position: position,
+                                  duration: duration,
+                                  formatDuration: formatDuration,
+                                  horizontalPadding: timelineHorizontalPadding,
+                                ),
+                                const SizedBox(height: 12),
+                              ],
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+                  ),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                      // Shuffle
+                      ValueListenableBuilder<ShuffleMode>(
+                        valueListenable: playerService.shuffleModeNotifier,
+                        builder: (context, shuffleMode, _) {
+                          final isActive = shuffleMode.isActive;
+                          final icon = switch (shuffleMode) {
+                            ShuffleMode.categories => LucideIcons.layers,
+                            ShuffleMode.random => LucideIcons.dices,
+                            _ => LucideIcons.shuffle,
+                          };
+                          return GestureDetector(
+                            onTap: () {
+                              AppHaptics.tap();
+                              playerService.toggleShuffle();
+                              final next =
+                                  playerService.shuffleModeNotifier.value;
+                              ScaffoldMessenger.of(context).showFlickSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    l10n.englishForFilipino.shuffle2(
+                                      next.label,
+                                    ),
+                                  ),
+                                  behavior: SnackBarBehavior.floating,
+                                  duration: const Duration(seconds: 1),
+                                ),
+                              );
+                            },
+                            onLongPress: () {
+                              AppHaptics.tap();
+                              ShuffleModeSheet.show(context, playerService);
+                            },
+                            child: Container(
+                              width: sideSize,
+                              height: sideSize,
+                              decoration: BoxDecoration(
+                                color: isActive
+                                    ? activeAccent.withValues(alpha: 0.25)
+                                    : buttonSurface.withValues(alpha: 0.6),
+                                shape: BoxShape.circle,
+                                border: isActive
+                                    ? Border.all(
+                                        color: activeAccent.withValues(
+                                          alpha: 0.6,
+                                        ),
+                                        width: 1.5,
+                                      )
+                                    : null,
+                              ),
+                              child: Icon(
+                                icon,
+                                size: iconSize,
+                                color: isActive
+                                    ? activeAccent
+                                    : Colors.white.withValues(alpha: 0.7),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(width: gap),
+                      // Previous
+                      Container(
+                        width: sideSize,
+                        height: sideSize,
+                        decoration: BoxDecoration(
+                          color: buttonSurface.withValues(alpha: 0.6),
+                          shape: BoxShape.circle,
+                        ),
+                        child: IconButton(
+                          onPressed: () {
+                            AppHaptics.tap();
+                            onPrevious();
+                          },
+                          iconSize: iconSize,
+                          padding: EdgeInsets.zero,
+                          icon: Icon(LucideIcons.skipBack, color: Colors.white),
+                        ),
+                      ),
+                      SizedBox(width: gap),
+                      // Play/Pause
+                      _PlayPauseButton(
+                        playerService: playerService,
+                        albumColorMode: albumColorMode,
+                        albumColor: albumColor,
+                        compact: compact,
+                      ),
+                      SizedBox(width: gap),
+                      // Next
+                      Container(
+                        width: sideSize,
+                        height: sideSize,
+                        decoration: BoxDecoration(
+                          color: buttonSurface.withValues(alpha: 0.6),
+                          shape: BoxShape.circle,
+                        ),
+                        child: IconButton(
+                          onPressed: () {
+                            AppHaptics.tap();
+                            onNext();
+                          },
+                          iconSize: iconSize,
+                          padding: EdgeInsets.zero,
+                          icon: Icon(
+                            LucideIcons.skipForward,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: gap),
+                      // Repeat/Loop
+                      ValueListenableBuilder<LoopMode>(
+                        valueListenable: playerService.loopModeNotifier,
+                        builder: (context, loopMode, _) {
+                          final icon = LoopModeSheet.iconFor(loopMode);
+                          final isActive = loopMode != LoopMode.off;
+                          final color = isActive
+                              ? activeAccent
+                              : Colors.white.withValues(alpha: 0.7);
+                          return GestureDetector(
+                            onTap: () {
+                              AppHaptics.tap();
+                              playerService.toggleLoopMode();
+                              final next = playerService.loopModeNotifier.value;
+                              ScaffoldMessenger.of(context).showFlickSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    l10n.englishForFilipino.repeat(next.label),
+                                  ),
+                                  behavior: SnackBarBehavior.floating,
+                                  duration: const Duration(seconds: 1),
+                                ),
+                              );
+                            },
+                            onLongPress: () {
+                              AppHaptics.tap();
+                              LoopModeSheet.show(context, playerService);
+                            },
+                            child: Container(
+                              width: sideSize,
+                              height: sideSize,
+                              decoration: BoxDecoration(
+                                color: buttonSurface.withValues(alpha: 0.6),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Icon(icon, size: iconSize, color: color),
+                                  if (loopMode == LoopMode.all)
+                                    Positioned(
+                                      bottom: 6,
+                                      child: Container(
+                                        width: 4,
+                                        height: 4,
+                                        decoration: BoxDecoration(
+                                          color: activeAccent,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class PlaybackTimeLabels extends StatelessWidget {
+  final Duration position;
+  final Duration duration;
+  final String Function(Duration) formatDuration;
+  final double horizontalPadding;
+
+  const PlaybackTimeLabels({
+    super.key,
+    required this.position,
+    required this.duration,
+    required this.formatDuration,
+    this.horizontalPadding = 0,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            formatDuration(position),
+            style: const TextStyle(
+              fontFamily: 'GoogleSansFlex',
+              fontSize: 12,
+              color: Colors.white,
+              fontFeatures: [FontFeature.tabularFigures()],
+            ),
+          ),
+          Text(
+            formatDuration(duration),
+            style: const TextStyle(
+              fontFamily: 'GoogleSansFlex',
+              fontSize: 12,
+              color: Colors.white,
+              fontFeatures: [FontFeature.tabularFigures()],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Extracted play/pause button to minimize rebuilds when only play state changes
+class _PlayPauseButton extends StatelessWidget {
+  final PlayerService playerService;
+  final AlbumColorMode albumColorMode;
+  final Color? albumColor;
+
+  final bool compact;
+
+  const _PlayPauseButton({
+    required this.playerService,
+    this.albumColorMode = AlbumColorMode.off,
+    this.albumColor,
+    this.compact = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final surfaceBlend = albumColorMode.surfaceBlend;
+    final accentBlend = albumColorMode.accentBlend;
+    final hasAlbumTint = albumColor != null && surfaceBlend > 0;
+
+    final buttonSurface = hasAlbumTint
+        ? albumSurface(albumColor!, surfaceBlend)
+        : const Color(0xFF121212);
+    final glowColor = hasAlbumTint
+        ? albumAccent(albumColor!, accentBlend)
+        : AppColors.accent;
+
+    return RepaintBoundary(
+      child: ValueListenableBuilder<bool>(
+        valueListenable: playerService.isPlayingNotifier,
+        builder: (context, isPlaying, _) {
+          final buttonSize = compact
+              ? 52.0
+              : context.responsive(58.0, 64.0, 68.0);
+          final iconSize = compact
+              ? 24.0
+              : context.responsive(26.0, 28.0, 30.0);
+
+          return Container(
+            width: buttonSize,
+            height: buttonSize,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: buttonSurface.withValues(alpha: 0.6),
+              boxShadow: [
+                BoxShadow(
+                  color: glowColor.withValues(alpha: 0.4),
+                  blurRadius: context.responsive(14.0, 18.0, 22.0),
+                  offset: Offset(0, context.responsive(5.0, 6.0, 7.0)),
+                ),
+              ],
+            ),
+            child: IconButton(
+              onPressed: () {
+                AppHaptics.tap();
+                playerService.togglePlayPause();
+              },
+              iconSize: iconSize,
+              padding: EdgeInsets.zero,
+              icon: Icon(
+                isPlaying ? LucideIcons.pause : LucideIcons.play,
+                color: Colors.white,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}

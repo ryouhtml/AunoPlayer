@@ -1,0 +1,1113 @@
+import 'package:auno_player/widgets/common/flick_dialog.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:auno_player/core/constants/app_constants.dart';
+import 'package:auno_player/core/theme/app_colors.dart';
+import 'package:auno_player/core/theme/adaptive_color_provider.dart';
+import 'package:auno_player/providers/providers.dart';
+import 'package:auno_player/features/settings/widgets/settings_widgets.dart';
+import 'package:auno_player/services/widget_sync_service.dart';
+import 'package:auno_player/l10n/settings_l10n.dart';
+
+class WidgetSettingsScreen extends ConsumerStatefulWidget {
+  const WidgetSettingsScreen({super.key, this.initialSection, this.initialTab = 0})
+      : assert(initialTab >= 0 && initialTab < 4);
+
+  final String? initialSection;
+  final int initialTab;
+
+  @override
+  ConsumerState<WidgetSettingsScreen> createState() =>
+      _WidgetSettingsScreenState();
+}
+
+class _WidgetSettingsScreenState extends ConsumerState<WidgetSettingsScreen> {
+  static const _tabCount = 4;
+  late int _tab = widget.initialTab;
+  int _dir = 1;
+
+  void _switchTo(int i) {
+    if (i < 0 || i >= _tabCount || i == _tab) return;
+    setState(() {
+      _dir = i > _tab ? 1 : -1;
+      _tab = i;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SettingsScaffold(
+      title: l10n.englishForFilipino.widgets,
+      initialSection: widget.initialSection,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _TabBar(
+            selectedIndex: _tab,
+            onSelected: _switchTo,
+          ),
+          const SizedBox(height: AppConstants.spacingLg),
+          GestureDetector(
+            onHorizontalDragEnd: (details) {
+              final v = details.primaryVelocity ?? 0;
+              if (v < -250) {
+                _switchTo(_tab + 1);
+              } else if (v > 250) {
+                _switchTo(_tab - 1);
+              }
+            },
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              switchInCurve: Curves.easeOutCubic,
+              switchOutCurve: Curves.easeInCubic,
+              layoutBuilder: (currentChild, previousChildren) => Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  ...previousChildren,
+                  ?currentChild,
+                ],
+              ),
+              transitionBuilder: (child, animation) {
+                final incoming = (child.key as ValueKey).value == _tab;
+                final beginX = (incoming ? _dir : -_dir).toDouble();
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: Offset(beginX, 0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: FadeTransition(opacity: animation, child: child),
+                );
+              },
+              child: KeyedSubtree(
+                key: ValueKey(_tab),
+                child: _tab == 0
+                    ? const _MiniPlayerTab()
+                    : _tab == 1
+                    ? const _FlagshipTab()
+                    : _tab == 2
+                    ? const _CompactTab()
+                    : const _ReplayTab(),
+              ),
+            ),
+          ),
+          const SizedBox(height: AppConstants.navBarHeight + 40),
+        ],
+      ),
+    );
+  }
+}
+
+class _TabBar extends StatelessWidget {
+  const _TabBar({
+    required this.selectedIndex,
+    required this.onSelected,
+  });
+
+  final int selectedIndex;
+  final ValueChanged<int> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    final tabs = [l10n.miniPlayer, '4×3 Flagship', '2×2', 'Replay'];
+    return Row(
+      children: List.generate(tabs.length * 2 - 1, (i) {
+        if (i.isOdd) {
+          return SizedBox(width: AppConstants.spacingXs);
+        }
+        final index = i ~/ 2;
+        final selected = index == selectedIndex;
+        return Expanded(
+          child: GestureDetector(
+            onTap: () => onSelected(index),
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: AppConstants.spacingSm,
+              ),
+              decoration: BoxDecoration(
+                color: selected
+                    ? AppColors.surface.withValues(alpha: 0.8)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(AppConstants.radiusMd),
+                border: selected
+                    ? Border.all(color: AppColors.glassBorder)
+                    : null,
+              ),
+              child: Text(
+                tabs[index],
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      color: selected
+                          ? context.adaptiveTextPrimary
+                          : context.adaptiveTextTertiary,
+                      fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                    ),
+              ),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+}
+
+class _MiniPlayerTab extends ConsumerWidget {
+  const _MiniPlayerTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final prefs = ref.watch(appPreferencesProvider);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SettingsSectionHeader(l10n.englishForFilipino.background, sectionId: 'background'),
+        SettingsCard(
+          children: [
+            _OpacityOption(
+              label: l10n.englishForFilipino.transparent,
+              value: 0,
+              groupValue: prefs.widgetBgOpacity,
+              onChanged: (v) => _updateOpacity(ref, v),
+            ),
+            const SettingsDivider(),
+            _OpacityOption(
+              label: l10n.englishForFilipino.light,
+              value: 1,
+              groupValue: prefs.widgetBgOpacity,
+              onChanged: (v) => _updateOpacity(ref, v),
+            ),
+            const SettingsDivider(),
+            _OpacityOption(
+              label: l10n.englishForFilipino.medium,
+              value: 2,
+              groupValue: prefs.widgetBgOpacity,
+              onChanged: (v) => _updateOpacity(ref, v),
+            ),
+            const SettingsDivider(),
+            _OpacityOption(
+              label: l10n.englishForFilipino.dark,
+              value: 3,
+              groupValue: prefs.widgetBgOpacity,
+              onChanged: (v) => _updateOpacity(ref, v),
+            ),
+            const SettingsDivider(),
+            _OpacityOption(
+              label: l10n.englishForFilipino.solid,
+              value: 4,
+              groupValue: prefs.widgetBgOpacity,
+              onChanged: (v) => _updateOpacity(ref, v),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppConstants.spacingLg),
+        SettingsSectionHeader(l10n.englishForFilipino.content, sectionId: 'content'),
+        SettingsCard(
+          children: [
+            ToggleSetting(
+              icon: LucideIcons.image,
+              title: l10n.englishForFilipino.albumArt,
+              subtitle: l10n.showAlbumArtworkOnTheMini,
+              value: prefs.widgetShowAlbumArt,
+              onChanged: (v) {
+                ref
+                    .read(appPreferencesProvider.notifier)
+                    .setWidgetShowAlbumArt(v);
+                WidgetSyncService.instance.pushCustomization(prefs.copyWith(
+                  widgetShowAlbumArt: v,
+                ));
+              },
+            ),
+            const SettingsDivider(),
+            ToggleSetting(
+              icon: LucideIcons.mic,
+              title: l10n.englishForFilipino.artistName,
+              subtitle: l10n.showArtistBelowSongTitle,
+              value: prefs.widgetShowArtist,
+              onChanged: (v) {
+                ref
+                    .read(appPreferencesProvider.notifier)
+                    .setWidgetShowArtist(v);
+                WidgetSyncService.instance.pushCustomization(prefs.copyWith(
+                  widgetShowArtist: v,
+                ));
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: AppConstants.spacingLg),
+        SettingsSectionHeader(l10n.englishForFilipino.textSize2, sectionId: 'textSize2'),
+        SettingsCard(
+          children: [
+            SliderSetting(
+              icon: LucideIcons.type,
+              title: l10n.englishForFilipino.fontScale,
+              subtitle: l10n.scalesWithWidgetSizeAutomatically,
+              value: prefs.widgetTextScale,
+              displayValue: '${(prefs.widgetTextScale * 100).round()}%',
+              min: 0.8,
+              max: 2.5,
+              divisions: 34,
+              onChanged: (v) => _updateTextScale(ref, v),
+              onDisplayTap: () => _showManualScaleDialog(
+                context,
+                value: prefs.widgetTextScale,
+                min: 0.8,
+                max: 2.5,
+                onChanged: (v) => _updateTextScale(ref, v),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppConstants.spacingSm),
+        _WidgetTextPreview(
+          titleBaseSp: 13,
+          artistBaseSp: 11,
+          baselineDp: 360,
+          manualScale: prefs.widgetTextScale,
+          accentColor: _resolveAccentColor(prefs.widgetAccentColor),
+          centered: false,
+        ),
+        const SizedBox(height: AppConstants.spacingLg),
+        SettingsSectionHeader(l10n.englishForFilipino.accentColor, sectionId: 'accentColor'),
+        SettingsCard(
+          children: [
+            _AccentOption(
+              label: l10n.englishForFilipino.white,
+              color: Colors.white,
+              value: 'white',
+              groupValue: prefs.widgetAccentColor,
+              onChanged: (v) => _updateAccent(ref, v),
+            ),
+            const SettingsDivider(),
+            _AccentOption(
+              label: l10n.englishForFilipino.amber,
+              color: const Color(0xFFFFB300),
+              value: 'amber',
+              groupValue: prefs.widgetAccentColor,
+              onChanged: (v) => _updateAccent(ref, v),
+            ),
+            const SettingsDivider(),
+            _AccentOption(
+              label: l10n.englishForFilipino.blue,
+              color: const Color(0xFF64B5F6),
+              value: 'blue',
+              groupValue: prefs.widgetAccentColor,
+              onChanged: (v) => _updateAccent(ref, v),
+            ),
+            const SettingsDivider(),
+            _AccentOption(
+              label: l10n.englishForFilipino.green,
+              color: const Color(0xFF81C784),
+              value: 'green',
+              groupValue: prefs.widgetAccentColor,
+              onChanged: (v) => _updateAccent(ref, v),
+            ),
+            const SettingsDivider(),
+            _AccentOption(
+              label: l10n.englishForFilipino.purple,
+              color: const Color(0xFFCE93D8),
+              value: 'purple',
+              groupValue: prefs.widgetAccentColor,
+              onChanged: (v) => _updateAccent(ref, v),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void _updateOpacity(WidgetRef ref, int value) {
+    ref.read(appPreferencesProvider.notifier).setWidgetBgOpacity(value);
+    final prefs = ref.read(appPreferencesProvider);
+    WidgetSyncService.instance.pushCustomization(
+      prefs.copyWith(widgetBgOpacity: value),
+    );
+  }
+
+  void _updateAccent(WidgetRef ref, String value) {
+    ref.read(appPreferencesProvider.notifier).setWidgetAccentColor(value);
+    final prefs = ref.read(appPreferencesProvider);
+    WidgetSyncService.instance.pushCustomization(
+      prefs.copyWith(widgetAccentColor: value),
+    );
+  }
+
+  void _updateTextScale(WidgetRef ref, double value) {
+    ref.read(appPreferencesProvider.notifier).setWidgetTextScale(value);
+    final prefs = ref.read(appPreferencesProvider);
+    WidgetSyncService.instance.pushCustomization(
+      prefs.copyWith(widgetTextScale: value),
+    );
+  }
+}
+
+class _FlagshipTab extends ConsumerWidget {
+  const _FlagshipTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final prefs = ref.watch(appPreferencesProvider);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SettingsSectionHeader(l10n.englishForFilipino.content, sectionId: 'content'),
+        SettingsCard(
+          children: [
+            ToggleSetting(
+              icon: LucideIcons.mic,
+              title: l10n.englishForFilipino.artistName,
+              subtitle: l10n.showArtistBelowSongTitle,
+              value: prefs.widgetFlagshipShowArtist,
+              onChanged: (v) {
+                ref
+                    .read(appPreferencesProvider.notifier)
+                    .setWidgetFlagshipShowArtist(v);
+                WidgetSyncService.instance.pushCustomization(prefs.copyWith(
+                  widgetFlagshipShowArtist: v,
+                ));
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: AppConstants.spacingLg),
+        SettingsSectionHeader(l10n.englishForFilipino.textSize2, sectionId: 'textSize2'),
+        SettingsCard(
+          children: [
+            SliderSetting(
+              icon: LucideIcons.type,
+              title: l10n.englishForFilipino.fontScale,
+              subtitle: l10n.scalesWithWidgetSizeAutomatically,
+              value: prefs.widgetFlagshipTextScale,
+              displayValue:
+                  '${(prefs.widgetFlagshipTextScale * 100).round()}%',
+              min: 0.8,
+              max: 2.5,
+              divisions: 34,
+              onChanged: (v) => _updateFlagshipTextScale(ref, v),
+              onDisplayTap: () => _showManualScaleDialog(
+                context,
+                value: prefs.widgetFlagshipTextScale,
+                min: 0.8,
+                max: 2.5,
+                onChanged: (v) => _updateFlagshipTextScale(ref, v),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppConstants.spacingSm),
+        _WidgetTextPreview(
+          titleBaseSp: 15,
+          artistBaseSp: 12,
+          baselineDp: 400,
+          manualScale: prefs.widgetFlagshipTextScale,
+          accentColor: _resolveAccentColor(prefs.widgetFlagshipAccent),
+          centered: true,
+        ),
+        const SizedBox(height: AppConstants.spacingLg),
+        SettingsSectionHeader(l10n.englishForFilipino.accentColor, sectionId: 'accentColor'),
+        SettingsCard(
+          children: [
+            _AccentOption(
+              label: l10n.englishForFilipino.white,
+              color: Colors.white,
+              value: 'white',
+              groupValue: prefs.widgetFlagshipAccent,
+              onChanged: (v) => _updateFlagshipAccent(ref, v),
+            ),
+            const SettingsDivider(),
+            _AccentOption(
+              label: l10n.englishForFilipino.amber,
+              color: const Color(0xFFFFB300),
+              value: 'amber',
+              groupValue: prefs.widgetFlagshipAccent,
+              onChanged: (v) => _updateFlagshipAccent(ref, v),
+            ),
+            const SettingsDivider(),
+            _AccentOption(
+              label: l10n.englishForFilipino.blue,
+              color: const Color(0xFF64B5F6),
+              value: 'blue',
+              groupValue: prefs.widgetFlagshipAccent,
+              onChanged: (v) => _updateFlagshipAccent(ref, v),
+            ),
+            const SettingsDivider(),
+            _AccentOption(
+              label: l10n.englishForFilipino.green,
+              color: const Color(0xFF81C784),
+              value: 'green',
+              groupValue: prefs.widgetFlagshipAccent,
+              onChanged: (v) => _updateFlagshipAccent(ref, v),
+            ),
+            const SettingsDivider(),
+            _AccentOption(
+              label: l10n.englishForFilipino.purple,
+              color: const Color(0xFFCE93D8),
+              value: 'purple',
+              groupValue: prefs.widgetFlagshipAccent,
+              onChanged: (v) => _updateFlagshipAccent(ref, v),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void _updateFlagshipAccent(WidgetRef ref, String value) {
+    ref.read(appPreferencesProvider.notifier).setWidgetFlagshipAccent(value);
+    final prefs = ref.read(appPreferencesProvider);
+    WidgetSyncService.instance.pushCustomization(
+      prefs.copyWith(widgetFlagshipAccent: value),
+    );
+  }
+
+  void _updateFlagshipTextScale(WidgetRef ref, double value) {
+    ref.read(appPreferencesProvider.notifier).setWidgetFlagshipTextScale(value);
+    final prefs = ref.read(appPreferencesProvider);
+    WidgetSyncService.instance.pushCustomization(
+      prefs.copyWith(widgetFlagshipTextScale: value),
+    );
+  }
+}
+
+class _CompactTab extends ConsumerWidget {
+  const _CompactTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final prefs = ref.watch(appPreferencesProvider);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SettingsSectionHeader(l10n.englishForFilipino.background, sectionId: 'background'),
+        SettingsCard(
+          children: [
+            _OpacityOption(
+              label: l10n.englishForFilipino.transparent,
+              value: 0,
+              groupValue: prefs.widgetCompactBgOpacity,
+              onChanged: (v) => _updateCompactOpacity(ref, v),
+            ),
+            const SettingsDivider(),
+            _OpacityOption(
+              label: l10n.englishForFilipino.light,
+              value: 1,
+              groupValue: prefs.widgetCompactBgOpacity,
+              onChanged: (v) => _updateCompactOpacity(ref, v),
+            ),
+            const SettingsDivider(),
+            _OpacityOption(
+              label: l10n.englishForFilipino.medium,
+              value: 2,
+              groupValue: prefs.widgetCompactBgOpacity,
+              onChanged: (v) => _updateCompactOpacity(ref, v),
+            ),
+            const SettingsDivider(),
+            _OpacityOption(
+              label: l10n.englishForFilipino.dark,
+              value: 3,
+              groupValue: prefs.widgetCompactBgOpacity,
+              onChanged: (v) => _updateCompactOpacity(ref, v),
+            ),
+            const SettingsDivider(),
+            _OpacityOption(
+              label: l10n.englishForFilipino.solid,
+              value: 4,
+              groupValue: prefs.widgetCompactBgOpacity,
+              onChanged: (v) => _updateCompactOpacity(ref, v),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppConstants.spacingLg),
+        SettingsSectionHeader(l10n.englishForFilipino.content, sectionId: 'content'),
+        SettingsCard(
+          children: [
+            ToggleSetting(
+              icon: LucideIcons.image,
+              title: l10n.englishForFilipino.albumArt,
+              subtitle: l10n.useAlbumArtAsBackground,
+              value: prefs.widgetCompactShowAlbumArt,
+              onChanged: (v) {
+                ref
+                    .read(appPreferencesProvider.notifier)
+                    .setWidgetCompactShowAlbumArt(v);
+                WidgetSyncService.instance.pushCustomization(prefs.copyWith(
+                  widgetCompactShowAlbumArt: v,
+                ));
+              },
+            ),
+            const SettingsDivider(),
+            ToggleSetting(
+              icon: LucideIcons.mic,
+              title: l10n.englishForFilipino.artistName,
+              subtitle: l10n.showArtistBelowSongTitle,
+              value: prefs.widgetCompactShowArtist,
+              onChanged: (v) {
+                ref
+                    .read(appPreferencesProvider.notifier)
+                    .setWidgetCompactShowArtist(v);
+                WidgetSyncService.instance.pushCustomization(prefs.copyWith(
+                  widgetCompactShowArtist: v,
+                ));
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: AppConstants.spacingLg),
+        SettingsSectionHeader(l10n.englishForFilipino.textSize2, sectionId: 'textSize2'),
+        SettingsCard(
+          children: [
+            SliderSetting(
+              icon: LucideIcons.type,
+              title: l10n.englishForFilipino.fontScale,
+              subtitle: l10n.scalesWithWidgetSizeAutomatically,
+              value: prefs.widgetCompactTextScale,
+              displayValue:
+                  '${(prefs.widgetCompactTextScale * 100).round()}%',
+              min: 0.8,
+              max: 2.5,
+              divisions: 34,
+              onChanged: (v) => _updateCompactTextScale(ref, v),
+              onDisplayTap: () => _showManualScaleDialog(
+                context,
+                value: prefs.widgetCompactTextScale,
+                min: 0.8,
+                max: 2.5,
+                onChanged: (v) => _updateCompactTextScale(ref, v),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppConstants.spacingSm),
+        _WidgetTextPreview(
+          titleBaseSp: 15,
+          artistBaseSp: 12,
+          baselineDp: 200,
+          manualScale: prefs.widgetCompactTextScale,
+          accentColor: _resolveAccentColor(prefs.widgetCompactAccent),
+          centered: true,
+        ),
+        const SizedBox(height: AppConstants.spacingLg),
+        SettingsSectionHeader(l10n.englishForFilipino.accentColor, sectionId: 'accentColor'),
+        SettingsCard(
+          children: [
+            _AccentOption(
+              label: l10n.englishForFilipino.white,
+              color: Colors.white,
+              value: 'white',
+              groupValue: prefs.widgetCompactAccent,
+              onChanged: (v) => _updateCompactAccent(ref, v),
+            ),
+            const SettingsDivider(),
+            _AccentOption(
+              label: l10n.englishForFilipino.amber,
+              color: const Color(0xFFFFB300),
+              value: 'amber',
+              groupValue: prefs.widgetCompactAccent,
+              onChanged: (v) => _updateCompactAccent(ref, v),
+            ),
+            const SettingsDivider(),
+            _AccentOption(
+              label: l10n.englishForFilipino.blue,
+              color: const Color(0xFF64B5F6),
+              value: 'blue',
+              groupValue: prefs.widgetCompactAccent,
+              onChanged: (v) => _updateCompactAccent(ref, v),
+            ),
+            const SettingsDivider(),
+            _AccentOption(
+              label: l10n.englishForFilipino.green,
+              color: const Color(0xFF81C784),
+              value: 'green',
+              groupValue: prefs.widgetCompactAccent,
+              onChanged: (v) => _updateCompactAccent(ref, v),
+            ),
+            const SettingsDivider(),
+            _AccentOption(
+              label: l10n.englishForFilipino.purple,
+              color: const Color(0xFFCE93D8),
+              value: 'purple',
+              groupValue: prefs.widgetCompactAccent,
+              onChanged: (v) => _updateCompactAccent(ref, v),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void _updateCompactOpacity(WidgetRef ref, int value) {
+    ref
+        .read(appPreferencesProvider.notifier)
+        .setWidgetCompactBgOpacity(value);
+    final prefs = ref.read(appPreferencesProvider);
+    WidgetSyncService.instance.pushCustomization(
+      prefs.copyWith(widgetCompactBgOpacity: value),
+    );
+  }
+
+  void _updateCompactAccent(WidgetRef ref, String value) {
+    ref.read(appPreferencesProvider.notifier).setWidgetCompactAccent(value);
+    final prefs = ref.read(appPreferencesProvider);
+    WidgetSyncService.instance.pushCustomization(
+      prefs.copyWith(widgetCompactAccent: value),
+    );
+  }
+
+  void _updateCompactTextScale(WidgetRef ref, double value) {
+    ref.read(appPreferencesProvider.notifier).setWidgetCompactTextScale(value);
+    final prefs = ref.read(appPreferencesProvider);
+    WidgetSyncService.instance.pushCustomization(
+      prefs.copyWith(widgetCompactTextScale: value),
+    );
+  }
+}
+
+class _ReplayTab extends ConsumerWidget {
+  const _ReplayTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n.englishForFilipino;
+    final prefs = ref.watch(appPreferencesProvider);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SettingsSectionHeader(l10n.englishForFilipino.background, sectionId: 'background'),
+        SettingsCard(
+          children: [
+            // The four look *names* (Acid / Night / Signal / Album) stay as they
+            // are: they are the names of shipped widgets, the same way 'Orbital'
+            // is a view-mode name. Their descriptions are prose and are translated.
+            _ReplayLookOption(
+              label: 'Acid',
+              subtitle: l10n.neonLimeWithSignalOrangeReplay,
+              icon: LucideIcons.sparkles,
+              value: 'acid',
+              groupValue: prefs.widgetReplayLook,
+              onChanged: (v) => _updateReplayLook(ref, v),
+            ),
+            const SettingsDivider(),
+            _ReplayLookOption(
+              label: 'Night',
+              subtitle: l10n.inkCardWithTheReplaySignature,
+              icon: LucideIcons.moon,
+              value: 'night',
+              groupValue: prefs.widgetReplayLook,
+              onChanged: (v) => _updateReplayLook(ref, v),
+            ),
+            const SettingsDivider(),
+            _ReplayLookOption(
+              label: 'Signal',
+              subtitle: l10n.signalOrangeSurfaceFromTheReplay,
+              icon: LucideIcons.zap,
+              value: 'signal',
+              groupValue: prefs.widgetReplayLook,
+              onChanged: (v) => _updateReplayLook(ref, v),
+            ),
+            const SettingsDivider(),
+            _ReplayLookOption(
+              label: 'Album',
+              subtitle: l10n.tintedFromTodaySTopCover,
+              icon: LucideIcons.image,
+              value: 'artwork',
+              groupValue: prefs.widgetReplayLook,
+              onChanged: (v) => _updateReplayLook(ref, v),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void _updateReplayLook(WidgetRef ref, String value) {
+    ref.read(appPreferencesProvider.notifier).setWidgetReplayLook(value);
+    final prefs = ref.read(appPreferencesProvider);
+    WidgetSyncService.instance.pushCustomization(
+      prefs.copyWith(widgetReplayLook: value),
+    );
+  }
+}
+
+class _ReplayLookOption extends StatelessWidget {
+  const _ReplayLookOption({
+    required this.label,
+    required this.subtitle,
+    required this.icon,
+    required this.value,
+    required this.groupValue,
+    required this.onChanged,
+  });
+
+  final String label;
+  final String subtitle;
+  final IconData icon;
+  final String value;
+  final String groupValue;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final selected = value == groupValue;
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => onChanged(value),
+        child: Padding(
+          padding: const EdgeInsets.all(AppConstants.spacingLg),
+          child: Row(
+            children: [
+              Container(
+                width: AppConstants.containerSizeMd,
+                height: AppConstants.containerSizeMd,
+                decoration: BoxDecoration(
+                  color: AppColors.glassBackgroundStrong,
+                  borderRadius: BorderRadius.circular(AppConstants.radiusSm),
+                ),
+                child: Icon(
+                  icon,
+                  color: selected
+                      ? context.adaptiveTextPrimary
+                      : context.adaptiveTextTertiary,
+                  size: AppConstants.iconSizeLg,
+                ),
+              ),
+              const SizedBox(width: AppConstants.spacingMd),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: context.adaptiveTextPrimary,
+                          ),
+                    ),
+                    const SizedBox(height: AppConstants.spacingXs),
+                    Text(
+                      subtitle,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: context.adaptiveTextSecondary,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(
+                selected
+                    ? Icons.check_circle_rounded
+                    : Icons.radio_button_unchecked,
+                color: selected
+                    ? context.adaptiveTextPrimary
+                    : context.adaptiveTextTertiary,
+                size: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _OpacityOption extends StatelessWidget {
+  const _OpacityOption({
+    required this.label,
+    required this.value,
+    required this.groupValue,
+    required this.onChanged,
+  });
+
+  final String label;
+  final int value;
+  final int groupValue;
+  final ValueChanged<int> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final selected = value == groupValue;
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => onChanged(value),
+        child: Padding(
+          padding: const EdgeInsets.all(AppConstants.spacingLg),
+          child: Row(
+            children: [
+              Container(
+                width: AppConstants.containerSizeMd,
+                height: AppConstants.containerSizeMd,
+                decoration: BoxDecoration(
+                  color: AppColors.glassBackgroundStrong,
+                  borderRadius: BorderRadius.circular(AppConstants.radiusSm),
+                ),
+                child: Icon(
+                  LucideIcons.paintBucket,
+                  color: selected
+                      ? context.adaptiveTextPrimary
+                      : context.adaptiveTextTertiary,
+                  size: AppConstants.iconSizeLg,
+                ),
+              ),
+              const SizedBox(width: AppConstants.spacingMd),
+              Expanded(
+                child: Text(
+                  label,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: context.adaptiveTextPrimary,
+                      ),
+                ),
+              ),
+              Icon(
+                selected
+                    ? Icons.check_circle_rounded
+                    : Icons.radio_button_unchecked,
+                color: selected
+                    ? context.adaptiveTextPrimary
+                    : context.adaptiveTextTertiary,
+                size: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+Color _resolveAccentColor(String name) {
+  return switch (name) {
+    'amber' => const Color(0xFFFFB300),
+    'blue' => const Color(0xFF64B5F6),
+    'green' => const Color(0xFF81C784),
+    'purple' => const Color(0xFFCE93D8),
+    _ => Colors.white,
+  };
+}
+
+Future<void> _showManualScaleDialog(
+  BuildContext context, {
+  required double value,
+  required double min,
+  required double max,
+  required ValueChanged<double> onChanged,
+}) async {
+  final submitted = await FlickDialogs.input(
+    context,
+    title: l10n.englishForFilipino.fontScale,
+    message:
+        l10n.enterAValueFromTo((min * 100).round(), (max * 100).round()),
+    initialValue: (value * 100).round().toString(),
+    confirmLabel: l10n.englishForFilipino.apply,
+    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+  );
+  final parsed = submitted == null ? null : double.tryParse(submitted);
+  if (parsed != null) {
+    onChanged((parsed / 100).clamp(min, max).toDouble());
+  }
+}
+
+class _WidgetTextPreview extends StatefulWidget {
+  const _WidgetTextPreview({
+    required this.titleBaseSp,
+    required this.artistBaseSp,
+    required this.baselineDp,
+    required this.manualScale,
+    required this.accentColor,
+    required this.centered,
+  });
+
+  final int titleBaseSp;
+  final int artistBaseSp;
+  final double baselineDp;
+  final double manualScale;
+  final Color accentColor;
+  final bool centered;
+
+  @override
+  State<_WidgetTextPreview> createState() => _WidgetTextPreviewState();
+}
+
+class _WidgetTextPreviewState extends State<_WidgetTextPreview> {
+  int _sizeIndex = 1;
+
+  static const _autoFactors = [0.85, 1.0, 1.3];
+  static const _sizeLabels = ['S', 'M', 'L'];
+
+  @override
+  Widget build(BuildContext context) {
+    final auto = _autoFactors[_sizeIndex];
+    double clampSp(int base) =>
+        (base * auto * widget.manualScale).round().clamp(9, 30).toDouble();
+    final titleSp = clampSp(widget.titleBaseSp);
+    final artistSp = clampSp(widget.artistBaseSp);
+    final cross = widget.centered
+        ? CrossAxisAlignment.center
+        : CrossAxisAlignment.start;
+
+    return SettingsCard(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            AppConstants.spacingLg,
+            AppConstants.spacingMd,
+            AppConstants.spacingLg,
+            AppConstants.spacingSm,
+          ),
+          child: Row(
+            children: [
+              Text(
+                l10n.englishForFilipino.preview,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      color: context.adaptiveTextTertiary,
+                    ),
+              ),
+              const Spacer(),
+              ...List.generate(3, (i) {
+                final selected = i == _sizeIndex;
+                return Padding(
+                  padding: const EdgeInsets.only(left: AppConstants.spacingXs),
+                  child: GestureDetector(
+                    onTap: () => setState(() => _sizeIndex = i),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: selected
+                            ? AppColors.surface.withValues(alpha: 0.8)
+                            : Colors.transparent,
+                        borderRadius:
+                            BorderRadius.circular(AppConstants.radiusSm),
+                        border: selected
+                            ? Border.all(color: AppColors.glassBorder)
+                            : null,
+                      ),
+                      child: Text(
+                        _sizeLabels[i],
+                        style: TextStyle(
+                          fontFamily: 'GoogleSansFlex',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: selected
+                              ? context.adaptiveTextPrimary
+                              : context.adaptiveTextTertiary,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            ],
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.fromLTRB(
+            AppConstants.spacingLg,
+            0,
+            AppConstants.spacingLg,
+            AppConstants.spacingLg,
+          ),
+          padding: const EdgeInsets.all(AppConstants.spacingLg),
+          decoration: BoxDecoration(
+            color: Colors.black.withValues(alpha: 0.75),
+            borderRadius: BorderRadius.circular(AppConstants.radiusMd),
+          ),
+          child: Column(
+            crossAxisAlignment: cross,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                l10n.midnightCityDreams,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontFamily: 'GoogleSansFlex',
+                  fontWeight: FontWeight.w700,
+                  fontSize: titleSp,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                l10n.neonSkyline,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontFamily: 'GoogleSansFlex',
+                  fontSize: artistSp,
+                  color: widget.accentColor,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _AccentOption extends StatelessWidget {
+  const _AccentOption({
+    required this.label,
+    required this.color,
+    required this.value,
+    required this.groupValue,
+    required this.onChanged,
+  });
+
+  final String label;
+  final Color color;
+  final String value;
+  final String groupValue;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final selected = value == groupValue;
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => onChanged(value),
+        child: Padding(
+          padding: const EdgeInsets.all(AppConstants.spacingLg),
+          child: Row(
+            children: [
+              Container(
+                width: AppConstants.containerSizeMd,
+                height: AppConstants.containerSizeMd,
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(AppConstants.radiusSm),
+                ),
+                child: Icon(
+                  LucideIcons.palette,
+                  color: color,
+                  size: AppConstants.iconSizeLg,
+                ),
+              ),
+              const SizedBox(width: AppConstants.spacingMd),
+              Expanded(
+                child: Text(
+                  label,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: context.adaptiveTextPrimary,
+                      ),
+                ),
+              ),
+              Icon(
+                selected
+                    ? Icons.check_circle_rounded
+                    : Icons.radio_button_unchecked,
+                color: selected
+                    ? context.adaptiveTextPrimary
+                    : context.adaptiveTextTertiary,
+                size: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

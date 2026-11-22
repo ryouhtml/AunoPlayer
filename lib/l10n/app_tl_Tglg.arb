@@ -1,0 +1,70 @@
+{
+  "@@locale": "tl_Tglg",
+  "@@comment": "Resource-only curated Baybayin labels, rendered only by BaybayinText when opted in. Never use as the app locale or convert metadata. Modern U+1714 virama; shared da/ra, e/i and o/u. All spellings remain drafts.",
+  "albums": "ᜋᜅ ᜀᜎ᜔ᜊᜓᜋ᜔",
+  "@albums": {
+    "description": "Albums library heading and menu browse shortcut.",
+    "x-latin": "Mga album",
+    "x-review-status": "draft"
+  },
+  "artists": "ᜋᜅ ᜃᜓᜋᜈ᜔ᜆ",
+  "@artists": {
+    "description": "Artists heading, menu shortcut and navigation; quick-access card and artist metadata stay English.",
+    "x-latin": "Mga kumanta",
+    "x-review-status": "draft"
+  },
+  "favorites": "ᜋᜅ ᜉᜊᜓᜇᜒᜆᜓ",
+  "@favorites": {
+    "description": "Favorites heading, menu shortcut and navigation label; quick-access card stays English.",
+    "x-latin": "Mga paborito",
+    "x-review-status": "draft"
+  },
+  "folders": "ᜋᜅ ᜉᜓᜎ᜔ᜇᜒᜇ᜔",
+  "@folders": {
+    "description": "Folders heading, browse shortcut and navigation; proposed polder spelling.",
+    "x-latin": "Mga polder",
+    "x-review-status": "draft"
+  },
+  "queue": "ᜉᜒᜎ",
+  "@queue": {
+    "description": "Queue screen heading and menu browse shortcut, not settings titles.",
+    "x-latin": "Pila",
+    "x-review-status": "draft"
+  },
+  "settings": "ᜋᜅ ᜉᜄ᜔ᜐᜐᜀᜌᜓᜐ᜔",
+  "@settings": {
+    "description": "Main Settings heading and navigation, not individual setting titles.",
+    "x-latin": "Mga pagsasaayos",
+    "x-review-status": "draft"
+  },
+  "libraryLabel": "ᜀᜃ᜔ᜎᜆᜈ᜔",
+  "@libraryLabel": {
+    "description": "Menu Library browse shortcut only.",
+    "x-latin": "Aklatan",
+    "x-review-status": "draft"
+  },
+  "nowPlaying": "ᜃᜐᜎᜓᜃᜓᜌᜅ᜔ ᜆᜓᜋᜓᜆᜓᜄ᜔ᜆᜓᜄ᜔",
+  "@nowPlaying": {
+    "description": "Menu current-playback heading; player uses the separate compact Tumutugtog label.",
+    "x-latin": "Kasalukuyang tumutugtog",
+    "x-review-status": "draft"
+  },
+  "playingLabel": "ᜆᜓᜋᜓᜆᜓᜄ᜔ᜆᜓᜄ᜔",
+  "@playingLabel": {
+    "description": "Player status heading only, with no visible Latin caption.",
+    "x-latin": "Tumutugtog",
+    "x-review-status": "draft"
+  },
+  "playlists": "ᜋᜅ ᜆᜎᜀᜈ᜔ ᜈᜅ᜔ ᜃᜈ᜔ᜆ",
+  "@playlists": {
+    "description": "Main Playlists library heading only; not navigation or user-created names.",
+    "x-latin": "Mga talaan ng kanta",
+    "x-review-status": "draft"
+  },
+  "songs14": "ᜋᜅ ᜃᜈ᜔ᜆ",
+  "@songs14": {
+    "description": "Main Songs library heading only; not navigation, counts or nested sections.",
+    "x-latin": "Mga kanta",
+    "x-review-status": "draft"
+  }
+}

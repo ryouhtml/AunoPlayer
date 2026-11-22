@@ -1,0 +1,1283 @@
+import 'dart:async';
+import 'dart:math' as math;
+import 'package:auno_player/widgets/common/flick_snackbar.dart';
+
+import 'package:auno_player/widgets/common/flick_dialog.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:auno_player/core/theme/app_theme.dart';
+import 'package:auno_player/core/theme/app_colors.dart';
+import 'package:auno_player/core/theme/app_system_ui.dart';
+import 'package:auno_player/core/theme/adaptive_color_provider.dart';
+import 'package:auno_player/features/songs/screens/songs_screen.dart';
+import 'package:auno_player/features/menu/screens/menu_screen.dart';
+import 'package:auno_player/features/settings/screens/settings_screen.dart';
+import 'package:auno_player/features/settings/screens/bottom_bar_settings_screen.dart';
+import 'package:auno_player/features/settings/screens/equalizer_screen.dart';
+import 'package:auno_player/features/settings/screens/support_flick_screen.dart';
+import 'package:auno_player/features/albums/screens/albums_screen.dart';
+import 'package:auno_player/features/artists/screens/artists_screen.dart';
+import 'package:auno_player/features/folders/screens/folders_screen.dart';
+import 'package:auno_player/features/playlists/screens/playlists_screen.dart';
+import 'package:auno_player/features/favorites/screens/favorites_screen.dart';
+import 'package:auno_player/features/search/screens/search_screen.dart';
+import 'package:auno_player/core/navigation/nav_bar_visibility_observer.dart';
+import 'package:auno_player/core/navigation/root_navigator.dart';
+import 'package:auno_player/core/utils/adaptive_layout.dart';
+import 'package:auno_player/core/utils/navigation_helper.dart';
+import 'package:auno_player/core/utils/app_haptics.dart';
+import 'package:auno_player/core/utils/app_log.dart';
+import 'package:auno_player/core/constants/app_constants.dart';
+import 'package:auno_player/features/player/widgets/ambient_background.dart';
+import 'package:auno_player/widgets/navigation/flick_nav_bar.dart';
+import 'package:auno_player/providers/equalizer_provider.dart';
+import 'package:auno_player/providers/lock_screen_visualizer_provider.dart';
+import 'package:auno_player/providers/providers.dart';
+import 'package:auno_player/features/onboarding/screens/onboarding_screen.dart';
+import 'package:auno_player/features/onboarding/tutorial_targets.dart';
+import 'package:auno_player/features/onboarding/tutorial_navigation.dart';
+import 'package:auno_player/features/onboarding/widgets/tutorial_overlay.dart';
+import 'package:auno_player/widgets/common/embedded_mini_player.dart';
+import 'package:auno_player/widgets/common/landscape_mini_player_dock.dart';
+import 'package:auno_player/widgets/common/landscape_side_mini_player.dart';
+import 'package:auno_player/widgets/navigation/bottom_bar_geometry.dart';
+import 'package:auno_player/providers/mini_player_config_provider.dart';
+import 'package:auno_player/widgets/common/floating_mini_player.dart';
+import 'package:auno_player/widgets/common/floating_scan_progress.dart';
+import 'package:auno_player/widgets/common/connection_notice_host.dart';
+import 'package:auno_player/widgets/common/display_mode_controller.dart';
+import 'package:auno_player/widgets/uac2/usb_bit_perfect_prompt.dart';
+import 'package:auno_player/models/song.dart';
+import 'package:auno_player/services/library_scanner_service.dart';
+import 'package:auno_player/services/player_service.dart';
+import 'package:auno_player/services/app_preferences_service.dart';
+import 'package:auno_player/services/milestone_service.dart';
+import 'package:auno_player/services/widget_sync_service.dart';
+import 'package:auno_player/services/widget_intent_handler.dart';
+import 'package:auno_player/models/nav_bar_config.dart';
+import 'package:auno_player/models/song_view_mode.dart';
+import 'package:auno_player/features/milestone/widgets/milestone_card.dart';
+import 'package:auno_player/features/milestone/widgets/streak_popup.dart';
+import 'package:auno_player/features/whats_new/widgets/whats_new_bottom_sheet.dart';
+import 'package:auno_player/core/utils/dev_log.dart';
+import 'package:auno_player/l10n/l10n.dart';
+
+/// Main application widget for Flick Player.
+class FlickPlayerApp extends StatelessWidget {
+  const FlickPlayerApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<Locale?>(
+      valueListenable: LocaleController.instance,
+      builder: (context, selectedLocale, _) {
+        return MaterialApp(
+          onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.darkTheme,
+          navigatorKey: rootNavigatorKey,
+          navigatorObservers: [tutorialNavigation.root],
+          localizationsDelegates: kAppLocalizationsDelegates,
+          supportedLocales: kSupportedLocales,
+          localeResolutionCallback: resolveAppLocale,
+          // null means "follow the device locale".
+          locale: selectedLocale,
+          home: const _RootRouter(),
+          // Global connectivity notice. It sits below the app content so it is
+          // never covered by routes and never covers any interface itself.
+          builder: (context, child) {
+            // Keep the global `l10n` accessor pointed at the active locale, so
+            // service-layer strings resolve consistently with the widget layer.
+            LocaleController.instance.bind(AppLocalizations.of(context));
+            return Consumer(
+              builder: (context, ref, _) {
+                ref.watch(lockScreenVisualizerProvider);
+                return AnnotatedRegion<SystemUiOverlayStyle>(
+                  // App-wide fallback. A route that paints a light surface
+                  // (the onboarding pages) declares its own region; once it
+                  // is gone this one takes over again instead of leaving the
+                  // old icon brightness behind.
+                  value: AppSystemUi.standard,
+                  child: ConnectionNoticeHost(
+                    showNotice: ref.watch(
+                      appPreferencesProvider.select(
+                        (preferences) => preferences.connectionNoticesEnabled,
+                      ),
+                    ),
+                    child: TutorialHost(
+                      child: child ?? const SizedBox.shrink(),
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+/// Main shell widget that contains navigation and screens.
+class MainShell extends ConsumerStatefulWidget {
+  const MainShell({super.key});
+
+  @override
+  ConsumerState<MainShell> createState() => _MainShellState();
+}
+
+class _MainShellState extends ConsumerState<MainShell>
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+  // Animation controller for smoother nav bar transitions
+  late final AnimationController _navBarAnimationController;
+  late final Animation<Offset> _navBarSlideAnimation;
+  late final PageController _pageController;
+  late final ProviderSubscription<bool> _navBarVisibilitySubscription;
+  late final ProviderSubscription<bool> _navBarAlwaysVisibleSubscription;
+  late final ProviderSubscription<Song?> _currentSongSubscription;
+  late final ProviderSubscription<int> _navigationIndexSubscription;
+  late final NavBarVisibilityObserver _navBarVisibilityObserver;
+  late final ProviderSubscription<PlayerState> _widgetSyncSubscription;
+  late final ProviderSubscription<AppPreferences>? _appPreferencesSubscription;
+  late final WidgetIntentHandler _widgetIntentHandler;
+
+  // Track previous song to detect changes
+  Song? _previousSong;
+  // Track the PageView position being animated to programmatically.
+  // When non-null, onPageChanged will allow navigation to this position
+  // even if it's beyond enabledCount (disabled essential pages).
+  // Cleared once the target position is reached.
+  int? _programmaticPageTarget;
+
+  int _lastHapticPage = -1;
+  late final PlayerService _playerService;
+
+  DateTime? _lastBackPressTime;
+
+  Timer? _idleTimer;
+  bool _isBottomBarCollapsed = false;
+
+  static const double _kNestedBarClearance = 150.0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    // Seed _previousSong from the already-restored state so the auto-navigate
+    // listener doesn't treat the restored song as "new" on cold start.
+    _previousSong = ref.read(currentSongProvider);
+    _playerService = ref.read(playerServiceProvider);
+    ref.read(equalizerProvider);
+    ref.read(updateCheckProvider.notifier);
+    final initialConfig = ref.read(navBarConfigProvider);
+    final defaultPage =
+        initialConfig.orderedButtons.contains(NavBarButton.songs)
+        ? NavBarButton.songs.pageIndex
+        : NavBarButton.menu.pageIndex;
+    ref.read(navigationIndexProvider.notifier).setIndex(defaultPage);
+    final initialIndex = ref.read(navigationIndexProvider);
+    final initialOrder = _getPageOrder(initialConfig);
+    final initialPosition = initialOrder.indexWhere(
+      (b) => b.pageIndex == initialIndex,
+    );
+    _pageController = PageController(
+      initialPage: initialPosition >= 0 ? initialPosition : 0,
+    );
+    _lastHapticPage = initialPosition >= 0 ? initialPosition : 0;
+    _pageController.addListener(_onPageScroll);
+    _navBarVisibilityObserver = NavBarVisibilityObserver(_showNavBar);
+    _navBarAnimationController = AnimationController(
+      vsync: this,
+      duration: AppConstants.animationNormal,
+    );
+    _navBarSlideAnimation =
+        Tween<Offset>(begin: Offset.zero, end: const Offset(0, 1.15)).animate(
+          CurvedAnimation(
+            parent: _navBarAnimationController,
+            curve: Curves.easeOutCubic,
+            reverseCurve: Curves.easeOutCubic,
+          ),
+        );
+
+    // Home-screen widget integration: keep widgets in sync with player and
+    // route widget click intents back into the app.
+    _widgetSyncSubscription = installWidgetSync(ref);
+    _widgetIntentHandler = WidgetIntentHandler(
+      ref,
+      onOpenQueue: () => NavigationHelper.navigateToQueue(context),
+      onOpenRecap: _openRecapFromWidget,
+    );
+    unawaited(_widgetIntentHandler.attach());
+
+    _navBarVisibilitySubscription = ref.listenManual<bool>(
+      navBarVisibleProvider,
+      (previous, next) {
+        _onNavBarVisibilityChanged(next);
+        if (next) {
+          _startIdleTimer();
+        } else {
+          _cancelIdleTimer();
+          if (_isBottomBarCollapsed) {
+            setState(() {
+              _isBottomBarCollapsed = false;
+            });
+          }
+        }
+      },
+    );
+
+    _navBarAlwaysVisibleSubscription = ref.listenManual<bool>(
+      navBarAlwaysVisibleProvider,
+      (previous, next) {
+        if (next) {
+          ref.read(navBarVisibleProvider.notifier).setVisible(true);
+        }
+      },
+    );
+
+    _currentSongSubscription = ref.listenManual<Song?>(currentSongProvider, (
+      previousSong,
+      nextSong,
+    ) {
+      // Only auto-navigate to the full player when a *different* song starts
+      // playing while the player is active. A cold-start restore always starts
+      // in a paused state, so we check isPlaying to avoid popping the full
+      // player screen on every app launch.
+      final songChanged =
+          nextSong != null &&
+          _previousSong != null &&
+          _previousSong!.id != nextSong.id;
+
+      if (!songChanged && nextSong?.isExternal == true) {
+        _maybeOpenExternalPlayer(nextSong);
+      }
+
+      _previousSong = nextSong;
+    });
+
+    _playerService.pendingMilestoneNotifier.addListener(_handleMilestone);
+    _playerService.streakPopupNotifier.addListener(_handleStreakPopup);
+    _playerService.networkPlaybackErrorNotifier.addListener(
+      _handleNetworkPlaybackError,
+    );
+
+    ref.listenManual<NavBarConfig>(navBarConfigProvider, (previous, next) {
+      if (previous == null || !mounted) return;
+      final currentPageIndex = ref.read(navigationIndexProvider);
+      final oldOrder = _getPageOrder(previous);
+      final newOrder = _getPageOrder(next);
+      final oldPosition = oldOrder.indexWhere(
+        (b) => b.pageIndex == currentPageIndex,
+      );
+      final newPosition = newOrder.indexWhere(
+        (b) => b.pageIndex == currentPageIndex,
+      );
+
+      if (newPosition < 0) {
+        // Current page was removed, jump to first page in new order
+        if (_pageController.hasClients && newOrder.isNotEmpty) {
+          _lastHapticPage = 0;
+          _pageController.jumpToPage(0);
+          ref
+              .read(navigationIndexProvider.notifier)
+              .setIndex(newOrder[0].pageIndex);
+        }
+        return;
+      }
+
+      if (oldPosition != newPosition && _pageController.hasClients) {
+        _lastHapticPage = newPosition;
+        _pageController.jumpToPage(newPosition);
+        ref.read(navigationIndexProvider.notifier).setIndex(currentPageIndex);
+      }
+    });
+
+    _navigationIndexSubscription = ref.listenManual<int>(
+      navigationIndexProvider,
+      (previous, next) {
+        if (!mounted) {
+          return;
+        }
+
+        _showNavBar();
+
+        void animateToTab() {
+          if (!_pageController.hasClients) {
+            return;
+          }
+
+          final config = ref.read(navBarConfigProvider);
+          final pageOrder = _getPageOrder(config);
+          final position = pageOrder.indexWhere((b) => b.pageIndex == next);
+          if (position == -1) return;
+
+          final currentPage =
+              (_pageController.page ?? _pageController.initialPage.toDouble())
+                  .round();
+          if (currentPage == position) {
+            return;
+          }
+
+          _programmaticPageTarget = position;
+          _lastHapticPage = position;
+          if (AppConstants.animationNormal == Duration.zero) {
+            _pageController.jumpToPage(position);
+          } else {
+            _pageController.animateToPage(
+              position,
+              duration: AppConstants.animationNormal,
+              curve: Curves.easeOutCubic,
+            );
+          }
+        }
+
+        if (_pageController.hasClients) {
+          animateToTab();
+        } else {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) {
+              animateToTab();
+            }
+          });
+        }
+      },
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+      _maybeOpenExternalPlayer(ref.read(currentSongProvider));
+      _refreshLibraryDeletions();
+      ref.read(updateCheckProvider.notifier).refreshIfOnline();
+      ref.read(autoLibrarySyncServiceProvider);
+
+      final tutorialState = ref.read(tutorialProvider);
+      if (tutorialState.autoStartPending && !tutorialState.active) {
+        ref.read(tutorialProvider.notifier).start();
+      }
+
+      _maybeShowWhatsNew();
+      unawaited(_playerService.recordActivityDayAndCheckMilestones());
+    });
+
+    _playerService.playbackDesyncedNotifier.addListener(
+      _onPlaybackDesyncChanged,
+    );
+
+    ref.listenManual<AsyncValue<int>>(libraryWarmupProvider, _onWarmupChanged);
+
+    ref.listenManual<AppPreferences>(appPreferencesProvider, (previous, next) {
+      if (!mounted) return;
+      // Restart idle timer whenever preferences change so that enabling
+      // auto-collapse or changing the timeout takes effect immediately.
+      _startIdleTimer();
+    });
+
+    _startIdleTimer();
+  }
+
+  void _refreshLibraryDeletions() {
+    unawaited(_refreshLibraryDeletionsAsync());
+  }
+
+  Future<void> _refreshLibraryDeletionsAsync() async {
+    try {
+      final scannerService = LibraryScannerService();
+      await scannerService.refreshDeletions();
+      if (mounted) {
+        ref.invalidate(songsProvider);
+        ref.invalidate(musicFoldersProvider);
+      }
+    } catch (e) {
+      devLog('Library deletion refresh failed: $e');
+    }
+  }
+
+  void _handleMilestone() {
+    final milestone = _playerService.pendingMilestoneNotifier.value;
+    if (milestone == null || !mounted) return;
+
+    _playerService.pendingMilestoneNotifier.value = null;
+    final milestoneService = MilestoneService();
+    unawaited(_showMilestoneDialog(milestone, milestoneService));
+  }
+
+  Future<void> _showMilestoneDialog(
+    MilestoneType milestone,
+    MilestoneService service,
+  ) async {
+    final next = await service.getNextMilestone();
+    if (!mounted) return;
+
+    await showFlickDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: l10n.englishForFilipino.milestone,
+      builder: (context) => MilestoneCard(
+        milestone: milestone,
+        nextMilestone: next.next,
+        nextRemaining: next.next == null ? null : next.remaining,
+        supportLabel: l10n.englishForFilipino.supportFlick,
+        dismissLabel: l10n.englishForFilipino.dismiss,
+        onSupportTap: () {
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (_) => const SupportFlickScreen()));
+        },
+      ),
+    );
+  }
+
+  void _handleNetworkPlaybackError() {
+    final message = _playerService.networkPlaybackErrorNotifier.value;
+    if (message == null || !mounted) return;
+    ScaffoldMessenger.of(context).showFlickSnackBar(
+      SnackBar(content: Text(message), duration: const Duration(seconds: 10)),
+      id: 'network-playback-error',
+    );
+  }
+
+  void _handleStreakPopup() {
+    final streak = _playerService.streakPopupNotifier.value;
+    if (streak == null || streak < 1 || !mounted) return;
+    _playerService.streakPopupNotifier.value = null;
+    showFlickDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: l10n.englishForFilipino.dayStreak2,
+      builder: (context) => StreakPopup(
+        streak: streak,
+        onSnooze: () => MilestoneService().snoozeStreakPopup(),
+      ),
+    );
+  }
+
+  void _maybeShowWhatsNew() {
+    if (!mounted) return;
+    if (!ref.read(onboardingCompletedProvider)) {
+      return;
+    }
+
+    // Wait for the AppPreferencesNotifier to publish its loaded state. The
+    // listener fires when the real SharedPreferences values replace the
+    // default values, which is the moment we can decide whether a "What's
+    // New" sheet should appear.
+    _appPreferencesSubscription = ref.listenManual<AppPreferences>(
+      appPreferencesProvider,
+      (previous, next) {
+        if (!mounted) return;
+        if (ref.read(tutorialProvider).active) return;
+        final notifier = ref.read(whatsNewProvider.notifier);
+        notifier.evaluate();
+        final pending = ref.read(whatsNewProvider).pendingEntry;
+        if (pending == null) {
+          return;
+        }
+
+        // Persist the dismissal before showing so a force-quit between now
+        // and the user actually tapping "Got it" doesn't re-trigger on the
+        // next launch.
+        unawaited(notifier.markCurrentVersionSeen());
+        unawaited(WhatsNewBottomSheet.show(context, entry: pending));
+      },
+    );
+  }
+
+  void _onPlaybackDesyncChanged() {
+    if (!mounted) return;
+    final desynced = _playerService.playbackDesyncedNotifier.value;
+    if (!desynced) {
+      ScaffoldMessenger.of(context).hideAunoSnackBar(id: 'playback-desync');
+      return;
+    }
+
+    ScaffoldMessenger.of(context).showAunoSnackBar(
+      SnackBar(
+        // The global accessor, not `context.l10n`: this listener runs outside
+        // build, and it is what the rest of `_AunoAppState` already reads.
+        content: Text(l10n.englishForFilipino.playbackDesynced),
+        duration: const Duration(days: 1),
+        action: SnackBarAction(
+          label: l10n.englishForFilipino.sync,
+          onPressed: () {
+            _playerService.syncNow();
+          },
+        ),
+      ),
+      id: 'playback-desync',
+    );
+  }
+
+  void _onWarmupChanged(AsyncValue<int>? previous, AsyncValue<int> next) {
+    if (!mounted) return;
+    final count = next.value ?? 0;
+    final prevCount = previous?.value ?? 0;
+    if (count == prevCount) return;
+
+    final messenger = ScaffoldMessenger.of(context);
+    if (count <= 0) {
+      if (prevCount > 0) {
+        messenger.hideAunoSnackBar(id: 'metadata-warmup');
+      }
+      return;
+    }
+
+    messenger.showAunoSnackBar(
+      SnackBar(
+        content: Text(l10n.englishForFilipino.finishingMetadataForSongs(count)),
+        duration: const Duration(days: 1),
+        action: SnackBarAction(
+          label: l10n.englishForFilipino.speedUp,
+          onPressed: () {
+            final bg = ref.read(backgroundMetadataServiceProvider);
+            unawaited(bg?.extractPendingMetadata());
+          },
+        ),
+      ),
+      id: 'metadata-warmup',
+    );
+  }
+
+  @override
+  void dispose() {
+    _cancelIdleTimer();
+    _playerService.playbackDesyncedNotifier.removeListener(
+      _onPlaybackDesyncChanged,
+    );
+    _playerService.pendingMilestoneNotifier.removeListener(_handleMilestone);
+    _playerService.streakPopupNotifier.removeListener(_handleStreakPopup);
+    _playerService.networkPlaybackErrorNotifier.removeListener(
+      _handleNetworkPlaybackError,
+    );
+    WidgetsBinding.instance.removeObserver(this);
+    _navBarVisibilitySubscription.close();
+    _navBarAlwaysVisibleSubscription.close();
+    _currentSongSubscription.close();
+    _navigationIndexSubscription.close();
+    _widgetSyncSubscription.close();
+    WidgetSyncService.instance.stopReplaySync();
+    _appPreferencesSubscription?.close();
+    unawaited(_widgetIntentHandler.detach());
+    _pageController.removeListener(_onPageScroll);
+    _pageController.dispose();
+    _navBarAnimationController.dispose();
+    super.dispose();
+  }
+
+  void _onPageScroll() {
+    if (_programmaticPageTarget != null || !_pageController.hasClients) return;
+    final page = _pageController.page;
+    if (page == null) return;
+    final rounded = page.round();
+    if (rounded != _lastHapticPage && (page - rounded).abs() <= 0.35) {
+      _lastHapticPage = rounded;
+      AppHaptics.selection();
+    }
+  }
+
+  void _startIdleTimer() {
+    _cancelIdleTimer();
+    final appPreferences = ref.read(appPreferencesProvider);
+    if (!appPreferences.bottomBarAutoCollapseEnabled) return;
+    if (!ref.read(navBarVisibleProvider)) return;
+
+    _idleTimer = Timer(
+      Duration(seconds: appPreferences.bottomBarAutoCollapseSeconds),
+      () {
+        if (mounted) {
+          setState(() {
+            _isBottomBarCollapsed = true;
+          });
+        }
+      },
+    );
+  }
+
+  void _cancelIdleTimer() {
+    _idleTimer?.cancel();
+    _idleTimer = null;
+  }
+
+  void _onUserInteraction() {
+    if (_isBottomBarCollapsed) {
+      setState(() {
+        _isBottomBarCollapsed = false;
+      });
+    }
+    _startIdleTimer();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.detached) {
+      _cancelIdleTimer();
+      unawaited(ref.read(playerServiceProvider).persistLastPlayed());
+      unawaited(WidgetSyncService.instance.pushKilled());
+      unawaited(ref.read(playerServiceProvider).onAppResumed());
+      unawaited(AppLog.instance.flushToDisk());
+    } else if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused) {
+      _cancelIdleTimer();
+      ref.read(autoLibrarySyncServiceProvider).notifyPaused();
+      unawaited(ref.read(playerServiceProvider).persistLastPlayed());
+      unawaited(WidgetSyncService.instance.pushPaused());
+      unawaited(ref.read(playerServiceProvider).onAppPaused());
+      unawaited(AppLog.instance.flushToDisk());
+
+      // Attempt to scrobble the current track before the app suspends.
+      // Only fire if playback is not active — audio apps often keep playing
+      // in the background, so treat this as a true "end" only when paused.
+      final playerState = ref.read(playerProvider);
+      final song = playerState.currentSong;
+      if (song != null && !song.isExternal && !playerState.isPlaying) {
+        final notifier = ref.read(playerProvider.notifier);
+        ref
+            .read(lastFmScrobbleProvider.notifier)
+            .onTrackEnded(
+              artist: song.artist,
+              track: song.title,
+              album: song.album,
+              albumArtist: null,
+              listenedSeconds: notifier.accumulatedListenSeconds,
+              trackDurationSeconds: playerState.duration.inSeconds,
+            );
+        ref
+            .read(listenBrainzScrobbleProvider.notifier)
+            .onTrackEnded(
+              artist: song.artist,
+              track: song.title,
+              album: song.album,
+              albumArtist: null,
+              listenedSeconds: notifier.accumulatedListenSeconds,
+              trackDurationSeconds: playerState.duration.inSeconds,
+            );
+      }
+    }
+    if (state == AppLifecycleState.resumed) {
+      _startIdleTimer();
+      unawaited(ref.read(playerServiceProvider).onAppResumed());
+      ref.read(updateCheckProvider.notifier).refreshIfOnline();
+      ref.read(lastFmScrobbleQueueProvider).flush().catchError((e) {
+        devLog('[LastFm] queue flush on resume failed: $e');
+      });
+      ref.read(listenbrainzScrobbleQueueProvider).flush().catchError((e) {
+        devLog('[ListenBrainz] queue flush on resume failed: $e');
+      });
+      ref.read(autoLibrarySyncServiceProvider).notifyResumed();
+    }
+  }
+
+  void _showNavBar() {
+    if (!mounted || ref.read(navBarVisibleProvider)) return;
+    ref.read(navBarVisibleProvider.notifier).setVisible(true);
+  }
+
+  void _onNavBarVisibilityChanged(bool isVisible) {
+    final separated = ref
+        .read(appPreferencesProvider)
+        .separateMiniPlayerFromNavBar;
+    if (separated) {
+      if (_navBarAnimationController.isAnimating ||
+          _navBarAnimationController.value != 0) {
+        _navBarAnimationController.reverse();
+      }
+      return;
+    }
+    if (isVisible) {
+      _navBarAnimationController.reverse();
+    } else {
+      _navBarAnimationController.forward();
+    }
+  }
+
+  /// Opens Auno Replay from the home-screen widget.
+  ///
+  /// The widget already launches the running Auno Player Activity, so the recap
+  /// belongs on the nested tab navigator like the in-app Replay shortcut:
+  /// that keeps the persistent ambient background and bottom bar behind it.
+  /// On a cold start the nested navigator is not mounted yet, so wait for the
+  /// shell's first frame instead of falling back to a root-level screen.
+  void _openRecapFromWidget() {
+    if (!mounted) return;
+    if (nestedNavigatorKey.currentState != null) {
+      NavigationHelper.navigateToRecap(context);
+      return;
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      NavigationHelper.navigateToRecap(context);
+    });
+    WidgetsBinding.instance.scheduleFrame();
+  }
+
+  void _maybeOpenExternalPlayer(Song? song) {
+    if (song?.isExternal != true) {
+      return;
+    }
+    if (!ref.read(isPlayingProvider) || NavigationHelper.isFullPlayerOpen) {
+      return;
+    }
+
+    Future.delayed(const Duration(milliseconds: 100), () {
+      if (!mounted || NavigationHelper.isFullPlayerOpen || song == null) {
+        return;
+      }
+      NavigationHelper.navigateToFullPlayer(
+        context,
+        heroTag: 'external_${song.id}',
+      );
+    });
+  }
+
+  bool _handleScrollNotification(ScrollNotification notification) {
+    final alwaysVisible = ref.read(navBarAlwaysVisibleProvider);
+    if (alwaysVisible) {
+      if (!ref.read(navBarVisibleProvider)) {
+        ref.read(navBarVisibleProvider.notifier).setVisible(true);
+      }
+      return false;
+    }
+
+    if (notification is UserScrollNotification &&
+        notification.metrics.axis == Axis.vertical) {
+      final direction = notification.direction;
+      final currentVisibility = ref.read(navBarVisibleProvider);
+
+      if (direction == ScrollDirection.reverse && currentVisibility) {
+        ref.read(navBarVisibleProvider.notifier).setVisible(false);
+      } else if (direction == ScrollDirection.forward && !currentVisibility) {
+        ref.read(navBarVisibleProvider.notifier).setVisible(true);
+      }
+    }
+    return false;
+  }
+
+  void _handleBackPress(bool didPop, dynamic result) {
+    if (didPop) return;
+
+    if (ref.read(tutorialProvider).active && tutorialNavigation.visible) {
+      ref.read(tutorialProvider.notifier).skip();
+      return;
+    }
+
+    // Back events only reach the root navigator; detail screens pushed on
+    // the nested tab navigator must be popped here manually.
+    final nested = nestedNavigatorKey.currentState;
+    if (nested != null && nested.canPop()) {
+      nested.pop();
+      return;
+    }
+
+    final now = DateTime.now();
+    if (_lastBackPressTime == null ||
+        now.difference(_lastBackPressTime!) > const Duration(seconds: 2)) {
+      _lastBackPressTime = now;
+      ScaffoldMessenger.of(context).showFlickSnackBar(
+        SnackBar(
+          content: Text(l10n.englishForFilipino.pressBackAgainToExit),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    } else {
+      SystemNavigator.pop();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final backgroundColor = ref.watch(backgroundColorProvider);
+    final miniConfig = ref.watch(miniPlayerConfigProvider);
+    final separated = ref.watch(
+      appPreferencesProvider.select(
+        (prefs) => prefs.separateMiniPlayerFromNavBar,
+      ),
+    );
+    final extraClearance = BottomBarGeometry.extraClearance(
+      context,
+      miniConfig,
+      separated,
+    );
+    final screenSize = MediaQuery.sizeOf(context);
+    final useSideNavigation = AdaptiveLayout.useSideNavigation(screenSize);
+    final railWidth = useSideNavigation ? FlickNavRail.width(context) : 0.0;
+    final sideMiniClearance =
+        BottomBarGeometry.miniPlayerHeight(context, miniConfig) + 20;
+    final contentSize = Size(
+      math.max(0.0, screenSize.width - railWidth),
+      screenSize.height,
+    );
+    final useCompactLandscapeDock =
+        useSideNavigation &&
+        AdaptiveLayout.useCompactLandscapeMiniPlayer(contentSize);
+    final currentIndex = ref.watch(navigationIndexProvider);
+    final songsViewMode = ref.watch(songsViewModeProvider);
+    final sideMiniPlayerCandidate =
+        useCompactLandscapeDock &&
+        currentIndex == NavBarButton.songs.pageIndex &&
+        songsViewMode == SongViewMode.orbit;
+    // Only listen to the auto-disposed library provider while the orbit is on
+    // screen; the shell must not keep the whole song list alive at startup.
+    final songsSortOption = sideMiniPlayerCandidate
+        ? ref.watch(songsProvider.select((state) => state.value?.sortOption))
+        : null;
+    final useOrbitSideMiniPlayer =
+        sideMiniPlayerCandidate && songsSortOption != SongSortOption.album;
+    final nestedBottomInset = useOrbitSideMiniPlayer
+        ? 0.0
+        : useSideNavigation
+        ? sideMiniClearance
+        : extraClearance;
+    final bottomClearance = useSideNavigation
+        ? (useOrbitSideMiniPlayer ? 0.0 : sideMiniClearance)
+        : _kNestedBarClearance + extraClearance;
+
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: _handleBackPress,
+      child: AdaptiveColorProvider(
+        backgroundColor: backgroundColor,
+        // The player/navigation bar is a body overlay, so Scaffold cannot
+        // infer its snackbar clearance. Reuse the content's reserved geometry
+        // without moving the bar or changing its tutorial/gesture layering.
+        child: SnackBarTheme(
+          data: Theme.of(context).snackBarTheme.copyWith(
+            insetPadding: EdgeInsets.fromLTRB(
+              (useSideNavigation ? railWidth : 0.0) + 16,
+              8,
+              16,
+              bottomClearance + 12,
+            ),
+          ),
+          child: Scaffold(
+            backgroundColor: AppColors.background,
+            extendBody: true,
+            body: NotificationListener<ScrollNotification>(
+              onNotification: _handleScrollNotification,
+              child: Listener(
+                behavior: HitTestBehavior.translucent,
+                onPointerDown: (_) => _onUserInteraction(),
+                onPointerMove: (_) => _onUserInteraction(),
+                child: Stack(
+                  children: [
+                    // Base Gradient
+                    Container(
+                      decoration: const BoxDecoration(
+                        gradient: AppColors.backgroundGradient,
+                      ),
+                    ),
+
+                    // Persistent Background - always on for all bottom-bar screens
+                    Positioned.fill(
+                      child: Consumer(
+                        builder: (context, ref, _) {
+                          final currentSong = ref.watch(currentSongProvider);
+                          return AmbientBackground(song: currentSong);
+                        },
+                      ),
+                    ),
+
+                    // Nested navigator: tabs + detail screens below the bar.
+                    // In rail mode the navigator is physically inset, so fixed
+                    // elements inside screens (detail headers, FABs) cannot sit
+                    // under the rail. The MediaQuery width is reduced too, so
+                    // width-based grids measure the real content pane.
+                    Positioned.fill(
+                      left: useSideNavigation ? railWidth : 0.0,
+                      child: Builder(
+                        builder: (nestedContext) {
+                          final mq = MediaQuery.of(nestedContext);
+                          final inflated = mq.copyWith(
+                            size: useSideNavigation
+                                ? Size(
+                                    math.max(0.0, mq.size.width - railWidth),
+                                    mq.size.height,
+                                  )
+                                : mq.size,
+                            padding: mq.padding.copyWith(
+                              left: useSideNavigation ? 0.0 : mq.padding.left,
+                              bottom: mq.padding.bottom + bottomClearance,
+                            ),
+                            viewPadding: mq.viewPadding.copyWith(
+                              left: useSideNavigation
+                                  ? 0.0
+                                  : mq.viewPadding.left,
+                              bottom: mq.viewPadding.bottom + bottomClearance,
+                            ),
+                          );
+                          return MediaQuery(
+                            data: inflated,
+                            child: Navigator(
+                              key: nestedNavigatorKey,
+                              initialRoute: '/',
+                              observers: [
+                                _navBarVisibilityObserver,
+                                tutorialNavigation.nested,
+                              ],
+                              onGenerateRoute: (settings) {
+                                if (settings.name == '/') {
+                                  return PageRouteBuilder<void>(
+                                    settings: settings,
+                                    pageBuilder: (routeContext, _, __) => MediaQuery.removePadding(
+                                      context: routeContext,
+                                      removeBottom: true,
+                                      child: Consumer(
+                                        builder: (context, ref, _) {
+                                          final currentIdx = ref.watch(
+                                            navigationIndexProvider,
+                                          );
+                                          final cfg = ref.watch(
+                                            navBarConfigProvider,
+                                          );
+                                          final order = _getPageOrder(cfg);
+                                          return PageView(
+                                            controller: _pageController,
+                                            physics:
+                                                const ClampingScrollPhysics(),
+                                            onPageChanged: (position) {
+                                              final currentConfig = ref.read(
+                                                navBarConfigProvider,
+                                              );
+                                              final currentOrder =
+                                                  _getPageOrder(currentConfig);
+                                              if (position < 0 ||
+                                                  position >=
+                                                      currentOrder.length) {
+                                                return;
+                                              }
+                                              if (_programmaticPageTarget ==
+                                                      null &&
+                                                  position != _lastHapticPage) {
+                                                AppHaptics.selection();
+                                              }
+                                              _lastHapticPage = position;
+                                              final enabledCount = currentConfig
+                                                  .orderedButtons
+                                                  .length;
+                                              if (position >= enabledCount) {
+                                                if (_programmaticPageTarget ==
+                                                    position) {
+                                                  _programmaticPageTarget =
+                                                      null;
+                                                  final pageIndex =
+                                                      currentOrder[position]
+                                                          .pageIndex;
+                                                  if (ref.read(
+                                                        navigationIndexProvider,
+                                                      ) !=
+                                                      pageIndex) {
+                                                    ref
+                                                        .read(
+                                                          navigationIndexProvider
+                                                              .notifier,
+                                                        )
+                                                        .setIndex(pageIndex);
+                                                  }
+                                                  return;
+                                                }
+                                                if (_programmaticPageTarget !=
+                                                    null) {
+                                                  return;
+                                                }
+                                                final pageIndex =
+                                                    currentOrder[position]
+                                                        .pageIndex;
+                                                if (ref.read(
+                                                      navigationIndexProvider,
+                                                    ) !=
+                                                    pageIndex) {
+                                                  ref
+                                                      .read(
+                                                        navigationIndexProvider
+                                                            .notifier,
+                                                      )
+                                                      .setIndex(pageIndex);
+                                                }
+                                                return;
+                                              }
+                                              if (_programmaticPageTarget ==
+                                                  position) {
+                                                _programmaticPageTarget = null;
+                                              }
+                                              final pageIndex =
+                                                  currentOrder[position]
+                                                      .pageIndex;
+                                              if (ref.read(
+                                                    navigationIndexProvider,
+                                                  ) !=
+                                                  pageIndex) {
+                                                ref
+                                                    .read(
+                                                      navigationIndexProvider
+                                                          .notifier,
+                                                    )
+                                                    .setIndex(pageIndex);
+                                              }
+                                            },
+                                            children: order.map((button) {
+                                              return Padding(
+                                                padding: EdgeInsets.only(
+                                                  bottom: nestedBottomInset,
+                                                ),
+                                                child: _buildTab(
+                                                  tabIndex: button.pageIndex,
+                                                  currentIndex: currentIdx,
+                                                  child: _buildScreen(
+                                                    button,
+                                                    pathOverflowBottom:
+                                                        nestedBottomInset,
+                                                  ),
+                                                ),
+                                              );
+                                            }).toList(),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    transitionDuration: Duration.zero,
+                                  );
+                                }
+                                return null;
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+
+                    // Tab pages are full-height so the orbit ribbon can continue
+                    // behind the bottom overlays. Keep the newly exposed strip
+                    // from paging the PageView; the bars sit above this blocker.
+                    if (nestedBottomInset > 0)
+                      Positioned(
+                        left: useSideNavigation ? railWidth : 0,
+                        right: 0,
+                        bottom: 0,
+                        height: nestedBottomInset,
+                        child: const AbsorbPointer(child: SizedBox.expand()),
+                      ),
+
+                    // Wide windows use a side rail; portrait keeps the bottom bar.
+                    if (useSideNavigation)
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        bottom: 0,
+                        child: TutorialTargetAnchor(
+                          target: TutorialTarget.navBar,
+                          child: AunoNavRail(
+                            currentIndex: ref.watch(navigationIndexProvider),
+                            config: ref.watch(navBarConfigProvider),
+                            onTap: _handleNavigationTap,
+                            onBottomBarSettings: _openBottomBarSettings,
+                          ),
+                        ),
+                      )
+                    else
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: RepaintBoundary(
+                          child: SlideTransition(
+                            position: _navBarSlideAnimation,
+                            child: _buildUnifiedBottomBar(),
+                          ),
+                        ),
+                      ),
+
+                    // Only short landscape windows animate between the bottom
+                    // bar and orbit strip. Keep the dock mounted across tabs.
+                    if (useCompactLandscapeDock)
+                      Positioned.fill(
+                        key: const ValueKey('landscape_mini_player_dock'),
+                        left: railWidth,
+                        child: LandscapeMiniPlayerDock(
+                          sideDocked: useOrbitSideMiniPlayer,
+                          bottomPlayerHeight:
+                              BottomBarGeometry.miniPlayerHeight(
+                                context,
+                                miniConfig,
+                              ) +
+                              12 +
+                              (separated ? miniConfig.navigationGap : 8),
+                          bottomPlayer: EmbeddedMiniPlayer(
+                            collapsed: false,
+                            separated: separated,
+                          ),
+                          sidePlayer: const LandscapeSideMiniPlayer(),
+                        ),
+                      )
+                    else if (useSideNavigation)
+                      // Larger windows retain their static bottom mini player.
+                      Positioned(
+                        left: railWidth,
+                        right: 0,
+                        bottom: 0,
+                        child: SafeArea(
+                          top: false,
+                          left: false,
+                          child: TutorialTargetAnchor(
+                            target: TutorialTarget.miniPlayer,
+                            child: EmbeddedMiniPlayer(
+                              collapsed: false,
+                              separated: separated,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                    // Floating island mini-player (draggable pill)
+                    const FloatingMiniPlayer(),
+
+                    // Pinned scan/preload progress bubble (overlay minimized)
+                    const Positioned.fill(child: FloatingScanProgress()),
+
+                    // USB DAC attach → auto bit-perfect switch (decline-aware)
+                    const UsbBitPerfectPrompt(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<NavBarButton> _getPageOrder(NavBarConfig config) {
+    final disabledEssentials = [
+      NavBarButton.menu,
+      NavBarButton.songs,
+      NavBarButton.settings,
+    ].where((b) => !config.orderedButtons.contains(b));
+    return [...config.orderedButtons, ...disabledEssentials];
+  }
+
+  Widget _buildScreen(NavBarButton button, {double pathOverflowBottom = 0}) {
+    return switch (button) {
+      NavBarButton.menu => MenuScreen(
+        key: const ValueKey('menu'),
+        onNavigateToTab: (index) {
+          ref.read(navigationIndexProvider.notifier).setIndex(index);
+        },
+      ),
+      NavBarButton.songs => SongsScreen(
+        key: const ValueKey('songs'),
+        pathOverflowBottom: pathOverflowBottom,
+        onNavigationRequested: (index) {
+          ref.read(navigationIndexProvider.notifier).setIndex(index);
+        },
+      ),
+      NavBarButton.settings => const SettingsScreen(key: ValueKey('settings')),
+      NavBarButton.albums => const AlbumsScreen(key: ValueKey('albums')),
+      NavBarButton.artists => const ArtistsScreen(key: ValueKey('artists')),
+      NavBarButton.folders => const FoldersScreen(key: ValueKey('folders')),
+      NavBarButton.playlists => const PlaylistsScreen(
+        key: ValueKey('playlists'),
+      ),
+      NavBarButton.favorites => const FavoritesScreen(
+        key: ValueKey('favorites'),
+      ),
+      NavBarButton.search => const SearchScreen(key: ValueKey('search')),
+      NavBarButton.equalizer => const EqualizerScreen(
+        key: ValueKey('equalizer'),
+        showBackButton: false,
+        embedded: true,
+      ),
+    };
+  }
+
+  Widget _buildTab({
+    required int tabIndex,
+    required int currentIndex,
+    required Widget child,
+  }) {
+    return RepaintBoundary(
+      child: AmbientBackgroundScope(
+        child: TickerMode(enabled: currentIndex == tabIndex, child: child),
+      ),
+    );
+  }
+
+  void _handleNavigationTap(int index) {
+    final nested = nestedNavigatorKey.currentState;
+    if (nested != null && nested.canPop()) {
+      nested.popUntil((route) => route.isFirst);
+    }
+    if (ref.read(navigationIndexProvider) != index) {
+      ref.read(navigationIndexProvider.notifier).setIndex(index);
+    } else if (nested != null && nested.canPop()) {
+      nested.popUntil((route) => route.isFirst);
+    }
+  }
+
+  void _openBottomBarSettings() {
+    NavigationHelper.pushOnRoot(
+      context,
+      MaterialPageRoute<void>(builder: (_) => const BottomBarSettingsScreen()),
+    );
+  }
+
+  Widget _buildUnifiedBottomBar() {
+    final currentIndex = ref.watch(navigationIndexProvider);
+    final navBarConfig = ref.watch(navBarConfigProvider);
+    final appPrefs = ref.watch(appPreferencesProvider);
+    final separated = appPrefs.separateMiniPlayerFromNavBar;
+    final alwaysVisible = ref.watch(navBarAlwaysVisibleProvider);
+    final navBarVisible = ref.watch(navBarVisibleProvider);
+    final scrollHidden = separated && !alwaysVisible && !navBarVisible;
+    final collapsed = _isBottomBarCollapsed || scrollHidden;
+
+    return TutorialTargetAnchor(
+      target: TutorialTarget.navBar,
+      child: FlickNavBar(
+        currentIndex: currentIndex,
+        config: navBarConfig,
+        collapsed: collapsed,
+        onTap: _handleNavigationTap,
+        onBottomBarSettings: _openBottomBarSettings,
+        showMiniPlayer: true,
+        miniPlayerWidget: TutorialTargetAnchor(
+          target: TutorialTarget.miniPlayer,
+          child: EmbeddedMiniPlayer(collapsed: collapsed, separated: separated),
+        ),
+      ),
+    );
+  }
+}
+
+class _RootRouter extends ConsumerWidget {
+  const _RootRouter();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final onboardingComplete = ref.watch(onboardingCompletedProvider);
+    final appPreferences = ref.watch(appPreferencesProvider);
+
+    // Apply animation and haptic preferences globally.
+    // When the OS requests reduced motion (e.g. Accessibility "remove
+    // animations"), that flag wins over the in-app preference so the app
+    // settles into a static state like native Android apps do.
+    final systemReducedMotion = MediaQuery.of(context).disableAnimations;
+    final animationsEnabled =
+        appPreferences.animationsEnabled && !systemReducedMotion;
+    AppConstants.setAnimationsEnabled(animationsEnabled);
+    AppHaptics.setEnabled(appPreferences.hapticsEnabled);
+
+    final child = onboardingComplete
+        ? const MainShell()
+        : const OnboardingScreen();
+
+    return DisplayModeController(
+      child: MediaQuery(
+        data: MediaQuery.of(
+          context,
+        ).copyWith(disableAnimations: !animationsEnabled),
+        child: child,
+      ),
+    );
+  }
+}

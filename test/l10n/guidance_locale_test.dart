@@ -1,0 +1,158 @@
+// Language roles, not linguistic approval: the manual remains draft Taglish.
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:auno_player/core/constants/app_constants.dart';
+import 'package:auno_player/core/theme/app_theme.dart';
+import 'package:auno_player/features/onboarding/widgets/tutorial_overlay.dart';
+import 'package:auno_player/features/settings/screens/app_info_settings_screen.dart';
+import 'package:auno_player/l10n/l10n.dart';
+import 'package:auno_player/providers/player_provider.dart';
+import 'package:auno_player/providers/songs_provider.dart';
+import 'package:auno_player/providers/tutorial_provider.dart';
+import 'package:auno_player/providers/update_check_provider.dart';
+
+class _ActiveTutorial extends TutorialNotifier {
+  @override
+  TutorialState build() => const TutorialState(active: true);
+}
+
+class _EmptySongs extends SongsNotifier {
+  @override
+  Future<SongsState> build() async => SongsState();
+}
+
+class _OfflineUpdates extends UpdateCheckNotifier {
+  @override
+  UpdateCheckState build() => const UpdateCheckState();
+}
+
+Widget _host(Widget child, {Locale locale = kFilipinoLocale}) => ProviderScope(
+  overrides: [
+    currentSongProvider.overrideWithValue(null),
+    songsProvider.overrideWith(_EmptySongs.new),
+    tutorialProvider.overrideWith(_ActiveTutorial.new),
+    updateCheckProvider.overrideWith(_OfflineUpdates.new),
+  ],
+  child: MaterialApp(
+    theme: AppTheme.darkTheme,
+    locale: locale,
+    supportedLocales: kSupportedLocales,
+    localizationsDelegates: kAppLocalizationsDelegates,
+    builder: (context, child) {
+      LocaleController.instance.bind(AppLocalizations.of(context));
+      return child!;
+    },
+    home: child,
+  ),
+);
+
+void main() {
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+    AppConstants.setAnimationsEnabled(false);
+  });
+
+  tearDown(() {
+    AppConstants.setAnimationsEnabled(true);
+    LocaleController.instance.bindLocale(kFallbackLocale);
+  });
+
+  testWidgets(
+    'all Taglish interactive tutorial steps and controls are English',
+    (tester) async {
+      final english = lookupFlickLocalizations(kFallbackLocale);
+      await tester.pumpWidget(_host(const Scaffold(body: TutorialOverlay())));
+      await tester.pump();
+      final container = ProviderScope.containerOf(
+        tester.element(find.byType(TutorialOverlay)),
+      );
+      final notifier = container.read(tutorialProvider.notifier);
+      for (final guide in TutorialGuide.values) {
+        notifier.start(guide: guide);
+        await tester.pump();
+        final steps = container.read(tutorialProvider).steps;
+        for (var i = 0; i < steps.length; i++) {
+          final step = steps[i];
+          expect(find.text(step.title(english)), findsWidgets);
+          expect(find.text(step.description(english)), findsOneWidget);
+          expect(
+            find.text(
+              step == TutorialStep.welcome
+                  ? english.tourNotNow
+                  : english.tourEnd,
+            ),
+            findsOneWidget,
+          );
+          if (i > 0) expect(find.text(english.back), findsOneWidget);
+          if (i == steps.length - 1) {
+            expect(find.text(english.done), findsOneWidget);
+          }
+          // Exercise Continue even when the real control is unavailable.
+          final label = step == TutorialStep.welcome
+              ? english.tourStart
+              : i == steps.length - 1
+              ? english.done
+              : english.tourContinue;
+          await tester.ensureVisible(find.text(label));
+          await tester.tap(find.text(label));
+          await tester.pump();
+          await tester.pump();
+          expect(tester.takeException(), isNull);
+        }
+      }
+      await tester.pumpWidget(const SizedBox());
+    },
+  );
+
+  testWidgets('Taglish licenses are English; Chinese stays localized', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(390, 844);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.view.resetPhysicalSize);
+    // Keep both visits in one test: LicenseRegistry is reset between tests,
+    // while AppInfoSettingsScreen registers Flick's license once per process.
+    for (final locale in [kFilipinoLocale, const Locale('zh', 'CN')]) {
+      await tester.pumpWidget(
+        _host(const AppInfoSettingsScreen(), locale: locale),
+      );
+      await tester.pump(const Duration(milliseconds: 100));
+      final copy = lookupAunoLocalizations(locale).englishForFilipino;
+      final expectedLocale = locale == kFilipinoLocale
+          ? kFallbackLocale
+          : locale;
+      await tester.ensureVisible(find.text(copy.licenses));
+      await tester.tap(find.text(copy.licenses));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 600));
+
+      final pageContext = tester.element(find.byType(LicensePage));
+      expect(Localizations.localeOf(pageContext), expectedLocale);
+      expect(
+        find.text(MaterialLocalizations.of(pageContext).licensesPageTitle),
+        findsOneWidget,
+      );
+
+      final flickEntry = find.widgetWithText(ListTile, 'Auno Player');
+      await tester.scrollUntilVisible(flickEntry, 300);
+      await tester.tap(flickEntry);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 600));
+      final detailContext = tester.element(find.byType(BackButton).last);
+      expect(Localizations.localeOf(detailContext), expectedLocale);
+      final licenseHeading = copy.mitLicenseCopyrightC2026Auno Player
+          .trim()
+          .split('\n')
+          .first;
+      expect(find.textContaining(licenseHeading), findsWidgets);
+      // The screen-scoped override must not change the app-wide locale.
+      expect(l10n.localeName, lookupFlickLocalizations(locale).localeName);
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+    }
+  });
+}

@@ -1,0 +1,119 @@
+// Copy-role widgets read the global localization getter, so these tests bind
+// Taglish exactly as MaterialApp.builder does in production.
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'package:auno_player/core/theme/app_theme.dart';
+import 'package:auno_player/features/menu/screens/restarting_screen.dart';
+import 'package:auno_player/features/player/widgets/audio_signal_report.dart';
+import 'package:auno_player/l10n/l10n.dart';
+import 'package:auno_player/models/song.dart';
+import 'package:auno_player/widgets/common/detail_header.dart';
+import 'package:auno_player/widgets/common/engine_restart_notice.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+
+Future<void> _pump(
+  WidgetTester tester,
+  Widget child, {
+  Locale locale = kFilipinoLocale,
+}) async {
+  await tester.pumpWidget(
+    MaterialApp(
+      theme: AppTheme.darkTheme,
+      locale: locale,
+      supportedLocales: kSupportedLocales,
+      localizationsDelegates: kAppLocalizationsDelegates,
+      localeResolutionCallback: resolveAppLocale,
+      builder: (context, child) {
+        LocaleController.instance.bind(AppLocalizations.of(context));
+        return child!;
+      },
+      home: Scaffold(body: child),
+    ),
+  );
+}
+
+void main() {
+  testWidgets('detail More sheet is English under Taglish', (tester) async {
+    addTearDown(() => LocaleController.instance.bindLocale(kFallbackLocale));
+    await _pump(
+      tester,
+      DetailMoreSheet(
+        items: [
+          DetailMoreSheetItem(
+            icon: LucideIcons.imagePlus,
+            label: 'Change cover',
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
+
+    expect(find.text('MORE'), findsOneWidget);
+    expect(find.text('HIGIT PA'), findsNothing);
+    expect(find.text('Change cover'), findsOneWidget);
+  });
+
+  testWidgets('audio signal report is English under Taglish', (tester) async {
+    addTearDown(() => LocaleController.instance.bindLocale(kFallbackLocale));
+    final taglish = lookupFlickLocalizations(kFilipinoLocale);
+    final english = lookupFlickLocalizations(kFallbackLocale);
+    final song = Song(
+      id: 'signal',
+      title: 'Signal',
+      artist: 'Auno Player',
+      duration: const Duration(minutes: 3),
+      fileType: 'FLAC',
+      resolution: '24-bit / 96 kHz',
+      sampleRate: 96000,
+      bitDepth: 24,
+    );
+
+    await _pump(
+      tester,
+      AudioSignalReport(
+        song: song,
+        diagnostics: null,
+        page: AudioSignalReportPage.source,
+        expanded: true,
+      ),
+    );
+
+    expect(find.text(english.signalSourceDescription), findsOneWidget);
+    expect(find.text(english.signalFileFormat), findsOneWidget);
+    expect(find.text(taglish.signalSourceDescription), findsNothing);
+    expect(find.text(taglish.signalFileFormat), findsNothing);
+  });
+
+  testWidgets('engine restart prompt is English under Taglish', (tester) async {
+    addTearDown(() => LocaleController.instance.bindLocale(kFallbackLocale));
+    final taglish = lookupFlickLocalizations(kFilipinoLocale);
+    final english = lookupFlickLocalizations(kFallbackLocale);
+    await _pump(tester, const EngineRestartNotice());
+
+    expect(find.text(english.restartRequired), findsOneWidget);
+    expect(find.text(english.yourNewAudioEngineIsReady), findsOneWidget);
+    expect(find.text(english.restart), findsOneWidget);
+    expect(find.text(taglish.restartRequired), findsNothing);
+    expect(find.text(taglish.yourNewAudioEngineIsReady), findsNothing);
+    expect(find.text(taglish.restart), findsNothing);
+  });
+
+  testWidgets('engine restarting screen is English under Taglish', (
+    tester,
+  ) async {
+    addTearDown(() => LocaleController.instance.bindLocale(kFallbackLocale));
+    final taglish = lookupFlickLocalizations(kFilipinoLocale);
+    final english = lookupFlickLocalizations(kFallbackLocale);
+    await _pump(tester, const RestartingScreen());
+    await tester.pump(const Duration(milliseconds: 100));
+
+    expect(find.text(english.restartingFlick), findsOneWidget);
+    expect(find.text(english.applyingNewAudioEngine), findsOneWidget);
+    expect(find.text(taglish.restartingFlick), findsNothing);
+    expect(find.text(taglish.applyingNewAudioEngine), findsNothing);
+
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump();
+  });
+}

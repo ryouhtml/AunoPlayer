@@ -1,0 +1,407 @@
+# Filipino and Baybayin review
+
+**Draft, not linguistically verified.** The Filipino reviewer decides whether
+the wording is natural and the Baybayin spelling is correct. Passing tests does
+not approve a translation. The 2,507-message Latin resource, eleven curated
+Baybayin labels, fifteen native-speaker-supplied Taglish hooks, five fixed
+streak greetings and one day-count streak greeting remain drafts for review. The
+latest corrections are screen-specific, not a global replacement of Filipino
+with English.
+
+## Try it
+
+1. Open Settings → Interface → Language and select **Taglish**.
+2. **English** remains an always-Latin escape option.
+3. Enable **Baybayin labels** in the same language card if desired.
+4. Check the Browse shortcut carousel, named screen/navigation labels and player
+   status. The four original library headings retain smaller Filipino captions;
+   the added compact labels do not show duplicate Latin text. Turn the switch off
+   to restore their Latin fallbacks immediately.
+
+New installations default to the switch **off**. A Filipino/Tagalog phone locale
+selects Taglish, never Baybayin. The switch is remembered independently of the
+language and only takes effect while the interface is Taglish. The earlier
+explicit `tl_Tglg` app selection migrates once to Taglish with headings on;
+subsequently turning them off survives a restart.
+
+## Script policy
+
+**Script and language are chosen by screen role.** With Taglish selected:
+
+- Home greetings use the reviewer's verbatim Taglish hooks. The summary shows
+  real counts on three lines: `902 na kanta`, `18 mga paborito mo`, `1 playlist`
+  are examples, not hardcoded values.
+- The Browse shortcut row uses Baybayin for Library, Albums, Folders, Queue and
+  Artists when enabled. The **Auno Replay** shortcut stays in English. Smart
+  mixes and original playlist names are not the requested carousel and are not
+  converted.
+- Home's current-playback heading uses **Kasalukuyang tumutugtog** in Baybayin;
+  both player layouts use only **Tumutugtog** in Baybayin, with no visible caption.
+- Favorites, Artists, Queue, Folders and the main Settings headings use Baybayin.
+  The Artists/Favorites/Folders/Settings navigation labels also use it. Individual
+  setting names remain English, not Baybayin.
+- The four quick-access cards below Now Playing keep English for **Favorites**
+  and **Artists**; their Baybayin versions appear only where those labels are the
+  browse shortcut, heading or navigation item.
+- Other general home copy is English. The audio-engine picker is fully English
+  in Taglish: title, option names, and explanations. English and Chinese keep
+  their own localized copy.
+- After an audio-engine change, both the restart prompt and the full-screen
+  restarting flow are English in Taglish.
+- The Audio Signal Path panel is fully English in Taglish: title, status,
+  labels and values. The compact bit-perfect capsule is English as well.
+- The volume card's fixed-volume notice is English in Taglish wherever the card
+  appears, including the menu volume card.
+- The full player's top queue badge says **Queue**, not the Taglish **Pila**.
+- The full-player three-dot song actions sheet is fully English in Taglish:
+  add to queue/playlist, album art, metadata, lyrics, visualizer, artist/album
+  navigation, player layout, playback speed, pitch, sleep timer and share.
+- Its sub-interfaces are English too: Add to Playlist, View Metadata, Share
+  (including preview templates, share text and actions), Playback Speed, Pitch,
+  Sleep Timer and Player Layout. The inline lyrics panel and online lyrics
+  search are English as well, while the full-player top chip and locker copy
+  keep their Taglish lines and the queue badge stays **Queue**.
+- The standalone Player Layout settings screen is English in Taglish too,
+  including both layout names and descriptions, layout controls, quick-action
+  pickers and album-color options. English and Chinese keep their own copy.
+- The UI Customization settings screen is English in Taglish for Track
+  Thumbnails, Progress Bar and Album Colors, including option names and
+  descriptions. English and Chinese keep their own copy.
+- The interactive EQ graph is English in Taglish: title, drag/pinch guidance,
+  detail labels and band families, and the status/mode chips. English and
+  Chinese keep their own copy.
+- The album, artist, playlist and smart-mix three-dot More sheets use English,
+  including their **More** header.
+- Album completeness uses English in Taglish: header and grid badges, missing
+  track/disc counts and positions, unknown status, and the verification sheet.
+  Album titles, artists and other metadata keep their existing copy roles.
+- The playlists screen's header and per-playlist three-dot menus use English.
+- The long-press song actions sheet is fully English in Taglish: every action,
+  its Add to Playlist sub-sheet, View Metadata panel, delete warning, Edit
+  Metadata form, and Set Album Art picker (including search states, errors and
+  reset dialog). This also covers the shared sheet from Search and song action
+  buttons. Android's system share sheet follows the OS language.
+- Songs sorting sheets are English in Taglish, regardless of the current sort:
+  sort choices, format filters and **All Formats**. Album sorting's three-dot
+  menu is English too, including view-mode options, **Album options** and
+  **Sort & Filter**. Its album-options sheet uses English sort choices,
+  format filters, album limit and page-size description.
+- Songs multiselection is English in Taglish: selected count, action tooltips,
+  More actions, select/deselect all, playlist picker and creation dialog,
+  deletion warning/actions and bulk-action feedback. The library heading,
+  normal song count, search copy and original metadata are unchanged.
+- The playlist creation dialogs are English in Taglish, including title, name
+  hint, storage selector, Cancel and Create. This applies from the Playlists
+  screen, song actions and multi-select actions. English and Chinese keep their
+  own copy.
+- The playlist cover editor is fully English in Taglish: title, crop/adjust/
+  filters tabs, tools, filter names, save/reset/close controls and the discard
+  dialog. English and Chinese keep their own UI copy.
+- The playlist detail header information line is English in Taglish: song
+  count, total duration, created/updated dates and the **Lossless** label. The
+  playlist name and other playlist metadata remain unchanged. English and
+  Chinese keep their own copy.
+- The artist biography heading is **Tungkol sa kanila**.
+- The Lyrics Sync Studio is fully English in Taglish: editor, tool labels,
+  help, dialogs, save flow and validation messages.
+- Auno Replay is fully English in Taglish: cards, period labels and dates,
+  studio controls, tooltips, empty/error states and saved posters. Downloadable
+  CSV/TXT recaps are always English regardless of UI language.
+- The streak popup keeps its count label and both buttons in English
+  (`N day streak`, `Continue`, `Don't show again today`). Its message is one of
+  five fixed Taglish greetings or a day-count line, chosen at random each time
+  the popup opens.
+- The Milestones screen, category names, progress units, dates, locked sheet and
+  celebration card are English in Taglish. The streak banner and its
+  **Current Streak** label are English too; the streak popup's greeting keeps
+  its separately requested Taglish copy.
+- Settings uses English for its section names, titles, options and descriptions.
+  The only Taglish line is the page tagline:
+  **Dito mo ayusin mga configuration ng settings mo.**
+- The **Manual** title, section/entry headings and search controls are English.
+  Its instructions and tips are conversational Taglish, not literal Filipino
+  translations. Manual search matches the displayed English headings and
+  Taglish instructions.
+- Onboarding is English except the first title:
+  **Kumusta! Greetings from Auno Player!** The interactive spotlight tutorial is fully
+  English, including its navigation buttons.
+- The license list and detail screens use English controls in Taglish, with
+  original license notices retained. English and Chinese keep their own UI.
+- The home update notice says **Yun oh! May bagong update na naman!** Its other
+  copy/actions remain English.
+- Original server/device/preset names stay unchanged even though the surrounding
+  settings copy is English.
+- Support titles, categories and descriptions use English. Only Taglish shows
+  **Donations will help me a lot! Hehehe. Sana masarap ulam mo lagi!** in its own
+  small card immediately above the Ko-fi / Buy Me a Coffee card. Donation
+  destinations are unchanged.
+- Single-song favorite add/remove toasts are the only Taglish toasts:
+  **Goods, na sa favorites mo na.** and **Okay, naalis na po.** All other toasts
+  use English, including bulk selection, settings, lyrics, artwork, queue and
+  deletion messages.
+- Search is unchanged. The remaining Filipino resource stays available to other
+  screens and services; there is no global English or Baybayin override.
+- Track titles, musical-artist names, album names, user playlist names and actual
+  lyrics remain the original data. Translating the label **Lirika** does not
+  translate a song's lyrics.
+- Product names, standard units and established audio terms such as USB DAC,
+  DSD and EQ retain their technical spelling; surrounding explanations are
+  Filipino. The original MIT license text is retained unchanged.
+- Baybayin labels have one Latin Filipino accessibility label rather than
+  asking a screen reader to pronounce the script or announce both copies.
+
+## Wording and spelling conventions
+
+The reviewer's requested terms are **Mga kanta**, **Mga kumanta**,
+**Mga talaan ng kanta**, **Susunod na kanta**, **Nakaraang kanta**, and **Lirika**.
+These Latin corrections do not approve the Baybayin spellings.
+
+The script drafts use modern vowel cancellation with **U+1714** (virama).
+They share da/ra, e/i and o/u signs; they do not introduce a separate modern ra.
+Review the actual sounds, syllables, final consonants and combining marks,
+especially loanwords such as *album* and *polder*. The Baybayin resource proposes
+**Mga polder** while the unchanged Latin/search baseline keeps **Mga folder**.
+Decide whether `ᜋᜅ` for *mga* is the
+preferred convention. No test can make that orthographic decision for a reader.
+
+### Curated label drafts
+
+Keep these rows synchronized with `lib/l10n/app_tl_Tglg.arb`. Approve a row only
+after reading the Latin intent, checking its screen context, and reviewing the
+Baybayin in the app or rendered screenshots. A Markdown viewer may lack the font.
+
+| Key | English | Context | Latin Filipino draft | Baybayin draft | Status |
+|---|---|---|---|---|---|
+| `albums` | Albums | Albums library heading and menu browse shortcut. | Mga album | ᜋᜅ ᜀᜎ᜔ᜊᜓᜋ᜔ | draft |
+| `artists` | Artists | Artists heading, menu shortcut and navigation; quick-access card and artist metadata stay English. | Mga kumanta | ᜋᜅ ᜃᜓᜋᜈ᜔ᜆ | draft |
+| `favorites` | Favorites | Favorites heading, menu shortcut and navigation label; quick-access card stays English. | Mga paborito | ᜋᜅ ᜉᜊᜓᜇᜒᜆᜓ | draft |
+| `folders` | Folders | Folders heading, browse shortcut and navigation; proposed polder spelling. | Mga polder | ᜋᜅ ᜉᜓᜎ᜔ᜇᜒᜇ᜔ | draft |
+| `queue` | Queue | Queue screen heading and menu browse shortcut, not settings titles. | Pila | ᜉᜒᜎ | draft |
+| `settings` | Settings | Main Settings heading and navigation, not individual setting titles. | Mga pagsasaayos | ᜋᜅ ᜉᜄ᜔ᜐᜐᜀᜌᜓᜐ᜔ | draft |
+| `libraryLabel` | Library | Menu Library browse shortcut only. | Aklatan | ᜀᜃ᜔ᜎᜆᜈ᜔ | draft |
+| `nowPlaying` | Now Playing | Menu current-playback heading; player uses the separate compact Tumutugtog label. | Kasalukuyang tumutugtog | ᜃᜐᜎᜓᜃᜓᜌᜅ᜔ ᜆᜓᜋᜓᜆᜓᜄ᜔ᜆᜓᜄ᜔ | draft |
+| `playingLabel` | Playing | Player status heading only, with no visible Latin caption. | Tumutugtog | ᜆᜓᜋᜓᜆᜓᜄ᜔ᜆᜓᜄ᜔ | draft |
+| `playlists` | Playlists | Main Playlists library heading only; not navigation or user-created names. | Mga talaan ng kanta | ᜋᜅ ᜆᜎᜀᜈ᜔ ᜈᜅ᜔ ᜃᜈ᜔ᜆ | draft |
+| `songs14` | Songs | Main Songs library heading only; not navigation, counts or nested sections. | Mga kanta | ᜋᜅ ᜃᜈ᜔ᜆ | draft |
+
+For the full Latin baseline, review `lib/l10n/app_tl.arb` against the English
+template and each actual screen. Prioritize permissions, deletion, scan/storage
+errors, playback/output descriptions and DSP warnings before cosmetic copy.
+All entries are drafted; retaining an audio term is not a claim of approval.
+Keep English/Chinese translations and their existing strict tests intact.
+
+## Filipino-only home hooks
+
+These are the native Filipino reviewer's exact replacement lines, including
+English/Taglish, slang and punctuation. They are exclusive to Filipino and do not
+replace English or Chinese greetings. They do not inspect listening history.
+
+One hook is chosen deterministically per local calendar day and period: four
+morning, four afternoon, **three evening**, and four late-night entries.
+It stays stable on rebuild, refresh or restart and rotates daily. The period is
+checked when the home greeting rebuilds, as with the existing greeting; this does
+not add a background timer, network request or persisted counter.
+
+| Local period | Original Filipino hook | Status |
+|---|---|---|
+| Morning, 05:00–11:59 | Uy, good morning! | draft |
+| Morning, 05:00–11:59 | Kape muna. | draft |
+| Morning, 05:00–11:59 | Almusal plus music? G! | draft |
+| Morning, 05:00–11:59 | Good morning, sunshine. | draft |
+| Afternoon, 12:00–17:59 | Break time music? | draft |
+| Afternoon, 12:00–17:59 | Coffee break? After work or studies? | draft |
+| Afternoon, 12:00–17:59 | Sunset na naman. | draft |
+| Afternoon, 12:00–17:59 | Pahinga-pahinga rin. | draft |
+| Evening, 18:00–21:59 | Dinner with music? | draft |
+| Evening, 18:00–21:59 | Commuting pauwi with music? | draft |
+| Evening, 18:00–21:59 | Ingat lagi! Listen well! | draft |
+| Late night, 22:00–04:59 | Oh, walang magrerelapse ha? | draft |
+| Late night, 22:00–04:59 | Hatinggabi na boss, itulog mo yan. | draft |
+| Late night, 22:00–04:59 | Luh, puyat yarn? | draft |
+| Late night, 22:00–04:59 | Listen for a bit tapos sleep na ha? | draft |
+
+Review tone as a coherent set, not just literal correctness: warm, music-first,
+brief, inclusive and not overly promotional. Edit `lib/l10n/home_greeting.dart`
+and the corresponding rows together. Technical tests only check selection,
+stability, locale isolation, review coverage and layout.
+
+## Filipino-only streak greetings
+
+The launch-day streak popup keeps its visible count label and both buttons in
+English under Taglish. Its message is one of the five fixed
+native-speaker-supplied Taglish lines below or a line that fills in the current
+streak, chosen at random each time the popup opens. English and Chinese keep
+their existing tier-specific messages.
+
+| Original Taglish greeting | Status |
+|---|---|
+| Uy oh, may nagbabalik! | draft |
+| Welcome back po. Tara music jam na ulit. | draft |
+| Handa mo na earphones mo ulit. Hahaha. | draft |
+| Hobby mo talaga music, maem? | draft |
+| Share your music with? | draft |
+| {days} days na ha? Keep it up! | draft |
+
+Edit `lib/l10n/streak_greeting.dart` and the corresponding rows together.
+
+## Full-player song actions
+
+The full-player three-dot sheet is an English surface in Taglish. Its actions
+read **Add to Queue**, **Add to Playlist**, **Set Album Art**, **Refresh Motion
+Art**, **Edit Metadata**, **View Metadata**, **Lyrics**, **Visualizer** /
+**Hide Visualizer**, **Go to Artist**, **Go to Album**, **Player Layout**,
+**Playback Speed**, **Pitch**, **Sleep Timer** and **Share**. The sheet's
+sub-interfaces listed above are English as well. English and Chinese keep their
+existing menu labels.
+
+## Implementation notes
+
+### Manual voice and first-run guidance
+
+All 82 manual instruction/tip messages in `app_tl.arb` have been rewritten as
+draft conversational Taglish. Keep UI names such as **Sort & Filter**,
+**Queue**, **Settings** and **Lyrics Sync Studio** recognizable. Use short,
+actionable directions with familiar English interface terms, not word-for-word
+translations. These drafts still need the native-speaker reviewer's approval.
+
+For example, the library guide starts: "Nasa Songs tab lahat ng tracks na
+na-scan ng Auno Player. Scroll ka lang para mag-browse. May hinahanap ka? I-type ang
+title o artist sa search bar para mas mabilis."
+
+`manual_screen.dart` resolves headings through `englishForFilipino` while
+instructions/tips keep the active catalog. Onboarding uses the same English
+role with only `onboardingWelcomeTitle` resolved from Taglish. The interactive
+tutorial uses English for its step titles, descriptions and controls.
+`LicensePage` needs a screen-local `Localizations.override`, since Flutter's
+license UI reads Material localizations rather than Auno Player's string getter.
+None of these overrides changes the app-wide locale.
+
+The song long-press flow uses the English copy shim in
+`song_actions_bottom_sheet.dart`, `metadata_editor_bottom_sheet.dart`,
+`album_art_picker_bottom_sheet.dart` and `album_art_import_service.dart`. That
+keeps the sheet, its sub-sheets and album-art failure messages English in
+Taglish while English and Chinese still receive their own resources.
+
+The full-player three-dot flow uses the same shim in `song_actions_sheet.dart`,
+`add_to_playlist_sheet.dart`, `share_bottom_sheet.dart`,
+`album_art_share_card.dart`, `song_metadata_sheet.dart`, the speed/pitch/sleep
+sheets, `player_layout_sheet.dart`, `inline_lyrics_panel.dart`,
+`online_lyrics_search_sheet.dart` and `lyrics_word_timeline.dart`. Share
+template names resolve through the passed English catalog. The top chip and
+locker copy in `full_player_screen.dart` intentionally stay on the active
+catalog, and the queue badge remains the separately requested **Queue**.
+
+Player Layout has two entry points, and both use the English role in Taglish:
+`player_layout_sheet.dart` imports the English shim, while
+`player_layout_settings_screen.dart` resolves its explicit labels through
+`englishForFilipino` and its shared copy through `settings_l10n.dart`.
+`model_labels.dart` gained caller-catalog `descriptionFor` methods for player
+screen modes and album-color modes, so plain extension getters elsewhere still
+follow the active locale. The action picker uses the same English catalog as
+the sheet. The same pattern covers `ProgressBarStyle` and
+`SongTileThumbnailMode`; the UI Customization screen passes its English role
+catalog so those option descriptions do not fall back to Taglish.
+
+`sort_filter_bottom_sheet.dart` also uses the English shim. Scoped copy roles
+in `songs_screen.dart` keep the album menu, album-options sheet and multiselect
+flows English without changing the rest of the screen. Format labels accept
+an explicit catalog via `SongFileTypeFilter.displayNameFor`; existing callers
+of `displayName` still use the active locale. Sorting/filtering logic is unchanged.
+
+The interactive EQ graph, `interactive_eq_graph.dart`, imports the English
+shim so its title, guidance, detail labels and status chips are English in
+Taglish. `ParametricBandTypeX.qLabelFor` accepts the caller catalog for the
+Slope/Resonance/Q detail label; the existing `qLabel` getter still follows the
+active locale for other callers. The equalizer settings screen that opens the
+graph already uses `settings_l10n.dart`.
+
+`playlist_detail_screen.dart` builds its header information line through
+`playlist_header_meta.dart` with the English copy role and passes that role's
+`lossless` label into `DetailHeader.losslessLabel`. Other detail screens keep
+the active catalog.
+
+- App locale is `tl`, the Tagalog locale supported by Flutter's stock controls;
+  `fil` language tags are accepted as aliases. This is the Filipino UI choice.
+- `tl_Tglg` is a **resource-only** generated subclass. It is excluded from the
+  app's supported locale list. Only `BaybayinText` reads its curated overrides;
+  `LibraryHeading` wraps that widget for the four captioned library headings.
+- App services retain the Latin baseline with Filipino ICU formatting rules.
+  `englishForFilipino` is an explicit copy-role accessor for reviewed home/support
+  copy and setting titles; English and Chinese keep their own resources. There
+  is no translated-string lookup, automatic transliteration or ICU-locale hack.
+- The visual switch cannot change notifications or service strings into
+  Baybayin. Native Android notifications/widgets do not inherit Flutter fonts;
+  their Latin Filipino layout and locale refresh still require device testing.
+- The existing font fallback includes the bundled Noto Sans Tagalog, so no
+  network font fetch or package dependency is needed.
+
+## Verification and release checklist
+
+Automated localization tests cover full Filipino key parity and ICU arguments,
+eleven-key script allowlisting, review-table synchronization, reviewer vocabulary,
+plural counts (0, 1, 2, 101), old preference migration, locale aliases, independent
+persistence, live switching, Latin accessibility labels, actual font coverage,
+narrow layouts, enlarged text and all home/streak greeting variants. They **do
+not certify linguistic correctness or Android/TalkBack behavior**.
+
+```sh
+flutter gen-l10n
+flutter test test/l10n --no-pub
+flutter test test/l10n/baybayin_layout_test.dart --no-pub --dart-define=BAYBAYIN_SCREENSHOTS=true
+```
+
+Optional review images are written to ignored `build/baybayin_shots/`. They are
+host widget renders with bundled fonts, not a substitute for Android hardware.
+
+Before removing the experimental/draft notices, the Filipino reviewer should:
+
+- [ ] Review Latin Filipino wording, all eleven Baybayin spellings, home hooks,
+      the five fixed streak greetings and the day-count streak line.
+- [ ] Test Android API 26 and a current Android version, including bold text,
+      combining/final marks, narrow widths and large system font sizes.
+- [ ] Switch Taglish ↔ English ↔ Chinese and enable/disable headings live.
+- [ ] Force-stop/relaunch: verify both preferences, default-off behavior and the
+      one-time migration; disabling migrated headings must remain disabled.
+- [ ] Follow a Filipino/Tagalog phone locale: Taglish appears, headings stay off
+      unless previously explicitly enabled. English escape remains reachable.
+- [ ] Check the per-screen role policy above, including the English Auno Replay
+      shortcut and the Baybayin Browse shortcuts, both player layouts, the
+      English audio-engine restart prompt/flow and audio signal path, the
+      **Queue** badge and detail/playlist menus,
+      the fully English full-player three-dot sheet, inline/online lyrics and
+      its playlist/share/metadata/speed/pitch/sleep/layout sub-interfaces,
+      the English Player Layout settings screen and action picker,
+      the English UI Customization Track Thumbnails, Progress Bar and Album
+      Colors sections, the English interactive EQ graph,
+      the fully English Lyrics Sync Studio,
+      the English Milestones surface and playlist cover editor, the English
+      playlist detail header information line/lossless indicator, all-English
+      playlist creation dialogs, the English song long-press sheet and its
+      metadata/album-art subflows, Songs sort/album-options sheets and
+      multiselection subflows, settings except the Taglish tagline,
+      unchanged search, and the Taglish-only support card. Technical values and
+      original music/playlist metadata must not change.
+- [ ] Review all manual instructions and tips for natural Taglish; check its
+      English headings, mixed-language search and enlarged text. Verify English
+      onboarding/tutorial controls, the exact welcome title, and license pages.
+- [ ] Use TalkBack: each heading announces its Latin label once as a heading;
+      verify actual Filipino pronunciation rather than assuming language support.
+- [ ] Check home hooks across time boundaries and day changes, including long
+      hooks at enlarged text settings. Confirm the streak popup rotates through
+      the five fixed lines and the day-count line and fits the longest greeting.
+- [ ] Check native dialogs, notifications and home-screen widgets separately for
+      Latin Filipino font support, clipping and stale strings after switching.
+
+The automated checks above run on the host; Android and TalkBack checks have not
+yet been completed. Device checks and human approval remain release gates.
+
+## Font provenance
+
+Unmodified `assets/fonts/NotoSansTagalog-Regular.ttf`, 53,012 bytes, from
+[Google Fonts / Noto Sans Tagalog](https://github.com/google/fonts/tree/main/ofl/notosanstagalog).
+
+- Git blob: `ca69d2626661d2baf304e591bad6914574314aef`
+- SHA-256: `871a66319d10d1a027eee889f75ea49be0b7d2a4e97acd6bf7f7a0ed1d741aac`
+- Copyright 2022 The Noto Project Authors (https://github.com/notofonts/tagalog)
+- SIL Open Font License 1.1: `assets/fonts/NotoSansTagalog-OFL.txt`, bundled and
+  registered in the app's license screen. No font package dependency was added.

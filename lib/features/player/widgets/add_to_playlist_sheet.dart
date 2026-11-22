@@ -1,0 +1,183 @@
+import 'package:flutter/material.dart';
+import 'package:auno_player/widgets/common/flick_snackbar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:auno_player/core/theme/app_colors.dart';
+import 'package:auno_player/core/theme/adaptive_color_provider.dart';
+import 'package:auno_player/models/song.dart';
+import 'package:auno_player/providers/providers.dart';
+import 'package:auno_player/widgets/common/flick_artwork_placeholder.dart';
+import 'package:auno_player/widgets/common/glass_bottom_sheet.dart';
+import 'package:auno_player/l10n/english_l10n.dart';
+
+class AddToPlaylistSheet extends ConsumerWidget {
+  final List<Song> songs;
+  const AddToPlaylistSheet({super.key, required this.songs});
+
+  Song get song => songs.first;
+
+  static Future<void> show(BuildContext context, Song song) {
+    return showSongs(context, [song]);
+  }
+
+  static Future<void> showSongs(BuildContext context, List<Song> songs) {
+    return showModalBottomSheet(
+      useRootNavigator: true,
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => AddToPlaylistSheet(songs: songs),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return AppBottomSheetSurface(
+      scrollable: true,
+      padding: const EdgeInsets.fromLTRB(
+        24,
+        24,
+        24,
+        24,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                LucideIcons.listPlus,
+                color: AppColors.accent,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                songs.length == 1
+                    ? l10n.addToPlaylist2
+                    : l10n.addSongsToPlaylist2(songs.length),
+                style: TextStyle(
+                  fontFamily: 'GoogleSansFlex',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: context.adaptiveTextPrimary,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Consumer(
+            builder: (context, ref, _) {
+              final playlistsAsync = ref.watch(playlistsProvider);
+              return playlistsAsync.when(
+                loading: () =>
+                    const Center(child: CircularProgressIndicator()),
+                error: (e, _) => Text(
+                  l10n.errorLoadingPlaylists,
+                  style: TextStyle(color: context.adaptiveTextTertiary),
+                ),
+                data: (state) {
+                  if (state.playlists.isEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24),
+                      child: Center(
+                        child: Text(
+                          l10n.noPlaylistsYetNcreateOneIn,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: context.adaptiveTextTertiary,
+                            fontFamily: 'GoogleSansFlex',
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height * 0.4,
+                    ),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: state.playlists.length,
+                      itemBuilder: (context, index) {
+                        final playlist = state.playlists[index];
+                        final songIds = songs.map((s) => s.id).toSet();
+                        final isAlreadyAdded = playlist.songIds
+                            .where((id) => songIds.contains(id))
+                            .length >=
+                            songs.length;
+                        return ListTile(
+                          leading: Container(
+                            width: 48,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              color: AppColors.surfaceLight,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const FlickArtworkPlaceholder(
+                              size: 22,
+                              opacity: 0.9,
+                            ),
+                          ),
+                          title: Text(
+                            playlist.name,
+                            style: TextStyle(
+                              color: context.adaptiveTextPrimary,
+                              fontFamily: 'GoogleSansFlex',
+                            ),
+                          ),
+                          subtitle: Text(
+                            l10n.songs9(playlist.songIds.length),
+                            style: TextStyle(
+                              color: context.adaptiveTextTertiary,
+                              fontFamily: 'GoogleSansFlex',
+                            ),
+                          ),
+                          trailing: isAlreadyAdded
+                              ? Icon(
+                                  LucideIcons.check,
+                                  color: AppColors.accent,
+                                )
+                              : null,
+                          onTap: isAlreadyAdded
+                              ? null
+                              : () async {
+                                  final notifier = ref.read(
+                                    playlistsProvider.notifier,
+                                  );
+                                  for (final s in songs) {
+                                    await notifier.addSongToPlaylist(
+                                      playlist.id,
+                                      s.id,
+                                      song: s,
+                                    );
+                                  }
+                                  if (context.mounted) {
+                                    Navigator.pop(context);
+                                    ScaffoldMessenger.of(
+                                      context,
+                                    ).showFlickSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          songs.length == 1
+                                              ? l10n.englishForFilipino.addedTo2(playlist.name)
+                                              : l10n.englishForFilipino.addedSongsTo(songs.length, playlist.name),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                        );
+                      },
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+}
