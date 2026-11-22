@@ -92,7 +92,7 @@ flutter_launcher_icons:
   image_path: "assets/icons/auno_icon.png"
   android: "launcher_icon"
   adaptive_icon_background: "#F5F5F5"
-  adaptive_icon_foreground: "assets/icons/reverse_flick_logo_transparent.png"
+  adaptive_icon_foreground: "assets/icons/auno_icon.png"
   adaptive_icon_monochrome: "assets/icons/auno_icon.png"
 
 # Resolve conflict between riverpod_generator and isar_community_generator

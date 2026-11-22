@@ -5272,7 +5272,7 @@ abstract class AppLocalizations {
   /// lib/features/settings/screens/app_info_settings_screen.dart:145
   ///
   /// In en, this message translates to:
-  /// **'Download the latest APK from flick-player.site'**
+  /// **'Download the latest APK from github.com/ryouhtml/AunoPlayer/releases'**
   String get downloadTheLatestApkFromAuno Player;
 
   /// lib/features/settings/screens/app_info_settings_screen.dart:638
@@ -6268,7 +6268,7 @@ abstract class AppLocalizations {
   /// lib/features/settings/screens/app_info_settings_screen.dart:176
   ///
   /// In en, this message translates to:
-  /// **'Auno Player checks flick-player.site for updates whenever you are online'**
+  /// **'Auno Player checks github.com/ryouhtml/AunoPlayer/releases for updates whenever you are online'**
   String get flickChecksAunoPlayerSiteFor;
 
   /// lib/features/settings/screens/support_flick_screen.dart:138
@@ -6670,7 +6670,7 @@ abstract class AppLocalizations {
   /// lib/features/settings/screens/app_info_settings_screen.dart:639
   ///
   /// In en, this message translates to:
-  /// **'Get the latest APK from flick-player.site'**
+  /// **'Get the latest APK from github.com/ryouhtml/AunoPlayer/releases'**
   String get getTheLatestApkFromAuno Player;
 
   /// lib/features/settings/widgets/lastfm_settings_tile.dart:404

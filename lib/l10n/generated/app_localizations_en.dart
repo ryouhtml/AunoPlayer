@@ -3056,7 +3056,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get downloadTheLatestApkFromFlick =>
-      'Download the latest APK from flick-player.site';
+      'Download the latest APK from github.com/ryouhtml/AunoPlayer/releases';
 
   @override
   String get downloadUpdate => 'Download Update';
@@ -3664,7 +3664,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get flickChecksFlickPlayerSiteFor =>
-      'Auno Player checks flick-player.site for updates whenever you are online';
+      'Auno Player checks github.com/ryouhtml/AunoPlayer/releases for updates whenever you are online';
 
   @override
   String get flickIsBuiltAndMaintainedBy =>
@@ -3898,7 +3898,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get getTheLatestApkFromFlick =>
-      'Get the latest APK from flick-player.site';
+      'Get the latest APK from github.com/ryouhtml/AunoPlayer/releases';
 
   @override
   String get getYourApiCredentials => 'Get your API credentials';

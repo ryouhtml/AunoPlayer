@@ -3699,7 +3699,7 @@
       }
     }
   },
-  "downloadTheLatestApkFromFlick": "Download the latest APK from flick-player.site",
+  "downloadTheLatestApkFromFlick": "Download the latest APK from github.com/ryouhtml/AunoPlayer/releases",
   "@downloadTheLatestApkFromFlick": {
     "description": "lib/features/settings/screens/app_info_settings_screen.dart:145"
   },
@@ -4547,7 +4547,7 @@
   "@flickCanReceivePlaybackHandoffsFrom": {
     "description": "lib/features/settings/screens/privacy_policy_screen.dart:71"
   },
-  "flickChecksFlickPlayerSiteFor": "Auno Player checks flick-player.site for updates whenever you are online",
+  "flickChecksFlickPlayerSiteFor": "Auno Player checks github.com/ryouhtml/AunoPlayer/releases for updates whenever you are online",
   "@flickChecksFlickPlayerSiteFor": {
     "description": "lib/features/settings/screens/app_info_settings_screen.dart:176"
   },
@@ -4856,7 +4856,7 @@
   "@getStarted": {
     "description": "lib/features/onboarding/screens/onboarding_screen.dart:269"
   },
-  "getTheLatestApkFromFlick": "Get the latest APK from flick-player.site",
+  "getTheLatestApkFromFlick": "Get the latest APK from github.com/ryouhtml/AunoPlayer/releases",
   "@getTheLatestApkFromFlick": {
     "description": "lib/features/settings/screens/app_info_settings_screen.dart:639"
   },

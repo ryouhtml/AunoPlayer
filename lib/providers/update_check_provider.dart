@@ -104,7 +104,7 @@ class UpdateCheckNotifier extends Notifier<UpdateCheckState> {
   static const String flickPlayStoreMarketUrl =
       'market://details?id=com.aunoplayer.auno';
   static const String flickWebsiteDownloadUrl =
-      'https://www.flick-player.site/';
+      'https://www.github.com/ryouhtml/AunoPlayer/releases/';
   static const Duration _automaticRefreshCooldown = Duration(minutes: 30);
 
   static final Uri _githubReleasesApiUri = Uri.parse(

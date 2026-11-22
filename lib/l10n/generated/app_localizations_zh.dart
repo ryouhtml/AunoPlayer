@@ -2834,7 +2834,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get downloadTheLatestApkFromFlick => '从 flick-player.site 下载最新的 APK';
+  String get downloadTheLatestApkFromFlick => '从 github.com/ryouhtml/AunoPlayer/releases 下载最新的 APK';
 
   @override
   String get downloadUpdate => '下载更新';
@@ -3409,7 +3409,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get flickChecksFlickPlayerSiteFor =>
-      '联网时 Auno Player 会检查 flick-player.site 的更新';
+      '联网时 Auno Player 会检查 github.com/ryouhtml/AunoPlayer/releases 的更新';
 
   @override
   String get flickIsBuiltAndMaintainedBy =>
@@ -3630,7 +3630,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get getStarted => '开始使用';
 
   @override
-  String get getTheLatestApkFromFlick => '从 flick-player.site 获取最新 APK';
+  String get getTheLatestApkFromFlick => '从 github.com/ryouhtml/AunoPlayer/releases 获取最新 APK';
 
   @override
   String get getYourApiCredentials => '获取你的 API 凭据';

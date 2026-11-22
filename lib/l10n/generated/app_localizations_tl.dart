@@ -3090,7 +3090,7 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get downloadTheLatestApkFromFlick =>
-      'I-download ang pinakabagong APK mula sa flick-player.site';
+      'I-download ang pinakabagong APK mula sa github.com/ryouhtml/AunoPlayer/releases';
 
   @override
   String get downloadUpdate => 'I-download ang update';
@@ -3711,7 +3711,7 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get flickChecksFlickPlayerSiteFor =>
-      'Sinusuri ng Auno Player ang flick-player.site para sa update kapag may koneksiyon ka';
+      'Sinusuri ng Auno Player ang github.com/ryouhtml/AunoPlayer/releases para sa update kapag may koneksiyon ka';
 
   @override
   String get flickIsBuiltAndMaintainedBy =>
@@ -3945,7 +3945,7 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get getTheLatestApkFromFlick =>
-      'Kunin ang pinakabagong APK mula sa flick-player.site';
+      'Kunin ang pinakabagong APK mula sa github.com/ryouhtml/AunoPlayer/releases';
 
   @override
   String get getYourApiCredentials => 'Kunin ang iyong API credentials';
