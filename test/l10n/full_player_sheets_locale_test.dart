@@ -356,8 +356,8 @@ void main() {
 
   testWidgets('Taglish inline lyrics empty state is English', (tester) async {
     _setLargePhone(tester);
-    final en = lookupAunoLocalizations(kFallbackLocale);
-    final tl = lookupAunoLocalizations(kFilipinoLocale);
+    final en = lookupFlickLocalizations(kFallbackLocale);
+    final tl = lookupFlickLocalizations(kFilipinoLocale);
     await tester.pumpWidget(
       _host(
         SizedBox(
@@ -398,8 +398,8 @@ void main() {
     tester,
   ) async {
     _setLargePhone(tester);
-    final en = lookupAunoLocalizations(kFallbackLocale);
-    final tl = lookupAunoLocalizations(kFilipinoLocale);
+    final en = lookupFlickLocalizations(kFallbackLocale);
+    final tl = lookupFlickLocalizations(kFilipinoLocale);
     final service = _FakePlayerService();
 
     await tester.pumpWidget(
@@ -438,8 +438,8 @@ void main() {
 
   testWidgets('Chinese metadata and lyrics stay Chinese', (tester) async {
     _setLargePhone(tester);
-    final zh = lookupAunoLocalizations(const Locale('zh', 'CN'));
-    final en = lookupAunoLocalizations(kFallbackLocale);
+    final zh = lookupFlickLocalizations(const Locale('zh', 'CN'));
+    final en = lookupFlickLocalizations(kFallbackLocale);
     await tester.pumpWidget(
       _host(
         Column(
@@ -481,8 +481,8 @@ void main() {
 
   testWidgets('Chinese share and timer copy stay Chinese', (tester) async {
     _setLargePhone(tester);
-    final zh = lookupAunoLocalizations(const Locale('zh', 'CN'));
-    final en = lookupAunoLocalizations(kFallbackLocale);
+    final zh = lookupFlickLocalizations(const Locale('zh', 'CN'));
+    final en = lookupFlickLocalizations(kFallbackLocale);
     final service = _FakePlayerService();
     await tester.pumpWidget(
       _host(

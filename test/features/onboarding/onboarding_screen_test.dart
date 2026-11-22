@@ -144,8 +144,8 @@ void main() {
   testWidgets(
     'Taglish onboarding is English except the supplied welcome title',
     (tester) async {
-      final en = lookupAunoLocalizations(kFallbackLocale);
-      final tl = lookupAunoLocalizations(kFilipinoLocale);
+      final en = lookupFlickLocalizations(kFallbackLocale);
+      final tl = lookupFlickLocalizations(kFilipinoLocale);
       AppConstants.setAnimationsEnabled(false);
       await _pumpOnboarding(tester, kFilipinoLocale);
 

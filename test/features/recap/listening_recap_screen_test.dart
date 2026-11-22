@@ -974,7 +974,7 @@ void main() {
       await _snapshot(tester, 'replay-floating-navigation');
       await tester.tap(find.byTooltip('Save / customize Replay'));
       await tester.pumpAndSettle();
-      expect(find.byType(AunoNavBar), findsOneWidget);
+      expect(find.byType(FlickNavBar), findsOneWidget);
       expect(
         tester.widget<Scaffold>(find.byType(Scaffold)).backgroundColor,
         Colors.transparent,
@@ -982,7 +982,7 @@ void main() {
       final saveButton = tester.getRect(
         find.widgetWithText(FilledButton, 'Save PNG'),
       );
-      final bar = tester.getRect(find.byType(AunoNavBar));
+      final bar = tester.getRect(find.byType(FlickNavBar));
       expect(saveButton.bottom, lessThan(bar.top));
       await _snapshot(tester, 'replay-studio-floating-navigation');
       final boundary =

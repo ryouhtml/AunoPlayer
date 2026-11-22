@@ -216,7 +216,7 @@ void main() {
   );
 
   test('Filipino plurals and arguments survive generation', () {
-    final strings = lookupAunoLocalizations(kFilipinoLocale);
+    final strings = lookupFlickLocalizations(kFilipinoLocale);
     for (final count in [0, 1, 2, 101]) {
       expect(strings.songsCount(count), '$count kanta');
       expect(strings.tracks(count), '$count kanta');
@@ -236,7 +236,7 @@ void main() {
   test(
     'native review copy is context-specific, not a global English switch',
     () {
-      final strings = lookupAunoLocalizations(kFilipinoLocale);
+      final strings = lookupFlickLocalizations(kFilipinoLocale);
       expect(
         strings.tracksLikedSongsPlaylists(902, 18, 1),
         '902 na kanta\n18 mga paborito mo\n1 playlist',
@@ -325,7 +325,7 @@ void main() {
       for (final locale in kSupportedLocales.where(
         (l) => l != kFilipinoLocale,
       )) {
-        final other = lookupAunoLocalizations(locale);
+        final other = lookupFlickLocalizations(locale);
         expect(other.isFilipino, isFalse);
         expect(identical(other.englishForFilipino, other), isTrue);
       }

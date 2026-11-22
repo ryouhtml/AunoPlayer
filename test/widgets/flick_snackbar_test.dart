@@ -73,7 +73,7 @@ void main() {
     'the whole surface fades and rises over 280ms, exits over 200ms',
     (tester) async {
       final host = await _host(tester, clearance: 162);
-      host.currentState!.showAunoSnackBar(_message('Saved'));
+      host.currentState!.showFlickSnackBar(_message('Saved'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 70));
       expect(_surfaceOpacity(tester), closeTo(0.25, 0.01));
@@ -89,7 +89,7 @@ void main() {
       expect(_surfaceOpacity(tester), 1);
       expect(tester.getTopLeft(find.text('Saved')).dy, lessThan(midpointTop));
       expect(tester.getSize(find.byType(SnackBar)).height, enteringHeight);
-      host.currentState!.hideAunoSnackBar();
+      host.currentState!.hideFlickSnackBar();
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 50));
       expect(_surfaceOpacity(tester), closeTo(0.75, 0.01));
@@ -106,11 +106,11 @@ void main() {
     tester,
   ) async {
     final host = await _host(tester);
-    host.currentState!.showAunoSnackBar(_message('First'));
+    host.currentState!.showFlickSnackBar(_message('First'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 70));
     expect(_surfaceOpacity(tester), closeTo(0.25, 0.01));
-    host.currentState!.showAunoSnackBar(_message('Next'));
+    host.currentState!.showFlickSnackBar(_message('Next'));
     await tester.pump();
     expect(_surfaceOpacity(tester), closeTo(0.25, 0.01));
     await tester.pump(const Duration(milliseconds: 25));
@@ -129,7 +129,7 @@ void main() {
   ) async {
     final host = await _host(tester);
     var visibleCount = 0;
-    host.currentState!.showAunoSnackBar(
+    host.currentState!.showFlickSnackBar(
       SnackBar(
         content: const Text('Saved'),
         duration: const Duration(seconds: 2),
@@ -138,7 +138,7 @@ void main() {
     );
     await _enter(tester);
     await tester.pump(const Duration(milliseconds: 1500));
-    host.currentState!.showAunoSnackBar(_message('Saved'));
+    host.currentState!.showFlickSnackBar(_message('Saved'));
     await tester.pump(const Duration(seconds: 1));
     expect(find.text('Saved'), findsOneWidget);
     expect(visibleCount, 1);
@@ -153,10 +153,10 @@ void main() {
     tester,
   ) async {
     final host = await _host(tester);
-    host.currentState!.showAunoSnackBar(_message('First'));
+    host.currentState!.showFlickSnackBar(_message('First'));
     await _enter(tester);
-    host.currentState!.showAunoSnackBar(_message('Stale'));
-    host.currentState!.showAunoSnackBar(_message('Latest'));
+    host.currentState!.showFlickSnackBar(_message('Stale'));
+    host.currentState!.showFlickSnackBar(_message('Latest'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
     expect(find.text('First'), findsOneWidget);
@@ -172,15 +172,15 @@ void main() {
   ) async {
     final host = await _host(tester);
     var undone = false;
-    host.currentState!.showAunoSnackBar(
+    host.currentState!.showFlickSnackBar(
       SnackBar(
         content: const Text('Removed'),
         action: SnackBarAction(label: 'Undo', onPressed: () => undone = true),
       ),
     );
     await _enter(tester);
-    host.currentState!.showAunoSnackBar(_message('Stale'));
-    host.currentState!.showAunoSnackBar(_message('Latest'));
+    host.currentState!.showFlickSnackBar(_message('Stale'));
+    host.currentState!.showFlickSnackBar(_message('Latest'));
     await tester.pump(const Duration(seconds: 10));
     expect(find.text('Undo'), findsOneWidget);
     expect(find.text('Latest'), findsNothing);
@@ -195,14 +195,14 @@ void main() {
   ) async {
     final host = await _host(tester);
     for (final name in ['First', 'Second']) {
-      host.currentState!.showAunoSnackBar(
+      host.currentState!.showFlickSnackBar(
         SnackBar(
           content: Text(name),
           action: SnackBarAction(label: 'Undo $name', onPressed: () {}),
         ),
       );
     }
-    host.currentState!.showAunoSnackBar(_message('Latest'));
+    host.currentState!.showFlickSnackBar(_message('Latest'));
     await _enter(tester);
     await tester.tap(find.text('Undo First'));
     await _replace(tester);
@@ -216,18 +216,18 @@ void main() {
     tester,
   ) async {
     final host = await _host(tester);
-    host.currentState!.showAunoSnackBar(
+    host.currentState!.showFlickSnackBar(
       SnackBar(
         content: const Text('Removed'),
         action: SnackBarAction(label: 'Undo', onPressed: () {}),
       ),
     );
     await _enter(tester);
-    host.currentState!.showAunoSnackBar(
+    host.currentState!.showFlickSnackBar(
       const SnackBar(content: Text('Working'), duration: Duration(days: 1)),
       id: 'warmup',
     );
-    host.currentState!.hideAunoSnackBar(id: 'warmup');
+    host.currentState!.hideFlickSnackBar(id: 'warmup');
     await tester.pump(const Duration(seconds: 1));
     expect(find.text('Undo'), findsOneWidget);
     await tester.tap(find.text('Undo'));
@@ -237,19 +237,19 @@ void main() {
 
   testWidgets('named status updates replace only that status', (tester) async {
     final host = await _host(tester);
-    host.currentState!.showAunoSnackBar(
+    host.currentState!.showFlickSnackBar(
       const SnackBar(content: Text('Working 1'), duration: Duration(days: 1)),
       id: 'warmup',
     );
     await _enter(tester);
-    host.currentState!.showAunoSnackBar(
+    host.currentState!.showFlickSnackBar(
       const SnackBar(content: Text('Working 2'), duration: Duration(days: 1)),
       id: 'warmup',
     );
     await _replace(tester);
     expect(find.text('Working 1'), findsNothing);
     expect(find.text('Working 2'), findsOneWidget);
-    host.currentState!.hideAunoSnackBar(id: 'warmup');
+    host.currentState!.hideFlickSnackBar(id: 'warmup');
     await tester.pumpAndSettle();
     expect(find.byType(SnackBar), findsNothing);
   });
@@ -258,14 +258,14 @@ void main() {
     tester,
   ) async {
     final host = await _host(tester);
-    host.currentState!.showAunoSnackBar(
+    host.currentState!.showFlickSnackBar(
       SnackBar(
         content: const Text('Removed'),
         action: SnackBarAction(label: 'Undo', onPressed: () {}),
       ),
     );
     await _enter(tester);
-    host.currentState!.showAunoSnackBar(_message('Next'));
+    host.currentState!.showFlickSnackBar(_message('Next'));
     await tester.drag(find.byType(SnackBar), const Offset(0, 300));
     await tester.pumpAndSettle();
     expect(find.text('Next'), findsOneWidget);
@@ -278,7 +278,7 @@ void main() {
       tester,
       mediaQuery: const MediaQueryData(disableAnimations: true),
     );
-    host.currentState!.showAunoSnackBar(_message('System'));
+    host.currentState!.showFlickSnackBar(_message('System'));
     await tester.pump();
     expect(_surfaceOpacity(tester), 1);
     await tester.pump(const Duration(seconds: 2));
@@ -286,7 +286,7 @@ void main() {
     expect(find.byType(SnackBar), findsNothing);
     final preferenceHost = await _host(tester);
     AppConstants.setAnimationsEnabled(false);
-    preferenceHost.currentState!.showAunoSnackBar(_message('Preference'));
+    preferenceHost.currentState!.showFlickSnackBar(_message('Preference'));
     await tester.pump();
     expect(_surfaceOpacity(tester), 1);
     await tester.pump(const Duration(seconds: 2));
@@ -298,7 +298,7 @@ void main() {
     tester,
   ) async {
     final host = await _host(tester);
-    host.currentState!.showAunoSnackBar(_message('Saved'));
+    host.currentState!.showFlickSnackBar(_message('Saved'));
     await _enter(tester);
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
     await tester.pump(const Duration(seconds: 10));
@@ -318,7 +318,7 @@ void main() {
         mediaQuery: const MediaQueryData(accessibleNavigation: true),
       );
       final semantics = tester.ensureSemantics();
-      host.currentState!.showAunoSnackBar(_message('Saved'));
+      host.currentState!.showFlickSnackBar(_message('Saved'));
       await _enter(tester);
       await tester.pump(const Duration(seconds: 3));
       expect(find.text('Saved'), findsOneWidget);
@@ -349,7 +349,7 @@ void main() {
       ),
       clearance: 100,
     );
-    host.currentState!.showAunoSnackBar(
+    host.currentState!.showFlickSnackBar(
       const SnackBar(
         content: Directionality(
           textDirection: TextDirection.rtl,
@@ -370,7 +370,7 @@ void main() {
   ) async {
     final navigator = GlobalKey<NavigatorState>();
     final host = await _host(tester, navigatorKey: navigator);
-    host.currentState!.showAunoSnackBar(_message('Saved'));
+    host.currentState!.showFlickSnackBar(_message('Saved'));
     await _enter(tester);
     navigator.currentState!.push(
       MaterialPageRoute<void>(
@@ -390,9 +390,9 @@ void main() {
     tester,
   ) async {
     final host = await _host(tester);
-    host.currentState!.showAunoSnackBar(_message('First'));
+    host.currentState!.showFlickSnackBar(_message('First'));
     await _enter(tester);
-    host.currentState!.showAunoSnackBar(_message('Next'));
+    host.currentState!.showFlickSnackBar(_message('Next'));
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump(const Duration(seconds: 10));
     expect(tester.takeException(), isNull);

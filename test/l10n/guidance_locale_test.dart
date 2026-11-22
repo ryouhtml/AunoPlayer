@@ -121,7 +121,7 @@ void main() {
         _host(const AppInfoSettingsScreen(), locale: locale),
       );
       await tester.pump(const Duration(milliseconds: 100));
-      final copy = lookupAunoLocalizations(locale).englishForFilipino;
+      final copy = lookupFlickLocalizations(locale).englishForFilipino;
       final expectedLocale = locale == kFilipinoLocale
           ? kFallbackLocale
           : locale;
@@ -144,7 +144,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 600));
       final detailContext = tester.element(find.byType(BackButton).last);
       expect(Localizations.localeOf(detailContext), expectedLocale);
-      final licenseHeading = copy.mitLicenseCopyrightC2026Auno Player
+      final licenseHeading = copy.mitLicenseCopyrightC2026Flick
           .trim()
           .split('\n')
           .first;

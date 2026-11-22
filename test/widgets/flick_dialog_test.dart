@@ -62,7 +62,7 @@ Future<void> _openInput(
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('AunoDialogs.confirm', () {
+  group('FlickDialogs.confirm', () {
     testWidgets('returns true when confirm is tapped', (tester) async {
       bool? result;
       await tester.pumpWidget(
@@ -127,7 +127,7 @@ void main() {
     });
   });
 
-  group('AunoDialogs.input', () {
+  group('FlickDialogs.input', () {
     testWidgets('returns trimmed text and closes on submit', (tester) async {
       String? result;
       await tester.pumpWidget(
@@ -205,7 +205,7 @@ void main() {
     });
   });
 
-  group('AunoDialog', () {
+  group('FlickDialog', () {
     testWidgets('renders title, content and actions', (tester) async {
       await tester.pumpWidget(
         _host(
@@ -374,7 +374,7 @@ void main() {
     });
   });
 
-  group('AunoOptionTile', () {
+  group('FlickOptionTile', () {
     testWidgets('fires tap and shows selection state', (tester) async {
       var taps = 0;
       await tester.pumpWidget(

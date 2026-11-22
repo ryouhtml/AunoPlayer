@@ -587,7 +587,7 @@ void main() {
             locale == kFilipinoLocale ? findsOneWidget : findsNothing,
           );
           if (locale == kFilipinoLocale) {
-            expect(find.text(english.supportAuno Player), findsOneWidget);
+            expect(find.text(english.supportFlick), findsOneWidget);
             expect(find.text(english.soloDeveloper), findsOneWidget);
             expect(
               find.text(english.flickIsBuiltAndMaintainedBy),
@@ -672,7 +672,7 @@ void main() {
               _app(
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: AunoNavBar(
+                  child: FlickNavBar(
                     config: allButtons
                         ? NavBarConfig(
                             enabledButtons: NavBarButton.values,
@@ -710,7 +710,7 @@ void main() {
                 ? NavBarButton.values
                 : NavBarConfig.defaultConfig.enabledButtons;
             final script = lookupAppLocalizations(kBaybayinLocale);
-            final strings = lookupAunoLocalizations(kFilipinoLocale);
+            final strings = lookupFlickLocalizations(kFilipinoLocale);
             for (final button in buttons) {
               final label = baybayinNavigationLabel(button);
               final expected = label?.text(script) ?? button.labelFor(strings);

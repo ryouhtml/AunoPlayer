@@ -86,7 +86,16 @@ jobs:
           EOF
 
       - name: Build release APK (full flavor)
-        run: flutter build apk --release --flavor full
+        run: |
+          # Cargokit sets CC/AR for cross builds but does not pass bindgen the
+          # Android sysroot. Without these, bindgen cannot find sys/types.h or
+          # bits/libc-header-start.h when generating the wavpack/opus bindings.
+          NDK_SYSROOT="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64"
+          export BINDGEN_EXTRA_CLANG_ARGS_aarch64_linux_android="--sysroot=$NDK_SYSROOT -I$NDK_SYSROOT/usr/include/aarch64-linux-android"
+          export BINDGEN_EXTRA_CLANG_ARGS_armv7_linux_androideabi="--sysroot=$NDK_SYSROOT -I$NDK_SYSROOT/usr/include/arm-linux-androideabi"
+          export BINDGEN_EXTRA_CLANG_ARGS_x86_64_linux_android="--sysroot=$NDK_SYSROOT -I$NDK_SYSROOT/usr/include/x86_64-linux-android"
+          export BINDGEN_EXTRA_CLANG_ARGS_i686_linux_android="--sysroot=$NDK_SYSROOT -I$NDK_SYSROOT/usr/include/i686-linux-android"
+          flutter build apk --release --flavor full
 
       - name: Verify APK
         run: |

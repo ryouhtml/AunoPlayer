@@ -103,8 +103,8 @@ void main() {
     'Taglish keeps the count label and buttons English and rotates the message',
     (tester) async {
       addTearDown(() => LocaleController.instance.bindLocale(kFallbackLocale));
-      final taglish = lookupAunoLocalizations(kFilipinoLocale);
-      final english = lookupAunoLocalizations(kFallbackLocale);
+      final taglish = lookupFlickLocalizations(kFilipinoLocale);
+      final english = lookupFlickLocalizations(kFallbackLocale);
 
       for (final streak in [1, 8, 99]) {
         await _pumpStreak(tester, locale: kFilipinoLocale, streak: streak);
@@ -135,7 +135,7 @@ void main() {
     tester,
   ) async {
     addTearDown(() => LocaleController.instance.bindLocale(kFallbackLocale));
-    final english = lookupAunoLocalizations(kFallbackLocale);
+    final english = lookupFlickLocalizations(kFallbackLocale);
 
     await _pumpStreak(tester, locale: kFallbackLocale, streak: 1);
 
@@ -160,7 +160,7 @@ void main() {
     tester,
   ) async {
     addTearDown(() => LocaleController.instance.bindLocale(kFallbackLocale));
-    final chinese = lookupAunoLocalizations(const Locale('zh', 'CN'));
+    final chinese = lookupFlickLocalizations(const Locale('zh', 'CN'));
 
     await _pumpStreak(tester, locale: const Locale('zh', 'CN'), streak: 1);
 
@@ -187,7 +187,7 @@ void main() {
       kFallbackLocale,
       const Locale('zh', 'CN'),
     ]) {
-      final strings = lookupAunoLocalizations(locale).englishForFilipino;
+      final strings = lookupFlickLocalizations(locale).englishForFilipino;
       await _pumpStreak(tester, locale: locale, streak: streak);
 
       expect(find.text('$streak'), findsNWidgets(2));

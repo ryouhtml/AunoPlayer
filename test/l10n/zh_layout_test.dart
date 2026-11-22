@@ -365,7 +365,7 @@ void main() {
         expect(find.text(l10n.discard), findsOneWidget);
 
         // The cancel button used to be the library's own English default,
-        // because `AunoDialogs.confirm` defaulted `cancelLabel` to the literal
+        // because `FlickDialogs.confirm` defaulted `cancelLabel` to the literal
         // 'Cancel' and 17 of its 18 call sites pass no `cancelLabel`.
         expect(
           find.text(l10n.cancel),
@@ -383,7 +383,7 @@ void main() {
   });
 
   testWidgets('zh: the input dialog cancels in Chinese too', (tester) async {
-    // `AunoDialogs.input` carried the same hardcoded 'Cancel' default as
+    // `FlickDialogs.input` carried the same hardcoded 'Cancel' default as
     // `confirm`, and all 7 of its call sites omit `cancelLabel`.
     await tester.pumpWidget(
       _host(
@@ -391,7 +391,7 @@ void main() {
           builder: (context) => Center(
             child: FilledButton(
               key: _openDialogKey,
-              onPressed: () => AunoDialogs.input(
+              onPressed: () => FlickDialogs.input(
                 context,
                 title: l10n.rename,
                 hintText: l10n.playlistName,

@@ -134,7 +134,7 @@ void main() {
         resolveAppLocale(requested, kSupportedLocales),
         const Locale('es'),
       );
-      expect(lookupAunoLocalizations(requested).language, 'Idioma');
+      expect(lookupFlickLocalizations(requested).language, 'Idioma');
     }
     expect(kSupportedLocales, contains(const Locale('es')));
   });

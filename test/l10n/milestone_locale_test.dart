@@ -58,8 +58,8 @@ void main() {
     tester.view.physicalSize = const Size(390, 3000);
     addTearDown(tester.view.resetDevicePixelRatio);
     addTearDown(tester.view.resetPhysicalSize);
-    final english = lookupAunoLocalizations(kFallbackLocale);
-    final taglish = lookupAunoLocalizations(kFilipinoLocale);
+    final english = lookupFlickLocalizations(kFallbackLocale);
+    final taglish = lookupFlickLocalizations(kFilipinoLocale);
     await tester.pumpWidget(_host(MilestonesScreen(service: _service())));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
@@ -104,7 +104,7 @@ void main() {
     tester.view.physicalSize = const Size(390, 844);
     addTearDown(tester.view.resetDevicePixelRatio);
     addTearDown(tester.view.resetPhysicalSize);
-    final english = lookupAunoLocalizations(kFallbackLocale);
+    final english = lookupFlickLocalizations(kFallbackLocale);
     await tester.pumpWidget(_host(MilestonesScreen(service: _service())));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));

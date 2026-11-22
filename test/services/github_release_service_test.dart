@@ -21,7 +21,7 @@ Map<String, dynamic> _release({
     'tag_name': tag,
     'name': name ?? tag,
     'body': body,
-    'html_url': 'https://github.com/moss-apps/Auno Player/releases/tag/$tag',
+    'html_url': 'https://github.com/ryouhtml/AunoPlayer/releases/tag/$tag',
     'prerelease': prerelease,
     'draft': draft,
     'assets': assets ?? [_apk('flick_$tag-release-official-full.apk')],
