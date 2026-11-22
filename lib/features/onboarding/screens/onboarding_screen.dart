@@ -96,7 +96,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             fit: BoxFit.scaleDown,
                             alignment: AlignmentDirectional.centerStart,
                             child: Text(
-                              'Auno Player',
+                              l10n.appTitle,
                               // Fixed-size logotype, not guidance copy.
                               textScaler: TextScaler.noScaling,
                               style: _type(24, colors.foreground).copyWith(

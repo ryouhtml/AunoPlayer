@@ -1,6 +1,62 @@
 use std::env;
 use std::path::PathBuf;
 
+/// Cargo-ndk passes the Android sysroot to bindgen via
+/// BINDGEN_EXTRA_CLANG_ARGS. Cargokit (used by flutter_rust_bridge) sets CC/AR
+/// for cross builds but not those bindgen variables, so derive the same flags
+/// from the compiler path here. This keeps the native bind step working for
+/// both build systems.
+fn ndk_prebuilt(target: &str) -> Option<PathBuf> {
+    for key in [
+        format!("CC_{}", target),
+        format!("CC_{}", target.replace('-', "_")),
+    ] {
+        if let Ok(cc) = env::var(&key) {
+            if let Some(prebuilt) = PathBuf::from(cc)
+                .ancestors()
+                .find(|p| p.file_name().and_then(|n| n.to_str()) == Some("bin"))
+                .and_then(|p| p.parent())
+            {
+                return Some(prebuilt.to_path_buf());
+            }
+        }
+    }
+    for key in ["ANDROID_NDK_HOME", "ANDROID_NDK_ROOT", "NDK_HOME"] {
+        if let Ok(ndk) = env::var(key) {
+            return Some(
+                PathBuf::from(ndk).join("toolchains/llvm/prebuilt/linux-x86_64"),
+            );
+        }
+    }
+    None
+}
+
+fn android_bindgen_clang_args() -> Vec<String> {
+    let target = match env::var("TARGET") {
+        Ok(target) => target,
+        Err(_) => return Vec::new(),
+    };
+    if !target.ends_with("-android") {
+        return Vec::new();
+    }
+    let sysroot_target = match target.as_str() {
+        "armv7-linux-androideabi" => "arm-linux-androideabi",
+        other => other,
+    };
+    let prebuilt = match ndk_prebuilt(&target) {
+        Some(prebuilt) => prebuilt,
+        None => return Vec::new(),
+    };
+    let sysroot = prebuilt.join("sysroot");
+    vec![
+        format!("--sysroot={}", sysroot.display()),
+        format!(
+            "-I{}",
+            sysroot.join("usr/include").join(sysroot_target).display()
+        ),
+    ]
+}
+
 fn main() {
     let opus_root = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap()).join("opus");
     let opus_include = opus_root.join("include");
@@ -181,14 +237,18 @@ fn main() {
 
     build.compile("opus");
 
-    let bindings = bindgen::Builder::default()
+    let mut bindings = bindgen::Builder::default()
         .header(opus_include.join("opus.h").to_str().unwrap())
         .clang_arg(format!("-I{}", opus_include.display()))
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
         .allowlist_function("opus_.*")
         .allowlist_type("Opus.*")
         .allowlist_var("OPUS_.*")
-        .size_t_is_usize(true)
+        .size_t_is_usize(true);
+    for arg in android_bindgen_clang_args() {
+        bindings = bindings.clang_arg(arg);
+    }
+    let bindings = bindings
         .generate()
         .expect("Unable to generate opus bindings");
 

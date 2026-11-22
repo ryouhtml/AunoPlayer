@@ -41,8 +41,16 @@ void main() {
   });
 
   tearDown(() async {
-    if (await cacheDir.exists()) {
-      await cacheDir.delete(recursive: true);
+    if (!await cacheDir.exists()) return;
+    // The service can still be flushing a cache write when the test body ends;
+    // give it a few ticks before giving up on cleaning the temp directory.
+    for (var attempt = 0; attempt < 5; attempt++) {
+      try {
+        await cacheDir.delete(recursive: true);
+        return;
+      } on FileSystemException {
+        await Future<void>.delayed(const Duration(milliseconds: 50));
+      }
     }
   });
 
