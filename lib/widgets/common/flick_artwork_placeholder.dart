@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-/// Centered Flick logo used when album art is missing.
+/// Centered Auno logo used when album art is missing.
 ///
 /// Used as placeholder/errorWidget inside [CachedImageWidget] fallbacks.
-/// The SVG `assets/icons/flicklogo_svg.svg` is white `#F5F5F5` on
-/// transparent, so it is rendered on a dark surface and dimmed via
-/// [opacity] to match the previous `Icon(..., white 0.48)` look.
+/// The master square logo is rendered with `BoxFit.contain` and can be tinted
+/// via [color] and dimmed via [opacity] to match the surrounding surface.
 class FlickArtworkPlaceholder extends StatelessWidget {
   const FlickArtworkPlaceholder({
     super.key,

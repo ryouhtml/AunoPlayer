@@ -89,11 +89,11 @@ dev_dependencies:
   riverpod_lint: ^3.0.3
 
 flutter_launcher_icons:
-  image_path: "assets/icons/auno_icon.png"
+  image_path: "assets/icons/auno_logo_square.png"
   android: "launcher_icon"
   adaptive_icon_background: "#F5F5F5"
-  adaptive_icon_foreground: "assets/icons/auno_icon.png"
-  adaptive_icon_monochrome: "assets/icons/auno_icon.png"
+  adaptive_icon_foreground: "assets/icons/auno_logo_square.png"
+  adaptive_icon_monochrome: "assets/icons/auno_logo_square.png"
 
 # Resolve conflict between riverpod_generator and isar_community_generator
 # while keeping build_runner compatible with the cached toolchain versions.
@@ -111,9 +111,6 @@ flutter:
     - assets/icons/auno_logo.png
     - assets/icons/auno_icon.png
     - assets/icons/auno_logo_square.png
-    - assets/icons/flicklogo.png
-    - assets/icons/flicklogo_svg.svg
-    - assets/icons/flicklogo_transparent.png
     - assets/recap/
     - assets/icons/svg/menu.svg
     - assets/icons/svg/record_vinyl.svg

@@ -63,15 +63,42 @@ class _OnboardingGraphicState extends State<OnboardingGraphic>
   @override
   Widget build(BuildContext context) => ExcludeSemantics(
     child: RepaintBoundary(
-      child: CustomPaint(
-        painter: _PosterPainter(
-          index: widget.index,
-          foreground: widget.foreground,
-          accent: widget.accent,
-          background: widget.background,
-          entrance: _entrance,
-        ),
-        child: const SizedBox.expand(),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final scale = math.min(constraints.maxWidth / 360, constraints.maxHeight / 244);
+          final left = (constraints.maxWidth - 360 * scale) / 2;
+          final top = (constraints.maxHeight - 244 * scale) / 2;
+          final Rect? markRect = switch (widget.index) {
+            0 => const Rect.fromLTWH(166, 0, 194, 235),
+            4 => const Rect.fromLTWH(168, 38, 132, 160),
+            _ => null,
+          };
+          return Stack(
+            children: [
+              CustomPaint(
+                painter: _PosterPainter(
+                  index: widget.index,
+                  foreground: widget.foreground,
+                  accent: widget.accent,
+                  background: widget.background,
+                  entrance: _entrance,
+                ),
+                child: const SizedBox.expand(),
+              ),
+              if (markRect != null)
+                Positioned(
+                  left: left + markRect.left * scale,
+                  top: top + markRect.top * scale,
+                  width: markRect.width * scale,
+                  height: markRect.height * scale,
+                  child: Image.asset(
+                    'assets/icons/auno_logo.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+            ],
+          );
+        },
       ),
     ),
   );
@@ -130,7 +157,6 @@ class _PosterPainter extends CustomPainter {
       Paint()..color = foreground,
     );
     canvas.drawCircle(const Offset(112, 148), 5, Paint()..color = accent);
-    _mark(canvas, const Rect.fromLTWH(166, 0, 194, 235), foreground);
   }
 
   void _library(Canvas canvas) {
@@ -225,7 +251,6 @@ class _PosterPainter extends CustomPainter {
 
   void _ready(Canvas canvas) {
     canvas.drawCircle(const Offset(231, 120), 112, Paint()..color = accent);
-    _mark(canvas, const Rect.fromLTWH(168, 38, 132, 160), background);
     _stripes(canvas, const Rect.fromLTWH(-24, 166, 130, 62), foreground);
     _dots(canvas, const Offset(16, 46), accent, columns: 4, rows: 3);
   }
@@ -302,54 +327,6 @@ class _PosterPainter extends CustomPainter {
       paint,
     );
   }
-
-  void _mark(Canvas canvas, Rect bounds, Color color) {
-    final paint = Paint()..color = color;
-    for (var i = 0; i < _logoDots.length; i++) {
-      final t = Interval(
-        i * 0.012,
-        0.72 + i * 0.012,
-        curve: Curves.easeOutQuart,
-      ).transform(entrance.value);
-      final dot = _logoDots[i];
-      final center = Offset(
-        bounds.left + dot.dx * bounds.width,
-        bounds.top + dot.dy * bounds.height,
-      );
-      canvas.drawCircle(
-        center +
-            Offset(
-              (1 - t) * (-70 - i % 3 * 14),
-              (1 - t) * (i.isEven ? 18 : -18),
-            ),
-        bounds.width * (29.4994 / 606) * (0.8 + 0.2 * t),
-        paint,
-      );
-    }
-  }
-
-  // Circle centers transformed directly from assets/icons/flicklogo_svg.svg.
-  // Keep its 606:734 proportions and all 18 dots; this is the official mark.
-  static const _logoDots = [
-    Offset(0.938466, 0.822157),
-    Offset(0.784463, 0.779958),
-    Offset(0.630459, 0.737761),
-    Offset(0.631196, 0.345784),
-    Offset(0.631196, 0.479750),
-    Offset(0.631196, 0.613716),
-    Offset(0.328776, 0.122214),
-    Offset(0.479865, 0.171068),
-    Offset(0.630954, 0.219922),
-    Offset(0.177080, 0.197360),
-    Offset(0.328169, 0.246215),
-    Offset(0.479256, 0.295068),
-    Offset(0.479499, 0.429279),
-    Offset(0.187999, 0.079650),
-    Offset(0.048679, 0.040190),
-    Offset(0.937916, 0.948444),
-    Offset(0.783913, 0.906247),
-    Offset(0.629910, 0.864048),
-  ];
 
   @override
   bool shouldRepaint(_PosterPainter oldDelegate) =>
