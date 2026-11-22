@@ -34,7 +34,7 @@ Baseline yang menjadi titik awal adalah commit `c3be702` yang sudah dirilis seba
 - Tanpa iklan, pelacakan, atau premium tier. Satu-satunya izin jaringan yang tersisa adalah `android.permission.INTERNET` untuk lirik online.
 - **Tidak ada dependency baru.** Gunakan dependency yang sudah ada (`realfft`, `lofty`, `dsf-meta`, `dff-meta`, `wavpack-sys`, `symphonia`, `hound` untuk test).
 - Asisten tidak memasang, meluncurkan, atau menguji di perangkat; pengguna yang melakukan verifikasi hardware.
-- Semua teks UI baru harus melalui `l10n`; tidak ada string hard-coded baru.
+- Semua teks UI baru harus melalui `l10n`; tidak ada string hard-coded baru. Setiap kunci baru yang diperkenalkan di Fase 3–5 wajib ditambahkan ke `app_en.arb` (template) dan diterjemahkan ke semua locale yang didukung, termasuk `app_id.arb`, sebelum gate fase tersebut lulus.
 - Internal identifier (nama class, file, generated getter l10n) yang sudah ada tetap canonical agar diff tetap terkonsentrasi; yang diubah adalah string yang ditampilkan dan aset gambar.
 
 ## 4. Arsitektur Umum
@@ -66,7 +66,7 @@ Data lokal tetap berpusat di `lib/data/database.dart` (Isar). Ada dua schema bum
 - Teks "Auno Player" di `onboarding_screen.dart` sudah benar dan tetap.
 - Verifikasi: SHA-256 semua aset gambar yang dikirimkan tidak ada yang sama dengan `flicklogo.png`; grep UI tidak menemukan string "Flick" yang ditampilkan.
 
-### 5.2Penghapusan Layanan
+### 5.2 Penghapusan Layanan
 
 Hapus secara menyeluruh (kode, rute, tile pengaturan, provider, service, entitas Isar usang, izin/dependency Android yang tidak terpakai, dan kunci l10n terkait di semua ARB):
 
@@ -86,7 +86,7 @@ Hapus secara menyeluruh (kode, rute, tile pengaturan, provider, service, entitas
 
 ## 6. Fase 2 — Bahasa Indonesia Penuh
 
-- Buat `lib/l10n/app_id.arb` sebagai terjemahan lengkap `app_en.arb`. every key diterjemahkan ke Bahasa Indonesia natural dengan istilah audio yang tepat: *laju sampel, kedalaman bit, rentang dinamis, kanal, laju bit, karaoke, lirik, riwayat, rekap*. Singkatan teknis (FLAC, DSD, DoP, DAC, LUFS, ReplayGain, AutoEQ, Tidal dll. yang masih relevan) tidak diterjemahkan.
+- Buat `lib/l10n/app_id.arb` sebagai terjemahan lengkap `app_en.arb`. Setiap kunci diterjemahkan ke Bahasa Indonesia natural dengan istilah audio yang tepat: *laju sampel, kedalaman bit, rentang dinamis, kanal, laju bit, karaoke, lirik, riwayat, rekap*. Singkatan teknis yang masih dipakai (FLAC, DSD, DoP, DAC, LUFS, ReplayGain, AutoEQ) tidak diterjemahkan.
 - Placeholder `{param}`, sintaks plural ICU, dan metadata `@` dipertahankan persis.
 - `lib/l10n/l10n.dart`: tambah `Locale('id')` ke `kSupportedLocales`; resolver menerima `id` dan `id_ID` lewat mekanisme language-code yang sudah ada. Tidak perlu logika script khusus.
 - `lib/features/settings/widgets/language_settings_card.dart`: tambah opsi "Bahasa Indonesia".
@@ -103,7 +103,7 @@ Hapus secara menyeluruh (kode, rute, tile pengaturan, provider, service, entitas
 
 - Perluas `lib/services/lyrics_service.dart`: `KaraokeLine`, `KaraokeWord`, `KaraokeSyllable` dengan `startMs`, `endMs` opsional, `startChar`/`endChar`, `sungUntilMs`, `background`, `alignment`, dan enum `TimingSource` (`embeddedEnhancedLrc`, `sidecarEnhancedLrc`, `onlineProvider`, `manual`, `lineOnly`).
 - Parser enhanced LRC `<mm:ss.xx>` yang sudah ada dipakai ulang. Adapter baru menyatukan embedded, sidecar, provider online, dan manual override menjadi satu model tanpa mengubah API publik `LyricsData` yang sudah dipakai komponen lain.
-- Algoritma span (sweep karakter, periode animate, char sung pada posisi tertentu, penanganan gap) diadaptasi dari model `LyricLine`/`LyricWord`/`LyricSyllable` BitChord ke Dart. Karena listen turunan GPL-3.0, sertakan header atribusi di file terkait; proyek sudah GPL-3.0-or-later.
+- Algoritma span (sweep karakter, periode animate, char sung pada posisi tertentu, penanganan gap) diadaptasi dari model `LyricLine`/`LyricWord`/`LyricSyllable` BitChord ke Dart. Karena kode ini turunan GPL-3.0, sertakan header atribusi di file terkait; proyek sudah GPL-3.0-or-later.
 
 ### 7.2 Rendering & Interaksi
 
@@ -149,7 +149,7 @@ Aksi lokal: simpan laporan sebagai file teks/JSON di direktori aplikasi. Tidak a
 - `UnsupportedFormat`, `UnsupportedMultichannel`, `Unreadable`, `NoAudioStream`, `NoSamples`, `Busy`, `Cancelled` tetap ditampilkan jelas dengan opsi retry untuk status yang retryable.
 - Content-URI, cue in/out, dan sourceType network tetap ditolak seperti perilaku sekarang (`audioAnalysisUnavailableReason`).
 - Analisis DSD yang gagal tetap menampilkan metadata tag, bukan layar kosong.
-- Test: unit test Rust dengan fixture WAV/FLAC/DSD dari `hound` (dev-dependency sudah ada), test field baru, widget test sheet dengan data lengkap dan sebagian.
+- Test: unit test Rust dengan fixture WAV yang dihasilkan `hound` (dev-dependency sudah ada) serta fixture FLAC/DSD minimal yang disimpan sebagai file statis di repo, test field baru, widget test sheet dengan data lengkap dan sebagian.
 - Gate: `cargo test --lib --manifest-path rust/Cargo.toml` + `flutter analyze` + `flutter test` hijau; metrik tampil untuk file lokal; nol dependency baru.
 
 ---
@@ -158,7 +158,7 @@ Aksi lokal: simpan laporan sebagai file teks/JSON di direktori aplikasi. Tidak a
 
 ### 9.1 Data
 
-- Entitas baru `lib/data/entities/listening_event_entity.dart` di `lib/data/database.dart`: `songId`, `playedAt`, `listenedMs`, `completedRatio`, dan snapshot `title`, `artist`, `album` agar rekap tetap benar saat file dihapus. Index pada `playedAt` dan `songId`.
+- Entitas baru `lib/data/entities/listening_event_entity.dart` di `lib/data/database.dart`: `songId`, `sessionId`, `playedAt`, `listenedMs`, `completedRatio`, dan snapshot `title`, `artist`, `album` agar rekap tetap benar saat file dihapus. Index pada `playedAt`, `songId`, dan `sessionId`.
 - `recently_played_entity.dart` tetap dipakai untuk tampilan "terakhir diputar".
 - Player service mencatat event saat putar dimulai dan saat selesai/dijeda; menghitung **waktu dengar aktual**, bukan durasi file. `sessionId` mencegah dobel hitung saat pause/resume.
 - Isar schema bump + backfill dari histori lama yang masih tersedia.
