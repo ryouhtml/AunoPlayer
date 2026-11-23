@@ -10,7 +10,7 @@ import '../../../widgets/common/vinyl_record.dart';
 import 'package:auno_player/l10n/english_l10n.dart';
 
 /// Signature celebration card shown when a milestone is unlocked. The visual
-/// anchor is a hand-painted vinyl record — a deliberate reference to Flick's
+/// anchor is a hand-painted vinyl record — a deliberate reference to Auno's
 /// music-player identity — with a tier-tinted center label. The card chrome
 /// stays in the app's monochrome glass vocabulary; the tier color is reserved
 /// for the disc label and a thin accent dot next to the title.
@@ -21,21 +21,14 @@ class MilestoneCard extends StatefulWidget {
     this.achievedAt,
     this.nextMilestone,
     this.nextRemaining,
-    this.supportLabel = 'Support Auno Player',
     this.dismissLabel = 'Dismiss',
-    this.onSupportTap,
   });
 
   final MilestoneType milestone;
   final DateTime? achievedAt;
   final MilestoneType? nextMilestone;
   final int? nextRemaining;
-  final String supportLabel;
   final String dismissLabel;
-
-  /// Called when the user taps the support action. If null, the host screen
-  /// is responsible for navigating to its own support page.
-  final VoidCallback? onSupportTap;
 
   @override
   State<MilestoneCard> createState() => _MilestoneCardState();
@@ -232,17 +225,6 @@ class _MilestoneCardState extends State<MilestoneCard>
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text(widget.dismissLabel),
-        ),
-        const SizedBox(width: AppConstants.spacingXs),
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-            widget.onSupportTap?.call();
-          },
-          child: Text(
-            widget.supportLabel,
-            style: TextStyle(color: AppColors.accent),
-          ),
         ),
       ],
     );

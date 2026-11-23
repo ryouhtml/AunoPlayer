@@ -214,8 +214,6 @@ const Map<String, String> _internalAssertionPaths = <String, String>{
   'lib/services/wav_stream_audio_source.dart': 'session assertions',
   'lib/services/csv_export_service.dart':
       'the recap screen swallows the failure and shows l10n.couldNotSave…',
-  'lib/features/recap/screens/replay_studio_screen.dart':
-      'the Ko-fi failure is swallowed and replaced by l10n.couldNotOpenKoFi…',
   'lib/features/playlists/screens/playlist_detail_screen.dart':
       'StateError from firstWhere orElse -- an internal invariant, not copy',
   'lib/features/playlists/utils/playlist_cover_render.dart':

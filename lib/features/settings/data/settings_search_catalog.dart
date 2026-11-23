@@ -22,7 +22,6 @@ import '../screens/playback_display_settings_screen.dart';
 import '../screens/player_layout_settings_screen.dart';
 import '../screens/privacy_policy_screen.dart';
 import '../screens/queue_settings_screen.dart';
-import '../screens/support_flick_screen.dart';
 import '../screens/uac2_preferences_screen.dart';
 import '../screens/uac2_settings_screen.dart';
 import '../screens/ui_customization_settings_screen.dart';
@@ -764,7 +763,6 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
           ('viewOnboarding', l10n.viewOnboarding),
           ('interactiveTutorial', l10n.interactiveTutorial),
         ]),
-        _section('support', l10n.support, []),
       ],
     ),
     page(
@@ -774,14 +772,6 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
       LucideIcons.shield,
       (_) => const PrivacyPolicyScreen(),
       keywords: 'privacy data',
-    ),
-    page(
-      'support_flick',
-      l10n.supportFlick,
-      about,
-      LucideIcons.heart,
-      (_) => const SupportFlickScreen(),
-      keywords: 'donate donation support coffee',
     ),
   ];
 }

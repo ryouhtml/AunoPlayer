@@ -50,10 +50,6 @@
   "tourOpenAudio": "Open Audio settings",
   "tourActionConfirmed": "Got it. On to the next step.",
   "tourUnavailable": "Control not visible? You can continue, or use the manual below.",
-  "filipinoDonationNote": "Thank you for supporting Auno Player.",
-  "@filipinoDonationNote": {
-    "description": "Personal note shown only in the Taglish locale, above the donation cards."
-  },
   "playingLabel": "Playing",
   "@playingLabel": {
     "description": "Compact player status heading; the Filipino Baybayin label says Tumutugtog."
@@ -1582,10 +1578,6 @@
   "@buttons": {
     "description": "lib/features/settings/screens/bottom_bar_settings_screen.dart:110"
   },
-  "buyMeACoffee": "Buy Me a Coffee",
-  "@buyMeACoffee": {
-    "description": "Buy Me a Coffee donation option label on the Support Auno Player screen."
-  },
   "by": "\"{arg1}\" by {arg2}",
   "@by": {
     "description": "lib/features/songs/widgets/song_actions_bottom_sheet.dart:726",
@@ -2281,10 +2273,6 @@
   "couldNotOpenBrowser": "Could not open browser.",
   "@couldNotOpenBrowser": {
     "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:683"
-  },
-  "couldNotOpenKoFiPlease": "Could not open Ko-fi. Please try again.",
-  "@couldNotOpenKoFiPlease": {
-    "description": "lib/features/recap/screens/replay_studio_screen.dart:796"
   },
   "couldNotOpenLink": "Could not open link",
   "@couldNotOpenLink": {
@@ -3658,14 +3646,6 @@
   "@donTShowAgainToday": {
     "description": "lib/features/milestone/widgets/streak_popup.dart:287"
   },
-  "donate": "Donate",
-  "@donate": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:198"
-  },
-  "donateFundFeaturesAndKeepThe": "Donate, fund features, and keep the app alive",
-  "@donateFundFeaturesAndKeepThe": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:718"
-  },
   "done": "Done",
   "@done": {
     "description": "lib/features/player/screens/lyrics_sync_screen.dart:634"
@@ -4551,10 +4531,6 @@
   "@flickChecksFlickPlayerSiteFor": {
     "description": "lib/features/settings/screens/app_info_settings_screen.dart:176"
   },
-  "flickIsBuiltAndMaintainedBy": "Auno Player is built and maintained by one person with zero budget. No team, no funding, no ads.",
-  "@flickIsBuiltAndMaintainedBy": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:138"
-  },
   "flickLogs": "Auno Player logs",
   "@flickLogs": {
     "description": "lib/features/settings/screens/logs_screen.dart:110"
@@ -4582,10 +4558,6 @@
   "flickScansForPlayStoreUpdates": "Auno Player scans for Play Store updates whenever you are online",
   "@flickScansForPlayStoreUpdates": {
     "description": "lib/features/settings/screens/app_info_settings_screen.dart:175"
-  },
-  "flickWillAlwaysBeFreeDonations": "Auno Player will always be free. Donations keep the project alive without paywalls or subscriptions.",
-  "@flickWillAlwaysBeFreeDonations": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:145"
   },
   "flickWillForceYourChosenCodec": "Auno Player will force your chosen codec on connect",
   "@flickWillForceYourChosenCodec": {
@@ -5590,10 +5562,6 @@
         "type": "Object"
       }
     }
-  },
-  "koFi": "Ko-fi",
-  "@koFi": {
-    "description": "Ko-fi donation option label on the Support Auno Player screen."
   },
   "label": "Label",
   "@label": {
@@ -9698,10 +9666,6 @@
   "@solid": {
     "description": "lib/features/settings/screens/widget_settings_screen.dart:187"
   },
-  "soloDeveloper": "Solo Developer",
-  "@soloDeveloper": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:136"
-  },
   "someOnlineFeaturesMayNotWork": "  ·  Some online features may not work",
   "@someOnlineFeaturesMayNotWork": {
     "description": "lib/widgets/common/offline_notice.dart:185"
@@ -10212,22 +10176,6 @@
   "support": "Support",
   "@support": {
     "description": "lib/features/settings/screens/app_info_settings_screen.dart:703"
-  },
-  "supportDevelopmentOnBuyMeACoffee": "Support development on Buy Me a Coffee",
-  "@supportDevelopmentOnBuyMeACoffee": {
-    "description": "Buy Me a Coffee donation option subtitle on the Support Auno Player screen."
-  },
-  "supportDevelopmentOnKoFi": "Support development on Ko-fi",
-  "@supportDevelopmentOnKoFi": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:213"
-  },
-  "supportFlick": "Support Auno Player",
-  "@supportFlick": {
-    "description": "lib/features/menu/screens/menu_screen.dart:367"
-  },
-  "supportFlickOnKoFi": "Support Auno Player on Ko-fi",
-  "@supportFlickOnKoFi": {
-    "description": "lib/features/recap/screens/replay_studio_screen.dart:775"
   },
   "surfaceShading": "Surface shading",
   "@surfaceShading": {
@@ -11733,10 +11681,6 @@
   "wholeAlbum": "Whole album",
   "@wholeAlbum": {
     "description": "lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:404"
-  },
-  "whyDonate": "Why Donate",
-  "@whyDonate": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:131"
   },
   "wide": "{amount}% wide",
   "@wide": {

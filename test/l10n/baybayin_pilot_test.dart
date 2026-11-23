@@ -249,10 +249,6 @@ void main() {
       expect(strings.playingLabel, 'Tumutugtog');
       expect(strings.nowPlaying, 'Kasalukuyang tumutugtog');
       expect(
-        strings.filipinoDonationNote,
-        'Donations will help me a lot! Hehehe. Sana masarap ulam mo lagi!',
-      );
-      expect(
         strings.configureYourMusicExperience,
         'Dito mo ayusin mga configuration ng settings mo.',
       );
@@ -302,7 +298,6 @@ void main() {
         en['playerMenuRefreshAlbumArt'],
       );
       expect(strings.englishForFilipino.settings, en['settings']);
-      expect(strings.englishForFilipino.soloDeveloper, en['soloDeveloper']);
       expect(strings.search, filipino['search']);
       final englishCopy = strings.englishForFilipino;
       expect(

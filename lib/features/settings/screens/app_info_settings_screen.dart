@@ -15,7 +15,6 @@ import 'package:auno_player/core/constants/app_constants.dart';
 import 'package:auno_player/core/utils/responsive.dart';
 import 'package:auno_player/features/onboarding/screens/onboarding_screen.dart';
 import 'package:auno_player/features/settings/screens/privacy_policy_screen.dart';
-import 'package:auno_player/features/settings/screens/support_flick_screen.dart';
 import 'package:auno_player/features/settings/widgets/settings_widgets.dart';
 import 'package:auno_player/models/update_channel.dart';
 import 'package:auno_player/providers/providers.dart';
@@ -34,8 +33,7 @@ class AppInfoSettingsScreen extends ConsumerStatefulWidget {
       _AppInfoSettingsScreenState();
 }
 
-class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen>
-    with SingleTickerProviderStateMixin {
+class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen> {
   // Follow GitHub's "latest release" instead of a pinned tag so the patch
   // notes stay current without a code change on every release.
   static final Uri _releaseNotesApiUri = Uri.parse(
@@ -44,32 +42,12 @@ class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen>
   static const String _releaseNotesUrl =
       'https://github.com/ryouhtml/AunoPlayer/releases/latest';
 
-  late final AnimationController _donationPulseController;
-  late final Animation<double> _donationPulseAnimation;
-
   String? _buildFlavor;
 
   @override
   void initState() {
     super.initState();
     _loadBuildFlavor();
-    _donationPulseController = AnimationController(
-      duration: const Duration(milliseconds: 2000),
-      vsync: this,
-    );
-    _donationPulseAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _donationPulseController,
-        curve: Curves.easeInOut,
-      ),
-    );
-    _donationPulseController.repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    _donationPulseController.dispose();
-    super.dispose();
   }
 
   void _showToast(String message) {
@@ -817,36 +795,6 @@ class _AppInfoSettingsScreenState extends ConsumerState<AppInfoSettingsScreen>
               ),
             ],
           ),
-          const SizedBox(height: AppConstants.spacingLg),
-          SettingsSectionHeader(l10n.englishForFilipino.support, sectionId: 'support'),
-          AnimatedBuilder(
-            animation: _donationPulseAnimation,
-            builder: (context, child) {
-              return SettingsCard(
-                border: Border.all(
-                  color: AppColors.textPrimary.withValues(
-                    alpha: 0.25 + _donationPulseAnimation.value * 0.55,
-                  ),
-                  width: 1.0 + _donationPulseAnimation.value * 1.2,
-                ),
-                children: [
-                  NavigationSetting(
-                    icon: LucideIcons.heart,
-                    title: l10n.englishForFilipino.supportFlick,
-                    subtitle: l10n.donateFundFeaturesAndKeepThe,
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute<void>(
-                          builder: (_) => const SupportFlickScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              );
-            },
-          ),
-          const SizedBox(height: AppConstants.spacingLg),
           const SizedBox(height: AppConstants.navBarHeight + 40),
         ],
       ),

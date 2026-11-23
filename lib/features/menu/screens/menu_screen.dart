@@ -375,37 +375,6 @@ class _MenuScreenState extends ConsumerState<MenuScreen>
               ),
             ],
           ),
-          const SizedBox(height: AppConstants.spacingMd),
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton(
-              onPressed: () {
-                try {
-                  launchUrl(
-                    Uri.parse('https://ko-fi.com/ultraelectronica'),
-                    mode: LaunchMode.externalApplication,
-                  );
-                } catch (_) {}
-              },
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(color: AppColors.glassBorder),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppConstants.spacingMd,
-                  vertical: AppConstants.spacingSm,
-                ),
-                backgroundColor: AppColors.glassBackgroundStrong,
-              ),
-              child: Text(
-                l10n.supportFlick,
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: context.adaptiveTextPrimary,
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

@@ -12,7 +12,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:auno_player/core/theme/app_theme.dart';
 import 'package:auno_player/features/settings/screens/interface_settings_screen.dart';
-import 'package:auno_player/features/settings/screens/support_flick_screen.dart';
 import 'package:auno_player/features/settings/widgets/language_settings_card.dart';
 import 'package:auno_player/features/settings/widgets/settings_widgets.dart';
 import 'package:auno_player/l10n/home_greeting.dart';
@@ -557,76 +556,6 @@ void main() {
       expect(tile, findsOneWidget);
     }
     expect(tester.takeException(), isNull);
-  });
-
-  testWidgets('support is English with the exact Taglish-only donation card', (
-    tester,
-  ) async {
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
-    final strings = lookupFlickLocalizations(kFilipinoLocale);
-    final english = strings.englishForFilipino;
-    for (final locale in kSupportedLocales) {
-      for (final width in [320.0, 375.0, 600.0]) {
-        for (final scale in [1.0, 2.0, 3.0]) {
-          _setSize(tester, width);
-          LocaleController.instance.value = locale;
-          await tester.pumpWidget(const SizedBox());
-          await tester.pumpWidget(
-            _app(const SupportFlickScreen(), scale: scale),
-          );
-          // Support's decorative pulse is continuous; do not pumpAndSettle.
-          await tester.pump(const Duration(seconds: 1));
-          expect(
-            tester.takeException(),
-            isNull,
-            reason: 'support $locale width=$width scale=$scale',
-          );
-          expect(
-            find.text(strings.filipinoDonationNote),
-            locale == kFilipinoLocale ? findsOneWidget : findsNothing,
-          );
-          if (locale == kFilipinoLocale) {
-            expect(find.text(english.supportFlick), findsOneWidget);
-            expect(find.text(english.soloDeveloper), findsOneWidget);
-            expect(
-              find.text(english.flickIsBuiltAndMaintainedBy),
-              findsOneWidget,
-            );
-            expect(find.text(english.whyDonate.toUpperCase()), findsOneWidget);
-            final note = find.text(strings.filipinoDonationNote);
-            final kofi = find.byWidgetPredicate(
-              (widget) =>
-                  widget is NavigationSetting &&
-                  widget.title == english.koFi &&
-                  widget.subtitle == english.supportDevelopmentOnKoFi,
-            );
-            final coffee = find.byWidgetPredicate(
-              (widget) =>
-                  widget is NavigationSetting &&
-                  widget.title == english.buyMeACoffee &&
-                  widget.subtitle == english.supportDevelopmentOnBuyMeACoffee,
-            );
-            expect(kofi, findsOneWidget);
-            expect(coffee, findsOneWidget);
-            expect(
-              tester.getTopLeft(note).dy,
-              lessThan(tester.getTopLeft(kofi).dy),
-            );
-            expect(
-              tester.getTopLeft(note).dy,
-              lessThan(tester.getTopLeft(coffee).dy),
-            );
-            if (width == 375 && scale == 1) {
-              await tester.ensureVisible(note);
-              await tester.pump(const Duration(milliseconds: 300));
-              await _shoot(tester, 'support-tl-donation-375');
-            }
-          }
-        }
-      }
-    }
-    await tester.pumpWidget(const SizedBox());
   });
 
   testWidgets('all fifteen Filipino hooks fit the constrained home heading', (

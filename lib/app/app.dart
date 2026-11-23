@@ -16,7 +16,6 @@ import 'package:auno_player/features/menu/screens/menu_screen.dart';
 import 'package:auno_player/features/settings/screens/settings_screen.dart';
 import 'package:auno_player/features/settings/screens/bottom_bar_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/equalizer_screen.dart';
-import 'package:auno_player/features/settings/screens/support_flick_screen.dart';
 import 'package:auno_player/features/albums/screens/albums_screen.dart';
 import 'package:auno_player/features/artists/screens/artists_screen.dart';
 import 'package:auno_player/features/folders/screens/folders_screen.dart';
@@ -420,13 +419,7 @@ class _MainShellState extends ConsumerState<MainShell>
         milestone: milestone,
         nextMilestone: next.next,
         nextRemaining: next.next == null ? null : next.remaining,
-        supportLabel: l10n.englishForFilipino.supportFlick,
         dismissLabel: l10n.englishForFilipino.dismiss,
-        onSupportTap: () {
-          Navigator.of(
-            context,
-          ).push(MaterialPageRoute(builder: (_) => const SupportFlickScreen()));
-        },
       ),
     );
   }

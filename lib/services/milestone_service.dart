@@ -107,37 +107,37 @@ extension MilestoneTypeX on MilestoneType {
   String get message {
     return switch (this) {
       MilestoneType.songs100 =>
-        "You've listened to 100 songs on Auno Player! If you're enjoying the app, a small donation helps keep the engine running and brings DSD playback closer.",
+        "You've listened to 100 songs on Auno Player — the journey is just getting started.",
       MilestoneType.songs500 =>
-        "500 songs and counting! Auno Player is built by a solo developer — consider fueling the next round of features on Ko-fi.",
+        "500 songs and counting! Your library and Auno Player are in sync.",
       MilestoneType.songs1000 =>
-        "1,000 songs deep in your Auno Player journey. Your support helps fund things like audio testing equipment and USB DAC improvements.",
+        "1,000 songs deep in your Auno Player journey. That is a serious collection.",
       MilestoneType.songs2500 =>
-        "2,500 songs in — you're a Auno Player regular. Donations help the solo dev keep the lights on and new features rolling.",
+        "2,500 songs in — you're an Auno Player regular.",
       MilestoneType.songs5000 =>
-        "5,000 songs! That's a library's worth of listening. Support helps fund native DSD and broader DAC coverage.",
+        "5,000 songs! That's a library's worth of listening.",
       MilestoneType.songs10000 =>
-        "10,000 songs on Auno Player — legendary status. Your support keeps independent audio software alive.",
+        "10,000 songs on Auno Player — legendary status.",
       MilestoneType.hours10 =>
-        "You've spent 10 hours with Auno Player. Time flies with great audio — if Auno Player adds value to your day, a donation helps keep it growing.",
+        "You've spent 10 hours with Auno Player. Time flies with great audio.",
       MilestoneType.hours50 =>
-        "50 hours on Auno Player — that's some serious listening. Consider tipping the developer to help fund native DSD/DSF playback.",
+        "50 hours on Auno Player — that's some serious listening.",
       MilestoneType.hours100 =>
-        "100 hours locked in. You clearly love great audio — a tip helps the solo dev fund testing gear and DAC work.",
+        "100 hours locked in. You clearly love great audio.",
       MilestoneType.hours250 =>
-        "250 hours on Auno Player — you're in the all-time tier. Support keeps independent hi-fi software thriving.",
+        "250 hours on Auno Player — you're in the all-time tier.",
       MilestoneType.streak7 =>
-        "A 7-day Auno Player streak! Consistency deserves a nod — if you're enjoying the daily sessions, consider a small donation.",
+        "A 7-day Auno Player streak! Consistency deserves a nod.",
       MilestoneType.streak30 =>
-        "30 days of Auno Player in a row — that's a full month of great audio. A tip helps the solo dev keep the grind going.",
+        "30 days of Auno Player in a row — that's a full month of great audio.",
       MilestoneType.streak100 =>
-        "100-day streak — dedication personified. Your support keeps Auno Player improving every single day.",
+        "100-day streak — dedication personified.",
       MilestoneType.artists25 =>
-        "You've explored 25 unique artists on Auno Player. Broad taste deserves applause — a donation helps keep the catalog growing.",
+        "You've explored 25 unique artists on Auno Player. Broad taste deserves applause.",
       MilestoneType.artists100 =>
-        "100 distinct artists and counting. Your varied taste funds the solo dev's quest for better audio for everyone.",
+        "100 distinct artists and counting. Your taste keeps getting more interesting.",
       MilestoneType.artists250 =>
-        "250 unique artists — a true sonic explorer. Support keeps Auno Player unlocking new music for listeners like you.",
+        "250 unique artists — a true sonic explorer.",
     };
   }
 

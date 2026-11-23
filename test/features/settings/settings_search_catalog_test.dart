@@ -83,7 +83,6 @@ void main() {
       'removeDuplicates',
       'fixMissingMetadata',
       'privacyPolicy',
-      'supportFlick',
       'logs',
     };
     // Transient update and playback states are information, not independently

@@ -16,10 +16,8 @@ import 'package:auno_player/features/settings/screens/lyrics_settings_screen.dar
 import 'package:auno_player/features/settings/screens/network_sources_screen.dart';
 import 'package:auno_player/features/settings/screens/player_layout_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/widget_settings_screen.dart';
-import 'package:auno_player/features/settings/screens/support_flick_screen.dart';
 import 'package:auno_player/core/utils/navigation_helper.dart';
 import 'package:auno_player/features/settings/widgets/settings_widgets.dart';
-import 'package:auno_player/features/settings/widgets/donation_coffee_icon.dart';
 import 'package:auno_player/features/milestone/screens/milestones_screen.dart';
 import 'package:auno_player/features/manual/screens/manual_screen.dart';
 import 'package:auno_player/services/milestone_service.dart';
@@ -382,20 +380,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ],
             ),
-          ),
-          IconButton(
-            onPressed: () {
-              NavigationHelper.pushOnRoot(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (_) => const SupportFlickScreen(),
-                ),
-              );
-            },
-            icon: const DonationCoffeeIcon(),
-            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-            visualDensity: VisualDensity.standard,
-            tooltip: l10n.supportFlick,
           ),
         ],
       ),
