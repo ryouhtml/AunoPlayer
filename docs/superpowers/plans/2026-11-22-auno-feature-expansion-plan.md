@@ -3,6 +3,8 @@
 Spesifikasi sumber: `docs/superpowers/specs/2026-11-22-auno-feature-expansion-design.md` (commit `9fafb92`).
 Plan ini dibuat dengan `make-plan`; Phase 0 (documentation discovery) sudah dijalankan dengan tiga subagent dan temuannya diringkas di bawah.
 
+Status 2026-11-23: Fase 1 selesai (`080a6d7`), Fase 2 selesai (`f162802`), Fase 3 sebagian (`967d4f4`: model/normalizer/provider/test; integrasi widget dan preferensi gaya masih tertunda). Fase 4–5 belum dimulai. Semua verifikasi Flutter/Dart masih menunggu CI karena toolchain tidak tersedia lokal.
+
 Perintah global yang dipakai berulang:
 
 ```
