@@ -67,6 +67,7 @@ class ListeningStatsService {
     DateTime? now,
   }) async {
     final anchor = now ?? DateTime.now();
+    final streakDays = await _computeGlobalStreak(anchor);
     final result = <ListeningRecapPeriod, ListeningRecap>{};
     for (final period in periods) {
       final range = period.rangeFor(anchor);
@@ -77,7 +78,13 @@ class ListeningStatsService {
           now: now,
         );
       } else {
-        result[period] = await _buildRecap(period, range, events, anchor);
+        result[period] = await _buildRecap(
+          period,
+          range,
+          events,
+          anchor,
+          streakDays: streakDays,
+        );
       }
     }
     return result;
@@ -109,8 +116,9 @@ class ListeningStatsService {
     ListeningRecapPeriod period,
     ListeningRecapRange range,
     List<ListeningEventEntity> events,
-    DateTime anchor,
-  ) async {
+    DateTime anchor, {
+    required int streakDays,
+  }) async {
     final songStats = <int, _Accumulator>{};
     final artistStats = <String, _Accumulator>{};
     final albumStats = <String, _Accumulator>{};
@@ -247,7 +255,7 @@ class ListeningStatsService {
           )
           .toList(growable: false),
       actualListenedMs: totalMs,
-      streakDays: _streakDays(activeDays, anchor),
+      streakDays: streakDays,
       hourBuckets: Map<int, int>.unmodifiable(hourBuckets),
       firstListenedAt: firstListenedAt,
       listeningPersonality: _personality(
@@ -288,6 +296,25 @@ class ListeningStatsService {
         return b.lastPlayedAt.compareTo(a.lastPlayedAt);
       });
     return list;
+  }
+
+  Future<int> _computeGlobalStreak(DateTime anchor) async {
+    final anchorDay = DateTime(anchor.year, anchor.month, anchor.day);
+    final events = await _eventsBetween(
+      anchorDay.subtract(const Duration(days: 400)),
+      anchorDay.add(const Duration(days: 1)),
+    );
+    final activeDays = <DateTime>{};
+    for (final event in events) {
+      activeDays.add(
+        DateTime(
+          event.playedAt.year,
+          event.playedAt.month,
+          event.playedAt.day,
+        ),
+      );
+    }
+    return _streakDays(activeDays, anchorDay);
   }
 
   static int _streakDays(Set<DateTime> activeDays, DateTime anchor) {
