@@ -9629,6 +9629,49 @@ class AppLocalizationsEn extends AppLocalizations {
       'Measured from a separate source-file decode. Some formats include decoder padding, which can affect duration and silence measurements. Playback, DSP, and tags are unchanged.';
 
   @override
+  String get audioAnalysisCodec => "Codec";
+  @override
+  String get audioAnalysisContainer => "Container";
+  @override
+  String get audioAnalysisBitrate => "Bitrate";
+  @override
+  String get audioAnalysisChannelLayout => "Channel layout";
+  @override
+  String get audioAnalysisHiResSection => "DSD / Hi-Res";
+  @override
+  String get audioAnalysisDsdVariant => "DSD variant";
+  @override
+  String get audioAnalysisDopCapable => "DoP capable";
+  @override
+  String get audioAnalysisDopYes => "Yes";
+  @override
+  String get audioAnalysisDopNo => "No";
+  @override
+  String get audioAnalysisHiResBadge => "Hi-Res source";
+  @override
+  String get audioAnalysisMetadataOnlyNote => "Full decoding is unavailable for this format. Metadata and integrity are shown instead.";
+  @override
+  String get audioAnalysisIntegritySection => "Integrity & tags";
+  @override
+  String get audioAnalysisIntegrityOk => "Full-file read passed";
+  @override
+  String get audioAnalysisIntegrityFailed => "Full-file read failed";
+  @override
+  String get audioAnalysisTagCompleteness => "Tag completeness";
+  @override
+  String get audioAnalysisOutputSection => "Output path";
+  @override
+  String get audioAnalysisBitPerfectPath => "Native / bit-perfect path";
+  @override
+  String get audioAnalysisResampleWarning => "The selected output path may resample playback.";
+  @override
+  String get audioAnalysisSaveReport => "Save local report";
+  @override
+  String get audioAnalysisReportSaved => "Report saved to Documents/AunoPlayer";
+  @override
+  String get audioAnalysisReportFailed => "Could not save the report.";
+
+  @override
   String get indonesian => 'Indonesian';
   @override
   String get artworkOnlyForLocalFiles => 'Artwork can only be changed for local files.';

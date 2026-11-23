@@ -16271,6 +16271,112 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Measured from a separate source-file decode. Some formats include decoder padding, which can affect duration and silence measurements. Playback, DSP, and tags are unchanged.'**
   String get audioAnalysisSourceNote;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Codec"**
+  String get audioAnalysisCodec;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Container"**
+  String get audioAnalysisContainer;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Bitrate"**
+  String get audioAnalysisBitrate;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Channel layout"**
+  String get audioAnalysisChannelLayout;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"DSD / Hi-Res"**
+  String get audioAnalysisHiResSection;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"DSD variant"**
+  String get audioAnalysisDsdVariant;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"DoP capable"**
+  String get audioAnalysisDopCapable;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Yes"**
+  String get audioAnalysisDopYes;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"No"**
+  String get audioAnalysisDopNo;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Hi-Res source"**
+  String get audioAnalysisHiResBadge;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Full decoding is unavailable for this format. Metadata and integrity are shown instead."**
+  String get audioAnalysisMetadataOnlyNote;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Integrity & tags"**
+  String get audioAnalysisIntegritySection;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Full-file read passed"**
+  String get audioAnalysisIntegrityOk;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Full-file read failed"**
+  String get audioAnalysisIntegrityFailed;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Tag completeness"**
+  String get audioAnalysisTagCompleteness;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Output path"**
+  String get audioAnalysisOutputSection;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Native / bit-perfect path"**
+  String get audioAnalysisBitPerfectPath;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"The selected output path may resample playback."**
+  String get audioAnalysisResampleWarning;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Save local report"**
+  String get audioAnalysisSaveReport;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Report saved to Documents/AunoPlayer"**
+  String get audioAnalysisReportSaved;
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **"Could not save the report."**
+  String get audioAnalysisReportFailed;
   /// Autonym row subtitle in the language picker.
   ///
   /// In en, this message translates to:

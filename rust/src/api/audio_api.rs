@@ -82,6 +82,24 @@ static PENDING_EQ: Lazy<Mutex<Option<(bool, f32, Vec<EqBandSpec>)>>> =
 // change between tracks and would otherwise drop it.
 static PENDING_CROSSFEED: AtomicU32 = AtomicU32::new(u32::MAX);
 
+/// Read-only hint for the source-analysis sheet. It describes the configured
+/// engine path, never changes playback state, and never promises a verified
+/// route (that is the verifier's job once playback starts).
+pub(crate) fn source_analysis_bit_perfect_path(dsd_source: bool) -> bool {
+    let high_res = ENGINE_MANAGER.is_high_res_mode_enabled();
+    let dap_bit_perfect = ENGINE_MANAGER.get_dap_bit_perfect_enabled();
+    if dsd_source {
+        high_res || dap_bit_perfect || dop_capability()
+    } else {
+        high_res || dap_bit_perfect
+    }
+}
+
+fn dop_capability() -> bool {
+    let mode = format!("{:?}", current_dsd_output_mode());
+    mode.contains("Dop") || mode.contains("Auto")
+}
+
 pub fn current_dsd_output_mode() -> DsdOutputMode {
     match DSD_OUTPUT_MODE.load(Ordering::Relaxed) {
         1 => DsdOutputMode::Dop,

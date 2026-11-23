@@ -9749,6 +9749,49 @@ class AppLocalizationsEs extends AppLocalizations {
       'Medido a partir de una decodificación independiente del archivo fuente. Algunos formatos incluyen relleno del decodificador, que puede afectar la duración y las mediciones de silencio. La reproducción, el DSP y las etiquetas no cambian.';
 
   @override
+  String get audioAnalysisCodec => "Códec";
+  @override
+  String get audioAnalysisContainer => "Contenedor";
+  @override
+  String get audioAnalysisBitrate => "Bitrate";
+  @override
+  String get audioAnalysisChannelLayout => "Distribución de canales";
+  @override
+  String get audioAnalysisHiResSection => "DSD / Alta resolución";
+  @override
+  String get audioAnalysisDsdVariant => "Variante DSD";
+  @override
+  String get audioAnalysisDopCapable => "Compatible con DoP";
+  @override
+  String get audioAnalysisDopYes => "Sí";
+  @override
+  String get audioAnalysisDopNo => "No";
+  @override
+  String get audioAnalysisHiResBadge => "Fuente de alta resolución";
+  @override
+  String get audioAnalysisMetadataOnlyNote => "La decodificación completa no está disponible para este formato. Se muestran los metadatos y la integridad.";
+  @override
+  String get audioAnalysisIntegritySection => "Integridad y etiquetas";
+  @override
+  String get audioAnalysisIntegrityOk => "La lectura completa del archivo se realizó correctamente";
+  @override
+  String get audioAnalysisIntegrityFailed => "Falló la lectura completa del archivo";
+  @override
+  String get audioAnalysisTagCompleteness => "Integridad de etiquetas";
+  @override
+  String get audioAnalysisOutputSection => "Ruta de salida";
+  @override
+  String get audioAnalysisBitPerfectPath => "Ruta nativa / bit-perfect";
+  @override
+  String get audioAnalysisResampleWarning => "La ruta de salida seleccionada puede remuestrear la reproducción.";
+  @override
+  String get audioAnalysisSaveReport => "Guardar informe local";
+  @override
+  String get audioAnalysisReportSaved => "Informe guardado en Documents/AunoPlayer";
+  @override
+  String get audioAnalysisReportFailed => "No se pudo guardar el informe.";
+
+  @override
   String get indonesian => 'Indonesio';
   @override
   String get artworkOnlyForLocalFiles => 'Las carátulas solo se pueden cambiar en archivos locales.';

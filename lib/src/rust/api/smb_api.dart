@@ -6,27 +6,15 @@
 import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-// These functions are ignored because they are not marked as `pub`: `addr`, `client_config`, `commit`, `connect`, `create`, `error_code`, `failure`, `should_skip_directory_error`, `skippable_subdirectory_error`, `split_account`
+
+            // These functions are ignored because they are not marked as `pub`: `addr`, `client_config`, `commit`, `connect`, `create`, `error_code`, `failure`, `should_skip_directory_error`, `skippable_subdirectory_error`, `split_account`
 // These types are ignored because they are neither used by any `pub` functions nor (for structs and enums) marked `#[frb(unignore)]`: `PendingDownload`
 // These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `clone`, `clone`, `drop`, `fmt`, `fmt`
 
-/// Connect, open the share and list the configured root once (not recursively).
+
+            /// Connect, open the share and list the configured root once (not recursively).
 /// Success does not imply permission to read every file in that directory.
-Future<void> smbPing({
-  required String host,
-  required int port,
-  required String share,
-  required String user,
-  required String pass,
-  required String rootPath,
-}) => RustLib.instance.api.crateApiSmbApiSmbPing(
-  host: host,
-  port: port,
-  share: share,
-  user: user,
-  pass: pass,
-  rootPath: rootPath,
-);
+Future<void>  smbPing({required String host , required int port , required String share , required String user , required String pass , required String rootPath }) => RustLib.instance.api.crateApiSmbApiSmbPing(host: host, port: port, share: share, user: user, pass: pass, rootPath: rootPath);
 
 /// BFS walk of `root_path` (relative to the share) pushing one [SmbEntry] per
 /// file or directory. `root_path` of "" lists the share root. One connection,
@@ -37,21 +25,7 @@ Future<void> smbPing({
 /// `System Volume Information` that even a valid account cannot list. Failing
 /// to list the configured root itself is still an error, since that is the
 /// address the user needs to correct.
-Stream<SmbEntry> smbListShare({
-  required String host,
-  required int port,
-  required String share,
-  required String user,
-  required String pass,
-  required String rootPath,
-}) => RustLib.instance.api.crateApiSmbApiSmbListShare(
-  host: host,
-  port: port,
-  share: share,
-  user: user,
-  pass: pass,
-  rootPath: rootPath,
-);
+Stream<SmbEntry>  smbListShare({required String host , required int port , required String share , required String user , required String pass , required String rootPath }) => RustLib.instance.api.crateApiSmbApiSmbListShare(host: host, port: port, share: share, user: user, pass: pass, rootPath: rootPath);
 
 /// Read a full (small) file into memory — cover art and tiny sidecars.
 ///
@@ -59,89 +33,59 @@ Stream<SmbEntry> smbListShare({
 /// READ and fails with `FileTooLargeForSingleRead` when the file exceeds the
 /// server's MaxReadSize (as small as 64 KiB on some NAS firmware). Folder art
 /// routinely exceeds that, which made SMB covers fail on those servers.
-Future<Uint8List> smbReadFile({
-  required String host,
-  required int port,
-  required String share,
-  required String path,
-  required String user,
-  required String pass,
-}) => RustLib.instance.api.crateApiSmbApiSmbReadFile(
-  host: host,
-  port: port,
-  share: share,
-  path: path,
-  user: user,
-  pass: pass,
-);
+Future<Uint8List>  smbReadFile({required String host , required int port , required String share , required String path , required String user , required String pass }) => RustLib.instance.api.crateApiSmbApiSmbReadFile(host: host, port: port, share: share, path: path, user: user, pass: pass);
 
 /// Download to a staging file, then atomically publish only a complete file.
-Stream<SmbProgress> smbDownloadFile({
-  required String host,
-  required int port,
-  required String share,
-  required String path,
-  required String user,
-  required String pass,
-  required String destPath,
-}) => RustLib.instance.api.crateApiSmbApiSmbDownloadFile(
-  host: host,
-  port: port,
-  share: share,
-  path: path,
-  user: user,
-  pass: pass,
-  destPath: destPath,
-);
+Stream<SmbProgress>  smbDownloadFile({required String host , required int port , required String share , required String path , required String user , required String pass , required String destPath }) => RustLib.instance.api.crateApiSmbApiSmbDownloadFile(host: host, port: port, share: share, path: path, user: user, pass: pass, destPath: destPath);
 
-class SmbEntry {
-  final String name;
-  final String path;
-  final BigInt size;
-  final bool isDir;
+            class SmbEntry  {
+                final String name;
+final String path;
+final BigInt size;
+final bool isDir;
 
-  const SmbEntry({
-    required this.name,
-    required this.path,
-    required this.size,
-    required this.isDir,
-  });
+                const SmbEntry({required this.name ,required this.path ,required this.size ,required this.isDir ,});
 
-  @override
-  int get hashCode =>
-      name.hashCode ^ path.hashCode ^ size.hashCode ^ isDir.hashCode;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SmbEntry &&
-          runtimeType == other.runtimeType &&
-          name == other.name &&
-          path == other.path &&
-          size == other.size &&
-          isDir == other.isDir;
-}
 
-class SmbProgress {
-  final BigInt received;
-  final BigInt total;
-  final bool isComplete;
 
-  const SmbProgress({
-    required this.received,
-    required this.total,
-    required this.isComplete,
-  });
 
-  @override
-  int get hashCode => received.hashCode ^ total.hashCode ^ isComplete.hashCode;
+        @override
+        int get hashCode => name.hashCode^path.hashCode^size.hashCode^isDir.hashCode;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SmbProgress &&
-          runtimeType == other.runtimeType &&
-          received == other.received &&
-          total == other.total &&
-          isComplete == other.isComplete;
-}
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is SmbEntry &&
+                runtimeType == other.runtimeType
+                && name == other.name&& path == other.path&& size == other.size&& isDir == other.isDir;
+
+            }
+
+class SmbProgress  {
+                final BigInt received;
+final BigInt total;
+final bool isComplete;
+
+                const SmbProgress({required this.received ,required this.total ,required this.isComplete ,});
+
+
+
+
+
+        @override
+        int get hashCode => received.hashCode^total.hashCode^isComplete.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is SmbProgress &&
+                runtimeType == other.runtimeType
+                && received == other.received&& total == other.total&& isComplete == other.isComplete;
+
+            }
+            

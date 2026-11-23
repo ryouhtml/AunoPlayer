@@ -10907,5 +10907,110 @@
   "audioAnalysisSourceNote": "Diukur dari dekode file sumber terpisah. Beberapa format menyertakan padding dekoder yang dapat memengaruhi pengukuran durasi dan hening. Pemutaran, DSP, dan tag tidak diubah.",
   "@audioAnalysisSourceNote": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisCodec": "Kodek",
+  "@audioAnalysisCodec": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisContainer": "Kontainer",
+  "@audioAnalysisContainer": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisBitrate": "Laju bit",
+  "@audioAnalysisBitrate": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisChannelLayout": "Tata letak kanal",
+  "@audioAnalysisChannelLayout": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisHiResSection": "DSD / Resolusi tinggi",
+  "@audioAnalysisHiResSection": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisDsdVariant": "Varian DSD",
+  "@audioAnalysisDsdVariant": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisDopCapable": "Mendukung DoP",
+  "@audioAnalysisDopCapable": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisDopYes": "Ya",
+  "@audioAnalysisDopYes": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisDopNo": "Tidak",
+  "@audioAnalysisDopNo": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisHiResBadge": "Sumber resolusi tinggi",
+  "@audioAnalysisHiResBadge": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisMetadataOnlyNote": "Dekode penuh tidak tersedia untuk format ini. Metadata dan integritas yang ditampilkan.",
+  "@audioAnalysisMetadataOnlyNote": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisIntegritySection": "Integritas & tag",
+  "@audioAnalysisIntegritySection": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisIntegrityOk": "Pembacaan seluruh file berhasil",
+  "@audioAnalysisIntegrityOk": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisIntegrityFailed": "Pembacaan seluruh file gagal",
+  "@audioAnalysisIntegrityFailed": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisTagCompleteness": "Kelengkapan tag",
+  "@audioAnalysisTagCompleteness": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisOutputSection": "Jalur output",
+  "@audioAnalysisOutputSection": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisBitPerfectPath": "Jalur native / bit-perfect",
+  "@audioAnalysisBitPerfectPath": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisResampleWarning": "Jalur output yang dipilih dapat melakukan resampling saat pemutaran.",
+  "@audioAnalysisResampleWarning": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisSaveReport": "Simpan laporan lokal",
+  "@audioAnalysisSaveReport": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisReportSaved": "Laporan disimpan ke Documents/AunoPlayer",
+  "@audioAnalysisReportSaved": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisReportFailed": "Laporan gagal disimpan.",
+  "@audioAnalysisReportFailed": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
   }
 }

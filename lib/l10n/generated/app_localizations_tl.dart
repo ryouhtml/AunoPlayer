@@ -9738,6 +9738,49 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get audioAnalysisSourceNote =>
       'Sinukat mula sa hiwalay na decode ng source file. May decoder padding ang ilang format, na puwedeng makaapekto sa duration at silence measurements. Hindi nagbabago ang playback, DSP, at tags.';
+
+  @override
+  String get audioAnalysisCodec => "Codec";
+  @override
+  String get audioAnalysisContainer => "Container";
+  @override
+  String get audioAnalysisBitrate => "Bitrate";
+  @override
+  String get audioAnalysisChannelLayout => "Layout ng channel";
+  @override
+  String get audioAnalysisHiResSection => "DSD / Hi-Res";
+  @override
+  String get audioAnalysisDsdVariant => "Variant ng DSD";
+  @override
+  String get audioAnalysisDopCapable => "May suporta sa DoP";
+  @override
+  String get audioAnalysisDopYes => "Oo";
+  @override
+  String get audioAnalysisDopNo => "Hindi";
+  @override
+  String get audioAnalysisHiResBadge => "Pinagmumuling Hi-Res";
+  @override
+  String get audioAnalysisMetadataOnlyNote => "Hindi available ang buong decoding para sa format na ito. Metadata at integridad ang ipinapakita.";
+  @override
+  String get audioAnalysisIntegritySection => "Integridad at mga tag";
+  @override
+  String get audioAnalysisIntegrityOk => "Matagumpay ang buong pagbasa ng file";
+  @override
+  String get audioAnalysisIntegrityFailed => "Nabigo ang buong pagbasa ng file";
+  @override
+  String get audioAnalysisTagCompleteness => "Kumpletuhan ng tag";
+  @override
+  String get audioAnalysisOutputSection => "Daan ng output";
+  @override
+  String get audioAnalysisBitPerfectPath => "Daan na katutubo / bit-perfect";
+  @override
+  String get audioAnalysisResampleWarning => "Maaaring i-resample ng napiling output path ang pag-playback.";
+  @override
+  String get audioAnalysisSaveReport => "I-save ang lokal na ulat";
+  @override
+  String get audioAnalysisReportSaved => "Na-save ang ulat sa Documents/AunoPlayer";
+  @override
+  String get audioAnalysisReportFailed => "Hindi ma-save ang ulat.";
 }
 
 /// The translations for Tagalog, using the Tagalog Baybayin Alibata script (`tl_Tglg`).

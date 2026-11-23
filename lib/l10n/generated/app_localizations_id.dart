@@ -6135,6 +6135,49 @@ class AppLocalizationsId extends AppLocalizations {
   String get audioAnalysisSpectrogramCaption => '0 dBFS hingga −120 dBFS · seluruh trek';
   @override
   String get audioAnalysisSourceNote => 'Diukur dari dekode file sumber terpisah. Beberapa format menyertakan padding dekoder yang dapat memengaruhi pengukuran durasi dan hening. Pemutaran, DSP, dan tag tidak diubah.';
+
+  @override
+  String get audioAnalysisCodec => "Kodek";
+  @override
+  String get audioAnalysisContainer => "Kontainer";
+  @override
+  String get audioAnalysisBitrate => "Laju bit";
+  @override
+  String get audioAnalysisChannelLayout => "Tata letak kanal";
+  @override
+  String get audioAnalysisHiResSection => "DSD / Resolusi tinggi";
+  @override
+  String get audioAnalysisDsdVariant => "Varian DSD";
+  @override
+  String get audioAnalysisDopCapable => "Mendukung DoP";
+  @override
+  String get audioAnalysisDopYes => "Ya";
+  @override
+  String get audioAnalysisDopNo => "Tidak";
+  @override
+  String get audioAnalysisHiResBadge => "Sumber resolusi tinggi";
+  @override
+  String get audioAnalysisMetadataOnlyNote => "Dekode penuh tidak tersedia untuk format ini. Metadata dan integritas yang ditampilkan.";
+  @override
+  String get audioAnalysisIntegritySection => "Integritas & tag";
+  @override
+  String get audioAnalysisIntegrityOk => "Pembacaan seluruh file berhasil";
+  @override
+  String get audioAnalysisIntegrityFailed => "Pembacaan seluruh file gagal";
+  @override
+  String get audioAnalysisTagCompleteness => "Kelengkapan tag";
+  @override
+  String get audioAnalysisOutputSection => "Jalur output";
+  @override
+  String get audioAnalysisBitPerfectPath => "Jalur native / bit-perfect";
+  @override
+  String get audioAnalysisResampleWarning => "Jalur output yang dipilih dapat melakukan resampling saat pemutaran.";
+  @override
+  String get audioAnalysisSaveReport => "Simpan laporan lokal";
+  @override
+  String get audioAnalysisReportSaved => "Laporan disimpan ke Documents/AunoPlayer";
+  @override
+  String get audioAnalysisReportFailed => "Laporan gagal disimpan.";
   @override
   String get indonesian => 'Bahasa Indonesia';
   @override

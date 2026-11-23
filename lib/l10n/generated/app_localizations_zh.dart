@@ -8919,6 +8919,49 @@ class AppLocalizationsZh extends AppLocalizations {
       '测量基于对源文件的独立解码。某些格式包含解码器填充，可能影响时长和静音测量。播放、DSP 和标签均不变。';
 
   @override
+  String get audioAnalysisCodec => "编解码器";
+  @override
+  String get audioAnalysisContainer => "容器";
+  @override
+  String get audioAnalysisBitrate => "比特率";
+  @override
+  String get audioAnalysisChannelLayout => "声道布局";
+  @override
+  String get audioAnalysisHiResSection => "DSD / 高解析";
+  @override
+  String get audioAnalysisDsdVariant => "DSD 规格";
+  @override
+  String get audioAnalysisDopCapable => "支持 DoP";
+  @override
+  String get audioAnalysisDopYes => "是";
+  @override
+  String get audioAnalysisDopNo => "否";
+  @override
+  String get audioAnalysisHiResBadge => "高解析音源";
+  @override
+  String get audioAnalysisMetadataOnlyNote => "此格式无法完整解码，改为显示元数据和完整性。";
+  @override
+  String get audioAnalysisIntegritySection => "完整性与标签";
+  @override
+  String get audioAnalysisIntegrityOk => "完整文件读取通过";
+  @override
+  String get audioAnalysisIntegrityFailed => "完整文件读取失败";
+  @override
+  String get audioAnalysisTagCompleteness => "标签完整度";
+  @override
+  String get audioAnalysisOutputSection => "输出路径";
+  @override
+  String get audioAnalysisBitPerfectPath => "原生 / 位完美路径";
+  @override
+  String get audioAnalysisResampleWarning => "所选输出路径可能会对播放进行重采样。";
+  @override
+  String get audioAnalysisSaveReport => "保存本地报告";
+  @override
+  String get audioAnalysisReportSaved => "报告已保存到 Documents/AunoPlayer";
+  @override
+  String get audioAnalysisReportFailed => "无法保存报告。";
+
+  @override
   String get indonesian => '印度尼西亚语';
   @override
   String get artworkOnlyForLocalFiles => '只能更改本地文件的封面。';

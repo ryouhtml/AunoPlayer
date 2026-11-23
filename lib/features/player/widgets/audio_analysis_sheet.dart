@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math' as math;
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -11,6 +13,7 @@ import 'package:auno_player/models/song.dart';
 import 'package:auno_player/src/rust/api/audio_analysis.dart';
 import 'package:auno_player/widgets/common/glass_bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 /// Suggested normalization target used by the existing ReplayGain scanner.
 /// The analysis view only reports this value; it is never applied or stored.
@@ -41,9 +44,6 @@ String? audioAnalysisUnavailableReason(Song song) {
   }
   if (path.startsWith('content://')) {
     return l10n.audioAnalysisDocumentProviderUnsupported;
-  }
-  if (song.isDsd || song.isWavPack) {
-    return l10n.audioAnalysisUnsupportedFormat;
   }
   return null;
 }
@@ -178,6 +178,70 @@ class _AudioAnalysisSheetState extends State<_AudioAnalysisSheet> {
       _failure = null;
       _status = AudioSourceAnalysisStatus.cancelled;
     });
+  }
+
+  Future<void> _saveLocalReport(AudioSourceAnalysis analysis) async {
+    final report = <String, dynamic>{
+      'generatedAt': DateTime.now().toIso8601String(),
+      'song': {
+        'id': widget.song.id,
+        'title': widget.song.title,
+        'artist': widget.song.artist,
+        'path': widget.song.filePath,
+      },
+      'status': analysis.status.name,
+      'format': {
+        'codec': analysis.codec,
+        'container': analysis.container,
+        'sampleRate': analysis.sampleRate,
+        'bitDepth': analysis.bitDepth,
+        'channels': analysis.channels,
+        'channelLayout': analysis.channelLayout,
+        'bitrateBps': analysis.bitrateBps?.toString(),
+        'fileSizeBytes': analysis.fileSizeBytes.toString(),
+        'durationSeconds': analysis.durationSeconds,
+      },
+      'dsd': {
+        'variant': analysis.dsdVariant,
+        'dopCapable': analysis.dopCapable,
+        'bitPerfectPath': analysis.bitPerfectPath,
+      },
+      'dynamics': {
+        'lufs': analysis.lufs,
+        'lra': analysis.lra,
+        'truePeakDb': analysis.truePeakDb,
+        'dr': analysis.dr,
+        'clipping': analysis.clipping,
+        'clippedSamples': analysis.clippedSamples.toString(),
+      },
+      'integrity': {
+        'integrityOk': analysis.integrityOk,
+        'tagCompleteness': analysis.tagCompleteness,
+      },
+    };
+    try {
+      final documents = await getApplicationDocumentsDirectory();
+      final directory = Directory('${documents.path}/AunoPlayer/analysis');
+      await directory.create(recursive: true);
+      final stamp = DateTime.now()
+          .toIso8601String()
+          .replaceAll(':', '-')
+          .replaceAll('.', '-');
+      final safeId = widget.song.id.replaceAll(RegExp(r'[^A-Za-z0-9_-]'), '_');
+      final file = File('${directory.path}/analysis_$safeId_$stamp.json');
+      await file.writeAsString(
+        const JsonEncoder.withIndent('  ').convert(report),
+      );
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.audioAnalysisReportSaved)),
+      );
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.audioAnalysisReportFailed)),
+      );
+    }
   }
 
   void _clearSpectrogramImages() {
@@ -442,12 +506,24 @@ class _AudioAnalysisSheetState extends State<_AudioAnalysisSheet> {
           title: l10n.audioAnalysisFileSection,
           children: [
             _AnalysisRow(
+              label: l10n.audioAnalysisCodec,
+              value: analysis.codec ?? '—',
+            ),
+            _AnalysisRow(
+              label: l10n.audioAnalysisContainer,
+              value: analysis.container ?? '—',
+            ),
+            _AnalysisRow(
               label: l10n.audioAnalysisDuration,
               value: _formatSeconds(analysis.durationSeconds),
             ),
             _AnalysisRow(
               label: l10n.audioAnalysisFileSize,
               value: _formatBytes(analysis.fileSizeBytes.toInt()),
+            ),
+            _AnalysisRow(
+              label: l10n.audioAnalysisBitrate,
+              value: _formatBitrate(analysis.bitrateBps?.toInt()),
             ),
             _AnalysisRow(
               label: l10n.sampleRate,
@@ -465,6 +541,10 @@ class _AudioAnalysisSheetState extends State<_AudioAnalysisSheet> {
               },
             ),
             _AnalysisRow(
+              label: l10n.audioAnalysisChannelLayout,
+              value: analysis.channelLayout ?? '—',
+            ),
+            _AnalysisRow(
               label: l10n.bitDepth,
               value: analysis.bitDepth == null
                   ? '—'
@@ -472,6 +552,26 @@ class _AudioAnalysisSheetState extends State<_AudioAnalysisSheet> {
             ),
           ],
         ),
+        if (analysis.dsdVariant != null ||
+            widget.song.isDsd ||
+            widget.song.isWavPack)
+          _AnalysisSection(
+            title: l10n.audioAnalysisHiResSection,
+            children: [
+              if (analysis.dsdVariant != null)
+                _AnalysisRow(
+                  label: l10n.audioAnalysisDsdVariant,
+                  value: analysis.dsdVariant!,
+                ),
+              _AnalysisRow(
+                label: l10n.audioAnalysisDopCapable,
+                value: _yesNo(analysis.dopCapable),
+              ),
+              if (analysis.codec == null && analysis.channelPeakDb.isEmpty)
+                _Note(l10n.audioAnalysisMetadataOnlyNote),
+              _Note(l10n.audioAnalysisHiResBadge),
+            ],
+          ),
         _AnalysisSection(
           title: l10n.audioAnalysisLevelsSection,
           children: [
@@ -579,6 +679,37 @@ class _AudioAnalysisSheetState extends State<_AudioAnalysisSheet> {
           ],
         ),
         _AnalysisSection(
+          title: l10n.audioAnalysisIntegritySection,
+          children: [
+            _AnalysisRow(
+              label: l10n.audioAnalysisIntegrityOk,
+              value: analysis.integrityOk == null
+                  ? '—'
+                  : analysis.integrityOk!
+                      ? l10n.audioAnalysisIntegrityOk
+                      : l10n.audioAnalysisIntegrityFailed,
+              warning: analysis.integrityOk == false,
+            ),
+            _AnalysisRow(
+              label: l10n.audioAnalysisTagCompleteness,
+              value: analysis.tagCompleteness == null
+                  ? '—'
+                  : '${(analysis.tagCompleteness! * 100).round()}%',
+            ),
+          ],
+        ),
+        _AnalysisSection(
+          title: l10n.audioAnalysisOutputSection,
+          children: [
+            _AnalysisRow(
+              label: l10n.audioAnalysisBitPerfectPath,
+              value: _yesNo(analysis.bitPerfectPath),
+            ),
+            if (analysis.bitPerfectPath == false)
+              _Note(l10n.audioAnalysisResampleWarning),
+          ],
+        ),
+        _AnalysisSection(
           title: l10n.audioAnalysisSpectrogramSection,
           children: [
             if (analysis.spectrogram == null ||
@@ -587,6 +718,13 @@ class _AudioAnalysisSheetState extends State<_AudioAnalysisSheet> {
             else
               _buildSpectrogram(context, analysis.spectrogram!),
           ],
+        ),
+        const SizedBox(height: 18),
+        OutlinedButton.icon(
+          onPressed: () => unawaited(_saveLocalReport(analysis)),
+          icon: const Icon(Icons.save_outlined, size: 18),
+          label: Text(l10n.audioAnalysisSaveReport),
+          style: _actionButtonStyle(context),
         ),
         const SizedBox(height: 18),
         Text(
@@ -953,6 +1091,22 @@ String _formatSeconds(double? seconds) {
   if (seconds == null || !seconds.isFinite || seconds < 0) return '—';
   final duration = Duration(microseconds: (seconds * 1000000).round());
   return formatDuration(duration);
+}
+
+String _formatBitrate(int? bitsPerSecond) {
+  if (bitsPerSecond == null || bitsPerSecond <= 0) return '—';
+  if (bitsPerSecond >= 1000000) {
+    return '${(bitsPerSecond / 1000000).toStringAsFixed(2)} Mbit/s';
+  }
+  if (bitsPerSecond >= 1000) {
+    return '${(bitsPerSecond / 1000).toStringAsFixed(0)} kbit/s';
+  }
+  return '$bitsPerSecond bit/s';
+}
+
+String _yesNo(bool? value) {
+  if (value == null) return '—';
+  return value ? l10n.audioAnalysisDopYes : l10n.audioAnalysisDopNo;
 }
 
 String _formatBytes(int bytes) {

@@ -4,10 +4,16 @@
 
 use std::collections::VecDeque;
 use std::fs::File;
+use std::io::Read;
 use std::path::Path;
 use std::sync::atomic::{AtomicBool, AtomicU32, Ordering};
 use std::sync::Mutex;
 
+use dff_meta::DffFile;
+use dsf_meta::DsfFile;
+use lofty::config::ParseOptions;
+use lofty::prelude::*;
+use lofty::probe::Probe;
 use realfft::num_complex::Complex;
 use realfft::{RealFftPlanner, RealToComplex};
 use symphonia::core::codecs::audio::{AudioDecoderOptions, CODEC_ID_NULL_AUDIO};
@@ -388,6 +394,25 @@ pub struct AudioSourceAnalysis {
     pub clipping: bool,
     pub clipped_samples: u64,
     pub spectrogram: Option<AudioSourceSpectrogram>,
+
+    /// Codec name reported by the container or metadata reader.
+    pub codec: Option<String>,
+    /// Upper-case container/extension, e.g. `FLAC`, `DSF`, `DFF`, `WV`.
+    pub container: Option<String>,
+    /// Native bitrate from metadata, in bits per second.
+    pub bitrate_bps: Option<u64>,
+    /// Human-readable channel layout, e.g. `stereo` or `mono`.
+    pub channel_layout: Option<String>,
+    /// DSD rate family such as `DSD64` or `DSD256`, when applicable.
+    pub dsd_variant: Option<String>,
+    /// Whether the configured output path can carry DoP for this DSD source.
+    pub dop_capable: Option<bool>,
+    /// Fraction of core tags present, 0.0..=1.0.
+    pub tag_completeness: Option<f64>,
+    /// True when a full byte read matched the file size.
+    pub integrity_ok: Option<bool>,
+    /// True when the configured engine path keeps the native format.
+    pub bit_perfect_path: Option<bool>,
 }
 
 static SOURCE_ANALYZER: Mutex<()> = Mutex::new(());
@@ -496,6 +521,295 @@ fn empty_source_analysis(
         clipping: false,
         clipped_samples: 0,
         spectrogram: None,
+        codec: None,
+        container: None,
+        bitrate_bps: None,
+        channel_layout: None,
+        dsd_variant: None,
+        dop_capable: None,
+        tag_completeness: None,
+        integrity_ok: None,
+        bit_perfect_path: None,
+    }
+}
+
+/// Read-only container/tag metadata gathered for source analysis.
+#[derive(Default)]
+pub struct SourceMetadata {
+    pub codec: Option<String>,
+    pub container: Option<String>,
+    pub duration_seconds: Option<f64>,
+    pub sample_rate: Option<u32>,
+    pub channels: Option<u32>,
+    pub bitrate_bps: Option<u64>,
+    pub channel_layout: Option<String>,
+    pub dsd_variant: Option<String>,
+    pub dop_capable: Option<bool>,
+    pub tag_completeness: Option<f64>,
+}
+
+fn channel_layout_label(channels: Option<u32>) -> Option<String> {
+    channels.map(|count| match count {
+        1 => "mono".to_string(),
+        2 => "stereo".to_string(),
+        other => format!("{other} channels"),
+    })
+}
+
+fn dsd_variant_for_rate(rate: Option<u32>) -> Option<String> {
+    let rate = rate?;
+    let multiplier = match rate {
+        2_822_400 => 1,
+        5_644_800 => 2,
+        11_289_600 => 4,
+        22_579_200 => 8,
+        45_158_400 => 16,
+        _ => return None,
+    };
+    Some(format!("DSD{}", 64 * multiplier))
+}
+
+fn bitrate_from_duration(file_size: u64, seconds: Option<f64>) -> Option<u64> {
+    let seconds = seconds?;
+    if seconds <= 0.0 {
+        return None;
+    }
+    Some(((file_size as f64) * 8.0 / seconds).round() as u64)
+}
+
+/// Verifies that the whole file can be read without changing playback state.
+/// A streaming read keeps memory bounded on large hi-res files.
+fn verify_source_integrity(path: &Path) -> bool {
+    let Ok(mut file) = File::open(path) else {
+        return false;
+    };
+    let Ok(metadata) = file.metadata() else {
+        return false;
+    };
+    if !metadata.is_file() {
+        return false;
+    }
+    let mut buffer = [0u8; 128 * 1024];
+    let mut total = 0u64;
+    loop {
+        match file.read(&mut buffer) {
+            Ok(0) => break,
+            Ok(read) => total += read as u64,
+            Err(_) => return false,
+        }
+    }
+    total == metadata.len()
+}
+
+fn dop_capability() -> bool {
+    let mode = format!("{:?}", crate::api::audio_api::current_dsd_output_mode());
+    mode.contains("Dop") || mode.contains("Auto")
+}
+
+/// DSD-in-WavPack properties via libwavpack: (native rate, channels, bytes).
+fn wavpack_dsd_properties(path: &Path) -> Option<(u32, u32, u64)> {
+    use std::ffi::CString;
+    use std::os::raw::c_char;
+    use wavpack_sys::{
+        WavpackCloseFile, WavpackGetNativeSampleRate, WavpackGetNumChannels,
+        WavpackGetNumSamples64, WavpackGetQualifyMode, WavpackOpenFileInput, OPEN_DSD_NATIVE,
+        QMODE_DSD_AUDIO,
+    };
+
+    let c_path = CString::new(path.to_str()?).ok()?;
+    let mut error_buf = [0u8; 256];
+    let context = unsafe {
+        WavpackOpenFileInput(
+            c_path.as_ptr(),
+            error_buf.as_mut_ptr() as *mut c_char,
+            OPEN_DSD_NATIVE as i32,
+            0,
+        )
+    };
+    if context.is_null() {
+        return None;
+    }
+    let props = unsafe {
+        let qmode = WavpackGetQualifyMode(context) as u32;
+        if qmode & QMODE_DSD_AUDIO != 0 {
+            Some((
+                WavpackGetNativeSampleRate(context) as u32,
+                WavpackGetNumChannels(context) as u32,
+                WavpackGetNumSamples64(context) as u64,
+            ))
+        } else {
+            None
+        }
+    };
+    unsafe { WavpackCloseFile(context) };
+    props
+}
+
+fn source_metadata(path: &Path, extension: &str, file_size: u64) -> SourceMetadata {
+    let ext = extension.to_ascii_lowercase();
+    let is_dsd = matches!(ext.as_str(), "dsf" | "dff" | "wv");
+    let mut result = SourceMetadata {
+        container: Some(ext.to_ascii_uppercase()),
+        codec: Some(match ext.as_str() {
+            "dsf" | "dff" => "DSD".to_string(),
+            "wv" => "WavPack".to_string(),
+            "flac" => "FLAC".to_string(),
+            "wav" => "PCM".to_string(),
+            "mp3" => "MP3".to_string(),
+            "m4a" | "mp4" => "AAC".to_string(),
+            "ogg" | "oga" => "Vorbis".to_string(),
+            "opus" => "Opus".to_string(),
+            other => other.to_ascii_uppercase(),
+        }),
+        dop_capable: is_dsd.then(dop_capability),
+        ..SourceMetadata::default()
+    };
+
+    let parse_options = ParseOptions::new().read_cover_art(false);
+    if let Some(tagged) = Probe::open(path)
+        .ok()
+        .and_then(|probe| probe.options(parse_options).guess_file_type().ok())
+        .and_then(|probe| probe.read().ok())
+    {
+        let properties = tagged.properties();
+        result.bitrate_bps = properties.audio_bitrate().map(u64::from);
+        result.duration_seconds = Some(properties.duration().as_secs_f64());
+        result.sample_rate = properties.sample_rate();
+        result.channels = properties.channels().map(u32::from);
+        result.channel_layout = channel_layout_label(result.channels);
+
+        let tag = tagged.primary_tag().or_else(|| tagged.first_tag());
+        let present = [
+            tag.and_then(|tag| tag.title()).is_some_and(|v| !v.is_empty()),
+            tag.and_then(|tag| tag.artist()).is_some_and(|v| !v.is_empty()),
+            tag.and_then(|tag| tag.album()).is_some_and(|v| !v.is_empty()),
+            tag.and_then(|tag| tag.genre()).is_some_and(|v| !v.is_empty()),
+            tag.and_then(|tag| tag.date())
+                .map(|date| date.year as u32)
+                .is_some_and(|year| year > 0),
+            tag.and_then(|tag| tag.track()).is_some_and(|v| v > 0),
+            tag.and_then(|tag| tag.disk()).is_some_and(|v| v > 0),
+        ];
+        let filled = present.iter().filter(|value| **value).count();
+        result.tag_completeness = Some(filled as f64 / present.len() as f64);
+        result.bitrate_bps = result
+            .bitrate_bps
+            .or_else(|| bitrate_from_duration(file_size, result.duration_seconds));
+    }
+
+    if ext == "dsf" {
+        if let Ok(dsf) = DsfFile::open(path) {
+            let fmt = dsf.fmt_chunk();
+            let rate = fmt.sampling_frequency();
+            let seconds = if rate > 0 {
+                Some(fmt.sample_count() as f64 / rate as f64)
+            } else {
+                None
+            };
+            result.duration_seconds = seconds.or(result.duration_seconds);
+            result.sample_rate = Some(rate);
+            result.channels = Some(fmt.channel_num());
+            result.channel_layout =
+                result.channels.and_then(|channels| channel_layout_label(Some(channels)));
+            result.dsd_variant = dsd_variant_for_rate(Some(rate));
+            result.bitrate_bps = bitrate_from_duration(file_size, seconds).or(result.bitrate_bps);
+        }
+    } else if ext == "wv" {
+        if let Some((rate, channels, bytes)) = wavpack_dsd_properties(path) {
+            let seconds = if rate > 0 && channels > 0 {
+                Some(bytes as f64 / (rate as f64 * channels as f64 * 8.0))
+            } else {
+                None
+            };
+            result.duration_seconds = seconds.or(result.duration_seconds);
+            result.sample_rate = Some(rate);
+            if channels > 0 {
+                result.channels = Some(channels);
+                result.channel_layout = channel_layout_label(result.channels);
+            }
+            result.dsd_variant = dsd_variant_for_rate(Some(rate));
+            result.bitrate_bps =
+                bitrate_from_duration(file_size, result.duration_seconds).or(result.bitrate_bps);
+        }
+    } else if ext == "dff" {
+        if let Ok(dff) = DffFile::open(path) {
+            if let Ok(rate) = dff.get_sample_rate() {
+                let seconds = dff
+                    .get_num_channels()
+                    .ok()
+                    .filter(|channels| *channels > 0 && rate > 0)
+                    .map(|channels| {
+                        dff.get_audio_length() as f64
+                            / (rate as f64 * channels as f64 * 8.0)
+                    });
+                result.channel_layout = dff
+                    .get_num_channels()
+                    .ok()
+                    .map(|channels| channel_layout_label(Some(channels as u32)))
+                    .unwrap_or_default();
+                result.duration_seconds = seconds.or(result.duration_seconds);
+                result.sample_rate = Some(rate);
+                result.channels = dff
+                    .get_num_channels()
+                    .ok()
+                    .map(|channels| channels as u32);
+                result.dsd_variant = dsd_variant_for_rate(Some(rate));
+                result.bitrate_bps =
+                    bitrate_from_duration(file_size, seconds).or(result.bitrate_bps);
+            }
+        }
+    }
+
+    if result.tag_completeness.is_none() && is_dsd {
+        result.tag_completeness = Some(0.0);
+    }
+    result
+}
+
+fn metadata_fallback_result(
+    file_size: u64,
+    metadata: &SourceMetadata,
+    integrity_ok: bool,
+    duration_seconds: Option<f64>,
+    sample_rate: Option<u32>,
+    channels: Option<u32>,
+    bit_depth: Option<u32>,
+) -> AudioSourceAnalysis {
+    let bit_perfect_path = crate::api::audio_api::source_analysis_bit_perfect_path(
+        metadata.dsd_variant.is_some(),
+    );
+    AudioSourceAnalysis {
+        status: AudioSourceAnalysisStatus::Ok,
+        file_size_bytes: file_size,
+        duration_seconds,
+        sample_rate,
+        channels,
+        bit_depth,
+        channel_peak_db: Vec::new(),
+        channel_rms_db: Vec::new(),
+        balance_db: None,
+        side_mid_db: None,
+        leading_silence_seconds: None,
+        trailing_silence_seconds: None,
+        silent: false,
+        lufs: None,
+        lra: None,
+        true_peak_db: None,
+        dr: None,
+        clipping: false,
+        clipped_samples: 0,
+        spectrogram: None,
+        codec: metadata.codec.clone(),
+        container: metadata.container.clone(),
+        bitrate_bps: metadata.bitrate_bps,
+        channel_layout: metadata.channel_layout.clone().or_else(|| {
+            channel_layout_label(channels)
+        }),
+        dsd_variant: metadata.dsd_variant.clone(),
+        dop_capable: metadata.dop_capable,
+        tag_completeness: metadata.tag_completeness,
+        integrity_ok: Some(integrity_ok),
+        bit_perfect_path: Some(bit_perfect_path),
     }
 }
 
@@ -786,15 +1100,12 @@ fn analyze_source_audio_file_inner(
         return empty_source_analysis(AudioSourceAnalysisStatus::Cancelled, 0);
     }
     let path_obj = Path::new(path);
-
-    if let Some(ext) = path_obj.extension().and_then(|e| e.to_str()) {
-        match ext.to_lowercase().as_str() {
-            "dsf" | "dff" | "wv" => {
-                return empty_source_analysis(AudioSourceAnalysisStatus::UnsupportedFormat, 0);
-            }
-            _ => {}
-        }
-    }
+    let extension = path_obj
+        .extension()
+        .and_then(|ext| ext.to_str())
+        .unwrap_or_default()
+        .to_ascii_lowercase();
+    let metadata_only_source = matches!(extension.as_str(), "dsf" | "dff" | "wv");
 
     let file = match File::open(path_obj) {
         Ok(file) => file,
@@ -803,6 +1114,22 @@ fn analyze_source_audio_file_inner(
     let file_size = match file.metadata() {
         Ok(metadata) if metadata.is_file() => metadata.len(),
         _ => return empty_source_analysis(AudioSourceAnalysisStatus::Unreadable, 0),
+    };
+    let source_meta = source_metadata(path_obj, &extension, file_size);
+    let integrity_ok = verify_source_integrity(path_obj);
+    let bit_perfect_path = crate::api::audio_api::source_analysis_bit_perfect_path(
+        source_meta.dsd_variant.is_some(),
+    );
+    let fallback = || {
+        metadata_fallback_result(
+            file_size,
+            &source_meta,
+            integrity_ok,
+            source_meta.duration_seconds,
+            source_meta.sample_rate,
+            source_meta.channels,
+            source_meta.dsd_variant.as_ref().map(|_| 1),
+        )
     };
 
     let mss = MediaSourceStream::new(Box::new(file), Default::default());
@@ -818,6 +1145,7 @@ fn analyze_source_audio_file_inner(
         MetadataOptions::default(),
     ) {
         Ok(probed) => probed,
+        Err(_) if metadata_only_source => return fallback(),
         Err(_) => {
             return empty_source_analysis(AudioSourceAnalysisStatus::UnsupportedFormat, file_size)
         }
@@ -826,12 +1154,14 @@ fn analyze_source_audio_file_inner(
     let (codec_params, track_id, num_frames) = {
         let track = match format_ctx.default_track(TrackType::Audio) {
             Some(track) => track,
+            None if metadata_only_source => return fallback(),
             None => {
                 return empty_source_analysis(AudioSourceAnalysisStatus::NoAudioStream, file_size)
             }
         };
         let params = match &track.codec_params {
             Some(CodecParameters::Audio(p)) if p.codec != CODEC_ID_NULL_AUDIO => p.clone(),
+            _ if metadata_only_source => return fallback(),
             _ => return empty_source_analysis(AudioSourceAnalysisStatus::NoAudioStream, file_size),
         };
         (params, track.id, track.num_frames)
@@ -853,6 +1183,7 @@ fn analyze_source_audio_file_inner(
         .make_audio_decoder(&codec_params, &AudioDecoderOptions::default())
     {
         Ok(decoder) => decoder,
+        Err(_) if metadata_only_source => return fallback(),
         Err(_) => {
             return empty_source_analysis(AudioSourceAnalysisStatus::UnsupportedFormat, file_size)
         }
@@ -1204,6 +1535,17 @@ fn analyze_source_audio_file_inner(
         clipping: clipped_samples > 0,
         clipped_samples,
         spectrogram: Some(spectrogram),
+        codec: source_meta.codec,
+        container: source_meta.container,
+        bitrate_bps: source_meta.bitrate_bps,
+        channel_layout: source_meta.channel_layout.or_else(|| {
+            channel_layout_label(Some(channels as u32))
+        }),
+        dsd_variant: source_meta.dsd_variant,
+        dop_capable: source_meta.dop_capable,
+        tag_completeness: source_meta.tag_completeness,
+        integrity_ok: Some(integrity_ok),
+        bit_perfect_path: Some(bit_perfect_path),
     }
 }
 
@@ -1357,6 +1699,43 @@ mod tests {
     fn analyze_source(path: String) -> AudioSourceAnalysis {
         // Measurement tests need not contend for the production job slot.
         analyze_source_audio_file_inner(&path, &create_source_audio_analysis_job())
+    }
+
+    /// Minimal structurally valid DSF header with a short DSD payload. Enough
+    /// for dsf-meta to expose metadata when Symphonia cannot decode the stream.
+    fn write_minimal_dsf(dir: &std::path::Path, name: &str) -> String {
+        use std::io::Write;
+
+        let path = dir.join(name);
+        let sample_rate = 2_822_400u32;
+        let channels = 2u32;
+        let payload_bytes = 1024u64;
+        let sample_count = payload_bytes * 8 / channels as u64;
+        let total_size = 28u64 + 52u64 + 12u64 + payload_bytes;
+        let mut bytes = Vec::with_capacity(total_size as usize);
+        bytes.extend_from_slice(b"DSD ");
+        bytes.extend_from_slice(&28u64.to_le_bytes());
+        bytes.extend_from_slice(&total_size.to_le_bytes());
+        bytes.extend_from_slice(&0u64.to_le_bytes());
+        bytes.extend_from_slice(b"fmt ");
+        bytes.extend_from_slice(&52u64.to_le_bytes());
+        bytes.extend_from_slice(&1u32.to_le_bytes());
+        bytes.extend_from_slice(&0u32.to_le_bytes());
+        bytes.extend_from_slice(&2u32.to_le_bytes());
+        bytes.extend_from_slice(&channels.to_le_bytes());
+        bytes.extend_from_slice(&sample_rate.to_le_bytes());
+        bytes.extend_from_slice(&1u32.to_le_bytes());
+        bytes.extend_from_slice(&sample_count.to_le_bytes());
+        bytes.extend_from_slice(&4096u32.to_le_bytes());
+        bytes.extend_from_slice(&0u32.to_le_bytes());
+        bytes.extend_from_slice(b"data");
+        bytes.extend_from_slice(&payload_bytes.to_le_bytes());
+        bytes.extend_from_slice(&0u64.to_le_bytes());
+        bytes.extend(std::iter::repeat(0u8).take(payload_bytes as usize));
+
+        let mut file = std::fs::File::create(&path).unwrap();
+        file.write_all(&bytes).unwrap();
+        path.to_string_lossy().into_owned()
     }
 
     #[test]
@@ -1544,9 +1923,38 @@ mod tests {
     }
 
     #[test]
-    fn source_analysis_rejects_dsd() {
-        let result = analyze_source("/tmp/flick_nonexistent.dsf".to_string());
-        assert_eq!(result.status, AudioSourceAnalysisStatus::UnsupportedFormat);
+    fn source_analysis_reports_dsd_metadata() {
+        let dir = std::env::temp_dir().join("auno_test_source_dsd");
+        std::fs::create_dir_all(&dir).unwrap();
+        let path = write_minimal_dsf(&dir, "sample.dsf");
+        let result = analyze_source(path);
+
+        assert_eq!(result.status, AudioSourceAnalysisStatus::Ok);
+        assert_eq!(result.container.as_deref(), Some("DSF"));
+        assert_eq!(result.dsd_variant.as_deref(), Some("DSD64"));
+        assert_eq!(result.sample_rate, Some(2_822_400));
+        assert_eq!(result.channels, Some(2));
+        assert_eq!(result.integrity_ok, Some(true));
+        assert!(result.bitrate_bps.unwrap_or_default() > 0);
+        assert!(result.dop_capable.is_some());
+        assert!(result.bit_perfect_path.is_some());
+    }
+
+    #[test]
+    fn source_analysis_reports_pcm_metadata_fields() {
+        let dir = std::env::temp_dir().join("auno_test_source_pcm_metadata");
+        std::fs::create_dir_all(&dir).unwrap();
+        let path = write_sine_wav(&dir, "metadata.wav", 440.0, 0.25, 1.0);
+        let result = analyze_source(path);
+
+        assert_eq!(result.status, AudioSourceAnalysisStatus::Ok);
+        assert_eq!(result.container.as_deref(), Some("WAV"));
+        assert_eq!(result.codec.as_deref(), Some("PCM"));
+        assert_eq!(result.channel_layout.as_deref(), Some("stereo"));
+        assert_eq!(result.integrity_ok, Some(true));
+        assert!(result.bitrate_bps.unwrap_or_default() > 0);
+        assert!(result.tag_completeness.is_some());
+        assert!(result.dsd_variant.is_none());
     }
 
     #[test]

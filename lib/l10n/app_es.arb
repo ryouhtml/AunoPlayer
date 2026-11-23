@@ -10908,5 +10908,110 @@
   "audioAnalysisUnsupportedMultichannel": "El análisis de origen solo admite archivos mono y estéreo.",
   "@audioAnalysisUnsupportedMultichannel": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisCodec": "Códec",
+  "@audioAnalysisCodec": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisContainer": "Contenedor",
+  "@audioAnalysisContainer": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisBitrate": "Bitrate",
+  "@audioAnalysisBitrate": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisChannelLayout": "Distribución de canales",
+  "@audioAnalysisChannelLayout": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisHiResSection": "DSD / Alta resolución",
+  "@audioAnalysisHiResSection": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisDsdVariant": "Variante DSD",
+  "@audioAnalysisDsdVariant": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisDopCapable": "Compatible con DoP",
+  "@audioAnalysisDopCapable": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisDopYes": "Sí",
+  "@audioAnalysisDopYes": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisDopNo": "No",
+  "@audioAnalysisDopNo": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisHiResBadge": "Fuente de alta resolución",
+  "@audioAnalysisHiResBadge": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisMetadataOnlyNote": "La decodificación completa no está disponible para este formato. Se muestran los metadatos y la integridad.",
+  "@audioAnalysisMetadataOnlyNote": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisIntegritySection": "Integridad y etiquetas",
+  "@audioAnalysisIntegritySection": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisIntegrityOk": "La lectura completa del archivo se realizó correctamente",
+  "@audioAnalysisIntegrityOk": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisIntegrityFailed": "Falló la lectura completa del archivo",
+  "@audioAnalysisIntegrityFailed": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisTagCompleteness": "Integridad de etiquetas",
+  "@audioAnalysisTagCompleteness": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisOutputSection": "Ruta de salida",
+  "@audioAnalysisOutputSection": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisBitPerfectPath": "Ruta nativa / bit-perfect",
+  "@audioAnalysisBitPerfectPath": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisResampleWarning": "La ruta de salida seleccionada puede remuestrear la reproducción.",
+  "@audioAnalysisResampleWarning": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisSaveReport": "Guardar informe local",
+  "@audioAnalysisSaveReport": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisReportSaved": "Informe guardado en Documents/AunoPlayer",
+  "@audioAnalysisReportSaved": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
+  },
+  "audioAnalysisReportFailed": "No se pudo guardar el informe.",
+  "@audioAnalysisReportFailed": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
+    "type": "text"
   }
 }

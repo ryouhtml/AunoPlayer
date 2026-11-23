@@ -6,156 +6,103 @@
 import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-// These functions are ignored because they are not marked as `pub`: `apply_tag_fields`, `id3_text_frame`, `join_tag_values`, `read_dsd_id3_tag`, `tag_read_result_from_id3`
+
+            // These functions are ignored because they are not marked as `pub`: `apply_tag_fields`, `id3_text_frame`, `join_tag_values`, `read_dsd_id3_tag`, `tag_read_result_from_id3`
 // These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `clone`, `clone`, `clone`, `fmt`, `fmt`, `fmt`
 
-Future<TagReadResult> readTags({required String path}) =>
-    RustLib.instance.api.crateApiMetadataEditorReadTags(path: path);
 
-Future<TagWriteResult> writeTags({
-  required String path,
-  required TagEditFields fields,
-}) => RustLib.instance.api.crateApiMetadataEditorWriteTags(
-  path: path,
-  fields: fields,
-);
+            Future<TagReadResult>  readTags({required String path }) => RustLib.instance.api.crateApiMetadataEditorReadTags(path: path);
 
-Future<TagWriteResult> writeTagsToTemp({
-  required String path,
-  required TagEditFields fields,
-  required String tempDir,
-}) => RustLib.instance.api.crateApiMetadataEditorWriteTagsToTemp(
-  path: path,
-  fields: fields,
-  tempDir: tempDir,
-);
+Future<TagWriteResult>  writeTags({required String path , required TagEditFields fields }) => RustLib.instance.api.crateApiMetadataEditorWriteTags(path: path, fields: fields);
 
-class TagEditFields {
-  final String? title;
-  final String? artist;
-  final String? album;
-  final String? albumArtist;
-  final String? genre;
-  final int? year;
-  final int? trackNumber;
-  final int? discNumber;
+Future<TagWriteResult>  writeTagsToTemp({required String path , required TagEditFields fields , required String tempDir }) => RustLib.instance.api.crateApiMetadataEditorWriteTagsToTemp(path: path, fields: fields, tempDir: tempDir);
 
-  const TagEditFields({
-    this.title,
-    this.artist,
-    this.album,
-    this.albumArtist,
-    this.genre,
-    this.year,
-    this.trackNumber,
-    this.discNumber,
-  });
+            class TagEditFields  {
+                final String? title;
+final String? artist;
+final String? album;
+final String? albumArtist;
+final String? genre;
+final int? year;
+final int? trackNumber;
+final int? discNumber;
 
-  @override
-  int get hashCode =>
-      title.hashCode ^
-      artist.hashCode ^
-      album.hashCode ^
-      albumArtist.hashCode ^
-      genre.hashCode ^
-      year.hashCode ^
-      trackNumber.hashCode ^
-      discNumber.hashCode;
+                const TagEditFields({this.title ,this.artist ,this.album ,this.albumArtist ,this.genre ,this.year ,this.trackNumber ,this.discNumber ,});
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TagEditFields &&
-          runtimeType == other.runtimeType &&
-          title == other.title &&
-          artist == other.artist &&
-          album == other.album &&
-          albumArtist == other.albumArtist &&
-          genre == other.genre &&
-          year == other.year &&
-          trackNumber == other.trackNumber &&
-          discNumber == other.discNumber;
-}
 
-class TagReadResult {
-  final String? title;
-  final String? artist;
-  final String? album;
-  final String? albumArtist;
-  final String? genre;
-  final int? year;
-  final int? trackNumber;
-  final int? discNumber;
-  final String? date;
-  final String? copyright;
-  final String? label;
-  final String? comment;
 
-  const TagReadResult({
-    this.title,
-    this.artist,
-    this.album,
-    this.albumArtist,
-    this.genre,
-    this.year,
-    this.trackNumber,
-    this.discNumber,
-    this.date,
-    this.copyright,
-    this.label,
-    this.comment,
-  });
 
-  @override
-  int get hashCode =>
-      title.hashCode ^
-      artist.hashCode ^
-      album.hashCode ^
-      albumArtist.hashCode ^
-      genre.hashCode ^
-      year.hashCode ^
-      trackNumber.hashCode ^
-      discNumber.hashCode ^
-      date.hashCode ^
-      copyright.hashCode ^
-      label.hashCode ^
-      comment.hashCode;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TagReadResult &&
-          runtimeType == other.runtimeType &&
-          title == other.title &&
-          artist == other.artist &&
-          album == other.album &&
-          albumArtist == other.albumArtist &&
-          genre == other.genre &&
-          year == other.year &&
-          trackNumber == other.trackNumber &&
-          discNumber == other.discNumber &&
-          date == other.date &&
-          copyright == other.copyright &&
-          label == other.label &&
-          comment == other.comment;
-}
+        @override
+        int get hashCode => title.hashCode^artist.hashCode^album.hashCode^albumArtist.hashCode^genre.hashCode^year.hashCode^trackNumber.hashCode^discNumber.hashCode;
 
-class TagWriteResult {
-  final bool success;
-  final String? error;
-  final String? tempPath;
 
-  const TagWriteResult({required this.success, this.error, this.tempPath});
 
-  @override
-  int get hashCode => success.hashCode ^ error.hashCode ^ tempPath.hashCode;
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is TagEditFields &&
+                runtimeType == other.runtimeType
+                && title == other.title&& artist == other.artist&& album == other.album&& albumArtist == other.albumArtist&& genre == other.genre&& year == other.year&& trackNumber == other.trackNumber&& discNumber == other.discNumber;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TagWriteResult &&
-          runtimeType == other.runtimeType &&
-          success == other.success &&
-          error == other.error &&
-          tempPath == other.tempPath;
-}
+            }
+
+class TagReadResult  {
+                final String? title;
+final String? artist;
+final String? album;
+final String? albumArtist;
+final String? genre;
+final int? year;
+final int? trackNumber;
+final int? discNumber;
+final String? date;
+final String? copyright;
+final String? label;
+final String? comment;
+
+                const TagReadResult({this.title ,this.artist ,this.album ,this.albumArtist ,this.genre ,this.year ,this.trackNumber ,this.discNumber ,this.date ,this.copyright ,this.label ,this.comment ,});
+
+
+
+
+
+        @override
+        int get hashCode => title.hashCode^artist.hashCode^album.hashCode^albumArtist.hashCode^genre.hashCode^year.hashCode^trackNumber.hashCode^discNumber.hashCode^date.hashCode^copyright.hashCode^label.hashCode^comment.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is TagReadResult &&
+                runtimeType == other.runtimeType
+                && title == other.title&& artist == other.artist&& album == other.album&& albumArtist == other.albumArtist&& genre == other.genre&& year == other.year&& trackNumber == other.trackNumber&& discNumber == other.discNumber&& date == other.date&& copyright == other.copyright&& label == other.label&& comment == other.comment;
+
+            }
+
+class TagWriteResult  {
+                final bool success;
+final String? error;
+final String? tempPath;
+
+                const TagWriteResult({required this.success ,this.error ,this.tempPath ,});
+
+
+
+
+
+        @override
+        int get hashCode => success.hashCode^error.hashCode^tempPath.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is TagWriteResult &&
+                runtimeType == other.runtimeType
+                && success == other.success&& error == other.error&& tempPath == other.tempPath;
+
+            }
+            
