@@ -1099,10 +1099,6 @@
   "@autoeqHeadphones2": {
     "description": "lib/features/settings/screens/widgets/autoeq_search_sheet.dart:188"
   },
-  "autoeqOnlineSearchFailed": "No se pudo cargar un preajuste en línea. Los preajustes incluidos siguen funcionando sin conexión; comprueba el modelo o la conexión.",
-  "@autoeqOnlineSearchFailed": {
-    "description": "Inline feedback when AutoEq online lookup cannot load a preset."
-  },
   "automatic": "Automático",
   "@automatic": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:311"
@@ -4611,15 +4607,6 @@
   "@formatStrategyIsUnavailableBecauseAudio": {
     "description": "lib/features/settings/screens/uac2_preferences_screen.dart:249"
   },
-  "foundOnline": "Se encontró «{arg1}» en línea.",
-  "@foundOnline": {
-    "description": "lib/features/settings/screens/widgets/autoeq_search_sheet.dart:121",
-    "placeholders": {
-      "arg1": {
-        "type": "Object"
-      }
-    }
-  },
   "frPkt": "{arg1} tramas/paquete",
   "@frPkt": {
     "description": "lib/features/player/widgets/bit_perfect_indicator.dart:988",
@@ -6721,7 +6708,7 @@
   "@noMatchesFound": {
     "description": "lib/features/songs/screens/songs_screen.dart:1854"
   },
-  "noMatchesTryFewerWordsOr": "No hay coincidencias. Prueba con menos palabras o busca en línea.",
+  "noMatchesTryFewerWordsOr": "No hay coincidencias. Prueba con menos palabras.",
   "@noMatchesTryFewerWordsOr": {
     "description": "lib/features/settings/screens/widgets/autoeq_search_sheet.dart:317"
   },
@@ -8681,10 +8668,6 @@
   "searchOnline": "Buscar en línea",
   "@searchOnline": {
     "description": "lib/features/player/widgets/inline_lyrics_panel.dart:219"
-  },
-  "searchOnline2": "Buscar en línea",
-  "@searchOnline2": {
-    "description": "lib/features/settings/screens/widgets/autoeq_search_sheet.dart:414"
   },
   "searchOnlineCreateYourOwnSynced": "Busca letras en línea, crea tus propias letras sincronizadas o importa un archivo existente.",
   "@searchOnlineCreateYourOwnSynced": {

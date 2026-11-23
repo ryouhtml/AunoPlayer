@@ -1,0 +1,45 @@
+Auno Player
+Copyright (C) 2026 Auno Player contributors
+Copyright (C) 2026 Flick Player contributors (original project)
+
+This project is licensed under the GNU General Public License,
+version 3 or (at your option) any later version (GPL-3.0-or-later).
+See LICENSE for the full license text.
+
+Third-party components and attribution
+--------------------------------------
+
+This project adapts ideas and implementation patterns from the following
+projects. They remain licensed under their own terms; their copyright
+notices are preserved here.
+
+- BitChord — GPL-3.0.
+  Used as a reference for karaoke timing and listening-history/replay UI.
+  Source: https://github.com/ (project repository as referenced by the
+  Auno feature specification).
+
+- Mornye — LGPL-3.0 / GPLv3.
+  Used as a reference for audiophile-oriented library scanning and
+  audio-quality analysis presentation.
+  Source: https://github.com/ (project repository as referenced by the
+  Auno feature specification).
+
+- Flick Player — MIT (original project).
+  Auno Player is a derivative of the original Flick Player codebase.
+  Copyright (c) 2026 Flick Player contributors. The original MIT permission
+  notice and disclaimer are preserved in the repository history prior to the
+  GPL-3.0-or-later relicensing commit.
+
+Source disclosure
+-----------------
+
+If you distribute a binary or APK built from this project, GPLv3 section 6
+requires that you also make the Corresponding Source available to recipients,
+under the same license, together with this NOTICE and a copy of LICENSE.
+For a release bundle this means including a link to the complete source
+repository for the exact commit used to build the APK, or shipping the source
+alongside the APK.
+
+Flutter, Dart, Rust, and their respective ecosystem packages are used under
+their own licenses; see pubspec.lock, rust/Cargo.lock, and each dependency's
+license files for details.

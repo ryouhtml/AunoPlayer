@@ -1099,10 +1099,6 @@
   "@autoeqHeadphones2": {
     "description": "lib/features/settings/screens/widgets/autoeq_search_sheet.dart:188"
   },
-  "autoeqOnlineSearchFailed": "Couldn't load an online preset. Bundled presets still work offline; check the model name or connection.",
-  "@autoeqOnlineSearchFailed": {
-    "description": "Inline feedback when AutoEq online lookup cannot load a preset."
-  },
   "automatic": "Automatic",
   "@automatic": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:311"
@@ -4611,15 +4607,6 @@
   "@formatStrategyIsUnavailableBecauseAudio": {
     "description": "lib/features/settings/screens/uac2_preferences_screen.dart:249"
   },
-  "foundOnline": "Found \"{arg1}\" online.",
-  "@foundOnline": {
-    "description": "lib/features/settings/screens/widgets/autoeq_search_sheet.dart:121",
-    "placeholders": {
-      "arg1": {
-        "type": "Object"
-      }
-    }
-  },
   "frPkt": "{arg1} fr/pkt",
   "@frPkt": {
     "description": "lib/features/player/widgets/bit_perfect_indicator.dart:988",
@@ -6721,7 +6708,7 @@
   "@noMatchesFound": {
     "description": "lib/features/songs/screens/songs_screen.dart:1854"
   },
-  "noMatchesTryFewerWordsOr": "No matches. Try fewer words or search online.",
+  "noMatchesTryFewerWordsOr": "No matches. Try fewer words.",
   "@noMatchesTryFewerWordsOr": {
     "description": "lib/features/settings/screens/widgets/autoeq_search_sheet.dart:317"
   },
@@ -8681,10 +8668,6 @@
   "searchOnline": "Search Online",
   "@searchOnline": {
     "description": "lib/features/player/widgets/inline_lyrics_panel.dart:219"
-  },
-  "searchOnline2": "Search online",
-  "@searchOnline2": {
-    "description": "lib/features/settings/screens/widgets/autoeq_search_sheet.dart:414"
   },
   "searchOnlineCreateYourOwnSynced": "Search online, create your own synced lyrics, or import an existing file.",
   "@searchOnlineCreateYourOwnSynced": {
