@@ -122,10 +122,15 @@ class PlaylistService {
     if (trimmedName.isEmpty) return null;
     if (_playlistNameExists(trimmedName)) return null;
 
+    final now = DateTime.now();
+    var id = now.microsecondsSinceEpoch.toString();
+    while (_playlists.any((p) => p.id == id)) {
+      id = '${now.microsecondsSinceEpoch}_${_playlists.length + 1}';
+    }
     final playlist = Playlist(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      id: id,
       name: trimmedName,
-      createdAt: DateTime.now(),
+      createdAt: now,
     );
 
     _playlists.add(playlist);
@@ -480,8 +485,12 @@ class PlaylistService {
       }
       playlist = updated;
     } else {
+      var id = now.microsecondsSinceEpoch.toString();
+      while (_playlists.any((p) => p.id == id)) {
+        id = '${now.microsecondsSinceEpoch}_${_playlists.length + 1}';
+      }
       playlist = Playlist(
-        id: now.millisecondsSinceEpoch.toString(),
+        id: id,
         name: playlistName,
         songIds: resolved.ids,
         createdAt: now,

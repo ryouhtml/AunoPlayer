@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:auno_player/features/player/widgets/audio_analysis_sheet.dart';
-import 'package:auno_player/l10n/l10n.dart';
+import 'package:auno_player/l10n/english_l10n.dart';
 import 'package:auno_player/models/song.dart';
 import 'package:auno_player/src/rust/api/audio_analysis.dart';
 import 'package:flutter/material.dart';

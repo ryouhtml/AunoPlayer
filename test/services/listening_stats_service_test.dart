@@ -29,6 +29,8 @@ String _isarCorePath() {
 }
 
 class _EmptyLegacy extends RecentlyPlayedRepository {
+  _EmptyLegacy({super.isar});
+
   @override
   Future<Map<ListeningRecapPeriod, ListeningRecap>> getListeningRecaps({
     Iterable<ListeningRecapPeriod>? periods,
@@ -61,7 +63,7 @@ void main() {
       directory: dir.path,
       name: p.basename(dir.path),
     );
-    service = ListeningStatsService(isar: isar, legacy: _EmptyLegacy());
+    service = ListeningStatsService(isar: isar, legacy: _EmptyLegacy(isar: isar));
   });
 
   tearDown(() async {

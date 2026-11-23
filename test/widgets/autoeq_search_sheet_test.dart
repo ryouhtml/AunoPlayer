@@ -38,6 +38,7 @@ class _Catalog extends Fake implements AutoEqCatalogService {
 Future<void> _open(
   WidgetTester tester,
   _Catalog service, {
+  Locale locale = kFallbackLocale,
   Size size = const Size(390, 844),
   double keyboardHeight = 0,
   double textScale = 1,
@@ -52,7 +53,7 @@ Future<void> _open(
   await tester.pumpWidget(
     MaterialApp(
       theme: AppTheme.darkTheme,
-      locale: kFallbackLocale,
+      locale: locale,
       supportedLocales: kSupportedLocales,
       localizationsDelegates: kAppLocalizationsDelegates,
       home: Scaffold(
