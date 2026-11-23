@@ -122,11 +122,12 @@ void main() {
       ),
       findsOneWidget,
     );
-    expect(find.text(english.close), findsOneWidget);
+    // The former support action was removed with donation flows; the
+    // celebration card now has a single dismiss action.
     expect(find.text(english.done), findsOneWidget);
     expect(find.text('Tapos'), findsNothing);
 
-    await tester.tap(find.text(english.close));
+    await tester.tap(find.text(english.done));
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
     await tester.pump(const Duration(milliseconds: 100));

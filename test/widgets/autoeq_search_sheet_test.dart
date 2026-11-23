@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:auno_player/core/theme/app_theme.dart';
 import 'package:auno_player/features/settings/screens/widgets/autoeq_search_sheet.dart';
-import 'package:auno_player/l10n/l10n.dart';
 import 'package:auno_player/l10n/settings_l10n.dart';
 import 'package:auno_player/services/autoeq_catalog_service.dart';
 

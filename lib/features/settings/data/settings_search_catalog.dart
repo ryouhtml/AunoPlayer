@@ -98,7 +98,6 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
         _section('albumArtwork', l10n.albumArtwork, [
           ('stretchNonSquareArt', l10n.stretchNonSquareArt),
         ]),
-        _section('metadata', l10n.metadata, []),
       ],
     ),
     page(
@@ -268,6 +267,9 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
         ]),
         _section('display', l10n.display, [
           ('karaokeEffect', l10n.karaokeEffect),
+          ('karaokeSweepStyleAuto', l10n.karaokeSweepStyleAuto),
+          ('karaokeSweepStyleWord', l10n.karaokeSweepStyleWord),
+          ('karaokeSweepStyleSyllable', l10n.karaokeSweepStyleSyllable),
           ('left', l10n.left),
           ('center', l10n.center),
           ('right', l10n.right),

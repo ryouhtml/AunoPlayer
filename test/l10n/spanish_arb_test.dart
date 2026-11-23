@@ -95,19 +95,7 @@ void main() {
     expect(spanish.dacWillBeOfferedAgain(2), 'Se volverán a ofrecer 2 DAC.');
   });
 
-  test('playlist sync and skipped entries agree and preserve spacing', () {
-    expect(
-      spanish.syncedPlaylistFromServers(0),
-      'Se sincronizaron 0 listas de reproducción desde los servidores',
-    );
-    expect(
-      spanish.syncedPlaylistFromServers(1),
-      'Se sincronizó 1 lista de reproducción desde los servidores',
-    );
-    expect(
-      spanish.syncedPlaylistFromServers(2),
-      'Se sincronizaron 2 listas de reproducción desde los servidores',
-    );
+  test('skipped entries agree and preserve spacing', () {
     expect(
       spanish.skippedUnmatchedEntr(0),
       ' Se omitieron 0 entradas sin coincidencia.',

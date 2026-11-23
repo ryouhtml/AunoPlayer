@@ -9,6 +9,13 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get indonesian => 'Indonesian';
+
+  @override
+  String get artworkOnlyForLocalFiles =>
+      'Artwork can only be changed for local files.';
+
+  @override
   String get lockScreenVisualizerTitle => 'Lock-screen visualizer';
 
   @override
@@ -188,9 +195,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Control not visible? You can continue, or use the manual below.';
 
   @override
-  String get filipinoDonationNote => 'Thank you for supporting Auno Player.';
-
-  @override
   String get playingLabel => 'Playing';
 
   @override
@@ -200,10 +204,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get aLittleRecordOfWhatStayed =>
       'A little record of what stayed on repeat.';
-
-  @override
-  String get aNewerFlickBuildIsOn =>
-      'A newer Auno Player build is on the Play Store.';
 
   @override
   String get aPlaylistWithThisNameAlready =>
@@ -247,12 +247,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutFlickPlayer => 'About Auno Player';
-
-  @override
-  String get aboutThisAlbum => 'About this album';
-
-  @override
-  String get aboutThem => 'About them';
 
   @override
   String get absoluteVolumeSync => 'Absolute Volume Sync';
@@ -325,9 +319,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get addMusicWithArtistTagsTo =>
       'Add music with artist tags to see them here';
-
-  @override
-  String get addServer => 'Add Server';
 
   @override
   String get addSongsFromThePlayerMenu => 'Add songs from the player menu';
@@ -468,10 +459,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get afterHours => 'After Hours';
 
   @override
-  String get afterScanningMatchFilesWithMissing =>
-      'After scanning, match files with missing tags against Apple Music. Only confident matches apply automatically.';
-
-  @override
   String get air => 'Air';
 
   @override
@@ -490,9 +477,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get albumArt2 => 'Album art';
-
-  @override
-  String get albumArtImport => 'Album Art Import';
 
   @override
   String get albumArtist => 'Album Artist';
@@ -692,15 +676,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get analyzingLoudness => 'Analyzing loudness';
 
   @override
-  String get andArtwork => ' and artwork';
-
-  @override
   String andMoreInRotation(Object arg1) {
     return '$arg1 and more in rotation';
   }
-
-  @override
-  String get android => 'Android';
 
   @override
   String get androidAudioApi => 'Android Audio API';
@@ -731,6 +709,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get animatedAlbumArt => 'Animated Album Art';
 
   @override
+  String get localAlbumArtPanAndGlow =>
+      'Slow pan and glow from the album art\'s dominant color.';
+
+  @override
   String get animationStyle => 'Animation Style';
 
   @override
@@ -748,9 +730,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Animations and haptic feedback toggles.';
 
   @override
-  String get apiKey => 'API Key';
-
-  @override
   String get appInfo => 'App Info';
 
   @override
@@ -763,20 +742,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appearsInTheOverflowMenu => 'Appears in the overflow menu';
 
   @override
-  String get appleMusicDataUnavailable => 'Apple Music data unavailable';
-
-  @override
-  String get appleMusicDataUpdated => 'Apple Music data updated';
-
-  @override
-  String get appleMusicLookupFailedCheckYour =>
-      'Apple Music lookup failed. Check your connection.';
-
-  @override
-  String get appleMusicMotionArtOnAlbums =>
-      'Apple Music Motion Art on albums plus pan/zoom, ambient glow and smooth fade on heroes';
-
-  @override
   String appliedAutoeqFor(Object arg1) {
     return 'Applied AutoEQ for $arg1';
   }
@@ -787,20 +752,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String apply2(Object arg1) {
     return 'Apply $arg1';
-  }
-
-  @override
-  String get applySelected => 'Apply Selected';
-
-  @override
-  String applyTo(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count songs',
-      one: '$count song',
-    );
-    return 'Apply to $_temp0';
   }
 
   @override
@@ -878,19 +829,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get artworkCard => 'Artwork Card';
 
   @override
-  String artworkLookupFailed(int status) {
-    return 'Artwork lookup failed (HTTP $status).';
-  }
-
-  @override
-  String get artworkLookupInvalidData =>
-      'Artwork lookup returned invalid data.';
-
-  @override
-  String get artworkLookupTemporarilyUnavailable =>
-      'Artwork lookup is temporarily unavailable.';
-
-  @override
   String get artworkPlacement => 'Artwork placement';
 
   @override
@@ -932,17 +870,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get audioSignalPath => 'Audio Signal Path';
 
   @override
-  String get audioTestingEquipment => 'Audio Testing Equipment';
-
-  @override
   String get aug => 'Aug';
 
   @override
   String get auroraSounds => 'Aurora Sounds';
-
-  @override
-  String get authenticationResponseMissingToken =>
-      'Authentication response missing token';
 
   @override
   String get auto => 'Auto';
@@ -973,9 +904,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get autoHideTimeout => 'Auto-hide Timeout';
 
   @override
-  String get autoIdentifyUntaggedAlbums => 'Auto-identify untagged albums';
-
-  @override
   String get autoNativeDsdOnDapsDop =>
       'Auto — Native DSD on DAPs, DoP for USB DACs, PCM otherwise';
 
@@ -1001,14 +929,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get autoeqHeadphones2 => 'AutoEQ Headphones';
 
   @override
-  String get autoeqOnlineSearchFailed =>
-      'Couldn\'t load an online preset. Bundled presets still work offline; check the model name or connection.';
-
-  @override
   String get automatic => 'Automatic';
-
-  @override
-  String get automaticUpdateChecks => 'Automatic Update Checks';
 
   @override
   String get automaticallyOpenKeyboardWhenSwitchingTo =>
@@ -1016,9 +937,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get autoplayOnQueueEnd => 'Autoplay on Queue End';
-
-  @override
-  String get availableDevices => 'Available Devices';
 
   @override
   String b(Object arg1) {
@@ -1360,9 +1278,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get buttons => 'Buttons';
 
   @override
-  String get buyMeACoffee => 'Buy Me a Coffee';
-
-  @override
   String by(Object arg1, Object arg2) {
     return '\"$arg1\" by $arg2';
   }
@@ -1436,25 +1351,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cardWidth => 'Card Width';
 
   @override
-  String get cast => 'Cast';
-
-  @override
-  String get casting => 'Casting';
-
-  @override
-  String get castingTapToManage => 'Casting — tap to manage';
-
-  @override
-  String castingTo(Object deviceName) {
-    return 'Casting to $deviceName';
-  }
-
-  @override
-  String castingTo2(Object arg1) {
-    return 'Casting to $arg1';
-  }
-
-  @override
   String get categories => 'Categories';
 
   @override
@@ -1514,9 +1410,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get checkAgain => 'Check Again';
-
-  @override
   String get checkTheVersionsYouWantTo =>
       'Check the versions you want to keep — unchecked ones will be removed from your library. At least one must stay.';
 
@@ -1526,12 +1419,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get checking => 'Checking…';
-
-  @override
-  String get checkingForUpdates => 'Checking for Updates';
-
-  @override
-  String get checkingForUpdates2 => 'Checking for Updates...';
 
   @override
   String get childrenSPrivacy => 'Children\'s Privacy';
@@ -1551,9 +1438,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chooseWhichToKeep => 'Choose which to keep';
-
-  @override
-  String get chromecast => 'Chromecast';
 
   @override
   String get circularDotsRadiusFollowsAmplitude =>
@@ -1699,55 +1583,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get connect => 'Connect';
 
   @override
-  String get connectAMusicServer => 'Connect a music server';
-
-  @override
-  String get connectASubsonicJellyfinWebdavUpnp =>
-      'Connect a Subsonic, Jellyfin, WebDAV, UPnP, or Tidal server to stream your remote library.';
-
-  @override
   String get connectAUsbDacOrAudio => 'Connect a USB DAC or audio interface';
-
-  @override
-  String get connectListenbrainz => 'Connect ListenBrainz';
-
-  @override
-  String get connectToScrobbleYourListeningHistory =>
-      'Connect to scrobble your listening history';
-
-  @override
-  String get connectToScrobbleYourMusic => 'Connect to scrobble your music';
-
-  @override
-  String get connectToSubmitYourListeningHistory =>
-      'Connect to submit your listening history';
-
-  @override
-  String get connectToTheInternetToCheck =>
-      'Connect to the internet to check for updates.';
 
   @override
   String get connected => 'Connected';
 
   @override
-  String get connectedAccount => 'Connected Account';
-
-  @override
-  String connectedAs(Object username) {
-    return 'Connected as $username';
-  }
-
-  @override
   String get connecting => 'Connecting';
 
   @override
-  String get connection => 'Connection';
-
-  @override
   String get connectionBehavior => 'Connection Behavior';
-
-  @override
-  String get connectionFailedRetry => 'Connection Failed — Retry';
 
   @override
   String get connectionManagement => 'Connection Management';
@@ -1758,9 +1603,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get connectionNoticesDescription =>
       'Show offline and back-online notices';
-
-  @override
-  String get connectionOk => 'Connection OK';
 
   @override
   String get connectionStatus => 'Connection Status';
@@ -1832,10 +1674,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get copyLink => 'Copy link';
 
   @override
-  String get copyYourUserTokenFromListenbrainz =>
-      'Copy your user token from ListenBrainz settings and paste it below.';
-
-  @override
   String get copyright => 'Copyright';
 
   @override
@@ -1843,17 +1681,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cosmicOrchestra => 'Cosmic Orchestra';
-
-  @override
-  String get couldNotCheckForUpdates => 'Could Not Check for Updates';
-
-  @override
-  String get couldNotConnectToLastFm =>
-      'Could not connect to Last.fm. Check your API credentials and try again.';
-
-  @override
-  String get couldNotConnectToListenbrainzCheck =>
-      'Could not connect to ListenBrainz. Check your token and try again.';
 
   @override
   String get couldNotLoadAlbumSongs => 'Could not load album songs';
@@ -1871,24 +1698,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get couldNotLoadSession => 'Could not load session';
-
-  @override
-  String get couldNotOpenBrowser => 'Could not open browser.';
-
-  @override
-  String get couldNotOpenKoFiPlease =>
-      'Could not open Ko-fi. Please try again.';
-
-  @override
-  String get couldNotOpenLink => 'Could not open link';
-
-  @override
-  String couldNotOpenLink2(Object e) {
-    return 'Could not open link: $e';
-  }
-
-  @override
   String get couldNotOpenThatPhotoTry =>
       'Could not open that photo. Try another image.';
 
@@ -1901,24 +1710,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get couldNotOpenThePlayStore => 'Could not open the Play Store.';
-
-  @override
-  String couldNotOpenThePlayStore2(Object error) {
-    return 'Could not open the Play Store: $error';
-  }
-
-  @override
-  String get couldNotOpenThePlayStore3 => 'Could not open the Play Store';
-
-  @override
   String couldNotPrepareTheEditedFile(String error) {
     return 'Could not prepare the edited file: $error';
   }
-
-  @override
-  String get couldNotReachTheServer =>
-      'Could not reach the server. Check the URL and credentials, then try again.';
 
   @override
   String get couldNotReadTheCoverColors =>
@@ -1953,10 +1747,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get couldNotUseTheSelectedLyrics =>
       'Could not use the selected lyrics file.';
-
-  @override
-  String get couldnTOpenTheBrowserAutomatically =>
-      'Couldn\'t open the browser automatically. Authorize on any device with this link — we\'ll finish signing in once you do:';
 
   @override
   String get countingFiles => 'Counting files…';
@@ -2096,10 +1886,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get interface => 'Interface';
-
-  @override
-  String get lastFmAndListenBrainzScrobbling =>
-      'Last.fm and ListenBrainz scrobbling setup.';
 
   @override
   String get layoutModeSizingMiniPlayer =>
@@ -2514,14 +2300,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get creativeFx => 'Creative FX';
 
   @override
-  String credentialsRejectedByReEnterThe(Object arg1) {
-    return 'Credentials rejected by $arg1. Re-enter the password.';
-  }
-
-  @override
-  String get credentialsSavedSuccessfully => 'Credentials saved successfully!';
-
-  @override
   String get crispestHeavierDuringFastScrolling =>
       'Crispest — heavier during fast scrolling';
 
@@ -2788,11 +2566,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get delete => 'Delete';
 
   @override
-  String deleteAndAllSongsAndPlaylists(Object arg1) {
-    return 'Delete \"$arg1\" and all songs and playlists synced from it? Cached downloads are kept.';
-  }
-
-  @override
   String get deleteFile => 'Delete File';
 
   @override
@@ -2952,22 +2725,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Disconnect behavior and codec info';
 
   @override
-  String disconnectFrom(Object arg1) {
-    return 'Disconnect from $arg1';
-  }
-
-  @override
-  String get disconnectLastFm => 'Disconnect Last.fm?';
-
-  @override
-  String get disconnectListenbrainz => 'Disconnect ListenBrainz?';
-
-  @override
   String get discord => 'Discord';
-
-  @override
-  String get discoversDlnaUpnpAndChromecastReceivers =>
-      'Discovers DLNA, UPnP and Chromecast receivers on your network';
 
   @override
   String get dismiss => 'Dismiss';
@@ -3011,25 +2769,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Distance between songs along the arc';
 
   @override
-  String get dlnaAndUpnpReceiversAreControlled =>
-      'DLNA and UPnP receivers are controlled directly in pure Dart — no extra dependencies. Chromecast support uses the native Cast SDK. Network sources (Subsonic, WebDAV, Jellyfin, UPnP), local files, and cached songs can all be cast — locals are served straight from this phone. While casting, volume keys and the system volume panel control the connected device.';
-
-  @override
-  String get dlnaUpnp => 'DLNA / UPnP';
-
-  @override
-  String get dlnaUpnpAndChromecastReceivers =>
-      'DLNA, UPnP and Chromecast receivers';
-
-  @override
   String get donTShowAgainToday => 'Don\'t show again today';
-
-  @override
-  String get donate => 'Donate';
-
-  @override
-  String get donateFundFeaturesAndKeepThe =>
-      'Donate, fund features, and keep the app alive';
 
   @override
   String get done => 'Done';
@@ -3053,13 +2793,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String down(Object arg1) {
     return '$arg1 down';
   }
-
-  @override
-  String get downloadTheLatestApkFromFlick =>
-      'Download the latest APK from github.com/ryouhtml/AunoPlayer/releases';
-
-  @override
-  String get downloadUpdate => 'Download Update';
 
   @override
   String dp(Object arg1) {
@@ -3102,9 +2835,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get dsdDsfPlayback => 'DSD / DSF Playback';
-
-  @override
   String get dsdMode => 'DSD mode';
 
   @override
@@ -3140,9 +2870,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Earlier standouts pulled back into view from your listening history.';
 
   @override
-  String get editCredentials => 'Edit Credentials';
-
-  @override
   String get editDescription => 'Edit Description';
 
   @override
@@ -3152,16 +2879,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editMetadata => 'Edit Metadata';
 
   @override
-  String get editServer => 'Edit Server';
-
-  @override
   String get editSync => 'Edit & Sync';
 
   @override
   String get editText => 'Edit Text';
-
-  @override
-  String get editToken => 'Edit Token';
 
   @override
   String get electricSunset => 'Electric Sunset';
@@ -3225,12 +2946,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enterAYear19999 => 'Enter a year (1–9999)';
 
   @override
-  String get enterYourApiKey => 'Enter your API key';
-
-  @override
-  String get enterYourSharedSecret => 'Enter your shared secret';
-
-  @override
   String ep(Object arg1) {
     return 'EP $arg1';
   }
@@ -3278,10 +2993,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get etherealTones => 'Ethereal Tones';
-
-  @override
-  String get everyAlbumHasArtistAndAlbum =>
-      'Every album has artist and album tags.';
 
   @override
   String get everySongIsRemovedFromYour =>
@@ -3408,11 +3119,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get failedToDeactivateFallback => 'Failed to deactivate fallback';
 
   @override
-  String failedToDownloadAlbumArt(int status) {
-    return 'Failed to download album art (HTTP $status).';
-  }
-
-  @override
   String failedToGetPersistedUris(String? error) {
     return 'Failed to get persisted URIs: $error';
   }
@@ -3482,10 +3188,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get failedToSaveTheRecapImage =>
       'Failed to save the recap image to your gallery.';
-
-  @override
-  String get failedToSearchAlbumArtOnline =>
-      'Failed to search album art online.';
 
   @override
   String get failedToStartStreaming => 'Failed to start streaming';
@@ -3566,17 +3268,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String files2(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count files',
-      one: '$count file',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String filesChecked(Object arg1) {
     return '$arg1 files checked…';
   }
@@ -3629,12 +3320,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get finishingUp => 'Finishing up…';
 
   @override
-  String get fix => 'Fix';
-
-  @override
-  String get fixMissingMetadata => 'Fix Missing Metadata';
-
-  @override
   String get fixedBands => '31 fixed bands';
 
   @override
@@ -3663,14 +3348,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Auno Player can receive playback handoffs from Locker (another Moss app). Playback intents contain only song file paths/metadata. No personal data is exchanged. The integration is entirely local.';
 
   @override
-  String get flickChecksFlickPlayerSiteFor =>
-      'Auno Player checks github.com/ryouhtml/AunoPlayer/releases for updates whenever you are online';
-
-  @override
-  String get flickIsBuiltAndMaintainedBy =>
-      'Auno Player is built and maintained by one person with zero budget. No team, no funding, no ads.';
-
-  @override
   String get flickLogs => 'Auno Player logs';
 
   @override
@@ -3689,14 +3366,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get flickReplay => 'Auno Replay';
-
-  @override
-  String get flickScansForPlayStoreUpdates =>
-      'Auno Player scans for Play Store updates whenever you are online';
-
-  @override
-  String get flickWillAlwaysBeFreeDonations =>
-      'Auno Player will always be free. Donations keep the project alive without paywalls or subscriptions.';
 
   @override
   String get flickWillForceYourChosenCodec =>
@@ -3791,17 +3460,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Format strategy is unavailable because Audio Format is disabled in Settings.';
 
   @override
-  String foundOnline(Object arg1) {
-    return 'Found \"$arg1\" online.';
-  }
-
-  @override
   String frPkt(Object arg1) {
     return '$arg1 fr/pkt';
   }
-
-  @override
-  String get freeOpenSource => 'Free & Open Source';
 
   @override
   String get freq => 'Freq';
@@ -3814,11 +3475,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get freshAdditions => 'Fresh Additions';
-
-  @override
-  String from(Object sourceLabel) {
-    return 'From $sourceLabel';
-  }
 
   @override
   String get fromSquareCornersToARounded =>
@@ -3851,10 +3507,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fullscreen => 'Fullscreen';
-
-  @override
-  String get fundingNativeDsdDsfPlaybackDevelopment =>
-      'Funding native DSD/DSF playback development — a highly requested feature for audiophiles.';
 
   @override
   String get fxOff => 'FX off';
@@ -3895,13 +3547,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get getStarted => 'Get Started';
-
-  @override
-  String get getTheLatestApkFromFlick =>
-      'Get the latest APK from github.com/ryouhtml/AunoPlayer/releases';
-
-  @override
-  String get getYourApiCredentials => 'Get your API credentials';
 
   @override
   String get github => 'GitHub';
@@ -4009,9 +3654,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Hide navigation buttons after being idle';
 
   @override
-  String get hidePassword => 'Hide password';
-
-  @override
   String get hideShortStingersRingtonesAndVoice =>
       'Hide short stingers, ringtones, and voice fragments';
 
@@ -4101,10 +3743,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'How wide each card spans across the screen';
 
   @override
-  String get httpBasicNeedsItRecoverableStored =>
-      'HTTP Basic needs it recoverable; stored encoded';
-
-  @override
   String hz(Object rate) {
     return '$rate Hz';
   }
@@ -4129,32 +3767,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get iconSize => 'Icon Size';
 
   @override
-  String identified(int count, Object note) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count songs',
-      one: '$count song',
-    );
-    return 'Identified $_temp0$note.';
-  }
-
-  @override
-  String get identifyAlbum => 'Identify album';
-
-  @override
-  String get identifyAlbum2 => 'Identify Album';
-
-  @override
-  String get identifyAlbumsWithUnknownArtistOr =>
-      'Identify albums with unknown artist or title tags';
-
-  @override
   String get idle => 'Idle';
-
-  @override
-  String get ifYouConnectYourLastFm =>
-      'If you connect your Last.fm account, credentials are stored securely on-device. Play data is sent only to Last.fm. We do not receive or process this data.';
 
   @override
   String get ignoreTracksUnder500Kb => 'Ignore Tracks Under 500 KB';
@@ -4207,9 +3820,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get impulseResponse => 'Impulse response';
 
   @override
-  String get inAppUpdates => 'In-App Updates';
-
-  @override
   String inLabel(Object folder) {
     return 'in $folder';
   }
@@ -4231,9 +3841,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get incredibleOverAMonthOfDaily =>
       'Incredible — over a month of daily listening.';
-
-  @override
-  String get info2 => 'Info';
 
   @override
   String get initializing => 'Initializing…';
@@ -4259,9 +3866,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get instrumental => 'Instrumental';
 
   @override
-  String get integrations => 'Integrations';
-
-  @override
   String get interactiveEq => 'Interactive EQ';
 
   @override
@@ -4272,9 +3876,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get interfaceLabel => 'Interface';
-
-  @override
-  String get invalidToken => 'Invalid token';
 
   @override
   String isOfflineRetainedSongsStillListed(Object folder) {
@@ -4296,20 +3897,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get jan => 'Jan';
 
   @override
-  String get jellyfin => 'Jellyfin';
-
-  @override
-  String get jellyfinEmby => 'Jellyfin · Emby';
-
-  @override
   String get jul => 'Jul';
 
   @override
   String get jumpBackIn => 'Jump Back In';
-
-  @override
-  String get jumpToTheFlickListingAnd =>
-      'Jump to the Auno Player listing and update from there';
 
   @override
   String get jun => 'Jun';
@@ -4328,6 +3919,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get karaokePreview => 'Karaoke Preview';
+
   @override
   String get karaokeSweepStyle => 'Sweep detail';
 
@@ -4335,7 +3927,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get karaokeSweepStyleAuto => 'Auto';
 
   @override
-  String get karaokeSweepStyleAutoDescription => 'Use the finest real timing in the lyrics';
+  String get karaokeSweepStyleAutoDescription =>
+      'Use the finest real timing in the lyrics';
 
   @override
   String get karaokeSweepStyleWord => 'Words';
@@ -4347,8 +3940,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get karaokeSweepStyleSyllable => 'Syllables';
 
   @override
-  String get karaokeSweepStyleSyllableDescription => 'Sweep each syllable that has a real timestamp';
-
+  String get karaokeSweepStyleSyllableDescription =>
+      'Sweep each syllable that has a real timestamp';
 
   @override
   String kb(Object arg1) {
@@ -4411,10 +4004,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Keeps software volume and DSP active on the DAP shared path.';
 
   @override
-  String get keptInSecureStorageToRe =>
-      'Kept in secure storage to re-sign in when the token expires';
-
-  @override
   String keptWillBeRemoved(Object keptCount, Object removeCount) {
     return '$keptCount kept • $removeCount will be removed';
   }
@@ -4445,12 +4034,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get koFi => 'Ko-fi';
-
-  @override
-  String get label => 'Label';
-
-  @override
   String get labelOrganization => 'Label / Organization';
 
   @override
@@ -4470,25 +4053,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageSystemDefault => 'System default';
 
   @override
-  String get lastFm => 'Last.fm';
-
-  @override
-  String get lastFmConfiguration => 'Last.fm Configuration';
-
-  @override
-  String get lastFmConnected => 'Last.fm Connected';
-
-  @override
-  String get lastFmConnected2 => 'Last.fm connected!';
-
-  @override
-  String get lastFmListenbrainzScrobbling =>
-      'Last.fm & ListenBrainz scrobbling';
-
-  @override
-  String get lastFmScrobbling => 'Last.fm Scrobbling';
-
-  @override
   String get lastPick => 'Last pick';
 
   @override
@@ -4503,9 +4067,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get latestArrivalsFromYourLibrary =>
       'Latest arrivals from your library';
-
-  @override
-  String get latestUpdate => 'Latest Update';
 
   @override
   String get layered => 'Layered';
@@ -4539,10 +4100,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get leMsbLittleEndianSubslotMsb =>
       'LE-MSB — little-endian subslot, MSB first';
-
-  @override
-  String get leaveEmptyToKeepTheCurrent =>
-      'Leave empty to keep the current credentials';
 
   @override
   String get left => 'Left';
@@ -4688,19 +4245,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get list => 'List';
 
   @override
-  String get listAvailableLocalAudioOutputDevices =>
-      'List available local audio output devices';
-
-  @override
-  String get listenbrainz => 'ListenBrainz';
-
-  @override
-  String get listenbrainzConnected => 'ListenBrainz Connected';
-
-  @override
-  String get listenbrainzConnected2 => 'ListenBrainz connected!';
-
-  @override
   String get listeningHours => 'Listening Hours';
 
   @override
@@ -4748,13 +4292,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Loading favorites, recent sessions, generated mixes, and playlists.';
 
   @override
-  String get loadingPatchNotes => 'Loading patch notes...';
-
-  @override
   String get loadingReplay => 'Loading Replay';
-
-  @override
-  String get loadingSession => 'Loading session...';
 
   @override
   String get localData => 'Local Data';
@@ -4779,18 +4317,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get look => 'Look';
-
-  @override
-  String get lookingForCoverArtFromMusicbrainz =>
-      'Looking for cover art from MusicBrainz and Cover Art Archive.';
-
-  @override
-  String get lookingForTheLatestFlickRelease =>
-      'Looking for the latest Auno Player release right now';
-
-  @override
-  String get lookingForTheLatestPlayStore =>
-      'Looking for the latest Play Store update right now';
 
   @override
   String get lossless => ' Lossless';
@@ -4891,24 +4417,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get matchAudioFilename => 'Match Audio Filename';
 
   @override
-  String matchByArtistAlbumAndTrack(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count files',
-      one: '$count file',
-    );
-    return 'Match $_temp0 by artist, album and track length';
-  }
-
-  @override
   String get matchEqToYourHeadphoneModel => 'Match EQ to your headphone model';
 
   @override
   String get matchNavigation => 'Match navigation';
-
-  @override
-  String get matches => 'Matches';
 
   @override
   String maxB(Object arg1) {
@@ -5005,9 +4517,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get minimize => 'Minimize';
 
   @override
-  String get minimserverServiioKodi => 'MinimServer · Serviio · Kodi';
-
-  @override
   String get mirrorTest => 'Mirror Test';
 
   @override
@@ -5015,7 +4524,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mitLicenseCopyrightC2026Flick =>
-      '\nMIT License\n\nCopyright (c) 2026 Auno Player Contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n';
+      'GNU General Public License v3.0 or later\n\nCopyright (c) 2026 Auno Player Contributors\n\nThis program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.';
 
   @override
   String get mix => 'Mix';
@@ -5093,30 +4602,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mossEcosystem => 'Moss Ecosystem';
 
   @override
-  String get mostDlnaServersNeedNoPassword =>
-      'Most DLNA servers need no password';
-
-  @override
   String get mostPlayed => 'Most Played';
 
   @override
   String mostReplayed(Object arg1) {
     return 'Most replayed · $arg1';
   }
-
-  @override
-  String get motionArtInBitPerfect => 'Motion Art in Bit-Perfect';
-
-  @override
-  String get motionArtIsReplacedWhileBit =>
-      'Motion art is replaced while bit-perfect output is active';
-
-  @override
-  String get motionArtPlaysDuringBitPerfect =>
-      'Motion art plays during bit-perfect audio (may interrupt playback on some DAPs)';
-
-  @override
-  String get motionArtRefreshed => 'Motion art refreshed';
 
   @override
   String get moveEveryStampedLyricForwardOr =>
@@ -5162,11 +4653,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mute => 'Mute';
 
   @override
-  String my(Object arg1) {
-    return 'My $arg1';
-  }
-
-  @override
   String nDb(Object arg1, Object arg2) {
     return '$arg1%\n$arg2 dB';
   }
@@ -5200,9 +4686,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get natureAmbient => 'Nature Ambient';
 
   @override
-  String get navidromeAirsonicGonic => 'Navidrome · Airsonic · Gonic';
-
-  @override
   String get navigationAppearance => 'Navigation Appearance';
 
   @override
@@ -5210,9 +4693,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get navigationDefaultsRestored => 'Navigation defaults restored';
-
-  @override
-  String get needsMetadata => 'Needs metadata';
 
   @override
   String negotiated(Object arg1) {
@@ -5236,15 +4716,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get network => 'Network';
 
   @override
-  String get networkSources => 'Network Sources';
-
-  @override
   String neutral(Object amount) {
     return '$amount% neutral';
   }
-
-  @override
-  String get neverSynced => 'Never synced';
 
   @override
   String get newLabel => 'New';
@@ -5264,9 +4738,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get nextcloudOwncloudSabredav => 'Nextcloud · ownCloud · SabreDAV';
-
-  @override
   String get night => 'Night';
 
   @override
@@ -5283,10 +4754,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noAlbumsFound => 'No Albums Found';
 
   @override
-  String get noAppleMusicReleaseFoundTry =>
-      'No Apple Music release found. Try editing the artist or album name and searching again.';
-
-  @override
   String get noArtistsFound => 'No Artists Found';
 
   @override
@@ -5299,15 +4766,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'No audio was found. If this folder contains music, a .nomedia file may be hiding it, or Android hasn\'t indexed it yet. Try enabling deep scan, or remove any .nomedia file and re-scan.';
 
   @override
-  String get noCastingDevicesFoundMakeSure =>
-      'No casting devices found. Make sure your phone and the receiver are on the same network.';
-
-  @override
   String get noCategoriesSelected => 'No categories selected';
-
-  @override
-  String get noChangelogNotesForThisVersion =>
-      'No changelog notes for this version yet.';
 
   @override
   String get noCustomAlbumArtIsSet => 'No custom album art is set yet.';
@@ -5334,10 +4793,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noHistoryYet => 'No History Yet';
 
   @override
-  String get noInternetConnectionPleaseCheckYour =>
-      'No internet connection. Please check your network and try again.';
-
-  @override
   String get noLibraryFilesForThisAlbum =>
       'No library files were found for this album.';
 
@@ -5352,9 +4807,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noLyricsYet => 'No lyrics yet';
 
   @override
-  String get noMatchFound => 'No match found';
-
-  @override
   String get noMatches => 'No matches.';
 
   @override
@@ -5366,26 +4818,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noMatchesFound => 'No matches found';
 
   @override
-  String get noMatchesTryFewerWordsOr =>
-      'No matches. Try fewer words or search online.';
+  String get noMatchesTryFewerWordsOr => 'No matches. Try fewer words.';
 
   @override
   String get noMusicYet => 'No Music Yet';
 
   @override
   String get noNewAdditionsYet => 'No New Additions Yet';
-
-  @override
-  String get noNewUpdateFound => 'No new update found.';
-
-  @override
-  String get noOnlineArtworkFound => 'No online artwork found';
-
-  @override
-  String get noOutputDevicesAvailable => 'No output devices available.';
-
-  @override
-  String get noPatchNotesAvailableYet => 'No patch notes available yet.';
 
   @override
   String get noPlaybackYet => 'No playback yet';
@@ -5420,12 +4859,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noScanResultsYet => 'No scan results yet';
 
   @override
-  String get noServerPlaylistsFound => 'No server playlists found';
-
-  @override
-  String get noServersConnected => 'No servers connected';
-
-  @override
   String get noSongPlaying => 'No song playing';
 
   @override
@@ -5436,9 +4869,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noUpcomingQueueItemsYet => 'No upcoming queue items yet.';
-
-  @override
-  String get noUpdateAvailable => 'No Update Available';
 
   @override
   String get noUrbData => 'No URB data';
@@ -5516,10 +4946,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get numberOnArt => 'Number on Art';
 
   @override
-  String get oauthSignInNoPasswordStored =>
-      'OAuth sign-in; no password stored here';
-
-  @override
   String get oceanWaves => 'Ocean Waves';
 
   @override
@@ -5531,9 +4957,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get offCropsToFillTheSquare =>
       'Off crops to fill the square; on stretches the artwork edge-to-edge';
-
-  @override
-  String get offline => 'Offline';
 
   @override
   String get onAndroidTheStandardJustAudio =>
@@ -5578,13 +5001,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingWelcomeTitle => 'Welcome to\nAuno Player';
 
   @override
-  String get onlineArtistAlbumInformation =>
-      'Online artist & album information';
-
-  @override
-  String get onlineResults => 'Online Results';
-
-  @override
   String get onlyLibraryEntriesAreRemovedYour =>
       'Only library entries are removed — your audio files stay on disk.';
 
@@ -5602,22 +5018,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get openBluetoothCodecSettings => 'Open Bluetooth Codec Settings';
 
   @override
-  String get openFullNotes => 'Open Full Notes';
-
-  @override
-  String get openInAppleMusic => 'Open in Apple Music';
-
-  @override
-  String get openInBrowser => 'Open in browser';
-
-  @override
-  String get openInPlayStore => 'Open in Play Store';
-
-  @override
   String get openLibrary => 'Open Library';
-
-  @override
-  String get openListenbrainzOrgSettings => 'Open listenbrainz.org/settings';
 
   @override
   String get openManual => 'Open Manual';
@@ -5626,14 +5027,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get openPlayer => 'Open Player';
 
   @override
-  String get openReleaseNotes => 'Open Release Notes';
-
-  @override
   String get openSourceLicenses => 'Open source licenses';
-
-  @override
-  String get openThePlayStoreToInstall =>
-      'Open the Play Store to install the latest Auno Player build';
 
   @override
   String get openedFromLocker => 'Opened from Locker';
@@ -5697,9 +5091,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get output => 'Output';
 
   @override
-  String get outputDevice => 'Output Device';
-
-  @override
   String get outputMode => 'Output Mode';
 
   @override
@@ -5734,17 +5125,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get passthrough => 'Passthrough';
 
   @override
-  String get password => 'Password';
-
-  @override
   String get pasteOrTypeTheSongLyrics =>
       'Paste or type the song lyrics here — one line per row';
-
-  @override
-  String get pasteYourListenbrainzToken => 'Paste your ListenBrainz token';
-
-  @override
-  String get patchNotes => 'Patch Notes';
 
   @override
   String get pause => 'Pause';
@@ -5866,10 +5248,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get playNext => 'Play next';
 
   @override
-  String get playStoreUpdatesUseGooglePlay =>
-      'Play Store updates use Google Play In-App Update API (governed by Google\'s privacy policies). Patch notes are fetched from GitHub Releases API without sending personal data.';
-
-  @override
   String get playback => 'Playback';
 
   @override
@@ -5982,9 +5360,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get playerMenuEditMetadata => 'Edit Metadata';
 
   @override
-  String get playerMenuRefreshAlbumArt => 'Refresh Motion Art';
-
-  @override
   String get playerMenuSetAlbumArt => 'Set Album Art';
 
   @override
@@ -6061,10 +5436,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pleaseEnterAPlaylistName => 'Please enter a playlist name';
-
-  @override
-  String get pleaseEnterYourListenbrainzUserToken =>
-      'Please enter your ListenBrainz user token.';
 
   @override
   String get portrait => 'Portrait';
@@ -6168,9 +5539,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get progressBar => 'Progress Bar';
-
-  @override
-  String get protocol => 'Protocol';
 
   @override
   String get pulledFromYourLateSessionPlays =>
@@ -6290,14 +5658,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reconnectNow => 'Reconnect Now';
 
   @override
-  String get reconnectToTheInternetToScan =>
-      'Reconnect to the internet to scan for updates';
-
-  @override
-  String get reconnectToWiFiOrMobile =>
-      'Reconnect to Wi-Fi or mobile data so Auno Player can scan again';
-
-  @override
   String get reconnectionFailed => 'Reconnection failed';
 
   @override
@@ -6307,22 +5667,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recorded => 'Recorded';
 
   @override
-  String get refreshAppleMusic => 'Refresh Apple Music';
-
-  @override
   String get refreshDevices => 'Refresh Devices';
 
   @override
   String get refreshDevices2 => 'Refresh devices';
 
   @override
-  String get refreshOutputs => 'Refresh outputs';
-
-  @override
   String get refreshRate => 'Refresh Rate';
-
-  @override
-  String get refreshingAppleMusicData => 'Refreshing Apple Music data';
 
   @override
   String get registeredNotClaimed => 'Registered, not claimed';
@@ -6389,12 +5740,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get removeSelected => 'Remove selected';
-
-  @override
-  String get removeServer => 'Remove server?';
-
-  @override
-  String get removeServer2 => 'Remove server';
 
   @override
   String get removeTheDatabaseEntriesOrDelete =>
@@ -6644,9 +5989,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ripSource => 'Rip Source';
 
   @override
-  String get root => 'Root';
-
-  @override
   String get rotationSeek => 'rotation seek';
 
   @override
@@ -6663,14 +6005,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get routesBluetoothThroughTheRustEngine =>
       'Routes Bluetooth through the Rust engine';
-
-  @override
-  String get runAnotherPlayStoreUpdateScan =>
-      'Run another Play Store update scan right now';
-
-  @override
-  String get runAnotherUpdateScanRightNow =>
-      'Run another update scan right now';
 
   @override
   String get rustViaOboe => 'Rust via Oboe';
@@ -6695,9 +6029,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sCurve => 'S-Curve';
-
-  @override
-  String get sambaWindowsShareTransportPending => 'Samba · Windows share';
 
   @override
   String get sampleArtist => 'Sample artist';
@@ -6728,9 +6059,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get saveChanges => 'Save Changes';
-
-  @override
-  String get saveConnect => 'Save & Connect';
 
   @override
   String get saveCreatesAnLrcFileIf =>
@@ -6846,9 +6174,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scanFailedPleaseTryAgain => 'Scan failed. Please try again.';
 
   @override
-  String get scanForDevices => 'Scan for devices';
-
-  @override
   String get scanProgress => 'Scan progress';
 
   @override
@@ -6886,16 +6211,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get search => 'Search';
 
   @override
-  String get searchAgain => 'Search Again';
-
-  @override
   String get searchArtistTitle => 'Search artist + title...';
 
   @override
   String get searchArtists => 'Search artists...';
-
-  @override
-  String get searchFailed => 'Search failed';
 
   @override
   String searchFailed2(Object e) {
@@ -6918,9 +6237,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get searchOnline => 'Search Online';
-
-  @override
-  String get searchOnline2 => 'Search online';
 
   @override
   String get searchOnlineCreateYourOwnSynced =>
@@ -6951,15 +6267,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchYourLibrary => 'Search your library';
 
   @override
-  String get searching => 'Searching…';
-
-  @override
-  String get searchingOnline => 'Searching online';
-
-  @override
-  String get searchingTheLocalNetwork => 'Searching the local network…';
-
-  @override
   String get secondsOfInactivityBeforeCollapsing =>
       'Seconds of inactivity before collapsing';
 
@@ -6972,9 +6279,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get seeWhatIsNewInThis => 'See what is new in this update';
-
-  @override
   String get select => 'Select';
 
   @override
@@ -6983,9 +6287,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get selectALineAndEdit =>
       '1. Select a line and edit its timestamp directly, or use \"Use Current Time\".\n2. In the word timeline, drag a boundary to stretch or shrink the segment before it — edits snap to 10ms.\n3. Tap letters in the inspector to split a word into separately timed syllables (slow-then-fast pacing), then drag their boundaries.\n4. Drag the last boundary (or use Length ±) to retime the next line. Use Auto-fill to seed evenly spaced words.\n5. Use the shift controls to move all stamped lyrics together.\n6. Save to generate the final `.lrc` file.';
-
-  @override
-  String get selectARelease => 'Select a release';
 
   @override
   String get selectAll => 'Select All';
@@ -7036,17 +6337,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get serialNumber => 'Serial Number';
 
   @override
-  String serverPlaylistSyncFailed(Object e) {
-    return 'Server playlist sync failed: $e';
-  }
-
-  @override
-  String get serverUrl => 'Server URL';
-
-  @override
-  String get session => 'Session';
-
-  @override
   String get setAlbumArt => 'Set Album Art';
 
   @override
@@ -7071,9 +6361,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String shareFailed(Object e) {
     return 'Share failed: $e';
   }
-
-  @override
-  String get sharedSecret => 'Shared Secret';
 
   @override
   String get sharpRecommended => 'Sharp (recommended)';
@@ -7108,10 +6395,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get showAlbumArtworkOnTheMini =>
       'Show album artwork on the mini player';
-
-  @override
-  String get showAppleMusicBiographiesRecommendationsAnd =>
-      'Show Apple Music biographies, similar artists, top songs, album notes, and artist portraits.';
 
   @override
   String get showArtist => 'Show artist';
@@ -7163,9 +6446,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get showOtherArtistsOnAlbumPages =>
       'Show other artists on album pages';
-
-  @override
-  String get showPassword => 'Show password';
 
   @override
   String get showPlaylistPreviewsOnTheHome =>
@@ -7292,20 +6572,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shuffleSongsInCurrentList => 'Shuffle songs in current list';
-
-  @override
-  String get signInFailedRetry => 'Sign-in Failed — Retry';
-
-  @override
-  String get signInWithTidal => 'Sign in with Tidal';
-
-  @override
-  String get signInWithYourAccountHifi =>
-      'Sign in with your account · HiFi lossless';
-
-  @override
-  String get signInWithYourOwnTidal =>
-      'Sign in with your own Tidal account. HiFi lossless (FLAC/ALAC) plays through the bit-perfect engine; HiRes/MQA and Atmos are gated by Tidal and will show an error instead of playing.';
 
   @override
   String get signal => 'Signal';
@@ -7446,14 +6712,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signalVerifiedInLog => 'Verified in log';
 
   @override
-  String get signedIn => 'Signed in';
-
-  @override
   String get silkySmoothBZierCurvesFluid =>
       'Silky smooth Bézier curves — fluid and organic';
-
-  @override
-  String get similarArtists => 'Similar Artists';
 
   @override
   String get simple => 'Simple';
@@ -7504,78 +6764,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get slope => 'Slope';
 
   @override
-  String get smbInvalidServerUrl =>
-      'Use smb://server/share or smb://server/share/folder. Enter credentials in the username and password fields, not in the URL.';
-
-  @override
-  String get smbSigningRequired =>
-      'The server requires SMB signing. Use an account permitted by the server\'s security policy; guest access may not be allowed.';
-
-  @override
-  String get smbCacheWriteFailed =>
-      'Could not save the SMB download. Check free storage on the phone, then retry.';
-
-  @override
-  String get smbDownloadIncomplete =>
-      'The SMB download did not finish. Check the connection and retry; no partial file will be played.';
-
-  @override
-  String get smbPathNotFound =>
-      'The SMB folder or file was not found. Check the folder in the server URL or sync the library again.';
-
-  @override
-  String get smbDecodeFailed =>
-      'The SMB file was downloaded, but playback could not start. Try the same file locally in Auno Player and check the selected audio output.';
-
-  @override
-  String get smbOperationFailed =>
-      'The SMB operation failed. Run Test Connection and check the SMB stage/code in the log before retrying.';
-
-  @override
-  String get smbAccessDenied =>
-      'Access denied. Check that the account can read this share.';
-
-  @override
-  String get smbAuthFailed =>
-      'The server rejected the username or password. Check the account — Samba may map unknown users to guest.';
-
-  @override
-  String get smbConnectionRefused =>
-      'Connection refused. Check that file sharing is enabled and port 445 is reachable.';
-
-  @override
-  String get smbCouldNotReach =>
-      'Could not reach the server. Check the IP address, then that the phone is on the same network.';
-
-  @override
-  String get smbHostNotResolved =>
-      'Could not resolve the server name. Try the IP address instead — Android cannot resolve NetBIOS/.local names.';
-
-  @override
-  String get smbMissingServerAddress =>
-      'Missing server address — use smb://host/share (e.g. smb://nas/music).';
-
-  @override
-  String get smbMissingShareName =>
-      'Missing share name — use smb://host/share (e.g. smb://nas/music).';
-
-  @override
-  String get smbServerUnresponsive =>
-      'The server stopped answering. Check the server, then retry.';
-
-  @override
-  String get smbShareNotFound =>
-      'The server answered but the share was not found. Check the share name in the URL.';
-
-  @override
-  String get smbSharesCanBeAddedNow =>
-      'SMB2/3 shares connect through the built-in client. Enter the share URL (smb://host/share) and sign in if the server asks for it.';
-
-  @override
-  String get smbTimedOut =>
-      'Timed out. Use the server IP (not a NetBIOS/.local name), check port 445, and that the phone is on the same network.';
-
-  @override
   String get smooth => 'Smooth';
 
   @override
@@ -7599,9 +6787,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get solid => 'Solid';
 
   @override
-  String get soloDeveloper => 'Solo Developer';
-
-  @override
   String get someOnlineFeaturesMayNotWork =>
       '  ·  Some online features may not work';
 
@@ -7621,17 +6806,6 @@ class AppLocalizationsEn extends AppLocalizations {
       one: '$count song',
     );
     return '$_temp0';
-  }
-
-  @override
-  String song3(int count, Object server) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count songs',
-      one: '$count song',
-    );
-    return '$_temp0 · $server';
   }
 
   @override
@@ -7746,11 +6920,6 @@ class AppLocalizationsEn extends AppLocalizations {
       one: '$count song',
     );
     return '$_temp0';
-  }
-
-  @override
-  String songsFound(Object arg1) {
-    return '$arg1 songs found';
   }
 
   @override
@@ -7896,9 +7065,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stopAtTheEndOfThe => 'Stop at the end of the current list';
 
   @override
-  String get stopCasting => 'Stop Casting';
-
-  @override
   String get stopStreaming => 'Stop Streaming';
 
   @override
@@ -7929,17 +7095,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get storagePermissions => 'Storage Permissions';
-
-  @override
-  String get storeOn => 'Store on';
-
-  @override
-  String get storedAsASaltedHashNever =>
-      'Stored as a salted hash, never in plaintext';
-
-  @override
-  String get storedEncodedPlaybackUnavailableInThis =>
-      'Stored base64-encoded — required for NTLM sign-in';
 
   @override
   String get stormChasers => 'Storm Chasers';
@@ -7988,30 +7143,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get subsonic => 'Subsonic';
-
-  @override
-  String get subsonicServersSyncAndStreaming =>
-      'Subsonic servers, sync, and streaming';
-
-  @override
   String get subtle => 'Subtle';
-
-  @override
-  String get support => 'Support';
-
-  @override
-  String get supportDevelopmentOnBuyMeACoffee =>
-      'Support development on Buy Me a Coffee';
-
-  @override
-  String get supportDevelopmentOnKoFi => 'Support development on Ko-fi';
-
-  @override
-  String get supportFlick => 'Support Auno Player';
-
-  @override
-  String get supportFlickOnKoFi => 'Support Auno Player on Ko-fi';
 
   @override
   String get surfaceShading => 'Surface shading';
@@ -8066,40 +7198,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sync => 'Sync';
 
   @override
-  String syncFailed(Object e) {
-    return 'Sync failed: $e';
-  }
-
-  @override
-  String get syncNow => 'Sync now';
-
-  @override
-  String get syncServerPlaylists => 'Sync Server Playlists';
-
-  @override
   String get synced => 'Synced';
 
   @override
-  String synced2(Object arg1) {
-    return 'Synced $arg1';
-  }
-
-  @override
   String get syncedLrc => 'Synced LRC';
-
-  @override
-  String syncedPlaylistFromServers(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count playlists',
-      one: '$count playlist',
-    );
-    return 'Synced $_temp0 from servers';
-  }
-
-  @override
-  String get syncing => 'Syncing…';
 
   @override
   String get synthwaveCity => 'Synthwave City';
@@ -8162,9 +7264,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get testConnection => 'Test Connection';
-
-  @override
   String get textGestures => 'Text & Gestures';
 
   @override
@@ -8182,10 +7281,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get theAppDoesNotKnowinglyCollect =>
       'The app does not knowingly collect any information from anyone, regardless of age.';
-
-  @override
-  String get theAppQueriesPublicApisMusicbrainz =>
-      'The app queries public APIs (MusicBrainz/Cover Art Archive, iTunes, Deezer) to find matching album art. Search queries use local music metadata. Downloaded images are cached locally.';
 
   @override
   String get theAudioEngineDeterminesHowYour =>
@@ -8220,9 +7315,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'This clears your current day streak and any unlocked streak milestones. This cannot be undone.';
 
   @override
-  String get thisDevice => 'This device';
-
-  @override
   String get thisFolderAppearsToBeEmpty => 'This folder appears to be empty';
 
   @override
@@ -8249,10 +7341,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'This song has no file path and cannot be edited.';
 
   @override
-  String get thisSongIsMissingAlbumMetadata =>
-      'This song is missing album metadata, so online matching is limited.';
-
-  @override
   String get thisSongOnly => 'This song only';
 
   @override
@@ -8269,80 +7357,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get thunderRoad => 'Thunder Road';
-
-  @override
-  String get tidal => 'Tidal';
-
-  @override
-  String get tidalAppKeyRejected =>
-      'Tidal rejected the app sign-in key. It rotates these — the built-in key may be out of date (a known limitation of the unofficial path).';
-
-  @override
-  String tidalCouldNotReach(int status) {
-    return 'Could not reach Tidal (HTTP $status). Check your connection.';
-  }
-
-  @override
-  String tidalEncryptedTrack(String trackId) {
-    return 'Track $trackId is encrypted (HiRes/MQA). Only unencrypted HiFi lossless is supported.';
-  }
-
-  @override
-  String tidalManifestDecodeFailed(String trackId, String error) {
-    return 'Could not decode the Tidal manifest for track $trackId: $error';
-  }
-
-  @override
-  String tidalManifestNoStream(String trackId) {
-    return 'Track $trackId has no stream URL in its manifest.';
-  }
-
-  @override
-  String get tidalNoPlayableStream => 'No playable stream for this track.';
-
-  @override
-  String get tidalNoSignInCode => 'Tidal did not return a sign-in code.';
-
-  @override
-  String get tidalNotSignedIn =>
-      'No Tidal sign-in. Tap \"Sign in with Tidal\".';
-
-  @override
-  String tidalOpenLinkManually(String uri) {
-    return 'Couldn\'t open the browser automatically. Open this link on any device to finish signing in, then tap Sign in again:\n\n$uri';
-  }
-
-  @override
-  String get tidalSessionExpired =>
-      'Tidal session expired. Please sign in again.';
-
-  @override
-  String get tidalSignInDenied => 'Tidal sign-in was denied.';
-
-  @override
-  String get tidalSignInExpired => 'The Tidal sign-in code expired. Try again.';
-
-  @override
-  String get tidalSignInRefused => 'Tidal refused the sign-in. Try again.';
-
-  @override
-  String get tidalSignInTimedOut => 'Timed out waiting for Tidal sign-in.';
-
-  @override
-  String get tidalTokenRefreshFailed => 'Tidal token refresh failed.';
-
-  @override
-  String get tidalTooManyRequests =>
-      'Too many Tidal requests. Wait a moment and try again.';
-
-  @override
-  String get tidalUnavailable =>
-      'Tidal is unavailable right now. Try again shortly.';
-
-  @override
-  String tidalUnsupportedFormat(String trackId) {
-    return 'Track $trackId uses an unsupported Tidal format (HiRes/MQA/Atmos). Only unencrypted HiFi lossless is supported.';
-  }
 
   @override
   String get time => 'Time';
@@ -8388,9 +7402,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get topArtists => 'Top artists';
-
-  @override
-  String get topSongs => 'Top Songs';
 
   @override
   String get topSongs2 => 'Top songs';
@@ -8477,11 +7488,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String tracks8(Object arg1) {
-    return '$arg1 tracks';
-  }
-
-  @override
   String tracksLikedSongsPlaylists(
     Object songCount,
     Object favoriteCount,
@@ -8524,10 +7530,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tryOriginalSearch => 'Try original search';
-
-  @override
-  String get tryPickingALocalImageIf =>
-      'Try picking a local image if the release metadata is uncommon.';
 
   @override
   String get turnOff432HzTuningTo => 'Turn off 432 Hz tuning to use crossfade';
@@ -8589,14 +7591,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ultra => 'Ultra';
 
   @override
-  String get unableToCheckForUpdatesRight =>
-      'Unable to check for updates right now.';
-
-  @override
-  String get unableToLoadPatchNotesRight =>
-      'Unable to load patch notes right now.';
-
-  @override
   String get unableToOpenAllFilesAccess =>
       'Unable to open All Files Access settings';
 
@@ -8648,9 +7642,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unknownFolder => 'Unknown Folder';
 
   @override
-  String get unknownLastFmError => 'Unknown Last.fm error';
-
-  @override
   String get unknownTitle => 'Unknown Title';
 
   @override
@@ -8695,62 +7686,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get update => 'Update';
-
-  @override
-  String get updateAvailable => 'Update Available';
-
-  @override
-  String get updateAvailableOnThePlayStore =>
-      'Update available on the Play Store.';
-
-  @override
-  String get updateNoticeHidden => 'Update notice hidden.';
-
-  @override
-  String get aNewerFlickBuildOnGithub =>
-      'A newer Auno Player build is available on GitHub.';
-
-  @override
-  String get betaUpdateAvailable => 'Beta Update Available';
-
-  @override
-  String get betaUpdateSubtitle =>
-      'A pre-release build is available for testing.';
-
-  @override
-  String get downloadBetaUpdate => 'Download Beta';
-
-  @override
-  String get getBetaUpdate => 'Get the beta build from GitHub.';
-
-  @override
-  String get updateAvailableOnGithub => 'Update available on GitHub.';
-
-  @override
-  String get updateChannel => 'Update Channel';
-
-  @override
-  String get updateChannelStable => 'Stable releases';
-
-  @override
-  String get updateChannelStableSubtitle =>
-      'Only offer fully released Auno Player builds.';
-
-  @override
-  String get updateChannelBeta => 'Pre-releases';
-
-  @override
-  String get updateChannelBetaSubtitle => 'Only offer beta builds for testing.';
-
-  @override
-  String get updateChannelBoth => 'Stable and pre-releases';
-
-  @override
-  String get updateChannelBothSubtitle =>
-      'Show update notices for both channels.';
-
-  @override
   String updated(Object arg1) {
     return 'Updated $arg1';
   }
@@ -8764,9 +7699,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String updatedAlbumArtFor2(Object arg1) {
     return 'Updated album art for \"$arg1\".';
   }
-
-  @override
-  String get updates => 'Updates';
 
   @override
   String get updatesAboutAndSupport => 'Updates, about, and support';
@@ -8786,9 +7718,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get uploadLogsAsALink => 'Upload logs as a link?';
-
-  @override
-  String get upnpDlna => 'UPnP / DLNA';
 
   @override
   String get urbPacket => 'URB Packet';
@@ -8818,10 +7747,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get usbDacAutoBitPerfectOffers =>
       'USB DAC auto bit-perfect offers reset.';
-
-  @override
-  String get usbDacsHeadphonesAndReferenceGear =>
-      'USB DACs, headphones, and reference gear to test and improve playback quality.';
 
   @override
   String get usbDeviceAccess => 'USB Device Access';
@@ -8902,12 +7827,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Use the verified direct USB path and disable software DSP controls that would break bit-perfect playback on an external USB DAC.';
 
   @override
-  String get userToken => 'User Token';
-
-  @override
-  String get username => 'Username';
-
-  @override
   String using(Object arg1) {
     return 'Using $arg1';
   }
@@ -8939,11 +7858,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String version(Object kAppVersion) {
     return 'Version $kAppVersion';
-  }
-
-  @override
-  String version2(Object arg1) {
-    return 'Version $arg1';
   }
 
   @override
@@ -9116,16 +8030,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get waitingForBrowserAuthorization =>
-      'Waiting for browser authorization...';
-
-  @override
   String get waitingForPlayback => 'Waiting for playback';
-
-  @override
-  String was(Object arg1) {
-    return 'was: $arg1';
-  }
 
   @override
   String get wave => 'Wave';
@@ -9172,9 +8077,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get webdav => 'WebDAV';
-
-  @override
   String get weekly => 'Weekly';
 
   @override
@@ -9185,9 +8087,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get whatItShows => 'What it shows';
-
-  @override
-  String get whatSNew => 'What\'s New';
 
   @override
   String get whenBitPerfectOutputIs =>
@@ -9205,9 +8104,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Where the focal song sits vertically';
 
   @override
-  String get whereYourMoneyGoes => 'Where Your Money Goes';
-
-  @override
   String get whisperWorld => 'Whisper World';
 
   @override
@@ -9218,9 +8114,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wholeAlbum => 'Whole album';
-
-  @override
-  String get whyDonate => 'Why Donate';
 
   @override
   String wide(Object amount) {
@@ -9305,14 +8198,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get yesterday => 'Yesterday';
 
   @override
-  String get youAlreadyHaveTheLatestFlick =>
-      'You already have the latest Auno Player release';
-
-  @override
-  String get youAlreadyHaveTheLatestPlay =>
-      'You already have the latest Play Store release';
-
-  @override
   String get youCanAlsoChangeTheCodec =>
       'You can also change the codec in Android Developer Options under \"Bluetooth Audio Codec\".';
 
@@ -9366,10 +8251,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your listening history is still yours. Try loading it again.';
 
   @override
-  String get yourListensWillRemainOnListenbrainz =>
-      'Your listens will remain on ListenBrainz, but Auno Player will stop submitting them.';
-
-  @override
   String get yourLogsAreUploadedToDpaste =>
       'Your logs are uploaded to dpaste.com as an unlisted link that expires in 30 days. Anyone you share the link with can read them — logs may contain file paths and device details.';
 
@@ -9379,12 +8260,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get yourMostReplayedTrack => 'Your most replayed track';
-
-  @override
-  String get yourMusicIsBeingScrobbled => 'Your music is being scrobbled';
-
-  @override
-  String get yourMusicIsBeingSubmitted => 'Your music is being submitted';
 
   @override
   String get yourMusicOnRepeat => 'Your music. On repeat.';
@@ -9401,10 +8276,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get yourPlaylists => 'Your Playlists';
-
-  @override
-  String get yourScrobblingHistoryWillRemainOn =>
-      'Your scrobbling history will remain on Last.fm, but Auno Player will stop sending scrobbles.';
 
   @override
   String get yourSessionHistory => 'Your session history';
@@ -9629,74 +8500,108 @@ class AppLocalizationsEn extends AppLocalizations {
       'Measured from a separate source-file decode. Some formats include decoder padding, which can affect duration and silence measurements. Playback, DSP, and tags are unchanged.';
 
   @override
-  String get audioAnalysisCodec => "Codec";
-  @override
-  String get audioAnalysisContainer => "Container";
-  @override
-  String get audioAnalysisBitrate => "Bitrate";
-  @override
-  String get audioAnalysisChannelLayout => "Channel layout";
-  @override
-  String get audioAnalysisHiResSection => "DSD / Hi-Res";
-  @override
-  String get audioAnalysisDsdVariant => "DSD variant";
-  @override
-  String get audioAnalysisDopCapable => "DoP capable";
-  @override
-  String get audioAnalysisDopYes => "Yes";
-  @override
-  String get audioAnalysisDopNo => "No";
-  @override
-  String get audioAnalysisHiResBadge => "Hi-Res source";
-  @override
-  String get audioAnalysisMetadataOnlyNote => "Full decoding is unavailable for this format. Metadata and integrity are shown instead.";
-  @override
-  String get audioAnalysisIntegritySection => "Integrity & tags";
-  @override
-  String get audioAnalysisIntegrityOk => "Full-file read passed";
-  @override
-  String get audioAnalysisIntegrityFailed => "Full-file read failed";
-  @override
-  String get audioAnalysisTagCompleteness => "Tag completeness";
-  @override
-  String get audioAnalysisOutputSection => "Output path";
-  @override
-  String get audioAnalysisBitPerfectPath => "Native / bit-perfect path";
-  @override
-  String get audioAnalysisResampleWarning => "The selected output path may resample playback.";
-  @override
-  String get audioAnalysisSaveReport => "Save local report";
-  @override
-  String get audioAnalysisReportSaved => "Report saved to Documents/AunoPlayer";
-  @override
-  String get audioAnalysisReportFailed => "Could not save the report.";
+  String get audioAnalysisCodec => 'Codec';
 
   @override
-  String get recapActualListeningLabel => "Actual listening";
+  String get audioAnalysisContainer => 'Container';
+
   @override
-  String recapStreakDays(int days) => "${days} day streak";
+  String get audioAnalysisBitrate => 'Bitrate';
+
   @override
-  String get recapListeningClock => "Listening clock";
+  String get audioAnalysisChannelLayout => 'Channel layout';
+
   @override
-  String get recapListeningClockHint => "Time spent listening in each hour of the day";
+  String get audioAnalysisHiResSection => 'DSD / Hi-Res';
+
   @override
-  String recapHourLabel(int hour) => "${hour}:00";
+  String get audioAnalysisDsdVariant => 'DSD variant';
+
   @override
-  String get recapPersonality => "Listening personality";
+  String get audioAnalysisDopCapable => 'DoP capable';
+
   @override
-  String get recapPersonalityNightOwl => "Night owl";
+  String get audioAnalysisDopYes => 'Yes';
+
   @override
-  String get recapPersonalityCompletionist => "Completionist";
+  String get audioAnalysisDopNo => 'No';
+
   @override
-  String get recapPersonalityExplorer => "Explorer";
+  String get audioAnalysisHiResBadge => 'Hi-Res source';
+
   @override
-  String get recapPersonalityBalanced => "Balanced listener";
+  String get audioAnalysisMetadataOnlyNote =>
+      'Full decoding is unavailable for this format. Metadata and integrity are shown instead.';
+
   @override
-  String get recapFirstListened => "First listen this period";
+  String get audioAnalysisIntegritySection => 'Integrity & tags';
+
   @override
-  String get recapLocalOnlyStats => "Calculated on this device";
+  String get audioAnalysisIntegrityOk => 'Full-file read passed';
+
   @override
-  String get indonesian => 'Indonesian';
+  String get audioAnalysisIntegrityFailed => 'Full-file read failed';
+
   @override
-  String get artworkOnlyForLocalFiles => 'Artwork can only be changed for local files.';
+  String get audioAnalysisTagCompleteness => 'Tag completeness';
+
+  @override
+  String get audioAnalysisOutputSection => 'Output path';
+
+  @override
+  String get audioAnalysisBitPerfectPath => 'Native / bit-perfect path';
+
+  @override
+  String get audioAnalysisResampleWarning =>
+      'The selected output path may resample playback.';
+
+  @override
+  String get audioAnalysisSaveReport => 'Save local report';
+
+  @override
+  String get audioAnalysisReportSaved => 'Report saved to Documents/AunoPlayer';
+
+  @override
+  String get audioAnalysisReportFailed => 'Could not save the report.';
+
+  @override
+  String get recapActualListeningLabel => 'Actual listening';
+
+  @override
+  String recapStreakDays(int days) {
+    return '$days day streak';
+  }
+
+  @override
+  String get recapListeningClock => 'Listening clock';
+
+  @override
+  String get recapListeningClockHint =>
+      'Time spent listening in each hour of the day';
+
+  @override
+  String recapHourLabel(int hour) {
+    return '$hour:00';
+  }
+
+  @override
+  String get recapPersonality => 'Listening personality';
+
+  @override
+  String get recapPersonalityNightOwl => 'Night owl';
+
+  @override
+  String get recapPersonalityCompletionist => 'Completionist';
+
+  @override
+  String get recapPersonalityExplorer => 'Explorer';
+
+  @override
+  String get recapPersonalityBalanced => 'Balanced listener';
+
+  @override
+  String get recapFirstListened => 'First listen this period';
+
+  @override
+  String get recapLocalOnlyStats => 'Calculated on this device';
 }

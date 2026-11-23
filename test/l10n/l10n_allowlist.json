@@ -87,6 +87,7 @@
     "flickplayer": "unused in lib/ before this guard was added",
     "frPkt": "unused in lib/ before this guard was added",
     "maxB": "unused in lib/ before this guard was added",
+    "metadata": "the standalone missing-metadata settings section was removed; the term remains in other copy",
     "ms": "unused in lib/ before this guard was added",
     "notVerified": "unused in lib/ before this guard was added",
     "pcmFrames": "unused in lib/ before this guard was added",

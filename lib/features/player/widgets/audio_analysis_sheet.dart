@@ -48,26 +48,36 @@ String? audioAnalysisUnavailableReason(Song song) {
   return null;
 }
 
+typedef AudioAnalysisJobFactory = AudioSourceAnalysisJob Function();
+
 void showAudioAnalysisSheet(BuildContext context, Song song) {
   showModalBottomSheet<void>(
     useRootNavigator: true,
     context: context,
     backgroundColor: Colors.transparent,
     isScrollControlled: true,
-    builder: (_) => _AudioAnalysisSheet(song: song),
+    builder: (_) => AudioAnalysisSheet(song: song),
   );
 }
 
-class _AudioAnalysisSheet extends StatefulWidget {
-  const _AudioAnalysisSheet({required this.song});
+/// Local-only source analysis sheet. The job factory is injectable so widget
+/// tests can exercise complete, partial, busy, cancelled, and retry states
+/// without opening a real audio file.
+class AudioAnalysisSheet extends StatefulWidget {
+  const AudioAnalysisSheet({
+    super.key,
+    required this.song,
+    this.jobFactory,
+  });
 
   final Song song;
+  final AudioAnalysisJobFactory? jobFactory;
 
   @override
-  State<_AudioAnalysisSheet> createState() => _AudioAnalysisSheetState();
+  State<AudioAnalysisSheet> createState() => _AudioAnalysisSheetState();
 }
 
-class _AudioAnalysisSheetState extends State<_AudioAnalysisSheet> {
+class _AudioAnalysisSheetState extends State<AudioAnalysisSheet> {
   AudioSourceAnalysis? _analysis;
   String? _blockedReason;
   String? _failure;
@@ -136,7 +146,8 @@ class _AudioAnalysisSheetState extends State<_AudioAnalysisSheet> {
     AudioSourceAnalysisJob? job;
     Future<AudioSourceAnalysis>? decode;
     try {
-      final currentJob = createSourceAudioAnalysisJob();
+      final currentJob =
+          widget.jobFactory?.call() ?? createSourceAudioAnalysisJob();
       job = _job = currentJob;
       _progressTimer = Timer.periodic(const Duration(milliseconds: 200), (_) {
         if (!mounted || runId != _runId) return;
@@ -228,7 +239,7 @@ class _AudioAnalysisSheetState extends State<_AudioAnalysisSheet> {
           .replaceAll(':', '-')
           .replaceAll('.', '-');
       final safeId = widget.song.id.replaceAll(RegExp(r'[^A-Za-z0-9_-]'), '_');
-      final file = File('${directory.path}/analysis_$safeId_$stamp.json');
+      final file = File('${directory.path}/analysis_${safeId}_$stamp.json');
       await file.writeAsString(
         const JsonEncoder.withIndent('  ').convert(report),
       );

@@ -9,6 +9,13 @@ class AppLocalizationsTl extends AppLocalizations {
   AppLocalizationsTl([String locale = 'tl']) : super(locale);
 
   @override
+  String get indonesian => 'Indonesiyano';
+
+  @override
+  String get artworkOnlyForLocalFiles =>
+      'Ang artwork ay mababago lamang para sa mga lokal na file.';
+
+  @override
   String get lockScreenVisualizerTitle => 'Lock-screen visualizer';
 
   @override
@@ -188,10 +195,6 @@ class AppLocalizationsTl extends AppLocalizations {
       'Control not visible? You can continue, or use the manual below.';
 
   @override
-  String get filipinoDonationNote =>
-      'Donations will help me a lot! Hehehe. Sana masarap ulam mo lagi!';
-
-  @override
   String get playingLabel => 'Tumutugtog';
 
   @override
@@ -201,10 +204,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get aLittleRecordOfWhatStayed =>
       'Munting tala ng mga paulit-ulit mong pinakinggan.';
-
-  @override
-  String get aNewerFlickBuildIsOn =>
-      'May mas bagong bersiyon ng Auno Player sa Play Store.';
 
   @override
   String get aPlaylistWithThisNameAlready =>
@@ -249,12 +248,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get aboutFlickPlayer => 'Tungkol sa Auno Player';
-
-  @override
-  String get aboutThisAlbum => 'Tungkol sa album na ito';
-
-  @override
-  String get aboutThem => 'Tungkol sa kanila';
 
   @override
   String get absoluteVolumeSync => 'Pagsabay ng absolute volume';
@@ -332,9 +325,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get addMusicWithArtistTagsTo =>
       'Magdagdag ng musikang may tag ng kumanta para makita rito';
-
-  @override
-  String get addServer => 'Magdagdag ng server';
 
   @override
   String get addSongsFromThePlayerMenu =>
@@ -477,10 +467,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get afterHours => 'Pagkatapos ng oras';
 
   @override
-  String get afterScanningMatchFilesWithMissing =>
-      'Pagkatapos mag-scan, itugma sa Apple Music ang mga file na kulang sa tag. Tanging mga tiyak na tugma ang awtomatikong ilalapat.';
-
-  @override
   String get air => 'Air';
 
   @override
@@ -499,9 +485,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get albumArt2 => 'Larawan ng album';
-
-  @override
-  String get albumArtImport => 'Pag-import ng larawan ng album';
 
   @override
   String get albumArtist => 'Kumanta sa album';
@@ -701,15 +684,9 @@ class AppLocalizationsTl extends AppLocalizations {
   String get analyzingLoudness => 'Sinusuri ang lakas ng tunog';
 
   @override
-  String get andArtwork => ' at larawan';
-
-  @override
   String andMoreInRotation(Object arg1) {
     return '$arg1 at iba pang pinakikinggan';
   }
-
-  @override
-  String get android => 'Android';
 
   @override
   String get androidAudioApi => 'Android Audio API';
@@ -740,6 +717,10 @@ class AppLocalizationsTl extends AppLocalizations {
   String get animatedAlbumArt => 'Gumagalaw na larawan ng album';
 
   @override
+  String get localAlbumArtPanAndGlow =>
+      'Dahan-dahang paglipat at glow mula sa pangunahing kulay ng cover art.';
+
+  @override
   String get animationStyle => 'Estilo ng galaw';
 
   @override
@@ -757,9 +738,6 @@ class AppLocalizationsTl extends AppLocalizations {
       'Dito mo puwedeng i-on o i-off ang animations at haptic feedback, depende sa komportable sa iyo.';
 
   @override
-  String get apiKey => 'API Key';
-
-  @override
   String get appInfo => 'Impormasyon ng app';
 
   @override
@@ -772,21 +750,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get appearsInTheOverflowMenu => 'Makikita sa menu ng iba pang opsiyon';
 
   @override
-  String get appleMusicDataUnavailable =>
-      'Hindi makuha ang datos ng Apple Music';
-
-  @override
-  String get appleMusicDataUpdated => 'Na-update ang datos ng Apple Music';
-
-  @override
-  String get appleMusicLookupFailedCheckYour =>
-      'Hindi matagumpay ang paghahanap sa Apple Music. Suriin ang iyong koneksiyon.';
-
-  @override
-  String get appleMusicMotionArtOnAlbums =>
-      'Apple Music Motion Art sa mga album, kasama ang paggalaw, pag-zoom, banayad na liwanag at makinis na paglipat sa malalaking larawan';
-
-  @override
   String appliedAutoeqFor(Object arg1) {
     return 'Nailapat ang AutoEQ para sa $arg1';
   }
@@ -797,20 +760,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String apply2(Object arg1) {
     return 'Ilapat ang $arg1';
-  }
-
-  @override
-  String get applySelected => 'Ilapat ang pinili';
-
-  @override
-  String applyTo(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count kanta',
-      one: '$count kanta',
-    );
-    return 'Ilapat sa $_temp0';
   }
 
   @override
@@ -888,19 +837,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get artworkCard => 'Card ng larawan';
 
   @override
-  String artworkLookupFailed(int status) {
-    return 'Hindi mahanap ang larawan (HTTP $status).';
-  }
-
-  @override
-  String get artworkLookupInvalidData =>
-      'Hindi wastong datos ang ibinalik ng paghahanap ng larawan.';
-
-  @override
-  String get artworkLookupTemporarilyUnavailable =>
-      'Pansamantalang hindi magamit ang paghahanap ng larawan.';
-
-  @override
   String get artworkPlacement => 'Puwesto ng larawan';
 
   @override
@@ -943,17 +879,10 @@ class AppLocalizationsTl extends AppLocalizations {
   String get audioSignalPath => 'Daan ng signal ng tunog';
 
   @override
-  String get audioTestingEquipment => 'Kagamitan sa pagsubok ng tunog';
-
-  @override
   String get aug => 'Ago';
 
   @override
   String get auroraSounds => 'Mga tunog ng aurora';
-
-  @override
-  String get authenticationResponseMissingToken =>
-      'Walang token sa tugon ng pagpapatunay';
 
   @override
   String get auto => 'Awtomatiko';
@@ -985,10 +914,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get autoHideTimeout => 'Oras bago awtomatikong itago';
 
   @override
-  String get autoIdentifyUntaggedAlbums =>
-      'Awtomatikong kilalanin ang mga album na walang tag';
-
-  @override
   String get autoNativeDsdOnDapsDop =>
       'Awtomatiko — native DSD sa mga DAP, DoP para sa mga USB DAC, PCM sa iba';
 
@@ -1014,14 +939,7 @@ class AppLocalizationsTl extends AppLocalizations {
   String get autoeqHeadphones2 => 'Mga headphone ng AutoEQ';
 
   @override
-  String get autoeqOnlineSearchFailed =>
-      'Hindi ma-load ang online preset. Gumagana pa rin ang mga kasamang preset offline; tingnan ang model o koneksyon.';
-
-  @override
   String get automatic => 'Awtomatiko';
-
-  @override
-  String get automaticUpdateChecks => 'Awtomatikong pagsuri ng update';
 
   @override
   String get automaticallyOpenKeyboardWhenSwitchingTo =>
@@ -1029,9 +947,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get autoplayOnQueueEnd => 'Awtomatikong patugtugin sa dulo ng pila';
-
-  @override
-  String get availableDevices => 'Mga magagamit na aparato';
 
   @override
   String b(Object arg1) {
@@ -1378,9 +1293,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get buttons => 'Mga pindutan';
 
   @override
-  String get buyMeACoffee => 'Buy Me a Coffee';
-
-  @override
   String by(Object arg1, Object arg2) {
     return '\"$arg1\" ni $arg2';
   }
@@ -1454,25 +1366,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get cardWidth => 'Lapad ng card';
 
   @override
-  String get cast => 'I-cast';
-
-  @override
-  String get casting => 'Nagka-cast';
-
-  @override
-  String get castingTapToManage => 'Nagka-cast — pindutin upang pamahalaan';
-
-  @override
-  String castingTo(Object deviceName) {
-    return 'Nagka-cast sa $deviceName';
-  }
-
-  @override
-  String castingTo2(Object arg1) {
-    return 'Nagka-cast sa $arg1';
-  }
-
-  @override
   String get categories => 'Mga kategorya';
 
   @override
@@ -1532,9 +1425,6 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String get checkAgain => 'Suriin muli';
-
-  @override
   String get checkTheVersionsYouWantTo =>
       'Lagyan ng tsek ang mga bersiyong ititira — aalisin sa iyong aklatan ang hindi napili. Dapat may matirang kahit isa.';
 
@@ -1544,12 +1434,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get checking => 'Sinusuri…';
-
-  @override
-  String get checkingForUpdates => 'Sinusuri kung may update';
-
-  @override
-  String get checkingForUpdates2 => 'Sinusuri kung may update...';
 
   @override
   String get childrenSPrivacy => 'Pagkapribado ng mga bata';
@@ -1569,9 +1453,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get chooseWhichToKeep => 'Piliin ang ititira';
-
-  @override
-  String get chromecast => 'Chromecast';
 
   @override
   String get circularDotsRadiusFollowsAmplitude =>
@@ -1719,56 +1600,16 @@ class AppLocalizationsTl extends AppLocalizations {
   String get connect => 'Kumonekta';
 
   @override
-  String get connectAMusicServer => 'Kumonekta sa server ng musika';
-
-  @override
-  String get connectASubsonicJellyfinWebdavUpnp =>
-      'Kumonekta sa Subsonic, Jellyfin, WebDAV, UPnP, o Tidal server upang i-stream ang iyong malayuang aklatan.';
-
-  @override
   String get connectAUsbDacOrAudio => 'Ikonekta ang USB DAC o audio interface';
-
-  @override
-  String get connectListenbrainz => 'Ikonekta ang ListenBrainz';
-
-  @override
-  String get connectToScrobbleYourListeningHistory =>
-      'Kumonekta upang i-scrobble ang iyong kasaysayan ng pakikinig';
-
-  @override
-  String get connectToScrobbleYourMusic =>
-      'Kumonekta upang i-scrobble ang iyong musika';
-
-  @override
-  String get connectToSubmitYourListeningHistory =>
-      'Kumonekta upang isumite ang iyong kasaysayan ng pakikinig';
-
-  @override
-  String get connectToTheInternetToCheck =>
-      'Kumonekta sa internet upang tingnan kung may update.';
 
   @override
   String get connected => 'Nakakonekta';
 
   @override
-  String get connectedAccount => 'Nakakonektang account';
-
-  @override
-  String connectedAs(Object username) {
-    return 'Nakakonekta bilang $username';
-  }
-
-  @override
   String get connecting => 'Kumokonekta';
 
   @override
-  String get connection => 'Koneksiyon';
-
-  @override
   String get connectionBehavior => 'Kilos ng koneksiyon';
-
-  @override
-  String get connectionFailedRetry => 'Hindi makakonekta — subukan muli';
 
   @override
   String get connectionManagement => 'Pamamahala ng koneksiyon';
@@ -1779,9 +1620,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get connectionNoticesDescription =>
       'Ipakita ang mga abiso kapag nawala o bumalik ang koneksiyon';
-
-  @override
-  String get connectionOk => 'Maayos ang koneksiyon';
 
   @override
   String get connectionStatus => 'Kalagayan ng koneksiyon';
@@ -1854,10 +1692,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get copyLink => 'Kopyahin ang link';
 
   @override
-  String get copyYourUserTokenFromListenbrainz =>
-      'Kopyahin ang iyong user token mula sa mga setting ng ListenBrainz at idikit sa ibaba.';
-
-  @override
   String get copyright => 'Karapatang-ari';
 
   @override
@@ -1865,17 +1699,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get cosmicOrchestra => 'Orkestra ng kalawakan';
-
-  @override
-  String get couldNotCheckForUpdates => 'Hindi masuri kung may update';
-
-  @override
-  String get couldNotConnectToLastFm =>
-      'Hindi makakonekta sa Last.fm. Suriin ang iyong API credentials at subukan muli.';
-
-  @override
-  String get couldNotConnectToListenbrainzCheck =>
-      'Hindi makakonekta sa ListenBrainz. Suriin ang iyong token at subukan muli.';
 
   @override
   String get couldNotLoadAlbumSongs => 'Hindi ma-load ang mga kanta ng album';
@@ -1894,24 +1717,6 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String get couldNotLoadSession => 'Hindi ma-load ang sesyon';
-
-  @override
-  String get couldNotOpenBrowser => 'Hindi mabuksan ang browser.';
-
-  @override
-  String get couldNotOpenKoFiPlease =>
-      'Hindi mabuksan ang Ko-fi. Subukan muli.';
-
-  @override
-  String get couldNotOpenLink => 'Hindi mabuksan ang link';
-
-  @override
-  String couldNotOpenLink2(Object e) {
-    return 'Hindi mabuksan ang link: $e';
-  }
-
-  @override
   String get couldNotOpenThatPhotoTry =>
       'Hindi mabuksan ang larawang iyon. Sumubok ng ibang larawan.';
 
@@ -1924,24 +1729,9 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String get couldNotOpenThePlayStore => 'Hindi mabuksan ang Play Store.';
-
-  @override
-  String couldNotOpenThePlayStore2(Object error) {
-    return 'Hindi mabuksan ang Play Store: $error';
-  }
-
-  @override
-  String get couldNotOpenThePlayStore3 => 'Hindi mabuksan ang Play Store';
-
-  @override
   String couldNotPrepareTheEditedFile(String error) {
     return 'Hindi maihanda ang binagong file: $error';
   }
-
-  @override
-  String get couldNotReachTheServer =>
-      'Hindi maabot ang server. Suriin ang URL at mga kredensiyal, saka subukan muli.';
 
   @override
   String get couldNotReadTheCoverColors =>
@@ -1977,10 +1767,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get couldNotUseTheSelectedLyrics =>
       'Hindi magamit ang napiling file ng lirika.';
-
-  @override
-  String get couldnTOpenTheBrowserAutomatically =>
-      'Hindi awtomatikong mabuksan ang browser. Pahintulutan sa alinmang aparato gamit ang link na ito — tatapusin namin ang pag-sign in kapag nagawa mo na:';
 
   @override
   String get countingFiles => 'Binibilang ang mga file…';
@@ -2120,10 +1906,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get interface => 'Interface';
-
-  @override
-  String get lastFmAndListenBrainzScrobbling =>
-      'Gumagamit ka ng Last.fm o ListenBrainz? Dito mo ise-set up ang scrobbling para sa account mo.';
 
   @override
   String get layoutModeSizingMiniPlayer =>
@@ -2542,15 +2324,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get creativeFx => 'Malikhaing FX';
 
   @override
-  String credentialsRejectedByReEnterThe(Object arg1) {
-    return 'Tinanggihan ng $arg1 ang mga kredensiyal. Ilagay muli ang password.';
-  }
-
-  @override
-  String get credentialsSavedSuccessfully =>
-      'Matagumpay na na-save ang mga kredensiyal!';
-
-  @override
   String get crispestHeavierDuringFastScrolling =>
       'Pinakamalinaw — mas mabigat sa mabilis na pag-scroll';
 
@@ -2819,11 +2592,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get delete => 'Burahin';
 
   @override
-  String deleteAndAllSongsAndPlaylists(Object arg1) {
-    return 'Burahin ang \"$arg1\" at lahat ng kanta at talaang na-sync mula rito? Ititira ang mga naka-cache na download.';
-  }
-
-  @override
   String get deleteFile => 'Burahin ang file';
 
   @override
@@ -2984,22 +2752,7 @@ class AppLocalizationsTl extends AppLocalizations {
       'Kilos kapag nadiskonekta at impormasyon ng codec';
 
   @override
-  String disconnectFrom(Object arg1) {
-    return 'Idiskonekta mula sa $arg1';
-  }
-
-  @override
-  String get disconnectLastFm => 'Idiskonekta ang Last.fm?';
-
-  @override
-  String get disconnectListenbrainz => 'Idiskonekta ang ListenBrainz?';
-
-  @override
   String get discord => 'Discord';
-
-  @override
-  String get discoversDlnaUpnpAndChromecastReceivers =>
-      'Hinahanap ang mga DLNA, UPnP at Chromecast receiver sa iyong network';
 
   @override
   String get dismiss => 'Isara';
@@ -3043,25 +2796,7 @@ class AppLocalizationsTl extends AppLocalizations {
   String get distanceBetweenSongsAlongTheArc => 'Pagitan ng mga kanta sa kurba';
 
   @override
-  String get dlnaAndUpnpReceiversAreControlled =>
-      'Direktang kinokontrol sa Dart ang mga DLNA at UPnP receiver — walang dagdag na dependency. Native Cast SDK naman ang gamit sa Chromecast. Maaaring i-cast ang mga network source (Subsonic, WebDAV, Jellyfin, UPnP), lokal na file, at naka-cache na kanta — direktang ibinabahagi mula sa teleponong ito ang mga lokal na file. Habang nagka-cast, ang mga volume key at system volume panel ay kumokontrol sa nakakonektang aparato.';
-
-  @override
-  String get dlnaUpnp => 'DLNA / UPnP';
-
-  @override
-  String get dlnaUpnpAndChromecastReceivers =>
-      'Mga DLNA, UPnP at Chromecast receiver';
-
-  @override
   String get donTShowAgainToday => 'Huwag nang ipakita ngayong araw';
-
-  @override
-  String get donate => 'Mag-donate';
-
-  @override
-  String get donateFundFeaturesAndKeepThe =>
-      'Mag-donate, suportahan ang mga tampok, at panatilihing buhay ang app';
 
   @override
   String get done => 'Tapos';
@@ -3087,13 +2822,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String down(Object arg1) {
     return '$arg1 pababa';
   }
-
-  @override
-  String get downloadTheLatestApkFromFlick =>
-      'I-download ang pinakabagong APK mula sa github.com/ryouhtml/AunoPlayer/releases';
-
-  @override
-  String get downloadUpdate => 'I-download ang update';
 
   @override
   String dp(Object arg1) {
@@ -3139,9 +2867,6 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String get dsdDsfPlayback => 'Pagtugtog ng DSD / DSF';
-
-  @override
   String get dsdMode => 'Mode ng DSD';
 
   @override
@@ -3177,9 +2902,6 @@ class AppLocalizationsTl extends AppLocalizations {
       'Mga dating paboritong muling inilahad mula sa iyong kasaysayan ng pakikinig.';
 
   @override
-  String get editCredentials => 'Baguhin ang mga kredensiyal';
-
-  @override
   String get editDescription => 'Baguhin ang paglalarawan';
 
   @override
@@ -3189,16 +2911,10 @@ class AppLocalizationsTl extends AppLocalizations {
   String get editMetadata => 'Baguhin ang metadata';
 
   @override
-  String get editServer => 'Baguhin ang server';
-
-  @override
   String get editSync => 'Baguhin at i-sync';
 
   @override
   String get editText => 'Baguhin ang teksto';
-
-  @override
-  String get editToken => 'Baguhin ang token';
 
   @override
   String get electricSunset => 'Elektrikong dapithapon';
@@ -3263,12 +2979,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get enterAYear19999 => 'Maglagay ng taon (1–9999)';
 
   @override
-  String get enterYourApiKey => 'Ilagay ang iyong API key';
-
-  @override
-  String get enterYourSharedSecret => 'Ilagay ang iyong shared secret';
-
-  @override
   String ep(Object arg1) {
     return 'EP $arg1';
   }
@@ -3316,10 +3026,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get etherealTones => 'Mga himig na tila panaginip';
-
-  @override
-  String get everyAlbumHasArtistAndAlbum =>
-      'May tag ng kumanta at album ang bawat album.';
 
   @override
   String get everySongIsRemovedFromYour =>
@@ -3448,11 +3154,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get failedToDeactivateFallback => 'Hindi ma-off ang pamalit';
 
   @override
-  String failedToDownloadAlbumArt(int status) {
-    return 'Hindi ma-download ang larawan ng album (HTTP $status).';
-  }
-
-  @override
   String failedToGetPersistedUris(String? error) {
     return 'Hindi makuha ang mga naka-save na URI: $error';
   }
@@ -3523,10 +3224,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get failedToSaveTheRecapImage =>
       'Hindi ma-save ang larawan ng buod sa iyong gallery.';
-
-  @override
-  String get failedToSearchAlbumArtOnline =>
-      'Hindi mahanap online ang larawan ng album.';
 
   @override
   String get failedToStartStreaming => 'Hindi masimulan ang streaming';
@@ -3610,17 +3307,6 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String files2(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count file',
-      one: '$count file',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String filesChecked(Object arg1) {
     return '$arg1 file na ang nasuri…';
   }
@@ -3676,12 +3362,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get finishingUp => 'Tinatapos…';
 
   @override
-  String get fix => 'Ayusin';
-
-  @override
-  String get fixMissingMetadata => 'Ayusin ang kulang na metadata';
-
-  @override
   String get fixedBands => '31 nakapirming band';
 
   @override
@@ -3710,14 +3390,6 @@ class AppLocalizationsTl extends AppLocalizations {
       'Maaaring tumanggap ang Auno Player ng paglilipat ng pagtugtog mula sa Locker (isa pang Moss app). Mga file path at metadata lamang ng kanta ang laman ng playback intents. Walang personal na datos na ipinagpapalitan. Ganap na lokal ang integrasyon.';
 
   @override
-  String get flickChecksFlickPlayerSiteFor =>
-      'Sinusuri ng Auno Player ang github.com/ryouhtml/AunoPlayer/releases para sa update kapag may koneksiyon ka';
-
-  @override
-  String get flickIsBuiltAndMaintainedBy =>
-      'Iisang tao ang gumagawa at nagpapanatili ng Auno Player nang walang badyet. Walang koponan, pondo, o patalastas.';
-
-  @override
   String get flickLogs => 'Mga log ng Auno Player';
 
   @override
@@ -3736,14 +3408,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get flickReplay => 'Auno Replay';
-
-  @override
-  String get flickScansForPlayStoreUpdates =>
-      'Sinusuri ng Auno Player ang mga update sa Play Store kapag may koneksiyon ka';
-
-  @override
-  String get flickWillAlwaysBeFreeDonations =>
-      'Laging libre ang Auno Player. Pinananatiling buhay ng mga donasyon ang proyekto nang walang bayad na harang o subscription.';
 
   @override
   String get flickWillForceYourChosenCodec =>
@@ -3838,17 +3502,9 @@ class AppLocalizationsTl extends AppLocalizations {
       'Hindi magamit ang pagpili ng format dahil naka-off ang Format ng tunog sa Mga pagsasaayos.';
 
   @override
-  String foundOnline(Object arg1) {
-    return 'Nahanap online ang \"$arg1\".';
-  }
-
-  @override
   String frPkt(Object arg1) {
     return '$arg1 fr/pkt';
   }
-
-  @override
-  String get freeOpenSource => 'Libre at open source';
 
   @override
   String get freq => 'Freq';
@@ -3861,11 +3517,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get freshAdditions => 'Mga bagong dagdag';
-
-  @override
-  String from(Object sourceLabel) {
-    return 'Mula sa $sourceLabel';
-  }
 
   @override
   String get fromSquareCornersToARounded =>
@@ -3898,10 +3549,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get fullscreen => 'Buong screen';
-
-  @override
-  String get fundingNativeDsdDsfPlaybackDevelopment =>
-      'Pagpopondo sa pagbuo ng native DSD/DSF playback — tampok na madalas hilingin ng mga audiophile.';
 
   @override
   String get fxOff => 'Naka-off ang FX';
@@ -3942,13 +3589,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get getStarted => 'Magsimula';
-
-  @override
-  String get getTheLatestApkFromFlick =>
-      'Kunin ang pinakabagong APK mula sa github.com/ryouhtml/AunoPlayer/releases';
-
-  @override
-  String get getYourApiCredentials => 'Kunin ang iyong API credentials';
 
   @override
   String get github => 'GitHub';
@@ -4056,9 +3696,6 @@ class AppLocalizationsTl extends AppLocalizations {
       'Itago ang mga pindutan ng nabigasyon kapag walang ginagawa';
 
   @override
-  String get hidePassword => 'Itago ang password';
-
-  @override
   String get hideShortStingersRingtonesAndVoice =>
       'Itago ang maiikling tunog, ringtone, at piraso ng boses';
 
@@ -4151,10 +3788,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get howWideEachCardSpansAcross => 'Lapad ng bawat card sa screen';
 
   @override
-  String get httpBasicNeedsItRecoverableStored =>
-      'Kailangang mabawi ito para sa HTTP Basic; naka-encode na nakaimbak';
-
-  @override
   String hz(Object rate) {
     return '$rate Hz';
   }
@@ -4179,32 +3812,7 @@ class AppLocalizationsTl extends AppLocalizations {
   String get iconSize => 'Laki ng icon';
 
   @override
-  String identified(int count, Object note) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count kanta',
-      one: '$count kanta',
-    );
-    return 'Natukoy ang $_temp0$note.';
-  }
-
-  @override
-  String get identifyAlbum => 'Kilalanin ang album';
-
-  @override
-  String get identifyAlbum2 => 'Kilalanin ang album';
-
-  @override
-  String get identifyAlbumsWithUnknownArtistOr =>
-      'Kilalanin ang mga album na walang kilalang kumanta o pamagat';
-
-  @override
   String get idle => 'Walang ginagawa';
-
-  @override
-  String get ifYouConnectYourLastFm =>
-      'Kung ikokonekta mo ang iyong Last.fm account, ligtas na iimbakin sa aparato ang mga kredensiyal. Sa Last.fm lamang ipinapadala ang datos ng pagtugtog. Hindi namin natatanggap o pinoproseso ang datos na ito.';
 
   @override
   String get ignoreTracksUnder500Kb =>
@@ -4259,9 +3867,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get impulseResponse => 'Impulse response';
 
   @override
-  String get inAppUpdates => 'Mga update sa loob ng app';
-
-  @override
   String inLabel(Object folder) {
     return 'sa $folder';
   }
@@ -4283,9 +3888,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get incredibleOverAMonthOfDaily =>
       'Kahanga-hanga — mahigit isang buwang araw-araw na pakikinig.';
-
-  @override
-  String get info2 => 'Impormasyon';
 
   @override
   String get initializing => 'Inihahanda…';
@@ -4311,9 +3913,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get instrumental => 'Instrumental';
 
   @override
-  String get integrations => 'Mga integrasyon';
-
-  @override
   String get interactiveEq => 'Interaktibong EQ';
 
   @override
@@ -4324,9 +3923,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get interfaceLabel => 'Itsura';
-
-  @override
-  String get invalidToken => 'Hindi wastong token';
 
   @override
   String isOfflineRetainedSongsStillListed(Object folder) {
@@ -4348,20 +3944,10 @@ class AppLocalizationsTl extends AppLocalizations {
   String get jan => 'Ene';
 
   @override
-  String get jellyfin => 'Jellyfin';
-
-  @override
-  String get jellyfinEmby => 'Jellyfin · Emby';
-
-  @override
   String get jul => 'Hul';
 
   @override
   String get jumpBackIn => 'Balikan ang pakikinig';
-
-  @override
-  String get jumpToTheFlickListingAnd =>
-      'Pumunta sa pahina ng Auno Player at mag-update mula roon';
 
   @override
   String get jun => 'Hun';
@@ -4380,6 +3966,7 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get karaokePreview => 'Paunang tingin ng karaoke';
+
   @override
   String get karaokeSweepStyle => 'Detalye ng sweep';
 
@@ -4387,7 +3974,8 @@ class AppLocalizationsTl extends AppLocalizations {
   String get karaokeSweepStyleAuto => 'Awtomatiko';
 
   @override
-  String get karaokeSweepStyleAutoDescription => 'Gamitin ang pinakatumpak na tunay na timing sa lyrics';
+  String get karaokeSweepStyleAutoDescription =>
+      'Gamitin ang pinakatumpak na tunay na timing sa lyrics';
 
   @override
   String get karaokeSweepStyleWord => 'Mga salita';
@@ -4399,8 +3987,8 @@ class AppLocalizationsTl extends AppLocalizations {
   String get karaokeSweepStyleSyllable => 'Mga pantig';
 
   @override
-  String get karaokeSweepStyleSyllableDescription => 'I-sweep bawat pantig na may tunay na timestamp';
-
+  String get karaokeSweepStyleSyllableDescription =>
+      'I-sweep bawat pantig na may tunay na timestamp';
 
   @override
   String kb(Object arg1) {
@@ -4464,10 +4052,6 @@ class AppLocalizationsTl extends AppLocalizations {
       'Pinananatiling aktibo ang software volume at DSP sa shared path ng DAP.';
 
   @override
-  String get keptInSecureStorageToRe =>
-      'Ligtas na nakaimbak upang makapag-sign in muli kapag nag-expire ang token';
-
-  @override
   String keptWillBeRemoved(Object keptCount, Object removeCount) {
     return '$keptCount ititira • $removeCount aalisin';
   }
@@ -4498,12 +4082,6 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String get koFi => 'Ko-fi';
-
-  @override
-  String get label => 'Label';
-
-  @override
   String get labelOrganization => 'Label / Organisasyon';
 
   @override
@@ -4523,25 +4101,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get languageSystemDefault => 'Wika ng aparato';
 
   @override
-  String get lastFm => 'Last.fm';
-
-  @override
-  String get lastFmConfiguration => 'Pagsasaayos ng Last.fm';
-
-  @override
-  String get lastFmConnected => 'Nakakonekta ang Last.fm';
-
-  @override
-  String get lastFmConnected2 => 'Nakakonekta na ang Last.fm!';
-
-  @override
-  String get lastFmListenbrainzScrobbling =>
-      'Pag-scrobble sa Last.fm at ListenBrainz';
-
-  @override
-  String get lastFmScrobbling => 'Pag-scrobble sa Last.fm';
-
-  @override
   String get lastPick => 'Huling pili';
 
   @override
@@ -4556,9 +4115,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get latestArrivalsFromYourLibrary =>
       'Mga pinakabagong dagdag sa iyong aklatan';
-
-  @override
-  String get latestUpdate => 'Pinakabagong update';
 
   @override
   String get layered => 'Patong-patong';
@@ -4592,10 +4148,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get leMsbLittleEndianSubslotMsb =>
       'LE-MSB — little-endian subslot, MSB muna';
-
-  @override
-  String get leaveEmptyToKeepTheCurrent =>
-      'Iwang walang laman upang panatilihin ang kasalukuyang mga kredensiyal';
 
   @override
   String get left => 'Kaliwa';
@@ -4741,19 +4293,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get list => 'Listahan';
 
   @override
-  String get listAvailableLocalAudioOutputDevices =>
-      'Ilista ang mga lokal na audio output device na magagamit';
-
-  @override
-  String get listenbrainz => 'ListenBrainz';
-
-  @override
-  String get listenbrainzConnected => 'Nakakonekta ang ListenBrainz';
-
-  @override
-  String get listenbrainzConnected2 => 'Nakakonekta na ang ListenBrainz!';
-
-  @override
   String get listeningHours => 'Mga oras ng pakikinig';
 
   @override
@@ -4801,13 +4340,7 @@ class AppLocalizationsTl extends AppLocalizations {
       'Nilo-load ang mga paborito, kamakailang sesyon, mga binuong halo, at mga talaan ng kanta.';
 
   @override
-  String get loadingPatchNotes => 'Nilo-load ang mga tala ng pagbabago...';
-
-  @override
   String get loadingReplay => 'Nilo-load ang Replay';
-
-  @override
-  String get loadingSession => 'Nilo-load ang sesyon...';
 
   @override
   String get localData => 'Lokal na datos';
@@ -4832,18 +4365,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get look => 'Hitsura';
-
-  @override
-  String get lookingForCoverArtFromMusicbrainz =>
-      'Naghahanap ng pabalat sa MusicBrainz at Cover Art Archive.';
-
-  @override
-  String get lookingForTheLatestFlickRelease =>
-      'Kasalukuyang hinahanap ang pinakabagong release ng Auno Player';
-
-  @override
-  String get lookingForTheLatestPlayStore =>
-      'Kasalukuyang hinahanap ang pinakabagong update sa Play Store';
 
   @override
   String get lossless => ' Lossless';
@@ -4944,25 +4465,11 @@ class AppLocalizationsTl extends AppLocalizations {
   String get matchAudioFilename => 'Itugma ang pangalan ng audio file';
 
   @override
-  String matchByArtistAlbumAndTrack(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count file',
-      one: '$count file',
-    );
-    return 'Itugma ang $_temp0 ayon sa kumanta, album at tagal ng kanta';
-  }
-
-  @override
   String get matchEqToYourHeadphoneModel =>
       'Itugma ang EQ sa modelo ng iyong headphone';
 
   @override
   String get matchNavigation => 'Itugma sa nabigasyon';
-
-  @override
-  String get matches => 'Mga tugma';
 
   @override
   String maxB(Object arg1) {
@@ -5060,9 +4567,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get minimize => 'Paliitin';
 
   @override
-  String get minimserverServiioKodi => 'MinimServer · Serviio · Kodi';
-
-  @override
   String get mirrorTest => 'Pagsubok ng salamin';
 
   @override
@@ -5070,7 +4574,7 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get mitLicenseCopyrightC2026Flick =>
-      '\nMIT License\n\nCopyright (c) 2026 Auno Player Contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n';
+      'GNU General Public License v3.0 o mas huli\n\nCopyright (c) 2026 Auno Player Contributors\n\nAng program na ito ay libreng software: maaari mong ipamudmod at/o baguhin ito sa ilalim ng mga tuntunin ng GNU General Public License na inilathala ng Free Software Foundation, alinman sa bersyon 3 ng lisensya, o (kung gusto mo) anumang mas bagong bersyon.\n\nIpamimudmod ang program na ito dahil umaasa kaming magagamit ito, ngunit WALANG ANUMANG GARANTIYA; maging ang implied warranty ng MERCHANTABILITY o FITNESS PARA SA ISANG TIYAK NA LAYUNIN. Tingnan ang GNU General Public License para sa higit pang detalye.\n\nDapat ay nakatanggap ka ng kopya ng GNU General Public License kasama ng program na ito. Kung hindi, tingnan ang <https://www.gnu.org/licenses/>.';
 
   @override
   String get mix => 'Halo';
@@ -5148,30 +4652,12 @@ class AppLocalizationsTl extends AppLocalizations {
   String get mossEcosystem => 'Ekosistema ng Moss';
 
   @override
-  String get mostDlnaServersNeedNoPassword =>
-      'Hindi kailangan ng password ang karamihan sa mga DLNA server';
-
-  @override
   String get mostPlayed => 'Pinakamadalas patugtugin';
 
   @override
   String mostReplayed(Object arg1) {
     return 'Pinakamadalas ulitin · $arg1';
   }
-
-  @override
-  String get motionArtInBitPerfect => 'Motion Art sa bit-perfect';
-
-  @override
-  String get motionArtIsReplacedWhileBit =>
-      'Pinapalitan ang motion art habang aktibo ang bit-perfect output';
-
-  @override
-  String get motionArtPlaysDuringBitPerfect =>
-      'Gumagana ang motion art habang bit-perfect ang tunog (maaaring makagambala sa pagtugtog sa ilang DAP)';
-
-  @override
-  String get motionArtRefreshed => 'Na-refresh ang motion art';
 
   @override
   String get moveEveryStampedLyricForwardOr =>
@@ -5217,11 +4703,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get mute => 'Patahimikin';
 
   @override
-  String my(Object arg1) {
-    return 'Aking $arg1';
-  }
-
-  @override
   String nDb(Object arg1, Object arg2) {
     return '$arg1%\n$arg2 dB';
   }
@@ -5245,7 +4726,8 @@ class AppLocalizationsTl extends AppLocalizations {
       'Native DSD — eksperimental (maaaring may mga depekto)';
 
   @override
-  String get nativeFlickPresetFormat => 'Native na format ng preset ng Auno Player';
+  String get nativeFlickPresetFormat =>
+      'Native na format ng preset ng Auno Player';
 
   @override
   String get naturalEqualizerFeelResponsiveYetSmooth =>
@@ -5255,9 +4737,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get natureAmbient => 'Himig ng kalikasan';
 
   @override
-  String get navidromeAirsonicGonic => 'Navidrome · Airsonic · Gonic';
-
-  @override
   String get navigationAppearance => 'Hitsura ng nabigasyon';
 
   @override
@@ -5265,9 +4744,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get navigationDefaultsRestored => 'Naibalik ang default ng nabigasyon';
-
-  @override
-  String get needsMetadata => 'Kailangan ng metadata';
 
   @override
   String negotiated(Object arg1) {
@@ -5291,15 +4767,9 @@ class AppLocalizationsTl extends AppLocalizations {
   String get network => 'Network';
 
   @override
-  String get networkSources => 'Mga source sa network';
-
-  @override
   String neutral(Object amount) {
     return '$amount% neutral';
   }
-
-  @override
-  String get neverSynced => 'Hindi pa nai-sync';
 
   @override
   String get newLabel => 'Bago';
@@ -5319,9 +4789,6 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String get nextcloudOwncloudSabredav => 'Nextcloud · ownCloud · SabreDAV';
-
-  @override
   String get night => 'Gabi';
 
   @override
@@ -5338,10 +4805,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get noAlbumsFound => 'Walang nahanap na album';
 
   @override
-  String get noAppleMusicReleaseFoundTry =>
-      'Walang nahanap na release sa Apple Music. Subukang baguhin ang pangalan ng kumanta o album at maghanap muli.';
-
-  @override
   String get noArtistsFound => 'Walang nahanap na kumanta';
 
   @override
@@ -5354,15 +4817,7 @@ class AppLocalizationsTl extends AppLocalizations {
       'Walang nahanap na tunog. Kung may musika ang folder na ito, maaaring nakatago ito dahil sa .nomedia file, o hindi pa na-index ng Android. Subukang i-on ang masusing pag-scan, o alisin ang .nomedia file at mag-scan muli.';
 
   @override
-  String get noCastingDevicesFoundMakeSure =>
-      'Walang nahanap na aparato para sa pag-cast. Tiyaking nasa iisang network ang telepono at receiver.';
-
-  @override
   String get noCategoriesSelected => 'Walang napiling kategorya';
-
-  @override
-  String get noChangelogNotesForThisVersion =>
-      'Wala pang tala ng pagbabago para sa bersiyong ito.';
 
   @override
   String get noCustomAlbumArtIsSet =>
@@ -5391,10 +4846,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get noHistoryYet => 'Wala pang kasaysayan';
 
   @override
-  String get noInternetConnectionPleaseCheckYour =>
-      'Walang koneksiyon sa internet. Suriin ang iyong network at subukan muli.';
-
-  @override
   String get noLibraryFilesForThisAlbum =>
       'Walang nahanap na file sa aklatan para sa album na ito.';
 
@@ -5409,9 +4860,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get noLyricsYet => 'Wala pang lirika';
 
   @override
-  String get noMatchFound => 'Walang nahanap na tugma';
-
-  @override
   String get noMatches => 'Walang tugma.';
 
   @override
@@ -5424,25 +4872,13 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get noMatchesTryFewerWordsOr =>
-      'Walang tugma. Bawasan ang mga salita o maghanap online.';
+      'Walang tugma. Bawasan ang mga salita.';
 
   @override
   String get noMusicYet => 'Wala pang musika';
 
   @override
   String get noNewAdditionsYet => 'Wala pang bagong dagdag';
-
-  @override
-  String get noNewUpdateFound => 'Walang nahanap na bagong update.';
-
-  @override
-  String get noOnlineArtworkFound => 'Walang nahanap na larawan online';
-
-  @override
-  String get noOutputDevicesAvailable => 'Walang magagamit na output device.';
-
-  @override
-  String get noPatchNotesAvailableYet => 'Wala pang mga tala ng pagbabago.';
 
   @override
   String get noPlaybackYet => 'Wala pang pagtugtog';
@@ -5477,13 +4913,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get noScanResultsYet => 'Wala pang resulta ng pag-scan';
 
   @override
-  String get noServerPlaylistsFound =>
-      'Walang nahanap na talaan ng kanta sa server';
-
-  @override
-  String get noServersConnected => 'Walang nakakonektang server';
-
-  @override
   String get noSongPlaying => 'Walang tumutugtog na kanta';
 
   @override
@@ -5494,9 +4923,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get noUpcomingQueueItemsYet => 'Wala pang susunod na item sa pila.';
-
-  @override
-  String get noUpdateAvailable => 'Walang bagong update';
 
   @override
   String get noUrbData => 'Walang datos ng URB';
@@ -5574,10 +5000,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get numberOnArt => 'Numero sa larawan';
 
   @override
-  String get oauthSignInNoPasswordStored =>
-      'Pag-sign in sa OAuth; walang password na nakaimbak dito';
-
-  @override
   String get oceanWaves => 'Mga alon ng dagat';
 
   @override
@@ -5589,9 +5011,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get offCropsToFillTheSquare =>
       'Kapag naka-off, kino-crop upang punan ang parisukat; kapag naka-on, ini-stretch ang larawan hanggang sa mga gilid';
-
-  @override
-  String get offline => 'Walang koneksiyon';
 
   @override
   String get onAndroidTheStandardJustAudio =>
@@ -5636,13 +5055,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get onboardingWelcomeTitle => 'Kumusta! Greetings from Auno Player!';
 
   @override
-  String get onlineArtistAlbumInformation =>
-      'Impormasyon sa artist at album online';
-
-  @override
-  String get onlineResults => 'Mga resulta online';
-
-  @override
   String get onlyLibraryEntriesAreRemovedYour =>
       'Mga tala lamang sa aklatan ang aalisin — mananatili sa imbakan ang iyong mga audio file.';
 
@@ -5661,23 +5073,7 @@ class AppLocalizationsTl extends AppLocalizations {
       'Buksan ang mga setting ng Bluetooth codec';
 
   @override
-  String get openFullNotes => 'Buksan ang buong tala';
-
-  @override
-  String get openInAppleMusic => 'Buksan sa Apple Music';
-
-  @override
-  String get openInBrowser => 'Buksan sa browser';
-
-  @override
-  String get openInPlayStore => 'Buksan sa Play Store';
-
-  @override
   String get openLibrary => 'Buksan ang aklatan';
-
-  @override
-  String get openListenbrainzOrgSettings =>
-      'Buksan ang listenbrainz.org/settings';
 
   @override
   String get openManual => 'Buksan ang gabay';
@@ -5686,14 +5082,7 @@ class AppLocalizationsTl extends AppLocalizations {
   String get openPlayer => 'Buksan ang player';
 
   @override
-  String get openReleaseNotes => 'Buksan ang mga tala ng release';
-
-  @override
   String get openSourceLicenses => 'Mga lisensiya ng open source';
-
-  @override
-  String get openThePlayStoreToInstall =>
-      'Buksan ang Play Store upang i-install ang pinakabagong build ng Auno Player';
 
   @override
   String get openedFromLocker => 'Binuksan mula sa Locker';
@@ -5757,9 +5146,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get output => 'Output';
 
   @override
-  String get outputDevice => 'Output device';
-
-  @override
   String get outputMode => 'Mode ng output';
 
   @override
@@ -5795,18 +5181,8 @@ class AppLocalizationsTl extends AppLocalizations {
   String get passthrough => 'Passthrough';
 
   @override
-  String get password => 'Password';
-
-  @override
   String get pasteOrTypeTheSongLyrics =>
       'Idikit o isulat dito ang lirika — isang linya sa bawat hanay';
-
-  @override
-  String get pasteYourListenbrainzToken =>
-      'Idikit ang iyong ListenBrainz token';
-
-  @override
-  String get patchNotes => 'Mga tala ng pagbabago';
 
   @override
   String get pause => 'I-pause';
@@ -5928,10 +5304,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get playNext => 'Isunod sa pagtugtog';
 
   @override
-  String get playStoreUpdatesUseGooglePlay =>
-      'Gumagamit ang mga update sa Play Store ng Google Play In-App Update API (saklaw ng mga patakaran sa pagkapribado ng Google). Kinukuha ang mga tala ng pagbabago sa GitHub Releases API nang walang ipinapadalang personal na datos.';
-
-  @override
   String get playback => 'Pagtugtog';
 
   @override
@@ -6045,9 +5417,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get playerMenuEditMetadata => 'May babaguhin ka ba sa metadata?';
 
   @override
-  String get playerMenuRefreshAlbumArt => 'Refresh natin yung album art.';
-
-  @override
   String get playerMenuSetAlbumArt =>
       'Lagyan natin ng album art para di blangko.';
 
@@ -6126,10 +5495,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get pleaseEnterAPlaylistName =>
       'Maglagay ng pangalan ng talaan ng kanta';
-
-  @override
-  String get pleaseEnterYourListenbrainzUserToken =>
-      'Ilagay ang iyong ListenBrainz user token.';
 
   @override
   String get portrait => 'Portrait';
@@ -6234,9 +5599,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get progressBar => 'Bar ng progreso';
-
-  @override
-  String get protocol => 'Protocol';
 
   @override
   String get pulledFromYourLateSessionPlays =>
@@ -6357,14 +5719,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get reconnectNow => 'Kumonekta muli ngayon';
 
   @override
-  String get reconnectToTheInternetToScan =>
-      'Kumonekta muli sa internet upang maghanap ng update';
-
-  @override
-  String get reconnectToWiFiOrMobile =>
-      'Kumonekta muli sa Wi-Fi o mobile data upang makapag-scan muli ang Auno Player';
-
-  @override
   String get reconnectionFailed => 'Hindi muling nakakonekta';
 
   @override
@@ -6374,23 +5728,13 @@ class AppLocalizationsTl extends AppLocalizations {
   String get recorded => 'Naitala';
 
   @override
-  String get refreshAppleMusic => 'I-refresh ang Apple Music';
-
-  @override
   String get refreshDevices => 'I-refresh ang mga aparato';
 
   @override
   String get refreshDevices2 => 'I-refresh ang mga aparato';
 
   @override
-  String get refreshOutputs => 'I-refresh ang mga output';
-
-  @override
   String get refreshRate => 'Refresh rate';
-
-  @override
-  String get refreshingAppleMusicData =>
-      'Nire-refresh ang datos ng Apple Music';
 
   @override
   String get registeredNotClaimed => 'Nakarehistro, hindi nakuha';
@@ -6458,12 +5802,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get removeSelected => 'Alisin ang napili';
-
-  @override
-  String get removeServer => 'Alisin ang server?';
-
-  @override
-  String get removeServer2 => 'Alisin ang server';
 
   @override
   String get removeTheDatabaseEntriesOrDelete =>
@@ -6715,9 +6053,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get ripSource => 'Pinagmulan ng rip';
 
   @override
-  String get root => 'Root';
-
-  @override
   String get rotationSeek => 'paghanap sa pamamagitan ng pag-ikot';
 
   @override
@@ -6734,13 +6069,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get routesBluetoothThroughTheRustEngine =>
       'Idinadaan ang Bluetooth sa Rust engine';
-
-  @override
-  String get runAnotherPlayStoreUpdateScan =>
-      'Maghanap muli ngayon ng update sa Play Store';
-
-  @override
-  String get runAnotherUpdateScanRightNow => 'Maghanap muli ngayon ng update';
 
   @override
   String get rustViaOboe => 'Rust sa pamamagitan ng Oboe';
@@ -6765,9 +6093,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get sCurve => 'S-Curve';
-
-  @override
-  String get sambaWindowsShareTransportPending => 'Samba · Windows share';
 
   @override
   String get sampleArtist => 'Halimbawang kumanta';
@@ -6799,9 +6124,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get saveChanges => 'I-save ang mga pagbabago';
-
-  @override
-  String get saveConnect => 'I-save at kumonekta';
 
   @override
   String get saveCreatesAnLrcFileIf =>
@@ -6921,9 +6243,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get scanFailedPleaseTryAgain => 'Hindi na-scan. Subukan muli.';
 
   @override
-  String get scanForDevices => 'Maghanap ng mga aparato';
-
-  @override
   String get scanProgress => 'Progreso ng pag-scan';
 
   @override
@@ -6961,16 +6280,10 @@ class AppLocalizationsTl extends AppLocalizations {
   String get search => 'Hanapin';
 
   @override
-  String get searchAgain => 'Maghanap muli';
-
-  @override
   String get searchArtistTitle => 'Hanapin ang kumanta + pamagat...';
 
   @override
   String get searchArtists => 'Hanapin ang mga kumanta...';
-
-  @override
-  String get searchFailed => 'Hindi nakapaghanap';
 
   @override
   String searchFailed2(Object e) {
@@ -6993,9 +6306,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get searchOnline => 'Maghanap online';
-
-  @override
-  String get searchOnline2 => 'Maghanap online';
 
   @override
   String get searchOnlineCreateYourOwnSynced =>
@@ -7027,15 +6337,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get searchYourLibrary => 'Hanapin sa iyong aklatan';
 
   @override
-  String get searching => 'Naghahanap…';
-
-  @override
-  String get searchingOnline => 'Naghahanap online';
-
-  @override
-  String get searchingTheLocalNetwork => 'Naghahanap sa lokal na network…';
-
-  @override
   String get secondsOfInactivityBeforeCollapsing =>
       'Segundong walang ginagawa bago lumiit';
 
@@ -7048,9 +6349,6 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String get seeWhatIsNewInThis => 'Tingnan ang bago sa update na ito';
-
-  @override
   String get select => 'Piliin';
 
   @override
@@ -7059,9 +6357,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get selectALineAndEdit =>
       '1. Pumili ng linya at direktang baguhin ang oras nito, o gamitin ang \"Gamitin ang kasalukuyang oras\".\n2. Sa timeline ng mga salita, hilahin ang hangganan upang pahabain o paikliin ang naunang bahagi — tig-10ms ang hakbang.\n3. Pindutin ang mga titik sa inspector upang hatiin ang salita sa mga pantig na may hiwalay na oras, saka hilahin ang mga hangganan.\n4. Hilahin ang huling hangganan (o gamitin ang Tagal ±) upang baguhin ang oras ng susunod na linya. Gamitin ang awtomatikong pagpuno para sa pantay na pagitan.\n5. Gamitin ang mga kontrol ng pag-usog upang sabay-sabay na ilipat ang lahat ng lirikang may oras.\n6. I-save upang mabuo ang pinal na `.lrc` file.';
-
-  @override
-  String get selectARelease => 'Pumili ng release';
 
   @override
   String get selectAll => 'Piliin lahat';
@@ -7113,17 +6408,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get serialNumber => 'Serial number';
 
   @override
-  String serverPlaylistSyncFailed(Object e) {
-    return 'Hindi naisabay ang talaan ng kanta ng server: $e';
-  }
-
-  @override
-  String get serverUrl => 'URL ng server';
-
-  @override
-  String get session => 'Sesyon';
-
-  @override
   String get setAlbumArt => 'Itakda ang larawan ng album';
 
   @override
@@ -7148,9 +6432,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String shareFailed(Object e) {
     return 'Hindi naibahagi: $e';
   }
-
-  @override
-  String get sharedSecret => 'Shared secret';
 
   @override
   String get sharpRecommended => 'Matalas (inirerekomenda)';
@@ -7187,10 +6468,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get showAlbumArtworkOnTheMini =>
       'Ipakita ang larawan ng album sa mini player';
-
-  @override
-  String get showAppleMusicBiographiesRecommendationsAnd =>
-      'Ipakita ang talambuhay, katulad na artist, nangungunang kanta, tala ng album, at larawan ng artist mula sa Apple Music.';
 
   @override
   String get showArtist => 'Ipakita ang kumanta';
@@ -7243,9 +6520,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get showOtherArtistsOnAlbumPages =>
       'Ipakita ang ibang kumanta sa mga pahina ng album';
-
-  @override
-  String get showPassword => 'Ipakita ang password';
 
   @override
   String get showPlaylistPreviewsOnTheHome =>
@@ -7375,20 +6649,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get shuffleSongsInCurrentList =>
       'Ihalo ang mga kanta sa kasalukuyang listahan';
-
-  @override
-  String get signInFailedRetry => 'Hindi naka-sign in — subukan muli';
-
-  @override
-  String get signInWithTidal => 'Mag-sign in sa Tidal';
-
-  @override
-  String get signInWithYourAccountHifi =>
-      'Mag-sign in sa iyong account · HiFi lossless';
-
-  @override
-  String get signInWithYourOwnTidal =>
-      'Mag-sign in gamit ang sarili mong Tidal account. Tinutugtog ang HiFi lossless (FLAC/ALAC) sa bit-perfect engine; kontrolado ng Tidal ang HiRes/MQA at Atmos at magpapakita ang mga ito ng error sa halip na tumugtog.';
 
   @override
   String get signal => 'Signal';
@@ -7529,14 +6789,8 @@ class AppLocalizationsTl extends AppLocalizations {
   String get signalVerifiedInLog => 'Napatunayan sa log';
 
   @override
-  String get signedIn => 'Naka-sign in';
-
-  @override
   String get silkySmoothBZierCurvesFluid =>
       'Napakakinis na mga kurbang Bézier — dumadaloy at natural';
-
-  @override
-  String get similarArtists => 'Mga katulad na kumanta';
 
   @override
   String get simple => 'Simple';
@@ -7587,78 +6841,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get slope => 'Slope';
 
   @override
-  String get smbInvalidServerUrl =>
-      'Gamitin ang smb://server/share o smb://server/share/folder. Ilagay ang mga kredensyal sa mga field ng username at password, hindi sa URL.';
-
-  @override
-  String get smbSigningRequired =>
-      'Kailangan ng server ang SMB signing. Gumamit ng account na pinapayagan ng patakaran sa seguridad ng server; maaaring hindi payagan ang guest access.';
-
-  @override
-  String get smbCacheWriteFailed =>
-      'Hindi mai-save ang SMB download. Suriin ang natitirang storage sa telepono, saka subukan muli.';
-
-  @override
-  String get smbDownloadIncomplete =>
-      'Hindi natapos ang SMB download. Suriin ang koneksyon at subukan muli; hindi patutugtugin ang hindi kumpletong file.';
-
-  @override
-  String get smbPathNotFound =>
-      'Hindi nahanap ang SMB folder o file. Suriin ang folder sa URL ng server o i-sync muli ang aklatan.';
-
-  @override
-  String get smbDecodeFailed =>
-      'Na-download ang SMB file, pero hindi masimulan ang pagpapatugtog. Subukang patugtugin ang parehong file nang lokal sa Auno Player at suriin ang napiling audio output.';
-
-  @override
-  String get smbOperationFailed =>
-      'Nabigo ang SMB operation. Patakbuhin ang Test Connection at suriin ang SMB stage/code sa log bago subukan muli.';
-
-  @override
-  String get smbAccessDenied =>
-      'Hindi pinapayagan ang pag-access. Suriing nababasa ng account ang share na ito.';
-
-  @override
-  String get smbAuthFailed =>
-      'Tinanggihan ng server ang username o password. Suriin ang account — maaaring ituring ng Samba na guest ang mga hindi kilalang user.';
-
-  @override
-  String get smbConnectionRefused =>
-      'Tinanggihan ang koneksiyon. Suriing naka-on ang file sharing at naaabot ang port 445.';
-
-  @override
-  String get smbCouldNotReach =>
-      'Hindi maabot ang server. Suriin ang IP address at tiyaking nasa iisang network ang telepono.';
-
-  @override
-  String get smbHostNotResolved =>
-      'Hindi matukoy ang pangalan ng server. Gamitin ang IP address — hindi matukoy ng Android ang mga pangalang NetBIOS/.local.';
-
-  @override
-  String get smbMissingServerAddress =>
-      'Walang address ng server — gamitin ang smb://host/share (hal. smb://nas/music).';
-
-  @override
-  String get smbMissingShareName =>
-      'Walang pangalan ng share — gamitin ang smb://host/share (hal. smb://nas/music).';
-
-  @override
-  String get smbServerUnresponsive =>
-      'Hindi na tumutugon ang server. Suriin ang server at subukan muli.';
-
-  @override
-  String get smbShareNotFound =>
-      'Tumugon ang server ngunit hindi nahanap ang share. Suriin ang pangalan ng share sa URL.';
-
-  @override
-  String get smbSharesCanBeAddedNow =>
-      'Kumokonekta ang mga SMB2/3 share sa pamamagitan ng nakapaloob na client. Ilagay ang share URL (smb://host/share) at mag-sign in kung hihingin ng server.';
-
-  @override
-  String get smbTimedOut =>
-      'Naubos ang oras. Gamitin ang IP ng server (hindi pangalang NetBIOS/.local), suriin ang port 445, at tiyaking nasa iisang network ang telepono.';
-
-  @override
   String get smooth => 'Makinis';
 
   @override
@@ -7682,9 +6864,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get solid => 'Buo';
 
   @override
-  String get soloDeveloper => 'Nag-iisang developer';
-
-  @override
   String get someOnlineFeaturesMayNotWork =>
       '  ·  Maaaring hindi gumana ang ilang tampok online';
 
@@ -7704,17 +6883,6 @@ class AppLocalizationsTl extends AppLocalizations {
       one: '$count kanta',
     );
     return '$_temp0';
-  }
-
-  @override
-  String song3(int count, Object server) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count kanta',
-      one: '$count kanta',
-    );
-    return '$_temp0 · $server';
   }
 
   @override
@@ -7829,11 +6997,6 @@ class AppLocalizationsTl extends AppLocalizations {
       one: '$count kanta',
     );
     return '$_temp0';
-  }
-
-  @override
-  String songsFound(Object arg1) {
-    return '$arg1 kanta ang nahanap';
   }
 
   @override
@@ -7980,9 +7143,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get stopAtTheEndOfThe => 'Huminto sa dulo ng kasalukuyang listahan';
 
   @override
-  String get stopCasting => 'Ihinto ang pag-cast';
-
-  @override
   String get stopStreaming => 'Ihinto ang pag-stream';
 
   @override
@@ -8013,17 +7173,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get storagePermissions => 'Mga pahintulot sa imbakan';
-
-  @override
-  String get storeOn => 'Iimbak sa';
-
-  @override
-  String get storedAsASaltedHashNever =>
-      'Nakaimbak bilang salted hash, hindi kailanman bilang payak na teksto';
-
-  @override
-  String get storedEncodedPlaybackUnavailableInThis =>
-      'Nakaimbak na base64-encoded — kailangan sa NTLM sign-in';
 
   @override
   String get stormChasers => 'Mga humahabol sa bagyo';
@@ -8072,30 +7221,7 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String get subsonic => 'Subsonic';
-
-  @override
-  String get subsonicServersSyncAndStreaming =>
-      'Mga Subsonic server, pagsabay, at pag-stream';
-
-  @override
   String get subtle => 'Banayad';
-
-  @override
-  String get support => 'Suporta';
-
-  @override
-  String get supportDevelopmentOnBuyMeACoffee =>
-      'Suportahan ang pagbuo sa Buy Me a Coffee';
-
-  @override
-  String get supportDevelopmentOnKoFi => 'Suportahan ang pagbuo sa Ko-fi';
-
-  @override
-  String get supportFlick => 'Suportahan ang Auno Player';
-
-  @override
-  String get supportFlickOnKoFi => 'Suportahan ang Auno Player sa Ko-fi';
 
   @override
   String get surfaceShading => 'Paglililim ng ibabaw';
@@ -8153,40 +7279,10 @@ class AppLocalizationsTl extends AppLocalizations {
   String get sync => 'Isabay';
 
   @override
-  String syncFailed(Object e) {
-    return 'Hindi naisabay: $e';
-  }
-
-  @override
-  String get syncNow => 'Isabay ngayon';
-
-  @override
-  String get syncServerPlaylists => 'Isabay ang mga talaan ng kanta ng server';
-
-  @override
   String get synced => 'Naisabay';
 
   @override
-  String synced2(Object arg1) {
-    return 'Naisabay ang $arg1';
-  }
-
-  @override
   String get syncedLrc => 'LRC na may oras';
-
-  @override
-  String syncedPlaylistFromServers(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count talaan ng kanta',
-      one: '$count talaan ng kanta',
-    );
-    return 'Naisabay ang $_temp0 mula sa mga server';
-  }
-
-  @override
-  String get syncing => 'Isinasabay…';
 
   @override
   String get synthwaveCity => 'Lungsod ng Synthwave';
@@ -8252,9 +7348,6 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String get testConnection => 'Subukan ang koneksiyon';
-
-  @override
   String get textGestures => 'Teksto at mga galaw';
 
   @override
@@ -8272,10 +7365,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get theAppDoesNotKnowinglyCollect =>
       'Hindi sadyang nangongolekta ang app ng anumang impormasyon mula sa sinuman, anuman ang edad.';
-
-  @override
-  String get theAppQueriesPublicApisMusicbrainz =>
-      'Naghahanap ang app sa mga pampublikong API (MusicBrainz/Cover Art Archive, iTunes, Deezer) ng tugmang larawan ng album. Metadata ng lokal na musika ang gamit sa paghahanap. Lokal na naka-cache ang mga na-download na larawan.';
 
   @override
   String get theAudioEngineDeterminesHowYour =>
@@ -8310,9 +7399,6 @@ class AppLocalizationsTl extends AppLocalizations {
       'Aalisin nito ang kasalukuyang sunod-sunod na araw at lahat ng nakamit na yugto nito. Hindi ito maibabalik.';
 
   @override
-  String get thisDevice => 'Ang aparatong ito';
-
-  @override
   String get thisFolderAppearsToBeEmpty =>
       'Mukhang walang laman ang folder na ito';
 
@@ -8339,10 +7425,6 @@ class AppLocalizationsTl extends AppLocalizations {
       'Walang file path ang kantang ito at hindi ito mababago.';
 
   @override
-  String get thisSongIsMissingAlbumMetadata =>
-      'Walang metadata ng album ang kantang ito, kaya limitado ang pagtutugma online.';
-
-  @override
   String get thisSongOnly => 'Kantang ito lamang';
 
   @override
@@ -8359,84 +7441,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get thunderRoad => 'Daan ng kulog';
-
-  @override
-  String get tidal => 'Tidal';
-
-  @override
-  String get tidalAppKeyRejected =>
-      'Tinanggihan ng Tidal ang sign-in key ng app. Pinapalitan nila ang mga ito — maaaring luma na ang nakapaloob na key (kilalang limitasyon ng hindi opisyal na paraan).';
-
-  @override
-  String tidalCouldNotReach(int status) {
-    return 'Hindi maabot ang Tidal (HTTP $status). Suriin ang iyong koneksiyon.';
-  }
-
-  @override
-  String tidalEncryptedTrack(String trackId) {
-    return 'Naka-encrypt ang kantang $trackId (HiRes/MQA). Hindi naka-encrypt na HiFi lossless lamang ang suportado.';
-  }
-
-  @override
-  String tidalManifestDecodeFailed(String trackId, String error) {
-    return 'Hindi mabasa ang Tidal manifest para sa kantang $trackId: $error';
-  }
-
-  @override
-  String tidalManifestNoStream(String trackId) {
-    return 'Walang stream URL sa manifest ng kantang $trackId.';
-  }
-
-  @override
-  String get tidalNoPlayableStream =>
-      'Walang mapatutugtog na stream para sa kantang ito.';
-
-  @override
-  String get tidalNoSignInCode => 'Walang ibinalik na sign-in code ang Tidal.';
-
-  @override
-  String get tidalNotSignedIn =>
-      'Hindi naka-sign in sa Tidal. Pindutin ang \"Mag-sign in sa Tidal\".';
-
-  @override
-  String tidalOpenLinkManually(String uri) {
-    return 'Hindi awtomatikong mabuksan ang browser. Buksan ang link na ito sa anumang aparato upang tapusin ang pag-sign in, saka pindutin muli ang Mag-sign in:\n\n$uri';
-  }
-
-  @override
-  String get tidalSessionExpired =>
-      'Nag-expire ang sesyon ng Tidal. Mag-sign in muli.';
-
-  @override
-  String get tidalSignInDenied => 'Hindi pinayagan ang pag-sign in sa Tidal.';
-
-  @override
-  String get tidalSignInExpired =>
-      'Nag-expire ang sign-in code ng Tidal. Subukan muli.';
-
-  @override
-  String get tidalSignInRefused =>
-      'Tinanggihan ng Tidal ang pag-sign in. Subukan muli.';
-
-  @override
-  String get tidalSignInTimedOut =>
-      'Naubos ang oras sa paghihintay ng pag-sign in sa Tidal.';
-
-  @override
-  String get tidalTokenRefreshFailed => 'Hindi na-refresh ang token ng Tidal.';
-
-  @override
-  String get tidalTooManyRequests =>
-      'Masyadong maraming kahilingan sa Tidal. Maghintay sandali at subukan muli.';
-
-  @override
-  String get tidalUnavailable =>
-      'Hindi magamit ang Tidal ngayon. Subukan muli mamaya.';
-
-  @override
-  String tidalUnsupportedFormat(String trackId) {
-    return 'Gumagamit ang kantang $trackId ng hindi suportadong format ng Tidal (HiRes/MQA/Atmos). Hindi naka-encrypt na HiFi lossless lamang ang suportado.';
-  }
 
   @override
   String get time => 'Oras';
@@ -8483,9 +7487,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get topArtists => 'Mga nangungunang kumanta';
-
-  @override
-  String get topSongs => 'Mga nangungunang kanta';
 
   @override
   String get topSongs2 => 'Mga nangungunang kanta';
@@ -8572,11 +7573,6 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String tracks8(Object arg1) {
-    return '$arg1 kanta';
-  }
-
-  @override
   String tracksLikedSongsPlaylists(
     Object songCount,
     Object favoriteCount,
@@ -8620,10 +7616,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get tryOriginalSearch => 'Subukan ang orihinal na paghahanap';
-
-  @override
-  String get tryPickingALocalImageIf =>
-      'Subukang pumili ng lokal na larawan kung hindi karaniwan ang metadata ng release.';
 
   @override
   String get turnOff432HzTuningTo =>
@@ -8686,14 +7678,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get ultra => 'Ultra';
 
   @override
-  String get unableToCheckForUpdatesRight =>
-      'Hindi makapaghanap ng update ngayon.';
-
-  @override
-  String get unableToLoadPatchNotesRight =>
-      'Hindi ma-load ang mga tala ng pagbabago ngayon.';
-
-  @override
   String get unableToOpenAllFilesAccess =>
       'Hindi mabuksan ang mga setting ng All Files Access';
 
@@ -8745,9 +7729,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get unknownFolder => 'Hindi kilalang folder';
 
   @override
-  String get unknownLastFmError => 'Hindi kilalang error sa Last.fm';
-
-  @override
   String get unknownTitle => 'Hindi kilalang pamagat';
 
   @override
@@ -8792,63 +7773,6 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String get update => 'I-update';
-
-  @override
-  String get updateAvailable => 'Yun oh! May bagong update na naman!';
-
-  @override
-  String get updateAvailableOnThePlayStore =>
-      'May bagong update sa Play Store.';
-
-  @override
-  String get updateNoticeHidden => 'Naitago ang abiso ng update.';
-
-  @override
-  String get aNewerFlickBuildOnGithub =>
-      'May mas bagong Auno Player build sa GitHub.';
-
-  @override
-  String get betaUpdateAvailable => 'May Available na Beta Update';
-
-  @override
-  String get betaUpdateSubtitle =>
-      'May pre-release build na available para sa testing.';
-
-  @override
-  String get downloadBetaUpdate => 'I-download ang Beta';
-
-  @override
-  String get getBetaUpdate => 'Kunin ang beta build mula sa GitHub.';
-
-  @override
-  String get updateAvailableOnGithub => 'May update sa GitHub.';
-
-  @override
-  String get updateChannel => 'Update Channel';
-
-  @override
-  String get updateChannelStable => 'Mga stable release';
-
-  @override
-  String get updateChannelStableSubtitle =>
-      'Mga ganap nang release na Auno Player build lang ang iaalok.';
-
-  @override
-  String get updateChannelBeta => 'Mga pre-release';
-
-  @override
-  String get updateChannelBetaSubtitle =>
-      'Mga beta build para sa testing lang ang iaalok.';
-
-  @override
-  String get updateChannelBoth => 'Stable at pre-releases';
-
-  @override
-  String get updateChannelBothSubtitle =>
-      'Ipakita ang update notice para sa dalawang channel.';
-
-  @override
   String updated(Object arg1) {
     return 'Na-update ang $arg1';
   }
@@ -8862,9 +7786,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String updatedAlbumArtFor2(Object arg1) {
     return 'Na-update ang larawan ng album para sa \"$arg1\".';
   }
-
-  @override
-  String get updates => 'Mga update';
 
   @override
   String get updatesAboutAndSupport => 'Mga update, tungkol, at suporta';
@@ -8884,9 +7805,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get uploadLogsAsALink => 'I-upload ang mga log bilang link?';
-
-  @override
-  String get upnpDlna => 'UPnP / DLNA';
 
   @override
   String get urbPacket => 'URB packet';
@@ -8916,10 +7834,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get usbDacAutoBitPerfectOffers =>
       'Na-reset ang mga awtomatikong alok na bit-perfect sa USB DAC.';
-
-  @override
-  String get usbDacsHeadphonesAndReferenceGear =>
-      'Mga USB DAC, headphone, at sangguniang kagamitan upang subukan at paghusayin ang kalidad ng pagtugtog.';
 
   @override
   String get usbDeviceAccess => 'Access sa USB device';
@@ -9003,12 +7917,6 @@ class AppLocalizationsTl extends AppLocalizations {
       'Gamitin ang napatunayang direktang USB path at patayin ang mga kontrol ng software DSP na sisira sa bit-perfect na pagtugtog sa panlabas na USB DAC.';
 
   @override
-  String get userToken => 'User token';
-
-  @override
-  String get username => 'Username';
-
-  @override
   String using(Object arg1) {
     return 'Ginagamit ang $arg1';
   }
@@ -9041,11 +7949,6 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String version(Object kAppVersion) {
     return 'Bersiyon $kAppVersion';
-  }
-
-  @override
-  String version2(Object arg1) {
-    return 'Bersiyon $arg1';
   }
 
   @override
@@ -9222,16 +8125,7 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String get waitingForBrowserAuthorization =>
-      'Hinihintay ang pahintulot sa browser...';
-
-  @override
   String get waitingForPlayback => 'Naghihintay ng pagtugtog';
-
-  @override
-  String was(Object arg1) {
-    return 'dati: $arg1';
-  }
 
   @override
   String get wave => 'Alon';
@@ -9278,9 +8172,6 @@ class AppLocalizationsTl extends AppLocalizations {
   }
 
   @override
-  String get webdav => 'WebDAV';
-
-  @override
   String get weekly => 'Lingguhan';
 
   @override
@@ -9292,9 +8183,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get whatItShows => 'Ano ang ipinapakita';
-
-  @override
-  String get whatSNew => 'Ano\'ng bago';
 
   @override
   String get whenBitPerfectOutputIs =>
@@ -9312,9 +8200,6 @@ class AppLocalizationsTl extends AppLocalizations {
       'Patayong puwesto ng nakatutok na kanta';
 
   @override
-  String get whereYourMoneyGoes => 'Saan napupunta ang iyong ambag';
-
-  @override
   String get whisperWorld => 'Mundo ng bulong';
 
   @override
@@ -9325,9 +8210,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get wholeAlbum => 'Buong album';
-
-  @override
-  String get whyDonate => 'Bakit mag-ambag';
 
   @override
   String wide(Object amount) {
@@ -9412,14 +8294,6 @@ class AppLocalizationsTl extends AppLocalizations {
   String get yesterday => 'Kahapon';
 
   @override
-  String get youAlreadyHaveTheLatestFlick =>
-      'Nasa iyo na ang pinakabagong release ng Auno Player';
-
-  @override
-  String get youAlreadyHaveTheLatestPlay =>
-      'Nasa iyo na ang pinakabagong release sa Play Store';
-
-  @override
   String get youCanAlsoChangeTheCodec =>
       'Maaari mo ring baguhin ang codec sa Android Developer Options sa ilalim ng \"Bluetooth Audio Codec\".';
 
@@ -9475,10 +8349,6 @@ class AppLocalizationsTl extends AppLocalizations {
       'Nasa iyo pa rin ang kasaysayan ng pakikinig mo. Subukang i-load itong muli.';
 
   @override
-  String get yourListensWillRemainOnListenbrainz =>
-      'Mananatili sa ListenBrainz ang iyong mga pakikinig, ngunit hindi na magpapadala ang Auno Player.';
-
-  @override
   String get yourLogsAreUploadedToDpaste =>
       'Ina-upload ang iyong mga log sa dpaste.com bilang hindi nakalistang link na nag-e-expire sa loob ng 30 araw. Mababasa ito ng sinumang pagbabahagian mo ng link — maaaring may mga file path at detalye ng aparato ang mga log.';
 
@@ -9488,12 +8358,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get yourMostReplayedTrack => 'Ang pinakamadalas mong uliting kanta';
-
-  @override
-  String get yourMusicIsBeingScrobbled => 'Isini-scrobble ang iyong musika';
-
-  @override
-  String get yourMusicIsBeingSubmitted => 'Ipinapadala ang iyong musika';
 
   @override
   String get yourMusicOnRepeat => 'Musika mo. Paulit-ulit.';
@@ -9512,10 +8376,6 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get yourPlaylists => 'Iyong mga talaan ng kanta';
-
-  @override
-  String get yourScrobblingHistoryWillRemainOn =>
-      'Mananatili sa Last.fm ang iyong kasaysayan ng scrobbling, ngunit hindi na magpapadala ang Auno Player.';
 
   @override
   String get yourSessionHistory => 'Kasaysayan ng iyong mga sesyon';
@@ -9740,47 +8600,111 @@ class AppLocalizationsTl extends AppLocalizations {
       'Sinukat mula sa hiwalay na decode ng source file. May decoder padding ang ilang format, na puwedeng makaapekto sa duration at silence measurements. Hindi nagbabago ang playback, DSP, at tags.';
 
   @override
-  String get audioAnalysisCodec => "Codec";
+  String get audioAnalysisCodec => 'Codec';
+
   @override
-  String get audioAnalysisContainer => "Container";
+  String get audioAnalysisContainer => 'Container';
+
   @override
-  String get audioAnalysisBitrate => "Bitrate";
+  String get audioAnalysisBitrate => 'Bitrate';
+
   @override
-  String get audioAnalysisChannelLayout => "Layout ng channel";
+  String get audioAnalysisChannelLayout => 'Layout ng channel';
+
   @override
-  String get audioAnalysisHiResSection => "DSD / Hi-Res";
+  String get audioAnalysisHiResSection => 'DSD / Hi-Res';
+
   @override
-  String get audioAnalysisDsdVariant => "Variant ng DSD";
+  String get audioAnalysisDsdVariant => 'Variant ng DSD';
+
   @override
-  String get audioAnalysisDopCapable => "May suporta sa DoP";
+  String get audioAnalysisDopCapable => 'May suporta sa DoP';
+
   @override
-  String get audioAnalysisDopYes => "Oo";
+  String get audioAnalysisDopYes => 'Oo';
+
   @override
-  String get audioAnalysisDopNo => "Hindi";
+  String get audioAnalysisDopNo => 'Hindi';
+
   @override
-  String get audioAnalysisHiResBadge => "Pinagmumuling Hi-Res";
+  String get audioAnalysisHiResBadge => 'Pinagmumuling Hi-Res';
+
   @override
-  String get audioAnalysisMetadataOnlyNote => "Hindi available ang buong decoding para sa format na ito. Metadata at integridad ang ipinapakita.";
+  String get audioAnalysisMetadataOnlyNote =>
+      'Hindi available ang buong decoding para sa format na ito. Metadata at integridad ang ipinapakita.';
+
   @override
-  String get audioAnalysisIntegritySection => "Integridad at mga tag";
+  String get audioAnalysisIntegritySection => 'Integridad at mga tag';
+
   @override
-  String get audioAnalysisIntegrityOk => "Matagumpay ang buong pagbasa ng file";
+  String get audioAnalysisIntegrityOk => 'Matagumpay ang buong pagbasa ng file';
+
   @override
-  String get audioAnalysisIntegrityFailed => "Nabigo ang buong pagbasa ng file";
+  String get audioAnalysisIntegrityFailed => 'Nabigo ang buong pagbasa ng file';
+
   @override
-  String get audioAnalysisTagCompleteness => "Kumpletuhan ng tag";
+  String get audioAnalysisTagCompleteness => 'Kumpletuhan ng tag';
+
   @override
-  String get audioAnalysisOutputSection => "Daan ng output";
+  String get audioAnalysisOutputSection => 'Daan ng output';
+
   @override
-  String get audioAnalysisBitPerfectPath => "Daan na katutubo / bit-perfect";
+  String get audioAnalysisBitPerfectPath => 'Daan na katutubo / bit-perfect';
+
   @override
-  String get audioAnalysisResampleWarning => "Maaaring i-resample ng napiling output path ang pag-playback.";
+  String get audioAnalysisResampleWarning =>
+      'Maaaring i-resample ng napiling output path ang pag-playback.';
+
   @override
-  String get audioAnalysisSaveReport => "I-save ang lokal na ulat";
+  String get audioAnalysisSaveReport => 'I-save ang lokal na ulat';
+
   @override
-  String get audioAnalysisReportSaved => "Na-save ang ulat sa Documents/AunoPlayer";
+  String get audioAnalysisReportSaved =>
+      'Na-save ang ulat sa Documents/AunoPlayer';
+
   @override
-  String get audioAnalysisReportFailed => "Hindi ma-save ang ulat.";
+  String get audioAnalysisReportFailed => 'Hindi ma-save ang ulat.';
+
+  @override
+  String get recapActualListeningLabel => 'Aktwal na pakikinig';
+
+  @override
+  String recapStreakDays(int days) {
+    return '$days araw na streak';
+  }
+
+  @override
+  String get recapListeningClock => 'Orasan ng pakikinig';
+
+  @override
+  String get recapListeningClockHint =>
+      'Oras ng pakikinig sa bawat oras ng araw';
+
+  @override
+  String recapHourLabel(int hour) {
+    return '$hour:00';
+  }
+
+  @override
+  String get recapPersonality => 'Personalidad sa pakikinig';
+
+  @override
+  String get recapPersonalityNightOwl => 'Night owl';
+
+  @override
+  String get recapPersonalityCompletionist => 'Completionist';
+
+  @override
+  String get recapPersonalityExplorer => 'Explorer';
+
+  @override
+  String get recapPersonalityBalanced => 'Balanced listener';
+
+  @override
+  String get recapFirstListened => 'Unang pakikinig sa periodong ito';
+
+  @override
+  String get recapLocalOnlyStats => 'Kinalculate sa device na ito';
 }
 
 /// The translations for Tagalog, using the Tagalog Baybayin Alibata script (`tl_Tglg`).
@@ -9819,33 +8743,4 @@ class AppLocalizationsTlTglg extends AppLocalizationsTl {
 
   @override
   String get songs14 => 'ᜋᜅ ᜃᜈ᜔ᜆ';
-
-  @override
-  String get recapActualListeningLabel => "Aktwal na pakikinig";
-  @override
-  String recapStreakDays(int days) => "${days} araw na streak";
-  @override
-  String get recapListeningClock => "Orasan ng pakikinig";
-  @override
-  String get recapListeningClockHint => "Oras ng pakikinig sa bawat oras ng araw";
-  @override
-  String recapHourLabel(int hour) => "${hour}:00";
-  @override
-  String get recapPersonality => "Personalidad sa pakikinig";
-  @override
-  String get recapPersonalityNightOwl => "Night owl";
-  @override
-  String get recapPersonalityCompletionist => "Completionist";
-  @override
-  String get recapPersonalityExplorer => "Explorer";
-  @override
-  String get recapPersonalityBalanced => "Balanced listener";
-  @override
-  String get recapFirstListened => "Unang pakikinig sa periodong ito";
-  @override
-  String get recapLocalOnlyStats => "Kinalculate sa device na ito";
-  @override
-  String get indonesian => 'Indonesiyano';
-  @override
-  String get artworkOnlyForLocalFiles => 'Ang artwork ay mababago lamang para sa mga lokal na file.';
 }

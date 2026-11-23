@@ -9,6 +9,13 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
+  String get indonesian => 'Indonesio';
+
+  @override
+  String get artworkOnlyForLocalFiles =>
+      'Las carátulas solo se pueden cambiar en archivos locales.';
+
+  @override
   String get lockScreenVisualizerTitle => 'Visualizador en pantalla de bloqueo';
 
   @override
@@ -188,9 +195,6 @@ class AppLocalizationsEs extends AppLocalizations {
       '¿No ves el control? Puedes continuar o consultar el manual más abajo.';
 
   @override
-  String get filipinoDonationNote => 'Gracias por apoyar a Auno Player.';
-
-  @override
   String get playingLabel => 'Reproduciendo';
 
   @override
@@ -200,10 +204,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get aLittleRecordOfWhatStayed =>
       'Un pequeño registro de lo que no dejaste de escuchar.';
-
-  @override
-  String get aNewerFlickBuildIsOn =>
-      'Hay una versión más reciente de Auno Player en Play Store.';
 
   @override
   String get aPlaylistWithThisNameAlready =>
@@ -248,12 +248,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get aboutFlickPlayer => 'Acerca de Auno Player';
-
-  @override
-  String get aboutThisAlbum => 'Acerca de este álbum';
-
-  @override
-  String get aboutThem => 'Acerca del artista';
 
   @override
   String get absoluteVolumeSync => 'Sincronización del volumen absoluto';
@@ -329,9 +323,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get addMusicWithArtistTagsTo =>
       'Agrega música con etiquetas de artista para verlos aquí';
-
-  @override
-  String get addServer => 'Agregar servidor';
 
   @override
   String get addSongsFromThePlayerMenu =>
@@ -476,10 +467,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get afterHours => 'A altas horas';
 
   @override
-  String get afterScanningMatchFilesWithMissing =>
-      'Después de escanear, busca en Apple Music coincidencias para los archivos sin etiquetas. Solo las coincidencias seguras se aplican automáticamente.';
-
-  @override
   String get air => 'Aire';
 
   @override
@@ -498,9 +485,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get albumArt2 => 'Portada del álbum';
-
-  @override
-  String get albumArtImport => 'Importar portada del álbum';
 
   @override
   String get albumArtist => 'Artista del álbum';
@@ -703,15 +687,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get analyzingLoudness => 'Analizando el volumen';
 
   @override
-  String get andArtwork => ' y la portada';
-
-  @override
   String andMoreInRotation(Object arg1) {
     return '$arg1 y más en rotación';
   }
-
-  @override
-  String get android => 'Android';
 
   @override
   String get androidAudioApi => 'API de audio de Android';
@@ -742,6 +720,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get animatedAlbumArt => 'Portada animada del álbum';
 
   @override
+  String get localAlbumArtPanAndGlow =>
+      'Desplazamiento lento y brillo basado en el color dominante de la portada.';
+
+  @override
   String get animationStyle => 'Estilo de animación';
 
   @override
@@ -759,9 +741,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Activar o desactivar las animaciones y la respuesta háptica.';
 
   @override
-  String get apiKey => 'Clave de API';
-
-  @override
   String get appInfo => 'Información de la app';
 
   @override
@@ -774,20 +753,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appearsInTheOverflowMenu => 'Aparece en el menú Más opciones';
 
   @override
-  String get appleMusicDataUnavailable => 'Datos de Apple Music no disponibles';
-
-  @override
-  String get appleMusicDataUpdated => 'Datos de Apple Music actualizados';
-
-  @override
-  String get appleMusicLookupFailedCheckYour =>
-      'No se pudo buscar en Apple Music. Comprueba tu conexión.';
-
-  @override
-  String get appleMusicMotionArtOnAlbums =>
-      'Portadas animadas de Apple Music en los álbumes, además de desplazamiento y zoom, brillo ambiental y transiciones suaves en las imágenes destacadas';
-
-  @override
   String appliedAutoeqFor(Object arg1) {
     return 'Se aplicó AutoEQ para $arg1';
   }
@@ -798,20 +763,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String apply2(Object arg1) {
     return 'Aplicar $arg1';
-  }
-
-  @override
-  String get applySelected => 'Aplicar selección';
-
-  @override
-  String applyTo(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count canciones',
-      one: '$count canción',
-    );
-    return 'Aplicar a $_temp0';
   }
 
   @override
@@ -889,19 +840,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get artworkCard => 'Tarjeta con portada';
 
   @override
-  String artworkLookupFailed(int status) {
-    return 'No se pudo obtener la portada (HTTP $status).';
-  }
-
-  @override
-  String get artworkLookupInvalidData =>
-      'La búsqueda de portada devolvió datos no válidos.';
-
-  @override
-  String get artworkLookupTemporarilyUnavailable =>
-      'La búsqueda de portada no está disponible temporalmente.';
-
-  @override
   String get artworkPlacement => 'Ubicación de la portada';
 
   @override
@@ -943,17 +881,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get audioSignalPath => 'Ruta de señal de audio';
 
   @override
-  String get audioTestingEquipment => 'Equipo de pruebas de audio';
-
-  @override
   String get aug => 'ago';
 
   @override
   String get auroraSounds => 'Aurora Sounds';
-
-  @override
-  String get authenticationResponseMissingToken =>
-      'Falta el token en la respuesta de autenticación';
 
   @override
   String get auto => 'Automático';
@@ -984,10 +915,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get autoHideTimeout => 'Tiempo antes de ocultarse automáticamente';
 
   @override
-  String get autoIdentifyUntaggedAlbums =>
-      'Identificar automáticamente álbumes sin etiquetas';
-
-  @override
   String get autoNativeDsdOnDapsDop =>
       'Automático: DSD nativo en reproductores de audio digital (DAP), DoP para DAC USB y PCM en los demás casos';
 
@@ -1013,14 +940,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get autoeqHeadphones2 => 'Audífonos AutoEQ';
 
   @override
-  String get autoeqOnlineSearchFailed =>
-      'No se pudo cargar un preajuste en línea. Los preajustes incluidos siguen funcionando sin conexión; comprueba el modelo o la conexión.';
-
-  @override
   String get automatic => 'Automático';
-
-  @override
-  String get automaticUpdateChecks => 'Buscar actualizaciones automáticamente';
 
   @override
   String get automaticallyOpenKeyboardWhenSwitchingTo =>
@@ -1029,9 +949,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get autoplayOnQueueEnd =>
       'Reproducción automática al final de la cola';
-
-  @override
-  String get availableDevices => 'Dispositivos disponibles';
 
   @override
   String b(Object arg1) {
@@ -1378,9 +1295,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get buttons => 'Botones';
 
   @override
-  String get buyMeACoffee => 'Cómprame un café';
-
-  @override
   String by(Object arg1, Object arg2) {
     return '«$arg1» de $arg2';
   }
@@ -1454,25 +1368,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cardWidth => 'Ancho de tarjeta';
 
   @override
-  String get cast => 'Transmitir';
-
-  @override
-  String get casting => 'Transmitiendo';
-
-  @override
-  String get castingTapToManage => 'Transmitiendo: toca para administrar';
-
-  @override
-  String castingTo(Object deviceName) {
-    return 'Transmitiendo a $deviceName';
-  }
-
-  @override
-  String castingTo2(Object arg1) {
-    return 'Transmitiendo a $arg1';
-  }
-
-  @override
   String get categories => 'Categorías';
 
   @override
@@ -1532,9 +1427,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get checkAgain => 'Volver a comprobar';
-
-  @override
   String get checkTheVersionsYouWantTo =>
       'Marca las versiones que quieres conservar; las que no marques se eliminarán de tu biblioteca. Debe quedar al menos una.';
 
@@ -1544,12 +1436,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get checking => 'Comprobando…';
-
-  @override
-  String get checkingForUpdates => 'Buscando actualizaciones';
-
-  @override
-  String get checkingForUpdates2 => 'Buscando actualizaciones…';
 
   @override
   String get childrenSPrivacy => 'Privacidad de los menores';
@@ -1569,9 +1455,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get chooseWhichToKeep => 'Elegir cuáles conservar';
-
-  @override
-  String get chromecast => 'Chromecast';
 
   @override
   String get circularDotsRadiusFollowsAmplitude =>
@@ -1719,57 +1602,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get connect => 'Conectar';
 
   @override
-  String get connectAMusicServer => 'Conectar un servidor de música';
-
-  @override
-  String get connectASubsonicJellyfinWebdavUpnp =>
-      'Conecta un servidor Subsonic, Jellyfin, WebDAV, UPnP o Tidal para transmitir desde tu biblioteca remota.';
-
-  @override
   String get connectAUsbDacOrAudio =>
       'Conectar un DAC USB o una interfaz de audio';
-
-  @override
-  String get connectListenbrainz => 'Conectar a ListenBrainz';
-
-  @override
-  String get connectToScrobbleYourListeningHistory =>
-      'Conéctate para registrar tu historial de escucha';
-
-  @override
-  String get connectToScrobbleYourMusic =>
-      'Conéctate para registrar lo que escuchas';
-
-  @override
-  String get connectToSubmitYourListeningHistory =>
-      'Conéctate para enviar tu historial de escucha';
-
-  @override
-  String get connectToTheInternetToCheck =>
-      'Conéctate a internet para buscar actualizaciones.';
 
   @override
   String get connected => 'Conectado';
 
   @override
-  String get connectedAccount => 'Cuenta conectada';
-
-  @override
-  String connectedAs(Object username) {
-    return 'Conectado como $username';
-  }
-
-  @override
   String get connecting => 'Conectando';
 
   @override
-  String get connection => 'Conexión';
-
-  @override
   String get connectionBehavior => 'Comportamiento de la conexión';
-
-  @override
-  String get connectionFailedRetry => 'Falló la conexión: volver a intentar';
 
   @override
   String get connectionManagement => 'Administración de conexiones';
@@ -1780,9 +1623,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get connectionNoticesDescription =>
       'Mostrar avisos cuando no hay conexión y cuando vuelve';
-
-  @override
-  String get connectionOk => 'Conexión correcta';
 
   @override
   String get connectionStatus => 'Estado de la conexión';
@@ -1855,10 +1695,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get copyLink => 'Copiar enlace';
 
   @override
-  String get copyYourUserTokenFromListenbrainz =>
-      'Copia tu token de usuario desde los ajustes de ListenBrainz y pégalo abajo.';
-
-  @override
   String get copyright => 'Derechos de autor';
 
   @override
@@ -1866,17 +1702,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get cosmicOrchestra => 'Cosmic Orchestra';
-
-  @override
-  String get couldNotCheckForUpdates => 'No se pudieron buscar actualizaciones';
-
-  @override
-  String get couldNotConnectToLastFm =>
-      'No se pudo conectar con Last.fm. Comprueba las credenciales de la API e inténtalo de nuevo.';
-
-  @override
-  String get couldNotConnectToListenbrainzCheck =>
-      'No se pudo conectar con ListenBrainz. Comprueba el token e inténtalo de nuevo.';
 
   @override
   String get couldNotLoadAlbumSongs =>
@@ -1896,24 +1721,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get couldNotLoadSession => 'No se pudo cargar la sesión';
-
-  @override
-  String get couldNotOpenBrowser => 'No se pudo abrir el navegador.';
-
-  @override
-  String get couldNotOpenKoFiPlease =>
-      'No se pudo abrir Ko-fi. Inténtalo de nuevo.';
-
-  @override
-  String get couldNotOpenLink => 'No se pudo abrir el enlace';
-
-  @override
-  String couldNotOpenLink2(Object e) {
-    return 'No se pudo abrir el enlace: $e';
-  }
-
-  @override
   String get couldNotOpenThatPhotoTry =>
       'No se pudo abrir esa foto. Prueba con otra imagen.';
 
@@ -1926,24 +1733,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get couldNotOpenThePlayStore => 'No se pudo abrir Play Store.';
-
-  @override
-  String couldNotOpenThePlayStore2(Object error) {
-    return 'No se pudo abrir Play Store: $error';
-  }
-
-  @override
-  String get couldNotOpenThePlayStore3 => 'No se pudo abrir Play Store';
-
-  @override
   String couldNotPrepareTheEditedFile(String error) {
     return 'No se pudo preparar el archivo editado: $error';
   }
-
-  @override
-  String get couldNotReachTheServer =>
-      'No se pudo acceder al servidor. Comprueba la URL y las credenciales e inténtalo de nuevo.';
 
   @override
   String get couldNotReadTheCoverColors =>
@@ -1980,10 +1772,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get couldNotUseTheSelectedLyrics =>
       'No se pudo usar el archivo de letras seleccionado.';
-
-  @override
-  String get couldnTOpenTheBrowserAutomatically =>
-      'No se pudo abrir el navegador automáticamente. Autoriza el acceso desde cualquier dispositivo con este enlace; completaremos el inicio de sesión cuando lo hagas:\n';
 
   @override
   String get countingFiles => 'Contando archivos…';
@@ -2123,10 +1911,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get interface => 'Interfaz';
-
-  @override
-  String get lastFmAndListenBrainzScrobbling =>
-      'Configuración del registro de reproducciones en Last.fm y ListenBrainz.';
 
   @override
   String get layoutModeSizingMiniPlayer =>
@@ -2544,15 +2328,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get creativeFx => 'Efectos creativos';
 
   @override
-  String credentialsRejectedByReEnterThe(Object arg1) {
-    return '$arg1 rechazó las credenciales. Vuelve a ingresar la contraseña.';
-  }
-
-  @override
-  String get credentialsSavedSuccessfully =>
-      'Las credenciales se guardaron correctamente.';
-
-  @override
   String get crispestHeavierDuringFastScrolling =>
       'Más nítido: mayor carga durante el desplazamiento rápido';
 
@@ -2820,11 +2595,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get delete => 'Eliminar';
 
   @override
-  String deleteAndAllSongsAndPlaylists(Object arg1) {
-    return '¿Eliminar «$arg1» y todas las canciones y listas sincronizadas desde ahí? Se conservarán las descargas en caché.';
-  }
-
-  @override
   String get deleteFile => 'Eliminar archivo';
 
   @override
@@ -2986,22 +2756,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Comportamiento al desconectarse e información del códec';
 
   @override
-  String disconnectFrom(Object arg1) {
-    return 'Desconectar de $arg1';
-  }
-
-  @override
-  String get disconnectLastFm => '¿Desconectar Last.fm?';
-
-  @override
-  String get disconnectListenbrainz => '¿Desconectar ListenBrainz?';
-
-  @override
   String get discord => 'Discord';
-
-  @override
-  String get discoversDlnaUpnpAndChromecastReceivers =>
-      'Busca receptores DLNA, UPnP y Chromecast en tu red';
 
   @override
   String get dismiss => 'Descartar';
@@ -3046,25 +2801,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Distancia entre canciones a lo largo del arco';
 
   @override
-  String get dlnaAndUpnpReceiversAreControlled =>
-      'Los receptores DLNA y UPnP se controlan directamente con Dart puro, sin dependencias adicionales. La compatibilidad con Chromecast usa el SDK nativo de Cast. Se pueden transmitir fuentes de red (Subsonic, WebDAV, Jellyfin y UPnP), archivos locales y canciones en caché; los archivos locales se sirven directamente desde este teléfono. Mientras transmites, las teclas de volumen y el panel de volumen del sistema controlan el dispositivo conectado.';
-
-  @override
-  String get dlnaUpnp => 'DLNA / UPnP';
-
-  @override
-  String get dlnaUpnpAndChromecastReceivers =>
-      'Receptores DLNA, UPnP y Chromecast';
-
-  @override
   String get donTShowAgainToday => 'No volver a mostrar hoy';
-
-  @override
-  String get donate => 'Donar';
-
-  @override
-  String get donateFundFeaturesAndKeepThe =>
-      'Contribuye, apoya nuevas funciones y ayuda a mantener viva la app';
 
   @override
   String get done => 'Listo';
@@ -3090,13 +2827,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String down(Object arg1) {
     return '$arg1 abajo';
   }
-
-  @override
-  String get downloadTheLatestApkFromFlick =>
-      'Descarga el APK más reciente desde github.com/ryouhtml/AunoPlayer/releases';
-
-  @override
-  String get downloadUpdate => 'Descargar actualización';
 
   @override
   String dp(Object arg1) {
@@ -3142,9 +2872,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get dsdDsfPlayback => 'Reproducción DSD / DSF';
-
-  @override
   String get dsdMode => 'Modo DSD';
 
   @override
@@ -3180,9 +2907,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Canciones destacadas de antes que vuelven a aparecer gracias a tu historial de escucha.';
 
   @override
-  String get editCredentials => 'Editar credenciales';
-
-  @override
   String get editDescription => 'Editar descripción';
 
   @override
@@ -3192,16 +2916,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get editMetadata => 'Editar metadatos';
 
   @override
-  String get editServer => 'Editar servidor';
-
-  @override
   String get editSync => 'Editar y sincronizar';
 
   @override
   String get editText => 'Editar texto';
-
-  @override
-  String get editToken => 'Editar token';
 
   @override
   String get electricSunset => 'Atardecer eléctrico';
@@ -3266,12 +2984,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get enterAYear19999 => 'Ingresa un año (1–9999)';
 
   @override
-  String get enterYourApiKey => 'Ingresa tu clave de API';
-
-  @override
-  String get enterYourSharedSecret => 'Ingresa tu secreto compartido';
-
-  @override
   String ep(Object arg1) {
     return 'EP $arg1';
   }
@@ -3320,10 +3032,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get etherealTones => 'Tonos etéreos';
-
-  @override
-  String get everyAlbumHasArtistAndAlbum =>
-      'Todos los álbumes tienen etiquetas de artista y de álbum.';
 
   @override
   String get everySongIsRemovedFromYour =>
@@ -3453,11 +3161,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo desactivar la alternativa';
 
   @override
-  String failedToDownloadAlbumArt(int status) {
-    return 'No se pudo descargar la portada del álbum (HTTP $status).';
-  }
-
-  @override
   String failedToGetPersistedUris(String? error) {
     return 'No se pudieron obtener los URI persistentes: $error';
   }
@@ -3529,10 +3232,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get failedToSaveTheRecapImage =>
       'No se pudo guardar la imagen del resumen en la galería.';
-
-  @override
-  String get failedToSearchAlbumArtOnline =>
-      'No se pudo buscar la portada del álbum en línea.';
 
   @override
   String get failedToStartStreaming => 'No se pudo iniciar la transmisión';
@@ -3616,17 +3315,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String files2(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count archivos',
-      one: '$count archivo',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String filesChecked(Object arg1) {
     return 'Se revisaron $arg1 archivos…';
   }
@@ -3683,12 +3371,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get finishingUp => 'Terminando…';
 
   @override
-  String get fix => 'Corregir';
-
-  @override
-  String get fixMissingMetadata => 'Corregir metadatos faltantes';
-
-  @override
   String get fixedBands => '31 bandas fijas';
 
   @override
@@ -3717,14 +3399,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Auno Player puede recibir transferencias de reproducción de Locker (otra app de Moss). Las solicitudes de reproducción solo contienen las rutas y los metadatos de los archivos de canciones. No se intercambian datos personales. La integración funciona completamente de forma local.';
 
   @override
-  String get flickChecksFlickPlayerSiteFor =>
-      'Auno Player busca actualizaciones en github.com/ryouhtml/AunoPlayer/releases cuando tienes conexión a internet';
-
-  @override
-  String get flickIsBuiltAndMaintainedBy =>
-      'Auno Player lo desarrolla y mantiene una sola persona, sin presupuesto. No hay equipo, financiación ni anuncios.';
-
-  @override
   String get flickLogs => 'Registros de Auno Player';
 
   @override
@@ -3743,14 +3417,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get flickReplay => 'Auno Replay';
-
-  @override
-  String get flickScansForPlayStoreUpdates =>
-      'Auno Player busca actualizaciones en Play Store cuando tienes conexión a internet';
-
-  @override
-  String get flickWillAlwaysBeFreeDonations =>
-      'Auno Player siempre será gratis. Las donaciones mantienen vivo el proyecto sin muros de pago ni suscripciones.';
 
   @override
   String get flickWillForceYourChosenCodec =>
@@ -3844,17 +3510,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'La estrategia de formato no está disponible porque el formato de audio está desactivado en Ajustes.';
 
   @override
-  String foundOnline(Object arg1) {
-    return 'Se encontró «$arg1» en línea.';
-  }
-
-  @override
   String frPkt(Object arg1) {
     return '$arg1 tramas/paquete';
   }
-
-  @override
-  String get freeOpenSource => 'Gratis y de código abierto';
 
   @override
   String get freq => 'Frec.';
@@ -3867,11 +3525,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get freshAdditions => 'Novedades recientes';
-
-  @override
-  String from(Object sourceLabel) {
-    return 'De $sourceLabel';
-  }
 
   @override
   String get fromSquareCornersToARounded =>
@@ -3904,10 +3557,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get fullscreen => 'Pantalla completa';
-
-  @override
-  String get fundingNativeDsdDsfPlaybackDevelopment =>
-      'Financia el desarrollo de la reproducción DSD/DSF nativa, una función muy solicitada por los audiófilos.';
 
   @override
   String get fxOff => 'Efectos desactivados';
@@ -3948,13 +3597,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get getStarted => 'Comenzar';
-
-  @override
-  String get getTheLatestApkFromFlick =>
-      'Descarga el APK más reciente desde github.com/ryouhtml/AunoPlayer/releases';
-
-  @override
-  String get getYourApiCredentials => 'Obtener credenciales de API';
 
   @override
   String get github => 'GitHub';
@@ -4062,9 +3704,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ocultar los botones de navegación tras un periodo de inactividad';
 
   @override
-  String get hidePassword => 'Ocultar contraseña';
-
-  @override
   String get hideShortStingersRingtonesAndVoice =>
       'Ocultar fragmentos cortos, tonos de llamada y fragmentos de voz';
 
@@ -4157,10 +3796,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Qué ancho ocupa cada tarjeta en la pantalla';
 
   @override
-  String get httpBasicNeedsItRecoverableStored =>
-      'HTTP Basic necesita poder recuperar la contraseña; se guarda codificada';
-
-  @override
   String hz(Object rate) {
     return '$rate Hz';
   }
@@ -4185,32 +3820,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get iconSize => 'Tamaño de ícono';
 
   @override
-  String identified(int count, Object note) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'Se identificaron $count canciones',
-      one: 'Se identificó $count canción',
-    );
-    return '$_temp0$note.';
-  }
-
-  @override
-  String get identifyAlbum => 'Identificar álbum';
-
-  @override
-  String get identifyAlbum2 => 'Identificar álbum';
-
-  @override
-  String get identifyAlbumsWithUnknownArtistOr =>
-      'Identificar álbumes con etiquetas de artista o título desconocidas';
-
-  @override
   String get idle => 'Inactivo';
-
-  @override
-  String get ifYouConnectYourLastFm =>
-      'Si conectas tu cuenta de Last.fm, las credenciales se guardan de forma segura en el dispositivo. Los datos de reproducción solo se envían a Last.fm. No recibimos ni procesamos esos datos.';
 
   @override
   String get ignoreTracksUnder500Kb => 'Ignorar pistas de menos de 500 KB';
@@ -4265,9 +3875,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get impulseResponse => 'Respuesta al impulso';
 
   @override
-  String get inAppUpdates => 'Actualizaciones desde la app';
-
-  @override
   String inLabel(Object folder) {
     return 'en $folder';
   }
@@ -4289,9 +3896,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get incredibleOverAMonthOfDaily =>
       'Increíble: más de un mes escuchando música todos los días.';
-
-  @override
-  String get info2 => 'Información';
 
   @override
   String get initializing => 'Inicializando…';
@@ -4317,9 +3921,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get instrumental => 'Instrumental';
 
   @override
-  String get integrations => 'Integraciones';
-
-  @override
   String get interactiveEq => 'Ecualizador interactivo';
 
   @override
@@ -4330,9 +3931,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get interfaceLabel => 'Interfaz';
-
-  @override
-  String get invalidToken => 'Token no válido';
 
   @override
   String isOfflineRetainedSongsStillListed(Object folder) {
@@ -4354,20 +3952,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get jan => 'ene';
 
   @override
-  String get jellyfin => 'Jellyfin';
-
-  @override
-  String get jellyfinEmby => 'Jellyfin · Emby';
-
-  @override
   String get jul => 'jul';
 
   @override
   String get jumpBackIn => 'Retomar';
-
-  @override
-  String get jumpToTheFlickListingAnd =>
-      'Ve a la ficha de Auno Player y actualiza desde allí';
 
   @override
   String get jun => 'jun';
@@ -4387,6 +3975,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get karaokePreview => 'Vista previa de karaoke';
+
   @override
   String get karaokeSweepStyle => 'Detalle del barrido';
 
@@ -4394,7 +3983,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get karaokeSweepStyleAuto => 'Automático';
 
   @override
-  String get karaokeSweepStyleAutoDescription => 'Usa el tiempo real más preciso de la letra';
+  String get karaokeSweepStyleAutoDescription =>
+      'Usa el tiempo real más preciso de la letra';
 
   @override
   String get karaokeSweepStyleWord => 'Palabras';
@@ -4406,8 +3996,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get karaokeSweepStyleSyllable => 'Sílabas';
 
   @override
-  String get karaokeSweepStyleSyllableDescription => 'Barre cada sílaba con una marca de tiempo real';
-
+  String get karaokeSweepStyleSyllableDescription =>
+      'Barre cada sílaba con una marca de tiempo real';
 
   @override
   String kb(Object arg1) {
@@ -4471,10 +4061,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Mantiene activos el volumen por software y el DSP en la ruta compartida del DAP.';
 
   @override
-  String get keptInSecureStorageToRe =>
-      'Se conserva en el almacenamiento seguro para volver a iniciar sesión cuando venza el token';
-
-  @override
   String keptWillBeRemoved(Object keptCount, Object removeCount) {
     return '$keptCount se conservan • se quitarán $removeCount';
   }
@@ -4505,12 +4091,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get koFi => 'Ko-fi';
-
-  @override
-  String get label => 'Etiqueta';
-
-  @override
   String get labelOrganization => 'Sello discográfico / organización';
 
   @override
@@ -4530,25 +4110,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get languageSystemDefault => 'Predeterminado del sistema';
 
   @override
-  String get lastFm => 'Last.fm';
-
-  @override
-  String get lastFmConfiguration => 'Configuración de Last.fm';
-
-  @override
-  String get lastFmConnected => 'Last.fm conectado';
-
-  @override
-  String get lastFmConnected2 => 'Se conectó Last.fm.';
-
-  @override
-  String get lastFmListenbrainzScrobbling =>
-      'Registro de reproducciones en Last.fm y ListenBrainz';
-
-  @override
-  String get lastFmScrobbling => 'Registro de reproducciones en Last.fm';
-
-  @override
   String get lastPick => 'Última selección';
 
   @override
@@ -4563,9 +4124,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get latestArrivalsFromYourLibrary =>
       'Lo último que llegó a tu biblioteca';
-
-  @override
-  String get latestUpdate => 'Última actualización';
 
   @override
   String get layered => 'En capas';
@@ -4599,10 +4157,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get leMsbLittleEndianSubslotMsb =>
       'LE-MSB: subranura en orden little-endian, primero el bit más significativo';
-
-  @override
-  String get leaveEmptyToKeepTheCurrent =>
-      'Déjalo vacío para conservar las credenciales actuales';
 
   @override
   String get left => 'Izquierda';
@@ -4748,19 +4302,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get list => 'Lista';
 
   @override
-  String get listAvailableLocalAudioOutputDevices =>
-      'Mostrar los dispositivos locales de salida de audio disponibles';
-
-  @override
-  String get listenbrainz => 'ListenBrainz';
-
-  @override
-  String get listenbrainzConnected => 'ListenBrainz conectado';
-
-  @override
-  String get listenbrainzConnected2 => 'Se conectó ListenBrainz.';
-
-  @override
   String get listeningHours => 'Horas de escucha';
 
   @override
@@ -4808,13 +4349,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cargando favoritos, sesiones recientes, mezclas generadas y listas de reproducción.';
 
   @override
-  String get loadingPatchNotes => 'Cargando notas de la versión…';
-
-  @override
   String get loadingReplay => 'Cargando Replay';
-
-  @override
-  String get loadingSession => 'Cargando sesión…';
 
   @override
   String get localData => 'Datos locales';
@@ -4839,18 +4374,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get look => 'Apariencia';
-
-  @override
-  String get lookingForCoverArtFromMusicbrainz =>
-      'Buscando portadas en MusicBrainz y Cover Art Archive.';
-
-  @override
-  String get lookingForTheLatestFlickRelease =>
-      'Buscando la versión más reciente de Auno Player';
-
-  @override
-  String get lookingForTheLatestPlayStore =>
-      'Buscando la actualización más reciente de Play Store';
 
   @override
   String get lossless => ' Sin pérdida';
@@ -4952,25 +4475,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Coincidir con el nombre del archivo de audio';
 
   @override
-  String matchByArtistAlbumAndTrack(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count archivos',
-      one: '$count archivo',
-    );
-    return 'Identificar $_temp0 por artista, álbum y duración de la pista';
-  }
-
-  @override
   String get matchEqToYourHeadphoneModel =>
       'Ajustar el ecualizador a tu modelo de audífonos';
 
   @override
   String get matchNavigation => 'Igualar navegación';
-
-  @override
-  String get matches => 'Coincidencias';
 
   @override
   String maxB(Object arg1) {
@@ -5068,9 +4577,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get minimize => 'Minimizar';
 
   @override
-  String get minimserverServiioKodi => 'MinimServer · Serviio · Kodi';
-
-  @override
   String get mirrorTest => 'Prueba de espejo';
 
   @override
@@ -5078,7 +4584,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mitLicenseCopyrightC2026Flick =>
-      'Licencia MIT\n\nCopyright (c) 2026 Colaboradores de Auno Player\n\nPor la presente se concede permiso, sin cargo, a toda persona que obtenga una copia de este software y de los archivos de documentación asociados (el «Software») para tratar el Software sin restricciones, incluidos, entre otros, los derechos de usar, copiar, modificar, combinar, publicar, distribuir, sublicenciar o vender copias del Software, y permitir que las personas a quienes se proporcione el Software lo hagan, sujeto a las siguientes condiciones:\n\nEl aviso de derechos de autor anterior y este aviso de permiso deben incluirse en todas las copias o partes sustanciales del Software.\n\nEL SOFTWARE SE PROPORCIONA «TAL CUAL», SIN GARANTÍAS DE NINGÚN TIPO, EXPRESAS O IMPLÍCITAS, INCLUIDAS, ENTRE OTRAS, LAS GARANTÍAS DE COMERCIABILIDAD, IDONEIDAD PARA UN FIN DETERMINADO Y NO INFRACCIÓN. EN NINGÚN CASO LOS AUTORES O TITULARES DE LOS DERECHOS DE AUTOR SERÁN RESPONSABLES DE NINGUNA RECLAMACIÓN, DAÑO U OTRA RESPONSABILIDAD, YA SEA EN UNA ACCIÓN CONTRACTUAL, EXTRACONTRACTUAL O DE OTRO TIPO, QUE SURJA DE, SE DERIVE DE O ESTÉ RELACIONADA CON EL SOFTWARE O SU USO U OTRAS OPERACIONES CON EL SOFTWARE.\n';
+      'Licencia Pública General de GNU v3.0 o posterior\n\nCopyright (c) 2026 Colaboradores de Auno Player\n\nEste programa es software libre: puedes redistribuirlo y/o modificarlo bajo los términos de la Licencia Pública General de GNU publicada por la Free Software Foundation, ya sea la versión 3 de la licencia o (a tu elección) cualquier versión posterior.\n\nEste programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA; ni siquiera la garantía implícita de COMERCIABILIDAD o APTITUD PARA UN PROPÓSITO PARTICULAR. Consulta la Licencia Pública General de GNU para más detalles.\n\nDeberías haber recibido una copia de la Licencia Pública General de GNU junto con este programa. Si no es así, consulta <https://www.gnu.org/licenses/>.';
 
   @override
   String get mix => 'Mezcla';
@@ -5156,30 +4662,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mossEcosystem => 'Ecosistema Moss';
 
   @override
-  String get mostDlnaServersNeedNoPassword =>
-      'La mayoría de los servidores DLNA no requieren contraseña';
-
-  @override
   String get mostPlayed => 'Más reproducidas';
 
   @override
   String mostReplayed(Object arg1) {
     return 'Más repetida · $arg1';
   }
-
-  @override
-  String get motionArtInBitPerfect => 'Motion Art en modo bit perfecto';
-
-  @override
-  String get motionArtIsReplacedWhileBit =>
-      'La animación de portada se reemplaza mientras está activa la salida bit perfecta';
-
-  @override
-  String get motionArtPlaysDuringBitPerfect =>
-      'La animación de portada se reproduce con audio bit perfecto (puede interrumpir la reproducción en algunos DAP)';
-
-  @override
-  String get motionArtRefreshed => 'Se actualizó la animación de portada';
 
   @override
   String get moveEveryStampedLyricForwardOr =>
@@ -5225,11 +4713,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mute => 'Silenciar';
 
   @override
-  String my(Object arg1) {
-    return 'Mi $arg1';
-  }
-
-  @override
   String nDb(Object arg1, Object arg2) {
     return '$arg1%\n$arg2 dB';
   }
@@ -5253,7 +4736,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'DSD nativo: experimental (puede tener errores)';
 
   @override
-  String get nativeFlickPresetFormat => 'Formato nativo de preajustes de Auno Player';
+  String get nativeFlickPresetFormat =>
+      'Formato nativo de preajustes de Auno Player';
 
   @override
   String get naturalEqualizerFeelResponsiveYetSmooth =>
@@ -5261,9 +4745,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get natureAmbient => 'Ambiente natural';
-
-  @override
-  String get navidromeAirsonicGonic => 'Navidrome · Airsonic · Gonic';
 
   @override
   String get navigationAppearance => 'Apariencia de navegación';
@@ -5274,9 +4755,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get navigationDefaultsRestored =>
       'Se restablecieron los valores predeterminados de navegación';
-
-  @override
-  String get needsMetadata => 'Faltan metadatos';
 
   @override
   String negotiated(Object arg1) {
@@ -5300,15 +4778,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get network => 'Red';
 
   @override
-  String get networkSources => 'Fuentes de red';
-
-  @override
   String neutral(Object amount) {
     return '$amount% neutral';
   }
-
-  @override
-  String get neverSynced => 'Nunca sincronizado';
 
   @override
   String get newLabel => 'Nuevo';
@@ -5328,9 +4800,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get nextcloudOwncloudSabredav => 'Nextcloud · ownCloud · SabreDAV';
-
-  @override
   String get night => 'Noche';
 
   @override
@@ -5347,10 +4816,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noAlbumsFound => 'No se encontraron álbumes';
 
   @override
-  String get noAppleMusicReleaseFoundTry =>
-      'No se encontró el lanzamiento en Apple Music. Prueba a editar el nombre del artista o del álbum y vuelve a buscar.';
-
-  @override
   String get noArtistsFound => 'No se encontraron artistas';
 
   @override
@@ -5363,15 +4828,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se encontró audio. Si esta carpeta contiene música, es posible que un archivo .nomedia la esté ocultando o que Android aún no la haya indexado. Prueba a activar el análisis profundo o quita cualquier archivo .nomedia y vuelve a analizarla.';
 
   @override
-  String get noCastingDevicesFoundMakeSure =>
-      'No se encontraron dispositivos para transmitir. Asegúrate de que el teléfono y el receptor estén conectados a la misma red.';
-
-  @override
   String get noCategoriesSelected => 'No hay categorías seleccionadas';
-
-  @override
-  String get noChangelogNotesForThisVersion =>
-      'Aún no hay notas de cambios para esta versión.';
 
   @override
   String get noCustomAlbumArtIsSet =>
@@ -5400,10 +4857,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noHistoryYet => 'Aún no hay historial';
 
   @override
-  String get noInternetConnectionPleaseCheckYour =>
-      'No hay conexión a internet. Comprueba la red e inténtalo de nuevo.';
-
-  @override
   String get noLibraryFilesForThisAlbum =>
       'No se encontraron archivos de la biblioteca para este álbum.';
 
@@ -5418,9 +4871,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noLyricsYet => 'Aún no hay letras';
 
   @override
-  String get noMatchFound => 'No se encontró ninguna coincidencia';
-
-  @override
   String get noMatches => 'No hay coincidencias.';
 
   @override
@@ -5433,26 +4883,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get noMatchesTryFewerWordsOr =>
-      'No hay coincidencias. Prueba con menos palabras o busca en línea.';
+      'No hay coincidencias. Prueba con menos palabras.';
 
   @override
   String get noMusicYet => 'Aún no hay música';
 
   @override
   String get noNewAdditionsYet => 'Todavía no hay canciones nuevas';
-
-  @override
-  String get noNewUpdateFound => 'No se encontraron actualizaciones nuevas.';
-
-  @override
-  String get noOnlineArtworkFound => 'No se encontraron portadas en línea';
-
-  @override
-  String get noOutputDevicesAvailable =>
-      'No hay dispositivos de salida disponibles.';
-
-  @override
-  String get noPatchNotesAvailableYet => 'Aún no hay notas de la versión.';
 
   @override
   String get noPlaybackYet => 'Aún no hay reproducciones';
@@ -5487,13 +4924,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noScanResultsYet => 'Aún no hay resultados del análisis';
 
   @override
-  String get noServerPlaylistsFound =>
-      'No se encontraron listas de reproducción en el servidor';
-
-  @override
-  String get noServersConnected => 'No hay servidores conectados';
-
-  @override
   String get noSongPlaying => 'No se está reproduciendo ninguna canción';
 
   @override
@@ -5506,9 +4936,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get noUpcomingQueueItemsYet =>
       'Aún no hay canciones siguientes en la cola.';
-
-  @override
-  String get noUpdateAvailable => 'No hay actualizaciones disponibles';
 
   @override
   String get noUrbData => 'No hay datos URB';
@@ -5587,10 +5014,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get numberOnArt => 'Número en la portada';
 
   @override
-  String get oauthSignInNoPasswordStored =>
-      'Inicio de sesión con OAuth; aquí no se guarda ninguna contraseña';
-
-  @override
   String get oceanWaves => 'Olas del océano';
 
   @override
@@ -5602,9 +5025,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get offCropsToFillTheSquare =>
       'Desactivado: recorta la imagen para llenar el cuadrado; activado: estira la portada de borde a borde';
-
-  @override
-  String get offline => 'Sin conexión';
 
   @override
   String get onAndroidTheStandardJustAudio =>
@@ -5649,13 +5069,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get onboardingWelcomeTitle => 'Te damos la bienvenida a\nAuno Player';
 
   @override
-  String get onlineArtistAlbumInformation =>
-      'Información de artistas y álbumes en línea';
-
-  @override
-  String get onlineResults => 'Resultados en línea';
-
-  @override
   String get onlyLibraryEntriesAreRemovedYour =>
       'Solo se quitan las entradas de la biblioteca; los archivos de audio permanecen en el disco.';
 
@@ -5673,22 +5086,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get openBluetoothCodecSettings => 'Abrir ajustes del códec Bluetooth';
 
   @override
-  String get openFullNotes => 'Abrir notas completas';
-
-  @override
-  String get openInAppleMusic => 'Abrir en Apple Music';
-
-  @override
-  String get openInBrowser => 'Abrir en el navegador';
-
-  @override
-  String get openInPlayStore => 'Abrir en Play Store';
-
-  @override
   String get openLibrary => 'Abrir biblioteca';
-
-  @override
-  String get openListenbrainzOrgSettings => 'Abrir listenbrainz.org/settings';
 
   @override
   String get openManual => 'Abrir manual';
@@ -5697,14 +5095,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get openPlayer => 'Abrir reproductor';
 
   @override
-  String get openReleaseNotes => 'Abrir notas de la versión';
-
-  @override
   String get openSourceLicenses => 'Abrir licencias de código abierto';
-
-  @override
-  String get openThePlayStoreToInstall =>
-      'Abre Play Store para instalar la versión más reciente de Auno Player';
 
   @override
   String get openedFromLocker => 'Abierto desde Locker';
@@ -5768,9 +5159,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get output => 'Salida';
 
   @override
-  String get outputDevice => 'Dispositivo de salida';
-
-  @override
   String get outputMode => 'Modo de salida';
 
   @override
@@ -5805,17 +5193,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get passthrough => 'Paso directo';
 
   @override
-  String get password => 'Contraseña';
-
-  @override
   String get pasteOrTypeTheSongLyrics =>
       'Pega o escribe aquí la letra de la canción, una línea por renglón';
-
-  @override
-  String get pasteYourListenbrainzToken => 'Pega tu token de ListenBrainz';
-
-  @override
-  String get patchNotes => 'Notas de la versión';
 
   @override
   String get pause => 'Pausar';
@@ -5937,10 +5316,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get playNext => 'Reproducir a continuación';
 
   @override
-  String get playStoreUpdatesUseGooglePlay =>
-      'Las actualizaciones de Play Store usan la API de actualización dentro de Google Play (sujeta a las políticas de privacidad de Google). Las notas de la versión se obtienen desde la API de GitHub Releases sin enviar datos personales.';
-
-  @override
   String get playback => 'Reproducción';
 
   @override
@@ -6053,9 +5428,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get playerMenuEditMetadata => 'Editar metadatos';
 
   @override
-  String get playerMenuRefreshAlbumArt => 'Actualizar portada animada';
-
-  @override
   String get playerMenuSetAlbumArt => 'Establecer portada del álbum';
 
   @override
@@ -6135,10 +5507,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get pleaseEnterAPlaylistName =>
       'Ingresa un nombre para la lista de reproducción';
-
-  @override
-  String get pleaseEnterYourListenbrainzUserToken =>
-      'Ingresa tu token de usuario de ListenBrainz.';
 
   @override
   String get portrait => 'Vertical';
@@ -6242,9 +5610,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get progressBar => 'Barra de progreso';
-
-  @override
-  String get protocol => 'Protocolo';
 
   @override
   String get pulledFromYourLateSessionPlays =>
@@ -6365,14 +5730,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reconnectNow => 'Reconectar ahora';
 
   @override
-  String get reconnectToTheInternetToScan =>
-      'Vuelve a conectarte a internet para buscar actualizaciones';
-
-  @override
-  String get reconnectToWiFiOrMobile =>
-      'Vuelve a conectarte a Wi-Fi o a los datos móviles para que Auno Player pueda buscar de nuevo';
-
-  @override
   String get reconnectionFailed => 'No se pudo reconectar';
 
   @override
@@ -6382,23 +5739,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get recorded => 'Grabado';
 
   @override
-  String get refreshAppleMusic => 'Actualizar Apple Music';
-
-  @override
   String get refreshDevices => 'Actualizar dispositivos';
 
   @override
   String get refreshDevices2 => 'Actualizar dispositivos';
 
   @override
-  String get refreshOutputs => 'Actualizar salidas';
-
-  @override
   String get refreshRate => 'Frecuencia de actualización';
-
-  @override
-  String get refreshingAppleMusicData =>
-      'Actualizando los datos de Apple Music';
 
   @override
   String get registeredNotClaimed => 'Registrado, sin asignar';
@@ -6466,12 +5813,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get removeSelected => 'Quitar selección';
-
-  @override
-  String get removeServer => '¿Quitar el servidor?';
-
-  @override
-  String get removeServer2 => 'Quitar servidor';
 
   @override
   String get removeTheDatabaseEntriesOrDelete =>
@@ -6723,9 +6064,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ripSource => 'Fuente de extracción';
 
   @override
-  String get root => 'Raíz';
-
-  @override
   String get rotationSeek => 'búsqueda rotatoria';
 
   @override
@@ -6742,14 +6080,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get routesBluetoothThroughTheRustEngine =>
       'Enruta el audio Bluetooth por el motor Rust';
-
-  @override
-  String get runAnotherPlayStoreUpdateScan =>
-      'Buscar actualizaciones de Play Store ahora mismo';
-
-  @override
-  String get runAnotherUpdateScanRightNow =>
-      'Buscar actualizaciones ahora mismo';
 
   @override
   String get rustViaOboe => 'Rust mediante Oboe';
@@ -6774,10 +6104,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sCurve => 'Curva en S';
-
-  @override
-  String get sambaWindowsShareTransportPending =>
-      'Samba · recurso compartido de Windows';
 
   @override
   String get sampleArtist => 'Artista de ejemplo';
@@ -6808,9 +6134,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get saveChanges => 'Guardar cambios';
-
-  @override
-  String get saveConnect => 'Guardar y conectar';
 
   @override
   String get saveCreatesAnLrcFileIf =>
@@ -6930,9 +6253,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo completar el análisis. Inténtalo de nuevo.';
 
   @override
-  String get scanForDevices => 'Buscar dispositivos';
-
-  @override
   String get scanProgress => 'Progreso del análisis';
 
   @override
@@ -6970,16 +6290,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get search => 'Buscar';
 
   @override
-  String get searchAgain => 'Buscar de nuevo';
-
-  @override
   String get searchArtistTitle => 'Buscar artista + título…';
 
   @override
   String get searchArtists => 'Buscar artistas…';
-
-  @override
-  String get searchFailed => 'Error en la búsqueda';
 
   @override
   String searchFailed2(Object e) {
@@ -7002,9 +6316,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get searchOnline => 'Buscar en línea';
-
-  @override
-  String get searchOnline2 => 'Buscar en línea';
 
   @override
   String get searchOnlineCreateYourOwnSynced =>
@@ -7036,15 +6347,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get searchYourLibrary => 'Buscar en tu biblioteca';
 
   @override
-  String get searching => 'Buscando…';
-
-  @override
-  String get searchingOnline => 'Buscando en línea';
-
-  @override
-  String get searchingTheLocalNetwork => 'Buscando en la red local…';
-
-  @override
   String get secondsOfInactivityBeforeCollapsing =>
       'Segundos de inactividad antes de contraer';
 
@@ -7057,10 +6359,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get seeWhatIsNewInThis =>
-      'Descubre las novedades de esta actualización';
-
-  @override
   String get select => 'Seleccionar';
 
   @override
@@ -7069,9 +6367,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get selectALineAndEdit =>
       '1. Selecciona una línea y edita directamente su marca de tiempo o usa «Usar hora actual».\n2. En la línea de tiempo de palabras, arrastra un límite para alargar o acortar el segmento anterior; los cambios se ajustan a intervalos de 10 ms.\n3. Toca letras en el inspector para dividir una palabra en sílabas con tiempos separados (ritmo lento y luego rápido) y después arrastra sus límites.\n4. Arrastra el último límite (o usa Duración ±) para cambiar el tiempo de la línea siguiente. Usa Autorrellenar para distribuir las palabras uniformemente.\n5. Usa los controles de desplazamiento para mover a la vez todas las letras marcadas.\n6. Guarda para generar el archivo `.lrc` final.';
-
-  @override
-  String get selectARelease => 'Seleccionar un lanzamiento';
 
   @override
   String get selectAll => 'Seleccionar todo';
@@ -7123,17 +6418,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get serialNumber => 'Número de serie';
 
   @override
-  String serverPlaylistSyncFailed(Object e) {
-    return 'No se pudo sincronizar la lista de reproducción del servidor: $e';
-  }
-
-  @override
-  String get serverUrl => 'URL del servidor';
-
-  @override
-  String get session => 'Sesión';
-
-  @override
   String get setAlbumArt => 'Establecer portada del álbum';
 
   @override
@@ -7158,9 +6442,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String shareFailed(Object e) {
     return 'No se pudo compartir: $e';
   }
-
-  @override
-  String get sharedSecret => 'Secreto compartido';
 
   @override
   String get sharpRecommended => 'Nítido (recomendado)';
@@ -7197,10 +6478,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get showAlbumArtworkOnTheMini =>
       'Mostrar la portada del álbum en el minirreproductor';
-
-  @override
-  String get showAppleMusicBiographiesRecommendationsAnd =>
-      'Mostrar biografías de Apple Music, artistas similares, canciones destacadas, notas de los álbumes y retratos de los artistas.';
 
   @override
   String get showArtist => 'Mostrar artista';
@@ -7253,9 +6530,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get showOtherArtistsOnAlbumPages =>
       'Mostrar otros artistas en las páginas de álbumes';
-
-  @override
-  String get showPassword => 'Mostrar contraseña';
 
   @override
   String get showPlaylistPreviewsOnTheHome =>
@@ -7385,20 +6659,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get shuffleSongsInCurrentList =>
       'Mezclar canciones de la lista actual';
-
-  @override
-  String get signInFailedRetry => 'Error al iniciar sesión: volver a intentar';
-
-  @override
-  String get signInWithTidal => 'Iniciar sesión con Tidal';
-
-  @override
-  String get signInWithYourAccountHifi =>
-      'Inicia sesión con tu cuenta · HiFi sin pérdida';
-
-  @override
-  String get signInWithYourOwnTidal =>
-      'Inicia sesión con tu cuenta de Tidal. El audio sin pérdida HiFi (FLAC/ALAC) se reproduce con el motor bit perfecto; Tidal restringe HiRes/MQA y Atmos, que mostrarán un error en lugar de reproducirse.';
 
   @override
   String get signal => 'Señal';
@@ -7541,14 +6801,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get signalVerifiedInLog => 'Verificado en el registro';
 
   @override
-  String get signedIn => 'Sesión iniciada';
-
-  @override
   String get silkySmoothBZierCurvesFluid =>
       'Curvas de Bézier muy suaves y fluidas, con un movimiento natural';
-
-  @override
-  String get similarArtists => 'Artistas similares';
 
   @override
   String get simple => 'Simple';
@@ -7599,78 +6853,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get slope => 'Pendiente';
 
   @override
-  String get smbInvalidServerUrl =>
-      'Usa smb://servidor/recurso o smb://servidor/recurso/carpeta. Ingresa las credenciales en los campos de usuario y contraseña, no en la URL.';
-
-  @override
-  String get smbSigningRequired =>
-      'El servidor requiere firma SMB. Usa una cuenta permitida por la política de seguridad del servidor; es posible que no se permita el acceso de invitado.';
-
-  @override
-  String get smbCacheWriteFailed =>
-      'No se pudo guardar la descarga SMB. Comprueba el espacio libre en el teléfono e inténtalo de nuevo.';
-
-  @override
-  String get smbDownloadIncomplete =>
-      'La descarga SMB no terminó. Comprueba la conexión e inténtalo de nuevo; no se reproducirá ningún archivo parcial.';
-
-  @override
-  String get smbPathNotFound =>
-      'No se encontró la carpeta o el archivo SMB. Comprueba la carpeta en la URL del servidor o vuelve a sincronizar la biblioteca.';
-
-  @override
-  String get smbDecodeFailed =>
-      'Se descargó el archivo SMB, pero no se pudo iniciar la reproducción. Prueba el mismo archivo localmente en Auno Player y comprueba la salida de audio seleccionada.';
-
-  @override
-  String get smbOperationFailed =>
-      'Falló la operación SMB. Ejecuta Probar conexión y comprueba la etapa o el código SMB en el registro antes de volver a intentarlo.';
-
-  @override
-  String get smbAccessDenied =>
-      'Acceso denegado. Comprueba que la cuenta tenga permiso para leer este recurso compartido.';
-
-  @override
-  String get smbAuthFailed =>
-      'El servidor rechazó el nombre de usuario o la contraseña. Comprueba la cuenta: Samba podría asignar los usuarios desconocidos como invitados.';
-
-  @override
-  String get smbConnectionRefused =>
-      'Se rechazó la conexión. Comprueba que el uso compartido de archivos esté activado y que el puerto 445 esté accesible.';
-
-  @override
-  String get smbCouldNotReach =>
-      'No se pudo acceder al servidor. Comprueba la dirección IP y que el teléfono esté conectado a la misma red.';
-
-  @override
-  String get smbHostNotResolved =>
-      'No se pudo encontrar el nombre del servidor. Prueba con la dirección IP; Android no puede resolver nombres NetBIOS ni .local.';
-
-  @override
-  String get smbMissingServerAddress =>
-      'Falta la dirección del servidor: usa smb://host/recurso (por ejemplo, smb://nas/musica).';
-
-  @override
-  String get smbMissingShareName =>
-      'Falta el nombre del recurso compartido: usa smb://host/recurso (por ejemplo, smb://nas/musica).';
-
-  @override
-  String get smbServerUnresponsive =>
-      'El servidor dejó de responder. Comprueba el servidor e inténtalo de nuevo.';
-
-  @override
-  String get smbShareNotFound =>
-      'El servidor respondió, pero no se encontró el recurso compartido. Comprueba su nombre en la URL.';
-
-  @override
-  String get smbSharesCanBeAddedNow =>
-      'Los recursos SMB2/3 se conectan con el cliente integrado. Ingresa la URL del recurso (smb://host/recurso) e inicia sesión si el servidor lo solicita.';
-
-  @override
-  String get smbTimedOut =>
-      'Se agotó el tiempo de espera. Usa la IP del servidor (no un nombre NetBIOS o .local), comprueba el puerto 445 y asegúrate de que el teléfono esté en la misma red.';
-
-  @override
   String get smooth => 'Suave';
 
   @override
@@ -7694,9 +6876,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get solid => 'Sólido';
 
   @override
-  String get soloDeveloper => 'Desarrollador independiente';
-
-  @override
   String get someOnlineFeaturesMayNotWork =>
       '  · Es posible que algunas funciones en línea no estén disponibles';
 
@@ -7716,17 +6895,6 @@ class AppLocalizationsEs extends AppLocalizations {
       one: '$count canción',
     );
     return '$_temp0';
-  }
-
-  @override
-  String song3(int count, Object server) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count canciones',
-      one: '$count canción',
-    );
-    return '$_temp0 · $server';
   }
 
   @override
@@ -7841,11 +7009,6 @@ class AppLocalizationsEs extends AppLocalizations {
       one: '$count canción',
     );
     return '$_temp0';
-  }
-
-  @override
-  String songsFound(Object arg1) {
-    return 'Se encontraron $arg1 canciones';
   }
 
   @override
@@ -7992,9 +7155,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stopAtTheEndOfThe => 'Detener al final de la lista actual';
 
   @override
-  String get stopCasting => 'Detener transmisión';
-
-  @override
   String get stopStreaming => 'Detener transmisión';
 
   @override
@@ -8025,17 +7185,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get storagePermissions => 'Permisos de almacenamiento';
-
-  @override
-  String get storeOn => 'Guardar en';
-
-  @override
-  String get storedAsASaltedHashNever =>
-      'Se guarda como un hash con sal, nunca como texto sin cifrar';
-
-  @override
-  String get storedEncodedPlaybackUnavailableInThis =>
-      'Se guarda codificado en Base64; es necesario para iniciar sesión con NTLM';
 
   @override
   String get stormChasers => 'Cazatormentas';
@@ -8084,30 +7233,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get subsonic => 'Subsonic';
-
-  @override
-  String get subsonicServersSyncAndStreaming =>
-      'Servidores Subsonic, sincronización y transmisión';
-
-  @override
   String get subtle => 'Sutil';
-
-  @override
-  String get support => 'Ayuda';
-
-  @override
-  String get supportDevelopmentOnBuyMeACoffee =>
-      'Apoya el desarrollo en Buy Me a Coffee';
-
-  @override
-  String get supportDevelopmentOnKoFi => 'Apoya el desarrollo en Ko-fi';
-
-  @override
-  String get supportFlick => 'Apoyar Auno Player';
-
-  @override
-  String get supportFlickOnKoFi => 'Apoya Auno Player en Ko-fi';
 
   @override
   String get surfaceShading => 'Sombreado de superficie';
@@ -8165,40 +7291,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sync => 'Sincronizar';
 
   @override
-  String syncFailed(Object e) {
-    return 'Error al sincronizar: $e';
-  }
-
-  @override
-  String get syncNow => 'Sincronizar ahora';
-
-  @override
-  String get syncServerPlaylists => 'Sincronizar listas del servidor';
-
-  @override
   String get synced => 'Sincronizado';
 
   @override
-  String synced2(Object arg1) {
-    return 'Sincronizado: $arg1';
-  }
-
-  @override
   String get syncedLrc => 'LRC sincronizado';
-
-  @override
-  String syncedPlaylistFromServers(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'Se sincronizaron $count listas de reproducción',
-      one: 'Se sincronizó $count lista de reproducción',
-    );
-    return '$_temp0 desde los servidores';
-  }
-
-  @override
-  String get syncing => 'Sincronizando…';
 
   @override
   String get synthwaveCity => 'Ciudad synthwave';
@@ -8264,9 +7360,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get testConnection => 'Probar conexión';
-
-  @override
   String get textGestures => 'Texto y gestos';
 
   @override
@@ -8284,10 +7377,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get theAppDoesNotKnowinglyCollect =>
       'La app no recopila deliberadamente información de nadie, sin importar su edad.';
-
-  @override
-  String get theAppQueriesPublicApisMusicbrainz =>
-      'La app consulta API públicas (MusicBrainz/Cover Art Archive, iTunes y Deezer) para encontrar portadas de álbumes coincidentes. Las búsquedas usan metadatos locales de música. Las imágenes descargadas se guardan en caché local.';
 
   @override
   String get theAudioEngineDeterminesHowYour =>
@@ -8322,9 +7411,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esto borrará tu racha actual y los hitos de racha que hayas desbloqueado. Esta acción no se puede deshacer.';
 
   @override
-  String get thisDevice => 'Este dispositivo';
-
-  @override
   String get thisFolderAppearsToBeEmpty => 'Esta carpeta parece estar vacía';
 
   @override
@@ -8350,10 +7436,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta canción no tiene una ruta de archivo y no se puede editar.';
 
   @override
-  String get thisSongIsMissingAlbumMetadata =>
-      'A esta canción le faltan los metadatos del álbum, por lo que la búsqueda en línea es limitada.';
-
-  @override
   String get thisSongOnly => 'Solo esta canción';
 
   @override
@@ -8370,86 +7452,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get thunderRoad => 'Thunder Road';
-
-  @override
-  String get tidal => 'Tidal';
-
-  @override
-  String get tidalAppKeyRejected =>
-      'Tidal rechazó la clave de inicio de sesión de la app. Estas claves cambian, así que la integrada podría estar desactualizada (una limitación conocida de la integración no oficial).';
-
-  @override
-  String tidalCouldNotReach(int status) {
-    return 'No se pudo acceder a Tidal (HTTP $status). Comprueba tu conexión.';
-  }
-
-  @override
-  String tidalEncryptedTrack(String trackId) {
-    return 'La pista $trackId está cifrada (HiRes/MQA). Solo se admite audio HiFi sin pérdida que no esté cifrado.';
-  }
-
-  @override
-  String tidalManifestDecodeFailed(String trackId, String error) {
-    return 'No se pudo decodificar el manifiesto de Tidal para la pista $trackId: $error';
-  }
-
-  @override
-  String tidalManifestNoStream(String trackId) {
-    return 'La pista $trackId no tiene una URL de transmisión en su manifiesto.';
-  }
-
-  @override
-  String get tidalNoPlayableStream =>
-      'No hay una transmisión reproducible para esta pista.';
-
-  @override
-  String get tidalNoSignInCode =>
-      'Tidal no devolvió un código de inicio de sesión.';
-
-  @override
-  String get tidalNotSignedIn =>
-      'No iniciaste sesión en Tidal. Toca Iniciar sesión con Tidal.';
-
-  @override
-  String tidalOpenLinkManually(String uri) {
-    return 'No se pudo abrir el navegador automáticamente. Abre este enlace en cualquier dispositivo para terminar de iniciar sesión y luego toca Iniciar sesión otra vez:\n\n$uri';
-  }
-
-  @override
-  String get tidalSessionExpired =>
-      'La sesión de Tidal venció. Vuelve a iniciar sesión.';
-
-  @override
-  String get tidalSignInDenied => 'Se rechazó el inicio de sesión en Tidal.';
-
-  @override
-  String get tidalSignInExpired =>
-      'El código de inicio de sesión de Tidal venció. Inténtalo de nuevo.';
-
-  @override
-  String get tidalSignInRefused =>
-      'Tidal rechazó el inicio de sesión. Inténtalo de nuevo.';
-
-  @override
-  String get tidalSignInTimedOut =>
-      'Se agotó el tiempo de espera para iniciar sesión en Tidal.';
-
-  @override
-  String get tidalTokenRefreshFailed =>
-      'No se pudo actualizar el token de Tidal.';
-
-  @override
-  String get tidalTooManyRequests =>
-      'Demasiadas solicitudes a Tidal. Espera un momento e inténtalo de nuevo.';
-
-  @override
-  String get tidalUnavailable =>
-      'Tidal no está disponible ahora. Inténtalo de nuevo en un momento.';
-
-  @override
-  String tidalUnsupportedFormat(String trackId) {
-    return 'La pista $trackId usa un formato de Tidal no compatible (HiRes/MQA/Atmos). Solo se admite audio HiFi sin pérdida que no esté cifrado.';
-  }
 
   @override
   String get time => 'Hora';
@@ -8496,9 +7498,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get topArtists => 'Artistas destacados';
-
-  @override
-  String get topSongs => 'Canciones destacadas';
 
   @override
   String get topSongs2 => 'Canciones destacadas';
@@ -8585,11 +7584,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String tracks8(Object arg1) {
-    return '$arg1 pistas';
-  }
-
-  @override
   String tracksLikedSongsPlaylists(
     Object songCount,
     Object favoriteCount,
@@ -8632,10 +7626,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tryOriginalSearch => 'Probar la búsqueda original';
-
-  @override
-  String get tryPickingALocalImageIf =>
-      'Prueba a elegir una imagen local si los metadatos del lanzamiento son poco comunes.';
 
   @override
   String get turnOff432HzTuningTo =>
@@ -8699,14 +7689,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ultra => 'Ultra';
 
   @override
-  String get unableToCheckForUpdatesRight =>
-      'No se pueden buscar actualizaciones en este momento.';
-
-  @override
-  String get unableToLoadPatchNotesRight =>
-      'No se pueden cargar las notas de la versión en este momento.';
-
-  @override
   String get unableToOpenAllFilesAccess =>
       'No se puede abrir la configuración de acceso a todos los archivos';
 
@@ -8758,9 +7740,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get unknownFolder => 'Carpeta desconocida';
 
   @override
-  String get unknownLastFmError => 'Error desconocido de Last.fm';
-
-  @override
   String get unknownTitle => 'Título desconocido';
 
   @override
@@ -8805,62 +7784,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get update => 'Actualizar';
-
-  @override
-  String get updateAvailable => 'Actualización disponible';
-
-  @override
-  String get updateAvailableOnThePlayStore =>
-      'Hay una actualización disponible en Play Store.';
-
-  @override
-  String get updateNoticeHidden => 'Se ocultó el aviso de actualización.';
-
-  @override
-  String get aNewerFlickBuildOnGithub =>
-      'Una versión más reciente de Auno Player está disponible en GitHub.';
-
-  @override
-  String get betaUpdateAvailable => 'Actualización beta disponible';
-
-  @override
-  String get betaUpdateSubtitle =>
-      'Hay una versión preliminar disponible para pruebas.';
-
-  @override
-  String get downloadBetaUpdate => 'Descargar beta';
-
-  @override
-  String get getBetaUpdate => 'Obtén la versión beta desde GitHub.';
-
-  @override
-  String get updateAvailableOnGithub => 'Actualización disponible en GitHub.';
-
-  @override
-  String get updateChannel => 'Canal de actualizaciones';
-
-  @override
-  String get updateChannelStable => 'Versiones estables';
-
-  @override
-  String get updateChannelStableSubtitle =>
-      'Ofrecer solo versiones finales de Auno Player.';
-
-  @override
-  String get updateChannelBeta => 'Versiones preliminares';
-
-  @override
-  String get updateChannelBetaSubtitle =>
-      'Ofrecer solo versiones beta para pruebas.';
-
-  @override
-  String get updateChannelBoth => 'Estables y preliminares';
-
-  @override
-  String get updateChannelBothSubtitle => 'Mostrar avisos de ambos canales.';
-
-  @override
   String updated(Object arg1) {
     return 'Actualizado: $arg1';
   }
@@ -8874,9 +7797,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String updatedAlbumArtFor2(Object arg1) {
     return 'Se actualizó la portada del álbum «$arg1».';
   }
-
-  @override
-  String get updates => 'Actualizaciones';
 
   @override
   String get updatesAboutAndSupport => 'Actualizaciones, información y ayuda';
@@ -8896,9 +7816,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get uploadLogsAsALink => '¿Subir los registros como enlace?';
-
-  @override
-  String get upnpDlna => 'UPnP / DLNA';
 
   @override
   String get urbPacket => 'Paquete URB';
@@ -8928,10 +7845,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get usbDacAutoBitPerfectOffers =>
       'Se restablecieron las ofertas automáticas de modo bit perfecto para DAC USB.';
-
-  @override
-  String get usbDacsHeadphonesAndReferenceGear =>
-      'DAC USB, audífonos y equipos de referencia para probar y mejorar la calidad de reproducción.';
 
   @override
   String get usbDeviceAccess => 'Acceso al dispositivo USB';
@@ -9012,12 +7925,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Usar la ruta USB directa verificada y desactivar los controles de DSP por software que impedirían la reproducción bit perfecta en un DAC USB externo.';
 
   @override
-  String get userToken => 'Token de usuario';
-
-  @override
-  String get username => 'Nombre de usuario';
-
-  @override
   String using(Object arg1) {
     return 'Usando $arg1';
   }
@@ -9050,11 +7957,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String version(Object kAppVersion) {
     return 'Versión $kAppVersion';
-  }
-
-  @override
-  String version2(Object arg1) {
-    return 'Versión $arg1';
   }
 
   @override
@@ -9230,16 +8132,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get waitingForBrowserAuthorization =>
-      'Esperando la autorización del navegador…';
-
-  @override
   String get waitingForPlayback => 'Esperando la reproducción';
-
-  @override
-  String was(Object arg1) {
-    return 'era: $arg1';
-  }
 
   @override
   String get wave => 'Onda';
@@ -9286,9 +8179,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get webdav => 'WebDAV';
-
-  @override
   String get weekly => 'Semanal';
 
   @override
@@ -9300,9 +8190,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get whatItShows => 'Qué muestra';
-
-  @override
-  String get whatSNew => 'Novedades';
 
   @override
   String get whenBitPerfectOutputIs =>
@@ -9321,9 +8208,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Posición vertical de la canción destacada';
 
   @override
-  String get whereYourMoneyGoes => 'A dónde va tu dinero';
-
-  @override
   String get whisperWorld => 'Mundo susurrante';
 
   @override
@@ -9334,9 +8218,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get wholeAlbum => 'Álbum completo';
-
-  @override
-  String get whyDonate => '¿Por qué donar?';
 
   @override
   String wide(Object amount) {
@@ -9422,14 +8303,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get yesterday => 'Ayer';
 
   @override
-  String get youAlreadyHaveTheLatestFlick =>
-      'Ya tienes la versión más reciente de Auno Player';
-
-  @override
-  String get youAlreadyHaveTheLatestPlay =>
-      'Ya tienes la versión más reciente de Play Store';
-
-  @override
   String get youCanAlsoChangeTheCodec =>
       'También puedes cambiar el códec en Opciones para desarrolladores de Android, en «Códec de audio Bluetooth».';
 
@@ -9483,10 +8356,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Tu historial de escucha sigue siendo tuyo. Intenta cargarlo de nuevo.';
 
   @override
-  String get yourListensWillRemainOnListenbrainz =>
-      'Tus reproducciones seguirán en ListenBrainz, pero Auno Player dejará de enviarlas.';
-
-  @override
   String get yourLogsAreUploadedToDpaste =>
       'Tus registros se suben a dpaste.com como un enlace no listado que vence en 30 días. Cualquier persona con el enlace podrá leerlos; los registros pueden incluir rutas de archivos y detalles del dispositivo.';
 
@@ -9496,14 +8365,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get yourMostReplayedTrack => 'La pista que más repetiste';
-
-  @override
-  String get yourMusicIsBeingScrobbled =>
-      'Se están registrando tus reproducciones';
-
-  @override
-  String get yourMusicIsBeingSubmitted =>
-      'Se están enviando tus reproducciones';
 
   @override
   String get yourMusicOnRepeat => 'Tu música. Una y otra vez.';
@@ -9520,10 +8381,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get yourPlaylists => 'Tus listas de reproducción';
-
-  @override
-  String get yourScrobblingHistoryWillRemainOn =>
-      'Tu historial de reproducciones seguirá en Last.fm, pero Auno Player dejará de enviar los registros.';
 
   @override
   String get yourSessionHistory => 'Tu historial de sesiones';
@@ -9749,74 +8606,111 @@ class AppLocalizationsEs extends AppLocalizations {
       'Medido a partir de una decodificación independiente del archivo fuente. Algunos formatos incluyen relleno del decodificador, que puede afectar la duración y las mediciones de silencio. La reproducción, el DSP y las etiquetas no cambian.';
 
   @override
-  String get audioAnalysisCodec => "Códec";
-  @override
-  String get audioAnalysisContainer => "Contenedor";
-  @override
-  String get audioAnalysisBitrate => "Bitrate";
-  @override
-  String get audioAnalysisChannelLayout => "Distribución de canales";
-  @override
-  String get audioAnalysisHiResSection => "DSD / Alta resolución";
-  @override
-  String get audioAnalysisDsdVariant => "Variante DSD";
-  @override
-  String get audioAnalysisDopCapable => "Compatible con DoP";
-  @override
-  String get audioAnalysisDopYes => "Sí";
-  @override
-  String get audioAnalysisDopNo => "No";
-  @override
-  String get audioAnalysisHiResBadge => "Fuente de alta resolución";
-  @override
-  String get audioAnalysisMetadataOnlyNote => "La decodificación completa no está disponible para este formato. Se muestran los metadatos y la integridad.";
-  @override
-  String get audioAnalysisIntegritySection => "Integridad y etiquetas";
-  @override
-  String get audioAnalysisIntegrityOk => "La lectura completa del archivo se realizó correctamente";
-  @override
-  String get audioAnalysisIntegrityFailed => "Falló la lectura completa del archivo";
-  @override
-  String get audioAnalysisTagCompleteness => "Integridad de etiquetas";
-  @override
-  String get audioAnalysisOutputSection => "Ruta de salida";
-  @override
-  String get audioAnalysisBitPerfectPath => "Ruta nativa / bit-perfect";
-  @override
-  String get audioAnalysisResampleWarning => "La ruta de salida seleccionada puede remuestrear la reproducción.";
-  @override
-  String get audioAnalysisSaveReport => "Guardar informe local";
-  @override
-  String get audioAnalysisReportSaved => "Informe guardado en Documents/AunoPlayer";
-  @override
-  String get audioAnalysisReportFailed => "No se pudo guardar el informe.";
+  String get audioAnalysisCodec => 'Códec';
 
   @override
-  String get recapActualListeningLabel => "Escucha real";
+  String get audioAnalysisContainer => 'Contenedor';
+
   @override
-  String recapStreakDays(int days) => "Racha de ${days} días";
+  String get audioAnalysisBitrate => 'Bitrate';
+
   @override
-  String get recapListeningClock => "Reloj de escucha";
+  String get audioAnalysisChannelLayout => 'Distribución de canales';
+
   @override
-  String get recapListeningClockHint => "Tiempo de escucha en cada hora del día";
+  String get audioAnalysisHiResSection => 'DSD / Alta resolución';
+
   @override
-  String recapHourLabel(int hour) => "${hour}:00";
+  String get audioAnalysisDsdVariant => 'Variante DSD';
+
   @override
-  String get recapPersonality => "Personalidad auditiva";
+  String get audioAnalysisDopCapable => 'Compatible con DoP';
+
   @override
-  String get recapPersonalityNightOwl => "Búho nocturno";
+  String get audioAnalysisDopYes => 'Sí';
+
   @override
-  String get recapPersonalityCompletionist => "Completista";
+  String get audioAnalysisDopNo => 'No';
+
   @override
-  String get recapPersonalityExplorer => "Explorador";
+  String get audioAnalysisHiResBadge => 'Fuente de alta resolución';
+
   @override
-  String get recapPersonalityBalanced => "Oyente equilibrado";
+  String get audioAnalysisMetadataOnlyNote =>
+      'La decodificación completa no está disponible para este formato. Se muestran los metadatos y la integridad.';
+
   @override
-  String get recapFirstListened => "Primera escucha del periodo";
+  String get audioAnalysisIntegritySection => 'Integridad y etiquetas';
+
   @override
-  String get recapLocalOnlyStats => "Calculado en este dispositivo";
+  String get audioAnalysisIntegrityOk =>
+      'La lectura completa del archivo se realizó correctamente';
+
   @override
-  String get indonesian => 'Indonesio';
+  String get audioAnalysisIntegrityFailed =>
+      'Falló la lectura completa del archivo';
+
   @override
-  String get artworkOnlyForLocalFiles => 'Las carátulas solo se pueden cambiar en archivos locales.';
+  String get audioAnalysisTagCompleteness => 'Integridad de etiquetas';
+
+  @override
+  String get audioAnalysisOutputSection => 'Ruta de salida';
+
+  @override
+  String get audioAnalysisBitPerfectPath => 'Ruta nativa / bit-perfect';
+
+  @override
+  String get audioAnalysisResampleWarning =>
+      'La ruta de salida seleccionada puede remuestrear la reproducción.';
+
+  @override
+  String get audioAnalysisSaveReport => 'Guardar informe local';
+
+  @override
+  String get audioAnalysisReportSaved =>
+      'Informe guardado en Documents/AunoPlayer';
+
+  @override
+  String get audioAnalysisReportFailed => 'No se pudo guardar el informe.';
+
+  @override
+  String get recapActualListeningLabel => 'Escucha real';
+
+  @override
+  String recapStreakDays(int days) {
+    return 'Racha de $days días';
+  }
+
+  @override
+  String get recapListeningClock => 'Reloj de escucha';
+
+  @override
+  String get recapListeningClockHint =>
+      'Tiempo de escucha en cada hora del día';
+
+  @override
+  String recapHourLabel(int hour) {
+    return '$hour:00';
+  }
+
+  @override
+  String get recapPersonality => 'Personalidad auditiva';
+
+  @override
+  String get recapPersonalityNightOwl => 'Búho nocturno';
+
+  @override
+  String get recapPersonalityCompletionist => 'Completista';
+
+  @override
+  String get recapPersonalityExplorer => 'Explorador';
+
+  @override
+  String get recapPersonalityBalanced => 'Oyente equilibrado';
+
+  @override
+  String get recapFirstListened => 'Primera escucha del periodo';
+
+  @override
+  String get recapLocalOnlyStats => 'Calculado en este dispositivo';
 }

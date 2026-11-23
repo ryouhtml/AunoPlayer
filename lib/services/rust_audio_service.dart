@@ -342,6 +342,84 @@ class RustAudioService {
     );
   }
 
+  void _syncDsdOutputMode() {
+    final mode = Uac2PreferencesService.dsdOutputModeSync;
+    final rustMode = switch (mode) {
+      DsdOutputMode.auto => 3,
+      DsdOutputMode.forcePcm => 0,
+      DsdOutputMode.forceDop => 1,
+      DsdOutputMode.native => 2,
+    };
+    // frb(sync): executes synchronously, so the store is done before the
+    // audioPlay call issued right after this.
+    rust_audio.audioSetDsdOutputMode(mode: rustMode);
+  }
+
+  /// Push native-DSD tuning overrides to the engine. Byte order + subslot
+  /// affect the USB direct path; wire variant + grouping the DAP shim path.
+  void _syncDsdTransportOverrides() {
+    final byteOrder = Uac2PreferencesService.dsdByteOrderOverrideSync;
+    rust_audio.audioSetDsdBigEndianOverride(
+      value: switch (byteOrder) {
+        DsdByteOrderOverride.auto => null,
+        DsdByteOrderOverride.littleEndian => false,
+        DsdByteOrderOverride.bigEndian => true,
+      },
+    );
+    rust_audio.audioSetDsdSubslotOverride(
+      value: Uac2PreferencesService.dsdSubslotOverrideSync,
+    );
+    rust_audio.audioSetSasWireVariant(
+      variant: switch (Uac2PreferencesService.dsdWireVariantSync) {
+        DsdWireVariant.auto => 0,
+        DsdWireVariant.beMsb => 0,
+        DsdWireVariant.leMsb => 1,
+        DsdWireVariant.beLsb => 2,
+        DsdWireVariant.leLsb => 3,
+      },
+    );
+    // Auto = U8: on-device calibration picked plain byte interleaving (LRLR).
+    rust_audio.audioSetSasWireGrouping(
+      grouping: switch (Uac2PreferencesService.dsdWireGroupingSync) {
+        DsdWireGrouping.auto => 2,
+        DsdWireGrouping.u32 => 0,
+        DsdWireGrouping.u16 => 1,
+        DsdWireGrouping.u8 => 2,
+      },
+    );
+  }
+
+  /// Pause playback.
+  Future<void> pause() async {
+    if (!_initialized) return;
+    await rust_audio.audioPause();
+    // Switch to slower updates when paused to reduce CPU usage while keeping UI synced
+    _startProgressUpdates(fast: false);
+    // Force immediate state update for responsive UI
+    _updateState();
+  }
+
+  /// Resume playback.
+  Future<void> resume() async {
+    if (!_initialized) return;
+    await rust_audio.audioResume();
+    // Resume fast updates for smooth progress bar
+    _startProgressUpdates(fast: true);
+    // Force immediate state update
+    _updateState();
+  }
+
+  /// Stop playback completely.
+  Future<void> stop() async {
+    if (!_initialized) return;
+    await rust_audio.audioStop();
+    _stopProgressUpdates();
+    _currentSource = null;
+    _nextSource = null;
+    _updateState();
+  }
+
+  /// Seek to a position in seconds.
   Future<void> seek(Duration position) async {
     if (!_initialized) return;
     await rust_audio.audioSeek(positionSecs: position.inMilliseconds / 1000.0);

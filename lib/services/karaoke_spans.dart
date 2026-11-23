@@ -150,8 +150,8 @@ class KaraokeNormalizer {
           ? rows[i + 1].startMs
           : row.startMs + _fallbackLineWindowMs;
       final parsed = _parseEnhancedBody(row.body, row.startMs, endMs);
-      final text = parsed.$1;
-      final words = parsed.$2;
+      final text = parsed.text;
+      final words = parsed.words;
       final resolvedSource =
           words.isEmpty ? TimingSource.lineOnly : source;
       result.add(
@@ -205,11 +205,11 @@ class KaraokeNormalizer {
           textStart: buffer.length,
           segments: <_RawSyllable>[],
         );
-        rawWords.add(current!);
+        rawWords.add(current);
       }
       final textStart = buffer.length;
       buffer.write(segment);
-      current!.segments.add(
+      current.segments.add(
         _RawSyllable(
           startMs: parsed.inMilliseconds,
           textStart: textStart,
@@ -350,18 +350,9 @@ List<KaraokeSpan> wordSpans(
   KaraokeLine line, [
   KaraokeSweepStyle style = KaraokeSweepStyle.auto,
 ]) {
-  if (style == KaraokeSweepStyle.syllable && line.words.isEmpty) {
-    return [
-      KaraokeSpan(
-        text: line.text,
-        startMs: line.startMs,
-        endMs: line.endMs,
-        startChar: 0,
-        endChar: line.text.length,
-      ),
-    ];
-  }
-  if (line.words.isEmpty || style == KaraokeSweepStyle.word) {
+  // A line whose source carried no word timestamps is revealed as a whole
+  // line. Both explicit granularities and auto keep that fallback.
+  if (line.words.isEmpty) {
     return [
       KaraokeSpan(
         text: line.text,
@@ -373,18 +364,21 @@ List<KaraokeSpan> wordSpans(
     ];
   }
 
+  final wordLevelSpans = [
+    for (final word in line.words)
+      KaraokeSpan(
+        text: word.text,
+        startMs: word.startMs,
+        endMs: word.endMs,
+        startChar: word.startChar,
+        endChar: word.endChar,
+      ),
+  ];
   final hasSyllables = line.words.any((word) => word.syllables.isNotEmpty);
-  if (!hasSyllables) {
-    return [
-      for (final word in line.words)
-        KaraokeSpan(
-          text: word.text,
-          startMs: word.startMs,
-          endMs: word.endMs,
-          startChar: word.startChar,
-          endChar: word.endChar,
-        ),
-    ];
+  // Explicit word style must ignore syllable timings even when both exist.
+  // Without syllable timings, syllable style falls back to real word timings.
+  if (style == KaraokeSweepStyle.word || !hasSyllables) {
+    return wordLevelSpans;
   }
   return [
     for (final word in line.words)

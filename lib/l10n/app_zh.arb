@@ -2533,7 +2533,7 @@
   "@recapListeningClock": {"description": "Listening recap insights.", "type": "text"},
   "recapListeningClockHint": "一天中每个小时的收听时长",
   "@recapListeningClockHint": {"description": "Listening recap insights.", "type": "text"},
-  "recapHourLabel": "{hour}:00",
+  "recapHourLabel": "{hour}时",
   "@recapHourLabel": {"description": "Listening recap insights.", "type": "text", "placeholders": {"hour": {"type": "int"}}},
   "recapPersonality": "收听性格",
   "@recapPersonality": {"description": "Listening recap insights.", "type": "text"},

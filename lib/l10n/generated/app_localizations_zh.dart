@@ -9,6 +9,12 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
+  String get indonesian => '印度尼西亚语';
+
+  @override
+  String get artworkOnlyForLocalFiles => '只能更改本地文件的封面。';
+
+  @override
   String get lockScreenVisualizerTitle => '锁屏可视化';
 
   @override
@@ -180,9 +186,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tourUnavailable => '看不到控件？可以继续，或查看下方手册。';
 
   @override
-  String get filipinoDonationNote => '感谢你支持 Auno Player。';
-
-  @override
   String get playingLabel => '播放中';
 
   @override
@@ -190,9 +193,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get aLittleRecordOfWhatStayed => '记录下那些被你反复播放的旋律。';
-
-  @override
-  String get aNewerFlickBuildIsOn => 'Play Store 上有更新的 Auno Player 版本。';
 
   @override
   String get aPlaylistWithThisNameAlready => '已存在同名播放列表';
@@ -230,12 +230,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get aboutFlickPlayer => '关于 Auno Player';
-
-  @override
-  String get aboutThisAlbum => '关于这张专辑';
-
-  @override
-  String get aboutThem => '关于他们';
 
   @override
   String get absoluteVolumeSync => '绝对音量同步';
@@ -306,9 +300,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get addMusicWithArtistTagsTo => '添加带艺术家标签的音乐即可在此看到';
-
-  @override
-  String get addServer => '添加服务器';
 
   @override
   String get addSongsFromThePlayerMenu => '从播放器菜单添加歌曲';
@@ -440,10 +431,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get afterHours => '深夜时光';
 
   @override
-  String get afterScanningMatchFilesWithMissing =>
-      '扫描后，把标签缺失的文件与 Apple Music 匹配。只有高置信度的匹配会自动应用。';
-
-  @override
   String get air => '空气感';
 
   @override
@@ -462,9 +449,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get albumArt2 => '专辑封面';
-
-  @override
-  String get albumArtImport => '专辑封面导入';
 
   @override
   String get albumArtist => '专辑艺术家';
@@ -644,15 +628,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get analyzingLoudness => '正在分析响度';
 
   @override
-  String get andArtwork => ' 和封面';
-
-  @override
   String andMoreInRotation(Object arg1) {
     return '$arg1 等更多常听';
   }
-
-  @override
-  String get android => 'Android';
 
   @override
   String get androidAudioApi => 'Android 音频 API';
@@ -682,6 +660,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get animatedAlbumArt => '动态专辑封面';
 
   @override
+  String get localAlbumArtPanAndGlow => '根据封面主色缓慢平移并发出柔和光晕。';
+
+  @override
   String get animationStyle => '动画样式';
 
   @override
@@ -697,9 +678,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get animationsAndHapticFeedbackToggles => '动画与触感反馈开关。';
 
   @override
-  String get apiKey => 'API 密钥';
-
-  @override
   String get appInfo => '应用信息';
 
   @override
@@ -712,19 +690,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appearsInTheOverflowMenu => '显示在溢出菜单中';
 
   @override
-  String get appleMusicDataUnavailable => 'Apple Music 数据不可用';
-
-  @override
-  String get appleMusicDataUpdated => 'Apple Music 数据已更新';
-
-  @override
-  String get appleMusicLookupFailedCheckYour => 'Apple Music 查询失败，请检查网络连接。';
-
-  @override
-  String get appleMusicMotionArtOnAlbums =>
-      '专辑上的 Apple Music 动态封面，以及主视觉的平移/缩放、氛围光晕与平滑淡入淡出';
-
-  @override
   String appliedAutoeqFor(Object arg1) {
     return '已为 $arg1 应用 AutoEQ';
   }
@@ -735,14 +700,6 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String apply2(Object arg1) {
     return '应用 $arg1';
-  }
-
-  @override
-  String get applySelected => '应用所选';
-
-  @override
-  String applyTo(int count) {
-    return '应用到 $count 首歌曲';
   }
 
   @override
@@ -810,17 +767,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get artworkCard => '封面卡片';
 
   @override
-  String artworkLookupFailed(int status) {
-    return '封面查询失败（HTTP $status）。';
-  }
-
-  @override
-  String get artworkLookupInvalidData => '封面查询返回了无效数据。';
-
-  @override
-  String get artworkLookupTemporarilyUnavailable => '封面查询暂时不可用。';
-
-  @override
   String get artworkPlacement => '封面位置';
 
   @override
@@ -862,16 +808,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get audioSignalPath => '音频信号路径';
 
   @override
-  String get audioTestingEquipment => '音频测试设备';
-
-  @override
   String get aug => '8 月';
 
   @override
   String get auroraSounds => '极光之声';
-
-  @override
-  String get authenticationResponseMissingToken => '登录响应里没有令牌';
 
   @override
   String get auto => '自动';
@@ -901,9 +841,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get autoHideTimeout => '自动隐藏超时';
 
   @override
-  String get autoIdentifyUntaggedAlbums => '自动识别无标签专辑';
-
-  @override
   String get autoNativeDsdOnDapsDop =>
       '自动 —— DAP 上使用原生 DSD，USB DAC 使用 DoP，其他情况使用 PCM';
 
@@ -926,22 +863,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get autoeqHeadphones2 => 'AutoEQ 耳机';
 
   @override
-  String get autoeqOnlineSearchFailed => '无法加载在线预设。内置预设仍可离线使用；请检查型号名称或网络连接。';
-
-  @override
   String get automatic => '自动';
-
-  @override
-  String get automaticUpdateChecks => '自动检查更新';
 
   @override
   String get automaticallyOpenKeyboardWhenSwitchingTo => '切到搜索时自动弹出键盘';
 
   @override
   String get autoplayOnQueueEnd => '队列结束时自动播放';
-
-  @override
-  String get availableDevices => '可用设备';
 
   @override
   String b(Object arg1) {
@@ -1267,9 +1195,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get buttons => '按钮';
 
   @override
-  String get buyMeACoffee => '请我喝杯咖啡';
-
-  @override
   String by(Object arg1, Object arg2) {
     return '$arg2 的《$arg1》';
   }
@@ -1340,25 +1265,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get cardWidth => '卡片宽度';
 
   @override
-  String get cast => '投放';
-
-  @override
-  String get casting => '投放';
-
-  @override
-  String get castingTapToManage => '正在投放 — 点按管理';
-
-  @override
-  String castingTo(Object deviceName) {
-    return '正在投放到 $deviceName';
-  }
-
-  @override
-  String castingTo2(Object arg1) {
-    return '正在投放到 $arg1';
-  }
-
-  @override
   String get categories => '分类';
 
   @override
@@ -1416,9 +1322,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get checkAgain => '再次检查';
-
-  @override
   String get checkTheVersionsYouWantTo => '勾选你要保留的版本 — 未勾选的将从音乐库中移除。至少需保留一个。';
 
   @override
@@ -1426,12 +1329,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get checking => '检查中…';
-
-  @override
-  String get checkingForUpdates => '正在检查更新';
-
-  @override
-  String get checkingForUpdates2 => '正在检查更新…';
 
   @override
   String get childrenSPrivacy => '儿童隐私';
@@ -1450,9 +1347,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get chooseWhichToKeep => '选择要保留的版本';
-
-  @override
-  String get chromecast => 'Chromecast';
 
   @override
   String get circularDotsRadiusFollowsAmplitude => '环形圆点——半径随振幅变化';
@@ -1591,52 +1485,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get connect => '连接';
 
   @override
-  String get connectAMusicServer => '连接音乐服务器';
-
-  @override
-  String get connectASubsonicJellyfinWebdavUpnp =>
-      '连接 Subsonic、Jellyfin、WebDAV、UPnP 或 Tidal 服务器，串流你的远程音乐库。';
-
-  @override
   String get connectAUsbDacOrAudio => '连接 USB DAC 或音频接口';
-
-  @override
-  String get connectListenbrainz => '连接 ListenBrainz';
-
-  @override
-  String get connectToScrobbleYourListeningHistory => '连接以记录你的收听历史';
-
-  @override
-  String get connectToScrobbleYourMusic => '连接以记录你的收听';
-
-  @override
-  String get connectToSubmitYourListeningHistory => '连接以提交你的收听记录';
-
-  @override
-  String get connectToTheInternetToCheck => '连接网络以检查更新。';
 
   @override
   String get connected => '已连接';
 
   @override
-  String get connectedAccount => '已连接账号';
-
-  @override
-  String connectedAs(Object username) {
-    return '已连接为 $username';
-  }
-
-  @override
   String get connecting => '连接中';
 
   @override
-  String get connection => '连接';
-
-  @override
   String get connectionBehavior => '连接行为';
-
-  @override
-  String get connectionFailedRetry => '连接失败 —— 重试';
 
   @override
   String get connectionManagement => '连接管理';
@@ -1646,9 +1504,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get connectionNoticesDescription => '显示离线和恢复连接提示';
-
-  @override
-  String get connectionOk => '连接正常';
 
   @override
   String get connectionStatus => '连接状态';
@@ -1718,10 +1573,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get copyLink => '复制链接';
 
   @override
-  String get copyYourUserTokenFromListenbrainz =>
-      '请从 ListenBrainz 设置中复制用户令牌，粘贴到下方。';
-
-  @override
   String get copyright => '版权';
 
   @override
@@ -1729,16 +1580,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get cosmicOrchestra => '宇宙管弦乐团';
-
-  @override
-  String get couldNotCheckForUpdates => '无法检查更新';
-
-  @override
-  String get couldNotConnectToLastFm => '无法连接到 Last.fm。请检查 API 凭据后重试。';
-
-  @override
-  String get couldNotConnectToListenbrainzCheck =>
-      '无法连接到 ListenBrainz。请检查令牌后重试。';
 
   @override
   String get couldNotLoadAlbumSongs => '无法加载专辑歌曲';
@@ -1755,23 +1596,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get couldNotLoadSession => '无法加载会话';
-
-  @override
-  String get couldNotOpenBrowser => '无法打开浏览器。';
-
-  @override
-  String get couldNotOpenKoFiPlease => '无法打开 Ko-fi，请重试。';
-
-  @override
-  String get couldNotOpenLink => '无法打开链接';
-
-  @override
-  String couldNotOpenLink2(Object e) {
-    return '无法打开链接：$e';
-  }
-
-  @override
   String get couldNotOpenThatPhotoTry => '无法打开该照片，请换一张。';
 
   @override
@@ -1783,23 +1607,9 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get couldNotOpenThePlayStore => '无法打开 Play Store。';
-
-  @override
-  String couldNotOpenThePlayStore2(Object error) {
-    return '无法打开 Play Store：$error';
-  }
-
-  @override
-  String get couldNotOpenThePlayStore3 => '无法打开 Play Store';
-
-  @override
   String couldNotPrepareTheEditedFile(String error) {
     return '无法准备待写入的文件：$error';
   }
-
-  @override
-  String get couldNotReachTheServer => '无法连接服务器。请检查地址与凭据后重试。';
 
   @override
   String get couldNotReadTheCoverColors => '无法读取封面配色。信号图仍可使用。';
@@ -1827,10 +1637,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get couldNotUseTheSelectedLyrics => '无法使用所选歌词文件。';
-
-  @override
-  String get couldnTOpenTheBrowserAutomatically =>
-      '无法自动打开浏览器。请用下面的链接在任意设备上授权——授权后我们会自动完成登录：';
 
   @override
   String get countingFiles => '正在统计文件…';
@@ -1865,7 +1671,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get dragAnywhereOnTheWaveform => '在波形上任意位置拖动即可定位。波形反映音频随时间的响度变化。';
 
   @override
-  String get dragEachFrequencyBandSlider => '拖动各频段滑块塑造音色。均衡器会作用于 Auno Player 的全部输出。';
+  String get dragEachFrequencyBandSlider =>
+      '拖动各频段滑块塑造音色。均衡器会作用于 Auno Player 的全部输出。';
 
   @override
   String get dragScrollHandle => '拖动滚动条';
@@ -1960,10 +1767,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get interface => '界面';
 
   @override
-  String get lastFmAndListenBrainzScrobbling =>
-      'Last.fm 与 ListenBrainz 的收听记录设置。';
-
-  @override
   String get layoutModeSizingMiniPlayer => '布局模式、尺寸、迷你播放器滑动手势，以及自定义快捷按钮。';
 
   @override
@@ -1979,7 +1782,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get longPressTheNavBar => '长按导航栏，或打开「设置 → 底栏」，选择显示哪些标签页以及它们的顺序。';
 
   @override
-  String get longPressYourHomeScreen => '长按主屏幕 →「添加小组件」→ Auno Player，选择尺寸后拖到主屏幕上。';
+  String get longPressYourHomeScreen =>
+      '长按主屏幕 →「添加小组件」→ Auno Player，选择尺寸后拖到主屏幕上。';
 
   @override
   String get manageScanFoldersTriggerRescans => '管理扫描文件夹、触发重新扫描，以及运行重复项清理。';
@@ -2328,14 +2132,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get creativeFx => '创意效果';
 
   @override
-  String credentialsRejectedByReEnterThe(Object arg1) {
-    return '$arg1 拒绝了凭据。请重新输入密码。';
-  }
-
-  @override
-  String get credentialsSavedSuccessfully => '凭据已成功保存！';
-
-  @override
   String get crispestHeavierDuringFastScrolling => '最清晰 — 快速滚动时负载更高';
 
   @override
@@ -2582,11 +2378,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get delete => '删除';
 
   @override
-  String deleteAndAllSongsAndPlaylists(Object arg1) {
-    return '删除「$arg1」以及从它同步的全部歌曲和播放列表？已缓存的下载内容会保留。';
-  }
-
-  @override
   String get deleteFile => '删除文件';
 
   @override
@@ -2741,22 +2532,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get disconnectBehaviorAndCodecInfo => '断连行为与编解码器信息';
 
   @override
-  String disconnectFrom(Object arg1) {
-    return '断开与 $arg1 的连接';
-  }
-
-  @override
-  String get disconnectLastFm => '断开 Last.fm 连接？';
-
-  @override
-  String get disconnectListenbrainz => '断开 ListenBrainz 连接？';
-
-  @override
   String get discord => 'Discord';
-
-  @override
-  String get discoversDlnaUpnpAndChromecastReceivers =>
-      '发现网络中的 DLNA、UPnP 与 Chromecast 接收器';
 
   @override
   String get dismiss => '忽略';
@@ -2792,23 +2568,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get distanceBetweenSongsAlongTheArc => '弧线上歌曲之间的距离';
 
   @override
-  String get dlnaAndUpnpReceiversAreControlled =>
-      'DLNA 与 UPnP 接收端完全由纯 Dart 控制——不依赖额外组件。Chromecast 走原生 Cast SDK。网络音源（Subsonic、WebDAV、Jellyfin、UPnP）、本地文件和已缓存歌曲都能投放——本地文件直接从这台手机提供。投放期间，音量键与系统音量面板控制的是已连接的设备。';
-
-  @override
-  String get dlnaUpnp => 'DLNA / UPnP';
-
-  @override
-  String get dlnaUpnpAndChromecastReceivers => 'DLNA、UPnP 与 Chromecast 接收器';
-
-  @override
   String get donTShowAgainToday => '今天不再显示';
-
-  @override
-  String get donate => '捐赠';
-
-  @override
-  String get donateFundFeaturesAndKeepThe => '捐赠、支持新功能，让应用持续发展';
 
   @override
   String get done => '完成';
@@ -2832,12 +2592,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String down(Object arg1) {
     return '下移 $arg1';
   }
-
-  @override
-  String get downloadTheLatestApkFromFlick => '从 github.com/ryouhtml/AunoPlayer/releases 下载最新的 APK';
-
-  @override
-  String get downloadUpdate => '下载更新';
 
   @override
   String dp(Object arg1) {
@@ -2878,9 +2632,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get dsdDsfPlayback => 'DSD / DSF 播放';
-
-  @override
   String get dsdMode => 'DSD 模式';
 
   @override
@@ -2914,9 +2665,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get earlierStandoutsPulledBackIntoView => '从收听历史中重新捞起的昔日佳作。';
 
   @override
-  String get editCredentials => '编辑凭据';
-
-  @override
   String get editDescription => '编辑说明';
 
   @override
@@ -2926,16 +2674,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get editMetadata => '编辑元数据';
 
   @override
-  String get editServer => '编辑服务器';
-
-  @override
   String get editSync => '编辑并同步';
 
   @override
   String get editText => '编辑文本';
-
-  @override
-  String get editToken => '编辑令牌';
 
   @override
   String get electricSunset => '电子日落';
@@ -2996,12 +2738,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get enterAYear19999 => '输入年份（1–9999）';
 
   @override
-  String get enterYourApiKey => '输入你的 API 密钥';
-
-  @override
-  String get enterYourSharedSecret => '输入你的共享密钥';
-
-  @override
   String ep(Object arg1) {
     return 'EP $arg1';
   }
@@ -3049,9 +2785,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get etherealTones => '空灵音色';
-
-  @override
-  String get everyAlbumHasArtistAndAlbum => '每张专辑都带有艺术家与专辑标签。';
 
   @override
   String get everySongIsRemovedFromYour =>
@@ -3174,11 +2907,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get failedToDeactivateFallback => '停用回退失败';
 
   @override
-  String failedToDownloadAlbumArt(int status) {
-    return '下载专辑封面失败（HTTP $status）。';
-  }
-
-  @override
   String failedToGetPersistedUris(String? error) {
     return '无法获取已保存的 URI：$error';
   }
@@ -3247,9 +2975,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get failedToSaveTheRecapImage => '把回顾图保存到相册失败。';
-
-  @override
-  String get failedToSearchAlbumArtOnline => '在线搜索专辑封面失败。';
 
   @override
   String get failedToStartStreaming => '无法启动音频流';
@@ -3326,11 +3051,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String files2(int count) {
-    return '$count 个文件';
-  }
-
-  @override
   String filesChecked(Object arg1) {
     return '已检查 $arg1 个文件…';
   }
@@ -3374,12 +3094,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get finishingUp => '即将完成…';
 
   @override
-  String get fix => '修复';
-
-  @override
-  String get fixMissingMetadata => '修正缺失的元数据';
-
-  @override
   String get fixedBands => '31 个固定频段';
 
   @override
@@ -3408,14 +3122,6 @@ class AppLocalizationsZh extends AppLocalizations {
       'Auno Player 可以接收来自 Locker（另一款 Moss 应用）的播放接力。播放意图仅包含歌曲文件路径/元数据。不交换任何个人数据。该集成完全在本地进行。';
 
   @override
-  String get flickChecksFlickPlayerSiteFor =>
-      '联网时 Auno Player 会检查 github.com/ryouhtml/AunoPlayer/releases 的更新';
-
-  @override
-  String get flickIsBuiltAndMaintainedBy =>
-      'Auno Player 由一个人零预算开发与维护。没有团队，没有资金，没有广告。';
-
-  @override
   String get flickLogs => 'Auno Player 日志';
 
   @override
@@ -3434,13 +3140,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get flickReplay => 'Auno Player 回顾';
-
-  @override
-  String get flickScansForPlayStoreUpdates => '联网时 Auno Player 会检查 Play Store 更新';
-
-  @override
-  String get flickWillAlwaysBeFreeDonations =>
-      'Auno Player 永远免费。捐赠让项目得以延续，没有付费墙，也没有订阅。';
 
   @override
   String get flickWillForceYourChosenCodec => '连接时 Auno Player 将强制使用你选择的编解码器';
@@ -3528,17 +3227,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get formatStrategyIsUnavailableBecauseAudio => '由于设置中已禁用音频格式，格式策略不可用。';
 
   @override
-  String foundOnline(Object arg1) {
-    return '已在线找到“$arg1”。';
-  }
-
-  @override
   String frPkt(Object arg1) {
     return '$arg1 帧/包';
   }
-
-  @override
-  String get freeOpenSource => '免费与开源';
 
   @override
   String get freq => '频率';
@@ -3551,11 +3242,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get freshAdditions => '新鲜入库';
-
-  @override
-  String from(Object sourceLabel) {
-    return '来自 $sourceLabel';
-  }
 
   @override
   String get fromSquareCornersToARounded => '从直角到圆角栏';
@@ -3586,10 +3272,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get fullscreen => '全屏';
-
-  @override
-  String get fundingNativeDsdDsfPlaybackDevelopment =>
-      '资助原生 DSD/DSF 播放功能的开发——发烧友呼声极高的功能。';
 
   @override
   String get fxOff => 'FX 关';
@@ -3628,12 +3310,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get getStarted => '开始使用';
-
-  @override
-  String get getTheLatestApkFromFlick => '从 github.com/ryouhtml/AunoPlayer/releases 获取最新 APK';
-
-  @override
-  String get getYourApiCredentials => '获取你的 API 凭据';
 
   @override
   String get github => 'GitHub';
@@ -3737,9 +3413,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get hideNavigationButtonsAfterBeingIdle => '空闲后隐藏导航按钮';
 
   @override
-  String get hidePassword => '隐藏密码';
-
-  @override
   String get hideShortStingersRingtonesAndVoice => '隐藏短过门、铃声与语音片段';
 
   @override
@@ -3817,9 +3490,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get howWideEachCardSpansAcross => '每张卡片在屏幕上的宽度';
 
   @override
-  String get httpBasicNeedsItRecoverableStored => 'HTTP Basic 需要可还原的密码；以编码形式存储';
-
-  @override
   String hz(Object rate) {
     return '$rate Hz';
   }
@@ -3844,25 +3514,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get iconSize => '图标大小';
 
   @override
-  String identified(int count, Object note) {
-    return '已识别 $count 首歌曲$note。';
-  }
-
-  @override
-  String get identifyAlbum => '识别专辑';
-
-  @override
-  String get identifyAlbum2 => '识别专辑';
-
-  @override
-  String get identifyAlbumsWithUnknownArtistOr => '识别艺术家或标题标签未知的专辑';
-
-  @override
   String get idle => '空闲';
-
-  @override
-  String get ifYouConnectYourLastFm =>
-      '如果你连接 Last.fm 账号，凭据将安全存储在设备上。播放数据仅发送至 Last.fm。我们不会接收或处理这些数据。';
 
   @override
   String get ignoreTracksUnder500Kb => '忽略小于 500 KB 的曲目';
@@ -3913,9 +3565,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get impulseResponse => '脉冲响应';
 
   @override
-  String get inAppUpdates => '应用内更新';
-
-  @override
   String inLabel(Object folder) {
     return '位于 $folder';
   }
@@ -3930,9 +3579,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get incredibleOverAMonthOfDaily => '太棒了，每日收听已超过一个月。';
-
-  @override
-  String get info2 => '信息';
 
   @override
   String get initializing => '初始化中…';
@@ -3957,9 +3603,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get instrumental => '纯音乐';
 
   @override
-  String get integrations => '集成';
-
-  @override
   String get interactiveEq => '交互式均衡器';
 
   @override
@@ -3970,9 +3613,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get interfaceLabel => '界面';
-
-  @override
-  String get invalidToken => '令牌无效';
 
   @override
   String isOfflineRetainedSongsStillListed(Object folder) {
@@ -3994,19 +3634,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get jan => '1 月';
 
   @override
-  String get jellyfin => 'Jellyfin';
-
-  @override
-  String get jellyfinEmby => 'Jellyfin · Emby';
-
-  @override
   String get jul => '7 月';
 
   @override
   String get jumpBackIn => '继续收听';
-
-  @override
-  String get jumpToTheFlickListingAnd => '前往 Auno Player 应用商店页面并在那里更新';
 
   @override
   String get jun => '6 月';
@@ -4025,6 +3656,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get karaokePreview => '卡拉 OK 预览';
+
   @override
   String get karaokeSweepStyle => '扫光粒度';
 
@@ -4045,7 +3677,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get karaokeSweepStyleSyllableDescription => '扫过每个具有真实时间戳的音节';
-
 
   @override
   String kb(Object arg1) {
@@ -4102,9 +3733,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get keepsSoftwareVolumeAndDspActive => '在 DAP 共享路径上保持软件音量与 DSP 启用。';
 
   @override
-  String get keptInSecureStorageToRe => '保存在安全存储中，以便令牌过期后重新登录';
-
-  @override
   String keptWillBeRemoved(Object keptCount, Object removeCount) {
     return '已保留 $keptCount 个 • 将移除 $removeCount 个';
   }
@@ -4135,12 +3763,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get koFi => 'Ko-fi';
-
-  @override
-  String get label => '标签';
-
-  @override
   String get labelOrganization => '厂牌 / 组织';
 
   @override
@@ -4159,24 +3781,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get languageSystemDefault => '跟随系统';
 
   @override
-  String get lastFm => 'Last.fm';
-
-  @override
-  String get lastFmConfiguration => 'Last.fm 配置';
-
-  @override
-  String get lastFmConnected => 'Last.fm 已连接';
-
-  @override
-  String get lastFmConnected2 => 'Last.fm 已连接！';
-
-  @override
-  String get lastFmListenbrainzScrobbling => 'Last.fm 与 ListenBrainz 记录收听';
-
-  @override
-  String get lastFmScrobbling => 'Last.fm 记录收听';
-
-  @override
   String get lastPick => '上次选择';
 
   @override
@@ -4190,9 +3794,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get latestArrivalsFromYourLibrary => '音乐库里的最新加入';
-
-  @override
-  String get latestUpdate => '最新更新';
 
   @override
   String get layered => '层叠';
@@ -4223,9 +3824,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get leMsbLittleEndianSubslotMsb => 'LE-MSB — 小端子槽，MSB 在前';
-
-  @override
-  String get leaveEmptyToKeepTheCurrent => '留空则保留当前凭据';
 
   @override
   String get left => '左对齐';
@@ -4364,18 +3962,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get list => '列表';
 
   @override
-  String get listAvailableLocalAudioOutputDevices => '列出可用的本地音频输出设备';
-
-  @override
-  String get listenbrainz => 'ListenBrainz';
-
-  @override
-  String get listenbrainzConnected => 'ListenBrainz 已连接';
-
-  @override
-  String get listenbrainzConnected2 => 'ListenBrainz 已连接！';
-
-  @override
   String get listeningHours => '收听时长';
 
   @override
@@ -4420,13 +4006,7 @@ class AppLocalizationsZh extends AppLocalizations {
       '正在加载收藏、最近播放、生成的混音和播放列表。';
 
   @override
-  String get loadingPatchNotes => '正在加载更新日志…';
-
-  @override
   String get loadingReplay => '正在载入回顾';
-
-  @override
-  String get loadingSession => '正在加载会话…';
 
   @override
   String get localData => '本地数据';
@@ -4451,16 +4031,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get look => '外观';
-
-  @override
-  String get lookingForCoverArtFromMusicbrainz =>
-      '正在从 MusicBrainz 和 Cover Art Archive 查找封面。';
-
-  @override
-  String get lookingForTheLatestFlickRelease => '正在检查最新的 Auno Player 版本';
-
-  @override
-  String get lookingForTheLatestPlayStore => '正在检查 Play Store 的最新更新';
 
   @override
   String get lossless => ' 无损';
@@ -4559,18 +4129,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get matchAudioFilename => '与音频文件名一致';
 
   @override
-  String matchByArtistAlbumAndTrack(int count) {
-    return '按艺术家、专辑和曲目长度匹配 $count 个文件';
-  }
-
-  @override
   String get matchEqToYourHeadphoneModel => '将均衡器匹配到你的耳机型号';
 
   @override
   String get matchNavigation => '匹配导航栏';
-
-  @override
-  String get matches => '匹配结果';
 
   @override
   String maxB(Object arg1) {
@@ -4665,9 +4227,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get minimize => '最小化';
 
   @override
-  String get minimserverServiioKodi => 'MinimServer · Serviio · Kodi';
-
-  @override
   String get mirrorTest => '镜像测试';
 
   @override
@@ -4675,7 +4234,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get mitLicenseCopyrightC2026Flick =>
-      '\nMIT 许可证\n\n版权所有 (c) 2026 Auno Player Contributors\n\n特此免费授予任何获得本软件及相关文档文件（以下称「软件」）副本的人不受限制地处置本软件的权利，包括但不限于使用、复制、修改、合并、发布、分发、再许可和/或销售本软件副本的权利，并允许获得本软件的人在符合以下条件的前提下这样做：\n\n上述版权声明与本许可声明应包含在本软件的所有副本或主要部分中。\n\n本软件按「原样」提供，不附带任何形式的明示或暗示担保，包括但不限于对适销性、特定用途适用性和非侵权的担保。在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任承担责任，无论是在合同诉讼、侵权行为还是其他情形下，均由本软件或本软件的使用或其他处置引起、与之相关或由此产生。\n';
+      'GNU 通用公共许可证 v3.0 或更高版本\n\nCopyright (c) 2026 Auno Player Contributors\n\n本程序是自由软件：您可以依据自由软件基金会发布的 GNU 通用公共许可证条款重新分发和/或修改它，无论选择许可证第 3 版，或（由您选择）任何更新版本。\n\n本程序的发布希望它能有用，但不提供任何保证；甚至不提供适销性或特定用途适用性的隐含保证。详情请参阅 GNU 通用公共许可证。\n\n您应该已随本程序收到一份 GNU 通用公共许可证副本。如果没有，请参阅 <https://www.gnu.org/licenses/>。';
 
   @override
   String get mix => '混合';
@@ -4753,28 +4312,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get mossEcosystem => 'Moss 生态';
 
   @override
-  String get mostDlnaServersNeedNoPassword => '大多数 DLNA 服务器无需密码';
-
-  @override
   String get mostPlayed => '最常播放';
 
   @override
   String mostReplayed(Object arg1) {
     return '播放最多 · $arg1';
   }
-
-  @override
-  String get motionArtInBitPerfect => '位完美模式下的动态封面';
-
-  @override
-  String get motionArtIsReplacedWhileBit => '位完美输出启用时动态封面会被替换';
-
-  @override
-  String get motionArtPlaysDuringBitPerfect =>
-      '位完美音频播放时播放动态封面（在某些 DAP 上可能中断播放）';
-
-  @override
-  String get motionArtRefreshed => '动态封面已刷新';
 
   @override
   String get moveEveryStampedLyricForwardOr => '将所有已标记时间的歌词一起前移或后移。';
@@ -4819,11 +4362,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get mute => '静音';
 
   @override
-  String my(Object arg1) {
-    return '我的 $arg1';
-  }
-
-  @override
   String nDb(Object arg1, Object arg2) {
     return '$arg1%\n$arg2 dB';
   }
@@ -4855,9 +4393,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get natureAmbient => '自然氛围';
 
   @override
-  String get navidromeAirsonicGonic => 'Navidrome · Airsonic · Gonic';
-
-  @override
   String get navigationAppearance => '导航栏外观';
 
   @override
@@ -4865,9 +4400,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get navigationDefaultsRestored => '导航栏默认设置已恢复';
-
-  @override
-  String get needsMetadata => '缺少元数据';
 
   @override
   String negotiated(Object arg1) {
@@ -4890,15 +4422,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get network => '网络';
 
   @override
-  String get networkSources => '网络来源';
-
-  @override
   String neutral(Object amount) {
     return '$amount% 中性';
   }
-
-  @override
-  String get neverSynced => '从未同步';
 
   @override
   String get newLabel => '新增';
@@ -4918,9 +4444,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get nextcloudOwncloudSabredav => 'Nextcloud · ownCloud · SabreDAV';
-
-  @override
   String get night => '夜色';
 
   @override
@@ -4936,10 +4459,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noAlbumsFound => '未找到专辑';
 
   @override
-  String get noAppleMusicReleaseFoundTry =>
-      '未找到 Apple Music 发行版。请尝试修改艺术家或专辑名后重新搜索。';
-
-  @override
   String get noArtistsFound => '未找到艺术家';
 
   @override
@@ -4952,13 +4471,7 @@ class AppLocalizationsZh extends AppLocalizations {
       '未找到音频。如果这个文件夹里确实有音乐，可能是被 `.nomedia` 文件隐藏了，或者 Android 还没索引到。可以试试开启深度扫描，或删除 `.nomedia` 文件后重新扫描。';
 
   @override
-  String get noCastingDevicesFoundMakeSure => '未发现投放设备。请确保手机与接收端处于同一网络。';
-
-  @override
   String get noCategoriesSelected => '未选择分类';
-
-  @override
-  String get noChangelogNotesForThisVersion => '此版本暂无更新说明。';
 
   @override
   String get noCustomAlbumArtIsSet => '尚未设置自定义专辑封面。';
@@ -4985,9 +4498,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noHistoryYet => '暂无历史';
 
   @override
-  String get noInternetConnectionPleaseCheckYour => '无网络连接。请检查网络后重试。';
-
-  @override
   String get noLibraryFilesForThisAlbum => '在音乐库中没有找到这张专辑的文件。';
 
   @override
@@ -4998,9 +4508,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get noLyricsYet => '暂无歌词';
-
-  @override
-  String get noMatchFound => '未找到匹配项';
 
   @override
   String get noMatches => '无匹配项。';
@@ -5014,25 +4521,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noMatchesFound => '未找到匹配项';
 
   @override
-  String get noMatchesTryFewerWordsOr => '无匹配结果。试试减少关键词或在线搜索。';
+  String get noMatchesTryFewerWordsOr => '无匹配结果。试试减少关键词。';
 
   @override
   String get noMusicYet => '还没有音乐';
 
   @override
   String get noNewAdditionsYet => '暂无新增内容';
-
-  @override
-  String get noNewUpdateFound => '未发现新版本。';
-
-  @override
-  String get noOnlineArtworkFound => '未找到在线封面';
-
-  @override
-  String get noOutputDevicesAvailable => '无可用输出设备。';
-
-  @override
-  String get noPatchNotesAvailableYet => '暂无更新说明。';
 
   @override
   String get noPlaybackYet => '暂无播放';
@@ -5066,12 +4561,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noScanResultsYet => '尚无扫描结果';
 
   @override
-  String get noServerPlaylistsFound => '未找到服务器播放列表';
-
-  @override
-  String get noServersConnected => '未连接服务器';
-
-  @override
   String get noSongPlaying => '暂无播放';
 
   @override
@@ -5082,9 +4571,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get noUpcomingQueueItemsYet => '暂无待播曲目';
-
-  @override
-  String get noUpdateAvailable => '无可用更新';
 
   @override
   String get noUrbData => '无 URB 数据';
@@ -5159,9 +4645,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get numberOnArt => '封面编号';
 
   @override
-  String get oauthSignInNoPasswordStored => 'OAuth 登录；此处不保存密码';
-
-  @override
   String get oceanWaves => '海浪';
 
   @override
@@ -5172,9 +4655,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get offCropsToFillTheSquare => '关闭则裁剪填满方形；开启则把封面拉伸到边到边';
-
-  @override
-  String get offline => '离线';
 
   @override
   String get onAndroidTheStandardJustAudio =>
@@ -5217,12 +4697,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get onboardingWelcomeTitle => '欢迎使用\nAuno Player 播放器';
 
   @override
-  String get onlineArtistAlbumInformation => '在线歌手与专辑信息';
-
-  @override
-  String get onlineResults => '在线结果';
-
-  @override
   String get onlyLibraryEntriesAreRemovedYour => '仅移除音乐库条目——音频文件仍保留在磁盘上。';
 
   @override
@@ -5238,22 +4712,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get openBluetoothCodecSettings => '打开蓝牙编解码器设置';
 
   @override
-  String get openFullNotes => '查看完整说明';
-
-  @override
-  String get openInAppleMusic => '在 Apple Music 中打开';
-
-  @override
-  String get openInBrowser => '在浏览器中打开';
-
-  @override
-  String get openInPlayStore => '在 Play 商店中打开';
-
-  @override
   String get openLibrary => '打开音乐库';
-
-  @override
-  String get openListenbrainzOrgSettings => '打开 listenbrainz.org/settings';
 
   @override
   String get openManual => '打开手册';
@@ -5262,13 +4721,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get openPlayer => '打开播放器';
 
   @override
-  String get openReleaseNotes => '打开发行说明';
-
-  @override
   String get openSourceLicenses => '开源许可证';
-
-  @override
-  String get openThePlayStoreToInstall => '打开 Play Store 安装最新的 Auno Player 版本';
 
   @override
   String get openedFromLocker => '从 Locker 打开';
@@ -5327,9 +4780,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get output => '输出';
 
   @override
-  String get outputDevice => '输出设备';
-
-  @override
   String get outputMode => '输出模式';
 
   @override
@@ -5362,16 +4812,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get passthrough => '直通';
 
   @override
-  String get password => '密码';
-
-  @override
   String get pasteOrTypeTheSongLyrics => '在此粘贴或输入歌词 —— 每行一句';
-
-  @override
-  String get pasteYourListenbrainzToken => '粘贴你的 ListenBrainz 令牌';
-
-  @override
-  String get patchNotes => '更新日志';
 
   @override
   String get pause => '暂停';
@@ -5480,10 +4921,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get playNext => '下一首播放';
 
   @override
-  String get playStoreUpdatesUseGooglePlay =>
-      'Play 商店更新使用 Google Play 应用内更新 API（受 Google 隐私政策约束）。补丁说明从 GitHub Releases API 获取，不会发送个人数据。';
-
-  @override
   String get playback => '播放';
 
   @override
@@ -5576,9 +5013,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get playerMenuEditMetadata => '编辑元数据';
 
   @override
-  String get playerMenuRefreshAlbumArt => '刷新动态封面';
-
-  @override
   String get playerMenuSetAlbumArt => '设置专辑封面';
 
   @override
@@ -5641,9 +5075,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get pleaseEnterAPlaylistName => '请输入播放列表名称';
-
-  @override
-  String get pleaseEnterYourListenbrainzUserToken => '请输入你的 ListenBrainz 用户令牌。';
 
   @override
   String get portrait => '竖屏';
@@ -5746,9 +5177,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get progressBar => '进度条';
-
-  @override
-  String get protocol => '协议';
 
   @override
   String get pulledFromYourLateSessionPlays => '取自你深夜时段的播放';
@@ -5859,12 +5287,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get reconnectNow => '立即重连';
 
   @override
-  String get reconnectToTheInternetToScan => '重新连接网络以扫描更新';
-
-  @override
-  String get reconnectToWiFiOrMobile => '重新连接 Wi-Fi 或移动数据，以便 Auno Player 再次扫描';
-
-  @override
   String get reconnectionFailed => '重连失败';
 
   @override
@@ -5874,22 +5296,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get recorded => '已录制';
 
   @override
-  String get refreshAppleMusic => '刷新 Apple Music';
-
-  @override
   String get refreshDevices => '刷新设备';
 
   @override
   String get refreshDevices2 => '刷新设备';
 
   @override
-  String get refreshOutputs => '刷新输出';
-
-  @override
   String get refreshRate => '刷新率';
-
-  @override
-  String get refreshingAppleMusicData => '正在刷新 Apple Music 数据';
 
   @override
   String get registeredNotClaimed => '已注册，未占用';
@@ -5956,12 +5369,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get removeSelected => '移除所选';
-
-  @override
-  String get removeServer => '移除服务器？';
-
-  @override
-  String get removeServer2 => '移除服务器';
 
   @override
   String get removeTheDatabaseEntriesOrDelete => '移除数据库条目或从设备删除文件。此操作无法撤销。';
@@ -6199,9 +5606,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get ripSource => '抓轨来源';
 
   @override
-  String get root => '根目录';
-
-  @override
   String get rotationSeek => '旋转跳转';
 
   @override
@@ -6215,12 +5619,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get routesBluetoothThroughTheRustEngine => '通过 Rust 引擎路由 Bluetooth';
-
-  @override
-  String get runAnotherPlayStoreUpdateScan => '立即再次扫描 Play Store 更新';
-
-  @override
-  String get runAnotherUpdateScanRightNow => '立即再次扫描更新';
 
   @override
   String get rustViaOboe => '通过 Oboe 使用 Rust';
@@ -6245,9 +5643,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get sCurve => 'S 曲线';
-
-  @override
-  String get sambaWindowsShareTransportPending => 'Samba · Windows 共享';
 
   @override
   String get sampleArtist => '示例艺术家';
@@ -6278,9 +5673,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get saveChanges => '保存更改';
-
-  @override
-  String get saveConnect => '保存并连接';
 
   @override
   String get saveCreatesAnLrcFileIf =>
@@ -6389,9 +5781,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get scanFailedPleaseTryAgain => '扫描失败，请重试。';
 
   @override
-  String get scanForDevices => '扫描设备';
-
-  @override
   String get scanProgress => '扫描进度';
 
   @override
@@ -6427,16 +5816,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get search => '搜索';
 
   @override
-  String get searchAgain => '重新搜索';
-
-  @override
   String get searchArtistTitle => '搜索艺术家 + 标题…';
 
   @override
   String get searchArtists => '搜索艺术家…';
-
-  @override
-  String get searchFailed => '搜索失败';
 
   @override
   String searchFailed2(Object e) {
@@ -6453,9 +5836,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get searchOnline => '在线搜索';
-
-  @override
-  String get searchOnline2 => '在线搜索';
 
   @override
   String get searchOnlineCreateYourOwnSynced => '可在线搜索、自制同步歌词，或导入现有文件。';
@@ -6485,15 +5865,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get searchYourLibrary => '搜索音乐库';
 
   @override
-  String get searching => '正在搜索…';
-
-  @override
-  String get searchingOnline => '正在在线搜索';
-
-  @override
-  String get searchingTheLocalNetwork => '正在搜索本地网络…';
-
-  @override
   String get secondsOfInactivityBeforeCollapsing => '无操作多少秒后收起';
 
   @override
@@ -6505,9 +5876,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get seeWhatIsNewInThis => '查看本次更新的新内容';
-
-  @override
   String get select => '选择';
 
   @override
@@ -6516,9 +5884,6 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get selectALineAndEdit =>
       '1. 选中一行直接编辑它的时间戳，或使用「使用当前时间」。\n2. 在词时间轴上拖动分界点，可拉长或缩短它前面的片段——编辑会吸附到 10ms。\n3. 在检查器里点击字母，可把一个词拆成分别计时的音节（适合先慢后快的节奏），再拖动它们的分界点。\n4. 拖动最后一个分界点（或用「长度 ±」）来给下一行重新计时。用「自动填充」可均匀铺开词。\n5. 用位移控件可整体移动所有已打点的歌词。\n6. 保存即可生成最终的 `.lrc` 文件。';
-
-  @override
-  String get selectARelease => '选择发行版';
 
   @override
   String get selectAll => '全选';
@@ -6562,17 +5927,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get serialNumber => '序列号';
 
   @override
-  String serverPlaylistSyncFailed(Object e) {
-    return '服务器播放列表同步失败：$e';
-  }
-
-  @override
-  String get serverUrl => '服务器 URL';
-
-  @override
-  String get session => '会话';
-
-  @override
   String get setAlbumArt => '设置专辑封面';
 
   @override
@@ -6597,9 +5951,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String shareFailed(Object e) {
     return '分享失败：$e';
   }
-
-  @override
-  String get sharedSecret => '共享密钥';
 
   @override
   String get sharpRecommended => '锐利（推荐）';
@@ -6630,10 +5981,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get showAlbumArtworkOnTheMini => '在迷你播放器上显示专辑封面';
-
-  @override
-  String get showAppleMusicBiographiesRecommendationsAnd =>
-      '显示 Apple Music 的简介、相似歌手、热门歌曲、专辑介绍和歌手照片。';
 
   @override
   String get showArtist => '显示艺术家';
@@ -6682,9 +6029,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get showOtherArtistsOnAlbumPages => '在专辑页显示其他艺术家';
-
-  @override
-  String get showPassword => '显示密码';
 
   @override
   String get showPlaylistPreviewsOnTheHome => '在主屏幕显示播放列表预览';
@@ -6792,19 +6136,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get shuffleSongsInCurrentList => '随机播放当前列表中的歌曲';
-
-  @override
-  String get signInFailedRetry => '登录失败 —— 重试';
-
-  @override
-  String get signInWithTidal => '使用 Tidal 登录';
-
-  @override
-  String get signInWithYourAccountHifi => '使用你的账号登录 · HiFi 无损';
-
-  @override
-  String get signInWithYourOwnTidal =>
-      '用你自己的 Tidal 账号登录。HiFi 无损（FLAC/ALAC）走位完美引擎播放；HiRes/MQA 与 Atmos 由 Tidal 限制，会提示错误而无法播放。';
 
   @override
   String get signal => '信号';
@@ -6939,13 +6270,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get signalVerifiedInLog => '在日志中已验证';
 
   @override
-  String get signedIn => '已登录';
-
-  @override
   String get silkySmoothBZierCurvesFluid => '丝滑的贝塞尔曲线——流畅自然';
-
-  @override
-  String get similarArtists => '相似艺术家';
 
   @override
   String get simple => '简单';
@@ -6990,68 +6315,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get slope => '斜率';
 
   @override
-  String get smbInvalidServerUrl =>
-      '请使用 smb://服务器/共享名 或 smb://服务器/共享名/文件夹。请在用户名和密码栏中填写凭据，不要将其放入网址。';
-
-  @override
-  String get smbSigningRequired => '服务器要求 SMB 签名。请使用符合服务器安全策略的账号；可能不允许访客访问。';
-
-  @override
-  String get smbCacheWriteFailed => '无法保存 SMB 下载文件。请检查手机的剩余存储空间，然后重试。';
-
-  @override
-  String get smbDownloadIncomplete => 'SMB 下载未完成。请检查连接后重试；不会播放未下载完整的文件。';
-
-  @override
-  String get smbPathNotFound => '找不到 SMB 文件夹或文件。请检查服务器网址中的文件夹，或重新同步音乐库。';
-
-  @override
-  String get smbDecodeFailed =>
-      'SMB 文件已下载，但无法开始播放。请在 Auno Player 中尝试播放同一本地文件，并检查所选音频输出。';
-
-  @override
-  String get smbOperationFailed =>
-      'SMB 操作失败。请运行“测试连接”，并在重试前检查日志中的 SMB stage/code。';
-
-  @override
-  String get smbAccessDenied => '访问被拒绝。请确认该账号有权读取此共享。';
-
-  @override
-  String get smbAuthFailed => '服务器拒绝了用户名或密码。请检查该账号，Samba 可能把未知用户映射为访客。';
-
-  @override
-  String get smbConnectionRefused => '连接被拒绝。请确认服务器已开启文件共享，且 445 端口可达。';
-
-  @override
-  String get smbCouldNotReach => '无法连接服务器。请检查 IP 地址，并确认手机与服务器在同一网络。';
-
-  @override
-  String get smbHostNotResolved =>
-      '无法解析服务器名称。请改用 IP 地址，Android 无法解析 NetBIOS/.local 名称。';
-
-  @override
-  String get smbMissingServerAddress =>
-      '缺少服务器地址。格式为 smb://主机/共享名（例如 smb://nas/music）。';
-
-  @override
-  String get smbMissingShareName =>
-      '缺少共享名。格式为 smb://主机/共享名（例如 smb://nas/music）。';
-
-  @override
-  String get smbServerUnresponsive => '服务器无响应。请检查服务器后重试。';
-
-  @override
-  String get smbShareNotFound => '服务器有响应，但没有找到该共享。请检查地址里的共享名。';
-
-  @override
-  String get smbSharesCanBeAddedNow =>
-      'SMB2/3 共享通过内置客户端连接。请输入共享地址（smb://host/share），如服务器要求请先登录。';
-
-  @override
-  String get smbTimedOut =>
-      '连接超时。请改用服务器 IP（而非 NetBIOS/.local 名称），确认 445 端口可用，且手机与服务器在同一网络。';
-
-  @override
   String get smooth => '平滑';
 
   @override
@@ -7073,9 +6336,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get solid => '纯色';
 
   @override
-  String get soloDeveloper => '独立开发者';
-
-  @override
   String get someOnlineFeaturesMayNotWork => '  ·  部分在线功能可能无法使用';
 
   @override
@@ -7087,11 +6347,6 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String song2(int count) {
     return '$count 首歌曲';
-  }
-
-  @override
-  String song3(int count, Object server) {
-    return '$count 首歌曲 · $server';
   }
 
   @override
@@ -7193,11 +6448,6 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String songsCount(int count) {
     return '$count 首歌曲';
-  }
-
-  @override
-  String songsFound(Object arg1) {
-    return '找到 $arg1 首歌曲';
   }
 
   @override
@@ -7318,9 +6568,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get stopAtTheEndOfThe => '在当前列表播放完后停止';
 
   @override
-  String get stopCasting => '停止投放';
-
-  @override
   String get stopStreaming => '停止串流';
 
   @override
@@ -7349,16 +6596,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get storagePermissions => '存储权限';
-
-  @override
-  String get storeOn => '存储位置';
-
-  @override
-  String get storedAsASaltedHashNever => '以加盐哈希存储，绝不保存明文';
-
-  @override
-  String get storedEncodedPlaybackUnavailableInThis =>
-      '以 Base64 编码存储——NTLM 登录需要此格式';
 
   @override
   String get stormChasers => '追风者';
@@ -7400,28 +6637,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get subsonic => 'Subsonic';
-
-  @override
-  String get subsonicServersSyncAndStreaming => 'Subsonic 服务器、同步与串流播放';
-
-  @override
   String get subtle => '淡雅';
-
-  @override
-  String get support => '支持';
-
-  @override
-  String get supportDevelopmentOnBuyMeACoffee => '在 Buy Me a Coffee 上支持开发';
-
-  @override
-  String get supportDevelopmentOnKoFi => '在 Ko-fi 上支持开发';
-
-  @override
-  String get supportFlick => '支持 Auno Player';
-
-  @override
-  String get supportFlickOnKoFi => '在 Ko-fi 上支持 Auno Player';
 
   @override
   String get surfaceShading => '表面阴影';
@@ -7470,34 +6686,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sync => '同步';
 
   @override
-  String syncFailed(Object e) {
-    return '同步失败：$e';
-  }
-
-  @override
-  String get syncNow => '立即同步';
-
-  @override
-  String get syncServerPlaylists => '同步服务器播放列表';
-
-  @override
   String get synced => '已同步';
 
   @override
-  String synced2(Object arg1) {
-    return '已同步 $arg1';
-  }
-
-  @override
   String get syncedLrc => '同步 LRC';
-
-  @override
-  String syncedPlaylistFromServers(int count) {
-    return '已从服务器同步 $count 个播放列表';
-  }
-
-  @override
-  String get syncing => '同步中…';
 
   @override
   String get synthwaveCity => '合成波之城';
@@ -7558,9 +6750,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get testConnection => '测试连接';
-
-  @override
   String get textGestures => '文字与手势';
 
   @override
@@ -7577,10 +6766,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get theAppDoesNotKnowinglyCollect => '本应用不会在任何年龄段有意收集任何人的任何信息。';
-
-  @override
-  String get theAppQueriesPublicApisMusicbrainz =>
-      '应用会查询公开 API（MusicBrainz/Cover Art Archive、iTunes、Deezer）以查找匹配的专辑封面。搜索查询使用本地音乐元数据。下载的图片会缓存在本地。';
 
   @override
   String get theAudioEngineDeterminesHowYour =>
@@ -7610,9 +6795,6 @@ class AppLocalizationsZh extends AppLocalizations {
       '这会清除你当前的连续收听天数和已解锁的连续收听里程碑。此操作无法撤销。';
 
   @override
-  String get thisDevice => '此设备';
-
-  @override
   String get thisFolderAppearsToBeEmpty => '此文件夹似乎是空的';
 
   @override
@@ -7637,9 +6819,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get thisSongHasNoFilePath => '这首歌曲没有文件路径，无法编辑。';
 
   @override
-  String get thisSongIsMissingAlbumMetadata => '此歌曲缺少专辑元数据，在线匹配受限。';
-
-  @override
   String get thisSongOnly => '仅这首歌曲';
 
   @override
@@ -7656,76 +6835,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get thunderRoad => '雷霆之路';
-
-  @override
-  String get tidal => 'Tidal';
-
-  @override
-  String get tidalAppKeyRejected =>
-      'Tidal 拒绝了这个应用的登录密钥。这些密钥会轮换，内置密钥可能已过期（这是非官方接入方式的已知限制）。';
-
-  @override
-  String tidalCouldNotReach(int status) {
-    return '无法连接 Tidal（HTTP $status），请检查网络连接。';
-  }
-
-  @override
-  String tidalEncryptedTrack(String trackId) {
-    return '曲目 $trackId 已加密（HiRes/MQA）。仅支持未加密的 HiFi 无损。';
-  }
-
-  @override
-  String tidalManifestDecodeFailed(String trackId, String error) {
-    return '无法解析曲目 $trackId 的 Tidal 清单：$error';
-  }
-
-  @override
-  String tidalManifestNoStream(String trackId) {
-    return '曲目 $trackId 的清单中没有串流地址。';
-  }
-
-  @override
-  String get tidalNoPlayableStream => '该曲目没有可播放的串流。';
-
-  @override
-  String get tidalNoSignInCode => 'Tidal 没有返回登录码。';
-
-  @override
-  String get tidalNotSignedIn => '尚未登录 Tidal。请点「使用 Tidal 登录」。';
-
-  @override
-  String tidalOpenLinkManually(String uri) {
-    return '无法自动打开浏览器。请在任意设备上打开此链接完成登录，然后点「重新登录」：\n\n$uri';
-  }
-
-  @override
-  String get tidalSessionExpired => 'Tidal 登录已过期，请重新登录。';
-
-  @override
-  String get tidalSignInDenied => 'Tidal 登录被拒绝。';
-
-  @override
-  String get tidalSignInExpired => 'Tidal 登录码已过期，请重试。';
-
-  @override
-  String get tidalSignInRefused => 'Tidal 拒绝了本次登录，请重试。';
-
-  @override
-  String get tidalSignInTimedOut => '等待 Tidal 登录超时。';
-
-  @override
-  String get tidalTokenRefreshFailed => 'Tidal 令牌刷新失败。';
-
-  @override
-  String get tidalTooManyRequests => 'Tidal 请求过于频繁，请稍候再试。';
-
-  @override
-  String get tidalUnavailable => 'Tidal 当前不可用，请稍后重试。';
-
-  @override
-  String tidalUnsupportedFormat(String trackId) {
-    return '曲目 $trackId 使用了不支持的 Tidal 格式（HiRes/MQA/Atmos）。仅支持未加密的 HiFi 无损。';
-  }
 
   @override
   String get time => '耗时';
@@ -7771,9 +6880,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get topArtists => '最常播放的艺人';
-
-  @override
-  String get topSongs => '最常播放的歌曲';
 
   @override
   String get topSongs2 => '最常播放的歌曲';
@@ -7858,11 +6964,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String tracks8(Object arg1) {
-    return '$arg1 首曲目';
-  }
-
-  @override
   String tracksLikedSongsPlaylists(
     Object songCount,
     Object favoriteCount,
@@ -7902,9 +7003,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get tryOriginalSearch => '尝试原始搜索';
-
-  @override
-  String get tryPickingALocalImageIf => '如果发行版元数据较为少见，可尝试选择本地图片。';
 
   @override
   String get turnOff432HzTuningTo => '关闭 432 Hz 调音才能使用淡入淡出';
@@ -7961,12 +7059,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get ultra => '极致';
 
   @override
-  String get unableToCheckForUpdatesRight => '暂时无法检查更新。';
-
-  @override
-  String get unableToLoadPatchNotesRight => '暂时无法加载更新日志';
-
-  @override
   String get unableToOpenAllFilesAccess => '无法打开所有文件访问权限设置';
 
   @override
@@ -8016,9 +7108,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get unknownFolder => '未知文件夹';
 
   @override
-  String get unknownLastFmError => '未知的 Last.fm 错误';
-
-  @override
   String get unknownTitle => '未知标题';
 
   @override
@@ -8057,57 +7146,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get update => '更新';
-
-  @override
-  String get updateAvailable => '有可用更新';
-
-  @override
-  String get updateAvailableOnThePlayStore => 'Play 商店有可用更新。';
-
-  @override
-  String get updateNoticeHidden => '已隐藏更新提示。';
-
-  @override
-  String get aNewerFlickBuildOnGithub => 'GitHub 上有更新的 Auno Player 版本。';
-
-  @override
-  String get betaUpdateAvailable => '有可用的 Beta 更新';
-
-  @override
-  String get betaUpdateSubtitle => '有可用于测试的预发布版本。';
-
-  @override
-  String get downloadBetaUpdate => '下载 Beta 版';
-
-  @override
-  String get getBetaUpdate => '从 GitHub 获取 Beta 版本。';
-
-  @override
-  String get updateAvailableOnGithub => 'GitHub 上有可用更新。';
-
-  @override
-  String get updateChannel => '更新渠道';
-
-  @override
-  String get updateChannelStable => '稳定版';
-
-  @override
-  String get updateChannelStableSubtitle => '仅提供正式发布的 Auno Player 版本。';
-
-  @override
-  String get updateChannelBeta => '预发布版';
-
-  @override
-  String get updateChannelBetaSubtitle => '仅提供用于测试的 Beta 版本。';
-
-  @override
-  String get updateChannelBoth => '稳定版和预发布版';
-
-  @override
-  String get updateChannelBothSubtitle => '显示两个渠道的更新通知。';
-
-  @override
   String updated(Object arg1) {
     return '更新于 $arg1';
   }
@@ -8121,9 +7159,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String updatedAlbumArtFor2(Object arg1) {
     return '已更新“$arg1”的专辑封面。';
   }
-
-  @override
-  String get updates => '更新';
 
   @override
   String get updatesAboutAndSupport => '更新、关于与支持';
@@ -8143,9 +7178,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get uploadLogsAsALink => '把日志上传为链接？';
-
-  @override
-  String get upnpDlna => 'UPnP / DLNA';
 
   @override
   String get urbPacket => 'URB 数据包';
@@ -8174,10 +7206,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get usbDacAutoBitPerfectOffers => 'USB DAC 自动位完美提示已重置。';
-
-  @override
-  String get usbDacsHeadphonesAndReferenceGear =>
-      'USB DAC、耳机与参考级设备，用于测试并提升播放质量。';
 
   @override
   String get usbDeviceAccess => 'USB 设备访问';
@@ -8254,12 +7282,6 @@ class AppLocalizationsZh extends AppLocalizations {
       '使用经过验证的 USB 直通路径，并禁用会破坏外接 USB DAC 位完美播放的软件 DSP 控制项。';
 
   @override
-  String get userToken => '用户令牌';
-
-  @override
-  String get username => '用户名';
-
-  @override
   String using(Object arg1) {
     return '正在使用 $arg1';
   }
@@ -8290,11 +7312,6 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String version(Object kAppVersion) {
     return '版本 $kAppVersion';
-  }
-
-  @override
-  String version2(Object arg1) {
-    return '版本 $arg1';
   }
 
   @override
@@ -8457,15 +7474,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get waitingForBrowserAuthorization => '正在等待浏览器授权…';
-
-  @override
   String get waitingForPlayback => '等待播放';
-
-  @override
-  String was(Object arg1) {
-    return '原为：$arg1';
-  }
 
   @override
   String get wave => '波形';
@@ -8493,9 +7502,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get webdav => 'WebDAV';
-
-  @override
   String get weekly => '每周';
 
   @override
@@ -8506,9 +7512,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get whatItShows => '显示内容';
-
-  @override
-  String get whatSNew => '新功能';
 
   @override
   String get whenBitPerfectOutputIs => '启用位完美输出时，胶囊会显示当前发送给 DAC 的采样率与位深。';
@@ -8524,9 +7527,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get whereTheFocalSongSitsVertically => '焦点歌曲的垂直位置';
 
   @override
-  String get whereYourMoneyGoes => '资金去向';
-
-  @override
   String get whisperWorld => '耳语世界';
 
   @override
@@ -8537,9 +7537,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get wholeAlbum => '整张专辑';
-
-  @override
-  String get whyDonate => '为何捐赠';
 
   @override
   String wide(Object amount) {
@@ -8624,12 +7621,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get yesterday => '昨天';
 
   @override
-  String get youAlreadyHaveTheLatestFlick => '你已是最新的 Auno Player 版本';
-
-  @override
-  String get youAlreadyHaveTheLatestPlay => '你已是最新的 Play Store 版本';
-
-  @override
   String get youCanAlsoChangeTheCodec =>
       '你也可以在 Android 开发者选项的「蓝牙音频编解码器」中更改编解码器。';
 
@@ -8676,10 +7667,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get yourListeningHistoryIsStillYours => '你的收听历史仍然属于你。请尝试重新载入。';
 
   @override
-  String get yourListensWillRemainOnListenbrainz =>
-      '你的收听记录会保留在 ListenBrainz，但 Auno Player 将停止提交。';
-
-  @override
   String get yourLogsAreUploadedToDpaste =>
       '日志会上传到 dpaste.com，生成一个 30 天后失效的非公开链接。任何拿到链接的人都能阅读——日志可能包含文件路径与设备信息。';
 
@@ -8688,12 +7675,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get yourMostReplayedTrack => '你播放最多的曲目';
-
-  @override
-  String get yourMusicIsBeingScrobbled => '正在记录你的收听';
-
-  @override
-  String get yourMusicIsBeingSubmitted => '正在提交你的收听';
 
   @override
   String get yourMusicOnRepeat => '你的音乐，循环不息。';
@@ -8709,10 +7690,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get yourPlaylists => '你的播放列表';
-
-  @override
-  String get yourScrobblingHistoryWillRemainOn =>
-      '你的收听记录会保留在 Last.fm，但 Auno Player 将不再发送记录。';
 
   @override
   String get yourSessionHistory => '你的收听记录';
@@ -8919,74 +7896,105 @@ class AppLocalizationsZh extends AppLocalizations {
       '测量基于对源文件的独立解码。某些格式包含解码器填充，可能影响时长和静音测量。播放、DSP 和标签均不变。';
 
   @override
-  String get audioAnalysisCodec => "编解码器";
-  @override
-  String get audioAnalysisContainer => "容器";
-  @override
-  String get audioAnalysisBitrate => "比特率";
-  @override
-  String get audioAnalysisChannelLayout => "声道布局";
-  @override
-  String get audioAnalysisHiResSection => "DSD / 高解析";
-  @override
-  String get audioAnalysisDsdVariant => "DSD 规格";
-  @override
-  String get audioAnalysisDopCapable => "支持 DoP";
-  @override
-  String get audioAnalysisDopYes => "是";
-  @override
-  String get audioAnalysisDopNo => "否";
-  @override
-  String get audioAnalysisHiResBadge => "高解析音源";
-  @override
-  String get audioAnalysisMetadataOnlyNote => "此格式无法完整解码，改为显示元数据和完整性。";
-  @override
-  String get audioAnalysisIntegritySection => "完整性与标签";
-  @override
-  String get audioAnalysisIntegrityOk => "完整文件读取通过";
-  @override
-  String get audioAnalysisIntegrityFailed => "完整文件读取失败";
-  @override
-  String get audioAnalysisTagCompleteness => "标签完整度";
-  @override
-  String get audioAnalysisOutputSection => "输出路径";
-  @override
-  String get audioAnalysisBitPerfectPath => "原生 / 位完美路径";
-  @override
-  String get audioAnalysisResampleWarning => "所选输出路径可能会对播放进行重采样。";
-  @override
-  String get audioAnalysisSaveReport => "保存本地报告";
-  @override
-  String get audioAnalysisReportSaved => "报告已保存到 Documents/AunoPlayer";
-  @override
-  String get audioAnalysisReportFailed => "无法保存报告。";
+  String get audioAnalysisCodec => '编解码器';
 
   @override
-  String get recapActualListeningLabel => "实际收听";
+  String get audioAnalysisContainer => '容器';
+
   @override
-  String recapStreakDays(int days) => "连续 ${days} 天";
+  String get audioAnalysisBitrate => '比特率';
+
   @override
-  String get recapListeningClock => "收听时段";
+  String get audioAnalysisChannelLayout => '声道布局';
+
   @override
-  String get recapListeningClockHint => "一天中每个小时的收听时长";
+  String get audioAnalysisHiResSection => 'DSD / 高解析';
+
   @override
-  String recapHourLabel(int hour) => "${hour}:00";
+  String get audioAnalysisDsdVariant => 'DSD 规格';
+
   @override
-  String get recapPersonality => "收听性格";
+  String get audioAnalysisDopCapable => '支持 DoP';
+
   @override
-  String get recapPersonalityNightOwl => "夜猫子";
+  String get audioAnalysisDopYes => '是';
+
   @override
-  String get recapPersonalityCompletionist => "完听主义者";
+  String get audioAnalysisDopNo => '否';
+
   @override
-  String get recapPersonalityExplorer => "探索者";
+  String get audioAnalysisHiResBadge => '高解析音源';
+
   @override
-  String get recapPersonalityBalanced => "均衡听众";
+  String get audioAnalysisMetadataOnlyNote => '此格式无法完整解码，改为显示元数据和完整性。';
+
   @override
-  String get recapFirstListened => "本周期首次收听";
+  String get audioAnalysisIntegritySection => '完整性与标签';
+
   @override
-  String get recapLocalOnlyStats => "仅在此设备计算";
+  String get audioAnalysisIntegrityOk => '完整文件读取通过';
+
   @override
-  String get indonesian => '印度尼西亚语';
+  String get audioAnalysisIntegrityFailed => '完整文件读取失败';
+
   @override
-  String get artworkOnlyForLocalFiles => '只能更改本地文件的封面。';
+  String get audioAnalysisTagCompleteness => '标签完整度';
+
+  @override
+  String get audioAnalysisOutputSection => '输出路径';
+
+  @override
+  String get audioAnalysisBitPerfectPath => '原生 / 位完美路径';
+
+  @override
+  String get audioAnalysisResampleWarning => '所选输出路径可能会对播放进行重采样。';
+
+  @override
+  String get audioAnalysisSaveReport => '保存本地报告';
+
+  @override
+  String get audioAnalysisReportSaved => '报告已保存到 Documents/AunoPlayer';
+
+  @override
+  String get audioAnalysisReportFailed => '无法保存报告。';
+
+  @override
+  String get recapActualListeningLabel => '实际收听';
+
+  @override
+  String recapStreakDays(int days) {
+    return '连续 $days 天';
+  }
+
+  @override
+  String get recapListeningClock => '收听时段';
+
+  @override
+  String get recapListeningClockHint => '一天中每个小时的收听时长';
+
+  @override
+  String recapHourLabel(int hour) {
+    return '$hour时';
+  }
+
+  @override
+  String get recapPersonality => '收听性格';
+
+  @override
+  String get recapPersonalityNightOwl => '夜猫子';
+
+  @override
+  String get recapPersonalityCompletionist => '完听主义者';
+
+  @override
+  String get recapPersonalityExplorer => '探索者';
+
+  @override
+  String get recapPersonalityBalanced => '均衡听众';
+
+  @override
+  String get recapFirstListened => '本周期首次收听';
+
+  @override
+  String get recapLocalOnlyStats => '仅在此设备计算';
 }

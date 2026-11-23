@@ -96,7 +96,9 @@ void main() {
       final spans = wordSpans(line);
       expect(spans, hasLength(1));
       expect(spans.single.text, 'Just a line');
-      expect(revealedChars(line, 1500), 6);
+      // Half of an 11-character line is 5.5; partial characters stay hidden
+      // until their sweep window has actually covered them.
+      expect(revealedChars(line, 1500), 5);
       expect(line.isLineOnly, isTrue);
     });
   });

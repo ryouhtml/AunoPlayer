@@ -293,22 +293,20 @@ class _AutoEqSearchSheetState extends State<_AutoEqSearchSheet> {
         ),
       );
     }
-    return Expanded(
-      child: _results.isEmpty
-          ? _buildEmptyResults(context)
-          : Scrollbar(
+    return _results.isEmpty
+        ? _buildEmptyResults(context)
+        : Scrollbar(
+            controller: _scrollController,
+            child: ListView.builder(
               controller: _scrollController,
-              child: ListView.builder(
-                controller: _scrollController,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppConstants.spacingLg,
-                  vertical: AppConstants.spacingXs,
-                ),
-                itemCount: _results.length,
-                itemBuilder: (context, i) => _resultTile(context, _results[i].entry),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppConstants.spacingLg,
+                vertical: AppConstants.spacingXs,
               ),
+              itemCount: _results.length,
+              itemBuilder: (context, i) => _resultTile(context, _results[i].entry),
             ),
-    );
+          );
   }
 
   Widget _buildEmptyResults(BuildContext context) {

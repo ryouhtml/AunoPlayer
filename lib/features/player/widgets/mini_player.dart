@@ -278,7 +278,7 @@ class _MiniPlayerState extends ConsumerState<MiniPlayer> {
                         ),
 
                       // Play/Pause button with circular background
-                        ValueListenableBuilder<bool>(
+                      ValueListenableBuilder<bool>(
                           valueListenable: _playerService.isPlayingNotifier,
                           builder: (context, isPlaying, _) {
                             return Container(
@@ -322,7 +322,7 @@ class _MiniPlayerState extends ConsumerState<MiniPlayer> {
                               ),
                             );
                           },
-                        );
+                        ),
                     ],
                   ),
                 ],

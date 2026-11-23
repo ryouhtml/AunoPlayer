@@ -5,11 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:auno_player/providers/equalizer_provider.dart';
 import 'package:auno_player/services/autoeq_catalog_service.dart';
 import 'package:auno_player/services/eq_preset_service.dart';
 
-const _revision = '7ae0f56d53074872b028649617a22bbb4232feb7';
 Map<String, dynamic> _entry(String id, String brand, String model) => {
   'id': id,
   'b': brand,

@@ -413,12 +413,13 @@ class _ReplayScrollContentState extends State<_ReplayScrollContent> {
         options: widget.options,
         scrollController: _scrollController,
       ),
-      ReplayInsights(
-        key: ValueKey('${recap.period.name}-insights'),
-        recap: recap,
-        options: widget.options,
-        scrollController: _scrollController,
-      ),
+      if (ReplayInsights.hasData(recap))
+        ReplayInsights(
+          key: ValueKey('${recap.period.name}-insights'),
+          recap: recap,
+          options: widget.options,
+          scrollController: _scrollController,
+        ),
       if (recap.topSongs.isNotEmpty)
         ReplayRankings(
           recap: recap,

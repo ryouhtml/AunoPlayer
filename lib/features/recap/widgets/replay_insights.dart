@@ -23,12 +23,14 @@ class ReplayInsights extends StatelessWidget {
     required this.scrollController,
   });
 
-  bool get hasInsights =>
+  static bool hasData(ListeningRecap recap) =>
       recap.actualListenedMs != null ||
       recap.streakDays != null ||
       recap.hourBuckets != null ||
       recap.firstListenedAt != null ||
       recap.listeningPersonality != null;
+
+  bool get hasInsights => hasData(recap);
 
   @override
   Widget build(BuildContext context) {
