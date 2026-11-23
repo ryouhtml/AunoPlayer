@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:auno_player/data/entities/listening_event_entity.dart';
 import 'package:auno_player/data/repositories/recently_played_repository.dart';
+import 'package:auno_player/data/repositories/song_repository.dart';
 import 'package:auno_player/services/listening_stats_service.dart';
 import 'package:auno_player/services/replay_play_tracker.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -29,7 +30,8 @@ String _isarCorePath() {
 }
 
 class _EmptyLegacy extends RecentlyPlayedRepository {
-  _EmptyLegacy({super.isar});
+  _EmptyLegacy({required Isar isar})
+      : super(isar: isar, songRepository: SongRepository(isar: isar));
 
   @override
   Future<Map<ListeningRecapPeriod, ListeningRecap>> getListeningRecaps({
