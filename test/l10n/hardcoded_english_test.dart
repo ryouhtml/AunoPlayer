@@ -39,9 +39,6 @@ const String _sourceDir = 'lib';
 /// A new entry here needs the same scrutiny as a new entry in
 /// `l10n_allowlist.json`: it is a claim that the English text is correct.
 const Map<String, String> _allowedPaths = <String, String>{
-  'lib/features/whats_new/data/changelog_data.dart':
-      'release notes are historical product copy, one entry per shipped '
-      'version; they are not UI strings and are translated as documents',
   'lib/features/settings/widgets/lastfm_settings_tile.dart':
       'the literal is the URL last.fm/api/account/create, shown as link text',
   'lib/features/settings/widgets/language_settings_card.dart':

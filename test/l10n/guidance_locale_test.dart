@@ -12,7 +12,6 @@ import 'package:auno_player/l10n/l10n.dart';
 import 'package:auno_player/providers/player_provider.dart';
 import 'package:auno_player/providers/songs_provider.dart';
 import 'package:auno_player/providers/tutorial_provider.dart';
-import 'package:auno_player/providers/update_check_provider.dart';
 
 class _ActiveTutorial extends TutorialNotifier {
   @override
@@ -24,17 +23,11 @@ class _EmptySongs extends SongsNotifier {
   Future<SongsState> build() async => SongsState();
 }
 
-class _OfflineUpdates extends UpdateCheckNotifier {
-  @override
-  UpdateCheckState build() => const UpdateCheckState();
-}
-
 Widget _host(Widget child, {Locale locale = kFilipinoLocale}) => ProviderScope(
   overrides: [
     currentSongProvider.overrideWithValue(null),
     songsProvider.overrideWith(_EmptySongs.new),
     tutorialProvider.overrideWith(_ActiveTutorial.new),
-    updateCheckProvider.overrideWith(_OfflineUpdates.new),
   ],
   child: MaterialApp(
     theme: AppTheme.darkTheme,

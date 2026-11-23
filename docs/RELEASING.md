@@ -30,16 +30,10 @@ flutter build apk --flavor full --release
 - The `full` flavor declares `MANAGE_EXTERNAL_STORAGE` and keeps the Rust
   direct-walk scanner for complete DSD/WavPack coverage
   (`android/app/src/full/AndroidManifest.xml`).
-- Attach the APK to the GitHub release. The in-app update checker only
-  offers a release that has an `.apk` asset attached; releases without
-  one are ignored. Upload the `full` APK before publishing.
+- Attach the APK to the GitHub release. Auno Player has no in-app updater,
+  update channel, or patch-note fetcher; users download releases manually.
 - Mark testing builds as a **pre-release** (GitHub flag and/or a
-  `-beta.N` tag). Auno Player treats semver pre-release tags as beta even when
-  the GitHub flag is off.
-- Users choose **Stable**, **Pre-releases**, or **both** under
-  Settings → App Info → Update Channel. Stable releases are the default;
-  beta notices are opt-in. A `stable` release is a tag without a semver
-  pre-release suffix.
+  `-beta.N` tag) so the release page distinguishes them from stable builds.
 
 ## Checks before publishing
 

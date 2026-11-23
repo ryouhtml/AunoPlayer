@@ -100,11 +100,6 @@ Auno Player is part of the **Moss ecosystem**. It can receive playback handoffs 
 - No personal data is exchanged between apps
 - The integration is entirely local on your device
 
-### 6.4 In-App Updates
-
-- **Play Store updates**: The App uses Google Play In-App Update API, which is governed by Google's privacy policies
-- **Patch notes**: Release notes are fetched from **GitHub Releases API** — no personal data is sent
-
 ---
 
 ## 7. Internet Access
@@ -113,7 +108,6 @@ The App requires internet access for:
 
 - Fetching album art from online sources (MusicBrainz, iTunes, Deezer)
 - Last.fm scrobbling (if enabled by you)
-- Checking for app updates and fetching patch notes from GitHub
 
 No personal data is transmitted during these operations beyond what is necessary for the specific feature (e.g., album/artist name for art lookup, scrobble data for Last.fm).
 

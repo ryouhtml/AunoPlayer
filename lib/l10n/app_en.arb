@@ -62,10 +62,6 @@
   "@aLittleRecordOfWhatStayed": {
     "description": "lib/features/recap/screens/listening_recap_screen.dart:476"
   },
-  "aNewerFlickBuildIsOn": "A newer Auno Player build is on the Play Store.",
-  "@aNewerFlickBuildIsOn": {
-    "description": "lib/features/menu/screens/menu_screen.dart:1234"
-  },
   "aPlaylistWithThisNameAlready": "A playlist with this name already exists",
   "@aPlaylistWithThisNameAlready": {
     "description": "lib/features/playlists/screens/playlists_screen.dart:444"
@@ -1023,10 +1019,6 @@
   "@audioSignalPath": {
     "description": "lib/features/player/widgets/bit_perfect_indicator.dart:480"
   },
-  "audioTestingEquipment": "Audio Testing Equipment",
-  "@audioTestingEquipment": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:173"
-  },
   "aug": "Aug",
   "@aug": {
     "description": "lib/features/milestone/screens/milestones_screen.dart:509"
@@ -1114,10 +1106,6 @@
   "automatic": "Automatic",
   "@automatic": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:311"
-  },
-  "automaticUpdateChecks": "Automatic Update Checks",
-  "@automaticUpdateChecks": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:173"
   },
   "automaticallyOpenKeyboardWhenSwitchingTo": "Automatically open keyboard when switching to search",
   "@automaticallyOpenKeyboardWhenSwitchingTo": {
@@ -1799,10 +1787,6 @@
       }
     }
   },
-  "checkAgain": "Check Again",
-  "@checkAgain": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:609"
-  },
   "checkTheVersionsYouWantTo": "Check the versions you want to keep — unchecked ones will be removed from your library. At least one must stay.",
   "@checkTheVersionsYouWantTo": {
     "description": "lib/features/settings/screens/duplicate_cleaner_screen.dart:1265"
@@ -1814,14 +1798,6 @@
   "checking": "Checking…",
   "@checking": {
     "description": "lib/features/settings/screens/library_settings_screen.dart:1118"
-  },
-  "checkingForUpdates": "Checking for Updates",
-  "@checkingForUpdates": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:133"
-  },
-  "checkingForUpdates2": "Checking for Updates...",
-  "@checkingForUpdates2": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:608"
   },
   "childrenSPrivacy": "Children's Privacy",
   "@childrenSPrivacy": {
@@ -2060,10 +2036,6 @@
   "@connectToSubmitYourListeningHistory": {
     "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:481"
   },
-  "connectToTheInternetToCheck": "Connect to the internet to check for updates.",
-  "@connectToTheInternetToCheck": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:80"
-  },
   "connected": "Connected",
   "@connected": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:110"
@@ -2233,10 +2205,6 @@
   "@cosmicOrchestra": {
     "description": "lib/models/song.dart:322"
   },
-  "couldNotCheckForUpdates": "Could Not Check for Updates",
-  "@couldNotCheckForUpdates": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:151"
-  },
   "couldNotConnectToLastFm": "Could not connect to Last.fm. Check your API credentials and try again.",
   "@couldNotConnectToLastFm": {
     "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:81"
@@ -2274,10 +2242,6 @@
   "@couldNotOpenBrowser": {
     "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:683"
   },
-  "couldNotOpenLink": "Could not open link",
-  "@couldNotOpenLink": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:110"
-  },
   "couldNotOpenLink2": "Could not open link: {e}",
   "@couldNotOpenLink2": {
     "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:692",
@@ -2303,23 +2267,6 @@
         "type": "Object"
       }
     }
-  },
-  "couldNotOpenThePlayStore": "Could not open the Play Store.",
-  "@couldNotOpenThePlayStore": {
-    "description": "lib/features/menu/screens/menu_screen.dart:229"
-  },
-  "couldNotOpenThePlayStore2": "Could not open the Play Store: {error}",
-  "@couldNotOpenThePlayStore2": {
-    "description": "lib/features/menu/screens/menu_screen.dart:237",
-    "placeholders": {
-      "error": {
-        "type": "Object"
-      }
-    }
-  },
-  "couldNotOpenThePlayStore3": "Could not open the Play Store",
-  "@couldNotOpenThePlayStore3": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:117"
   },
   "couldNotPrepareTheEditedFile": "Could not prepare the edited file: {error}",
   "@couldNotPrepareTheEditedFile": {
@@ -3679,14 +3626,6 @@
       }
     }
   },
-  "downloadTheLatestApkFromFlick": "Download the latest APK from github.com/ryouhtml/AunoPlayer/releases",
-  "@downloadTheLatestApkFromFlick": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:145"
-  },
-  "downloadUpdate": "Download Update",
-  "@downloadUpdate": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:638"
-  },
   "dp": "{arg1} dp",
   "@dp": {
     "description": "lib/features/settings/widgets/mini_player_customization.dart:107",
@@ -3746,10 +3685,6 @@
         "type": "Object"
       }
     }
-  },
-  "dsdDsfPlayback": "DSD / DSF Playback",
-  "@dsdDsfPlayback": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:180"
   },
   "dsdMode": "DSD mode",
   "@dsdMode": {
@@ -4527,10 +4462,6 @@
   "@flickCanReceivePlaybackHandoffsFrom": {
     "description": "lib/features/settings/screens/privacy_policy_screen.dart:71"
   },
-  "flickChecksFlickPlayerSiteFor": "Auno Player checks github.com/ryouhtml/AunoPlayer/releases for updates whenever you are online",
-  "@flickChecksFlickPlayerSiteFor": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:176"
-  },
   "flickLogs": "Auno Player logs",
   "@flickLogs": {
     "description": "lib/features/settings/screens/logs_screen.dart:110"
@@ -4554,10 +4485,6 @@
   "flickReplay": "Auno Replay",
   "@flickReplay": {
     "description": "lib/features/menu/screens/menu_screen.dart:1089"
-  },
-  "flickScansForPlayStoreUpdates": "Auno Player scans for Play Store updates whenever you are online",
-  "@flickScansForPlayStoreUpdates": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:175"
   },
   "flickWillForceYourChosenCodec": "Auno Player will force your chosen codec on connect",
   "@flickWillForceYourChosenCodec": {
@@ -4702,10 +4629,6 @@
       }
     }
   },
-  "freeOpenSource": "Free & Open Source",
-  "@freeOpenSource": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:143"
-  },
   "freq": "Freq",
   "@freq": {
     "description": "lib/features/settings/screens/equalizer_screen.dart:2623"
@@ -4771,10 +4694,6 @@
   "@fullscreen": {
     "description": "lib/features/player/widgets/player_layout_sheet.dart:152"
   },
-  "fundingNativeDsdDsfPlaybackDevelopment": "Funding native DSD/DSF playback development — a highly requested feature for audiophiles.",
-  "@fundingNativeDsdDsfPlaybackDevelopment": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:182"
-  },
   "fxOff": "FX off",
   "@fxOff": {
     "description": "lib/features/settings/screens/equalizer_screen.dart:3511"
@@ -4827,10 +4746,6 @@
   "getStarted": "Get Started",
   "@getStarted": {
     "description": "lib/features/onboarding/screens/onboarding_screen.dart:269"
-  },
-  "getTheLatestApkFromFlick": "Get the latest APK from github.com/ryouhtml/AunoPlayer/releases",
-  "@getTheLatestApkFromFlick": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:639"
   },
   "getYourApiCredentials": "Get your API credentials",
   "@getYourApiCredentials": {
@@ -5242,10 +5157,6 @@
   "@impulseResponse": {
     "description": "lib/features/settings/screens/equalizer_screen.dart:3762"
   },
-  "inAppUpdates": "In-App Updates",
-  "@inAppUpdates": {
-    "description": "lib/features/settings/screens/privacy_policy_screen.dart:74"
-  },
   "inLabel": "in {folder}",
   "@inLabel": {
     "description": "lib/features/settings/screens/duplicate_cleaner_screen.dart:1555",
@@ -5373,10 +5284,6 @@
   "jumpBackIn": "Jump Back In",
   "@jumpBackIn": {
     "description": "lib/features/menu/screens/menu_screen.dart:1310"
-  },
-  "jumpToTheFlickListingAnd": "Jump to the Auno Player listing and update from there",
-  "@jumpToTheFlickListingAnd": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:632"
   },
   "jun": "Jun",
   "@jun": {
@@ -5634,10 +5541,6 @@
   "latestArrivalsFromYourLibrary": "Latest arrivals from your library",
   "@latestArrivalsFromYourLibrary": {
     "description": "lib/features/menu/screens/menu_screen.dart:1775"
-  },
-  "latestUpdate": "Latest Update",
-  "@latestUpdate": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:250"
   },
   "layered": "Layered",
   "@layered": {
@@ -5962,10 +5865,6 @@
   "@loadingFavoritesRecentSessionsGenerated": {
     "description": "lib/features/menu/screens/menu_screen.dart:2260"
   },
-  "loadingPatchNotes": "Loading patch notes...",
-  "@loadingPatchNotes": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:276"
-  },
   "loadingReplay": "Loading Replay",
   "@loadingReplay": {
     "description": "lib/features/recap/screens/listening_recap_screen.dart:235"
@@ -6010,14 +5909,6 @@
   "lookingForCoverArtFromMusicbrainz": "Looking for cover art from MusicBrainz and Cover Art Archive.",
   "@lookingForCoverArtFromMusicbrainz": {
     "description": "lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:471"
-  },
-  "lookingForTheLatestFlickRelease": "Looking for the latest Auno Player release right now",
-  "@lookingForTheLatestFlickRelease": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:136"
-  },
-  "lookingForTheLatestPlayStore": "Looking for the latest Play Store update right now",
-  "@lookingForTheLatestPlayStore": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:135"
   },
   "lossless": " Lossless",
   "@lossless": {
@@ -6757,10 +6648,6 @@
   "@noCategoriesSelected": {
     "description": "lib/features/search/screens/search_screen.dart:315"
   },
-  "noChangelogNotesForThisVersion": "No changelog notes for this version yet.",
-  "@noChangelogNotesForThisVersion": {
-    "description": "lib/features/whats_new/widgets/whats_new_bottom_sheet.dart:56"
-  },
   "noCustomAlbumArtIsSet": "No custom album art is set yet.",
   "@noCustomAlbumArtIsSet": {
     "description": "l10n pass: user-visible service error"
@@ -6846,10 +6733,6 @@
   "@noNewAdditionsYet": {
     "description": "lib/features/recently_added/screens/recently_added_screen.dart:318"
   },
-  "noNewUpdateFound": "No new update found.",
-  "@noNewUpdateFound": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:95"
-  },
   "noOnlineArtworkFound": "No online artwork found",
   "@noOnlineArtworkFound": {
     "description": "lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:489"
@@ -6857,10 +6740,6 @@
   "noOutputDevicesAvailable": "No output devices available.",
   "@noOutputDevicesAvailable": {
     "description": "lib/features/settings/screens/casting_settings_screen.dart:264"
-  },
-  "noPatchNotesAvailableYet": "No patch notes available yet.",
-  "@noPatchNotesAvailableYet": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:251"
   },
   "noPlaybackYet": "No playback yet",
   "@noPlaybackYet": {
@@ -6931,10 +6810,6 @@
   "noUpcomingQueueItemsYet": "No upcoming queue items yet.",
   "@noUpcomingQueueItemsYet": {
     "description": "lib/features/queue/screens/queue_screen.dart:507"
-  },
-  "noUpdateAvailable": "No Update Available",
-  "@noUpdateAvailable": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:165"
   },
   "noUrbData": "No URB data",
   "@noUrbData": {
@@ -7048,10 +6923,6 @@
   "@offCropsToFillTheSquare": {
     "description": "lib/features/settings/screens/library_settings_screen.dart:2197"
   },
-  "offline": "Offline",
-  "@offline": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:158"
-  },
   "onAndroidTheStandardJustAudio": "On Android, the standard just_audio playback path now applies native counterparts for EQ, dynamics, balance, and spatial FX on supported devices. The Rust engine still delivers the most exact version of these controls, so some Android results are approximate.",
   "@onAndroidTheStandardJustAudio": {
     "description": "lib/features/settings/screens/equalizer_screen.dart:3911"
@@ -7128,10 +6999,6 @@
   "@openBluetoothCodecSettings": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:351"
   },
-  "openFullNotes": "Open Full Notes",
-  "@openFullNotes": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:401"
-  },
   "openInAppleMusic": "Open in Apple Music",
   "@openInAppleMusic": {
     "description": "lib/features/albums/screens/album_detail_screen.dart:360"
@@ -7139,10 +7006,6 @@
   "openInBrowser": "Open in browser",
   "@openInBrowser": {
     "description": "lib/features/settings/screens/network_server_edit_screen.dart:623"
-  },
-  "openInPlayStore": "Open in Play Store",
-  "@openInPlayStore": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:631"
   },
   "openLibrary": "Open Library",
   "@openLibrary": {
@@ -7160,17 +7023,9 @@
   "@openPlayer": {
     "description": "lib/features/menu/screens/menu_screen.dart:1319"
   },
-  "openReleaseNotes": "Open Release Notes",
-  "@openReleaseNotes": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:312"
-  },
   "openSourceLicenses": "Open source licenses",
   "@openSourceLicenses": {
     "description": "lib/features/settings/screens/app_info_settings_screen.dart:660"
-  },
-  "openThePlayStoreToInstall": "Open the Play Store to install the latest Auno Player build",
-  "@openThePlayStoreToInstall": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:144"
   },
   "openedFromLocker": "Opened from Locker",
   "@openedFromLocker": {
@@ -7304,10 +7159,6 @@
   "pasteYourListenbrainzToken": "Paste your ListenBrainz token",
   "@pasteYourListenbrainzToken": {
     "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:741"
-  },
-  "patchNotes": "Patch Notes",
-  "@patchNotes": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:259"
   },
   "pause": "Pause",
   "@pause": {
@@ -7449,10 +7300,6 @@
   "playNext": "Play next",
   "@playNext": {
     "description": "lib/features/queue/screens/queue_screen.dart:843"
-  },
-  "playStoreUpdatesUseGooglePlay": "Play Store updates use Google Play In-App Update API (governed by Google's privacy policies). Patch notes are fetched from GitHub Releases API without sending personal data.",
-  "@playStoreUpdatesUseGooglePlay": {
-    "description": "lib/features/settings/screens/privacy_policy_screen.dart:76"
   },
   "playback": "Playback",
   "@playback": {
@@ -8000,14 +7847,6 @@
   "@reconnectNow": {
     "description": "lib/widgets/uac2/uac2_connection_manager.dart:205"
   },
-  "reconnectToTheInternetToScan": "Reconnect to the internet to scan for updates",
-  "@reconnectToTheInternetToScan": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:614"
-  },
-  "reconnectToWiFiOrMobile": "Reconnect to Wi-Fi or mobile data so Auno Player can scan again",
-  "@reconnectToWiFiOrMobile": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:159"
-  },
   "reconnectionFailed": "Reconnection failed",
   "@reconnectionFailed": {
     "description": "lib/widgets/uac2/uac2_connection_manager.dart:72"
@@ -8514,14 +8353,6 @@
   "@routesBluetoothThroughTheRustEngine": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:434"
   },
-  "runAnotherPlayStoreUpdateScan": "Run another Play Store update scan right now",
-  "@runAnotherPlayStoreUpdateScan": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:612"
-  },
-  "runAnotherUpdateScanRightNow": "Run another update scan right now",
-  "@runAnotherUpdateScanRightNow": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:613"
-  },
   "rustViaOboe": "Rust via Oboe",
   "@rustViaOboe": {
     "description": "lib/features/settings/screens/uac2_preferences_screen.dart:794"
@@ -8919,10 +8750,6 @@
         "type": "Object"
       }
     }
-  },
-  "seeWhatIsNewInThis": "See what is new in this update",
-  "@seeWhatIsNewInThis": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:624"
   },
   "select": "Select",
   "@select": {
@@ -10173,10 +10000,6 @@
   "@subtle": {
     "description": "lib/models/album_color_mode.dart:22"
   },
-  "support": "Support",
-  "@support": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:703"
-  },
   "surfaceShading": "Surface shading",
   "@surfaceShading": {
     "description": "lib/features/recap/screens/replay_studio_screen.dart:674"
@@ -10962,14 +10785,6 @@
   "@ultra": {
     "description": "lib/features/settings/screens/orbit_settings_screen.dart:166"
   },
-  "unableToCheckForUpdatesRight": "Unable to check for updates right now.",
-  "@unableToCheckForUpdatesRight": {
-    "description": "lib/providers/update_check_provider.dart:177"
-  },
-  "unableToLoadPatchNotesRight": "Unable to load patch notes right now.",
-  "@unableToLoadPatchNotesRight": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:300"
-  },
   "unableToOpenAllFilesAccess": "Unable to open All Files Access settings",
   "@unableToOpenAllFilesAccess": {
     "description": "lib/features/settings/screens/library_settings_screen.dart:220"
@@ -11110,74 +10925,6 @@
       }
     }
   },
-  "update": "Update",
-  "@update": {
-    "description": "lib/features/menu/screens/menu_screen.dart:1247"
-  },
-  "updateAvailable": "Update Available",
-  "@updateAvailable": {
-    "description": "lib/features/menu/screens/menu_screen.dart:1226"
-  },
-  "updateAvailableOnThePlayStore": "Update available on the Play Store.",
-  "@updateAvailableOnThePlayStore": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:85"
-  },
-  "updateNoticeHidden": "Update notice hidden.",
-  "@updateNoticeHidden": {
-    "description": "lib/features/menu/screens/menu_screen.dart:1269"
-  },
-  "aNewerFlickBuildOnGithub": "A newer Auno Player build is available on GitHub.",
-  "@aNewerFlickBuildOnGithub": {
-    "description": "GitHub update banner for stable releases."
-  },
-  "betaUpdateAvailable": "Beta Update Available",
-  "@betaUpdateAvailable": {
-    "description": "GitHub update banner title for pre-releases."
-  },
-  "betaUpdateSubtitle": "A pre-release build is available for testing.",
-  "@betaUpdateSubtitle": {
-    "description": "Explains that the offered beta build is for testing."
-  },
-  "downloadBetaUpdate": "Download Beta",
-  "@downloadBetaUpdate": {
-    "description": "Action label for downloading a pre-release APK."
-  },
-  "getBetaUpdate": "Get the beta build from GitHub.",
-  "@getBetaUpdate": {
-    "description": "Subtitle for downloading a pre-release APK."
-  },
-  "updateAvailableOnGithub": "Update available on GitHub.",
-  "@updateAvailableOnGithub": {
-    "description": "Toast shown when a GitHub update is available."
-  },
-  "updateChannel": "Update Channel",
-  "@updateChannel": {
-    "description": "Settings section for choosing stable or beta updates."
-  },
-  "updateChannelStable": "Stable releases",
-  "@updateChannelStable": {
-    "description": "Update channel option for stable releases only."
-  },
-  "updateChannelStableSubtitle": "Only offer fully released Auno Player builds.",
-  "@updateChannelStableSubtitle": {
-    "description": "Explains the stable update channel."
-  },
-  "updateChannelBeta": "Pre-releases",
-  "@updateChannelBeta": {
-    "description": "Update channel option for pre-releases only."
-  },
-  "updateChannelBetaSubtitle": "Only offer beta builds for testing.",
-  "@updateChannelBetaSubtitle": {
-    "description": "Explains the beta update channel."
-  },
-  "updateChannelBoth": "Stable and pre-releases",
-  "@updateChannelBoth": {
-    "description": "Update channel option for both release types."
-  },
-  "updateChannelBothSubtitle": "Show update notices for both channels.",
-  "@updateChannelBothSubtitle": {
-    "description": "Explains the combined update channel."
-  },
   "updated": "Updated {arg1}",
   "@updated": {
     "description": "lib/features/playlists/screens/playlist_detail_screen.dart:438",
@@ -11204,10 +10951,6 @@
         "type": "Object"
       }
     }
-  },
-  "updates": "Updates",
-  "@updates": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:602"
   },
   "updatesAboutAndSupport": "Updates, about, and support",
   "@updatesAboutAndSupport": {
@@ -11278,10 +11021,6 @@
   "usbDacAutoBitPerfectOffers": "USB DAC auto bit-perfect offers reset.",
   "@usbDacAutoBitPerfectOffers": {
     "description": "lib/features/settings/screens/uac2_preferences_screen.dart:522"
-  },
-  "usbDacsHeadphonesAndReferenceGear": "USB DACs, headphones, and reference gear to test and improve playback quality.",
-  "@usbDacsHeadphonesAndReferenceGear": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:175"
   },
   "usbDeviceAccess": "USB Device Access",
   "@usbDeviceAccess": {
@@ -11430,15 +11169,6 @@
     "description": "lib/features/settings/screens/app_info_settings_screen.dart:454",
     "placeholders": {
       "kAppVersion": {
-        "type": "Object"
-      }
-    }
-  },
-  "version2": "Version {arg1}",
-  "@version2": {
-    "description": "lib/features/whats_new/widgets/whats_new_bottom_sheet.dart:126",
-    "placeholders": {
-      "arg1": {
         "type": "Object"
       }
     }
@@ -11642,10 +11372,6 @@
   "@whatItShows": {
     "description": "lib/features/manual/data/manual_data.dart"
   },
-  "whatSNew": "What's New",
-  "@whatSNew": {
-    "description": "lib/features/whats_new/widgets/whats_new_bottom_sheet.dart:22"
-  },
   "whenBitPerfectOutputIs": "When bit-perfect output is active, a capsule shows the sample rate and bit depth being sent to your DAC.",
   "@whenBitPerfectOutputIs": {
     "description": "lib/features/manual/data/manual_data.dart"
@@ -11661,10 +11387,6 @@
   "whereTheFocalSongSitsVertically": "Where the focal song sits vertically",
   "@whereTheFocalSongSitsVertically": {
     "description": "lib/features/settings/screens/orbit_settings_screen.dart:39"
-  },
-  "whereYourMoneyGoes": "Where Your Money Goes",
-  "@whereYourMoneyGoes": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:161"
   },
   "whisperWorld": "Whisper World",
   "@whisperWorld": {
@@ -11815,14 +11537,6 @@
   "yesterday": "Yesterday",
   "@yesterday": {
     "description": "lib/data/repositories/recently_played_repository.dart:285"
-  },
-  "youAlreadyHaveTheLatestFlick": "You already have the latest Auno Player release",
-  "@youAlreadyHaveTheLatestFlick": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:168"
-  },
-  "youAlreadyHaveTheLatestPlay": "You already have the latest Play Store release",
-  "@youAlreadyHaveTheLatestPlay": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:167"
   },
   "youCanAlsoChangeTheCodec": "You can also change the codec in Android Developer Options under \"Bluetooth Audio Codec\".",
   "@youCanAlsoChangeTheCodec": {

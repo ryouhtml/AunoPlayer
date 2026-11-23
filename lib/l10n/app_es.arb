@@ -62,10 +62,6 @@
   "@aLittleRecordOfWhatStayed": {
     "description": "lib/features/recap/screens/listening_recap_screen.dart:476"
   },
-  "aNewerFlickBuildIsOn": "Hay una versión más reciente de Auno Player en Play Store.",
-  "@aNewerFlickBuildIsOn": {
-    "description": "lib/features/menu/screens/menu_screen.dart:1234"
-  },
   "aPlaylistWithThisNameAlready": "Ya existe una lista de reproducción con ese nombre",
   "@aPlaylistWithThisNameAlready": {
     "description": "lib/features/playlists/screens/playlists_screen.dart:444"
@@ -1023,10 +1019,6 @@
   "@audioSignalPath": {
     "description": "lib/features/player/widgets/bit_perfect_indicator.dart:480"
   },
-  "audioTestingEquipment": "Equipo de pruebas de audio",
-  "@audioTestingEquipment": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:173"
-  },
   "aug": "ago",
   "@aug": {
     "description": "lib/features/milestone/screens/milestones_screen.dart:509"
@@ -1114,10 +1106,6 @@
   "automatic": "Automático",
   "@automatic": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:311"
-  },
-  "automaticUpdateChecks": "Buscar actualizaciones automáticamente",
-  "@automaticUpdateChecks": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:173"
   },
   "automaticallyOpenKeyboardWhenSwitchingTo": "Abrir automáticamente el teclado al cambiar a la búsqueda",
   "@automaticallyOpenKeyboardWhenSwitchingTo": {
@@ -1799,10 +1787,6 @@
       }
     }
   },
-  "checkAgain": "Volver a comprobar",
-  "@checkAgain": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:609"
-  },
   "checkTheVersionsYouWantTo": "Marca las versiones que quieres conservar; las que no marques se eliminarán de tu biblioteca. Debe quedar al menos una.",
   "@checkTheVersionsYouWantTo": {
     "description": "lib/features/settings/screens/duplicate_cleaner_screen.dart:1265"
@@ -1814,14 +1798,6 @@
   "checking": "Comprobando…",
   "@checking": {
     "description": "lib/features/settings/screens/library_settings_screen.dart:1118"
-  },
-  "checkingForUpdates": "Buscando actualizaciones",
-  "@checkingForUpdates": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:133"
-  },
-  "checkingForUpdates2": "Buscando actualizaciones…",
-  "@checkingForUpdates2": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:608"
   },
   "childrenSPrivacy": "Privacidad de los menores",
   "@childrenSPrivacy": {
@@ -2060,10 +2036,6 @@
   "@connectToSubmitYourListeningHistory": {
     "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:481"
   },
-  "connectToTheInternetToCheck": "Conéctate a internet para buscar actualizaciones.",
-  "@connectToTheInternetToCheck": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:80"
-  },
   "connected": "Conectado",
   "@connected": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:110"
@@ -2233,10 +2205,6 @@
   "@cosmicOrchestra": {
     "description": "lib/models/song.dart:322"
   },
-  "couldNotCheckForUpdates": "No se pudieron buscar actualizaciones",
-  "@couldNotCheckForUpdates": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:151"
-  },
   "couldNotConnectToLastFm": "No se pudo conectar con Last.fm. Comprueba las credenciales de la API e inténtalo de nuevo.",
   "@couldNotConnectToLastFm": {
     "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:81"
@@ -2274,10 +2242,6 @@
   "@couldNotOpenBrowser": {
     "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:683"
   },
-  "couldNotOpenLink": "No se pudo abrir el enlace",
-  "@couldNotOpenLink": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:110"
-  },
   "couldNotOpenLink2": "No se pudo abrir el enlace: {e}",
   "@couldNotOpenLink2": {
     "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:692",
@@ -2303,23 +2267,6 @@
         "type": "Object"
       }
     }
-  },
-  "couldNotOpenThePlayStore": "No se pudo abrir Play Store.",
-  "@couldNotOpenThePlayStore": {
-    "description": "lib/features/menu/screens/menu_screen.dart:229"
-  },
-  "couldNotOpenThePlayStore2": "No se pudo abrir Play Store: {error}",
-  "@couldNotOpenThePlayStore2": {
-    "description": "lib/features/menu/screens/menu_screen.dart:237",
-    "placeholders": {
-      "error": {
-        "type": "Object"
-      }
-    }
-  },
-  "couldNotOpenThePlayStore3": "No se pudo abrir Play Store",
-  "@couldNotOpenThePlayStore3": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:117"
   },
   "couldNotPrepareTheEditedFile": "No se pudo preparar el archivo editado: {error}",
   "@couldNotPrepareTheEditedFile": {
@@ -3679,14 +3626,6 @@
       }
     }
   },
-  "downloadTheLatestApkFromFlick": "Descarga el APK más reciente desde github.com/ryouhtml/AunoPlayer/releases",
-  "@downloadTheLatestApkFromFlick": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:145"
-  },
-  "downloadUpdate": "Descargar actualización",
-  "@downloadUpdate": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:638"
-  },
   "dp": "{arg1} dp",
   "@dp": {
     "description": "lib/features/settings/widgets/mini_player_customization.dart:107",
@@ -3746,10 +3685,6 @@
         "type": "Object"
       }
     }
-  },
-  "dsdDsfPlayback": "Reproducción DSD / DSF",
-  "@dsdDsfPlayback": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:180"
   },
   "dsdMode": "Modo DSD",
   "@dsdMode": {
@@ -4527,10 +4462,6 @@
   "@flickCanReceivePlaybackHandoffsFrom": {
     "description": "lib/features/settings/screens/privacy_policy_screen.dart:71"
   },
-  "flickChecksFlickPlayerSiteFor": "Auno Player busca actualizaciones en github.com/ryouhtml/AunoPlayer/releases cuando tienes conexión a internet",
-  "@flickChecksFlickPlayerSiteFor": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:176"
-  },
   "flickLogs": "Registros de Auno Player",
   "@flickLogs": {
     "description": "lib/features/settings/screens/logs_screen.dart:110"
@@ -4554,10 +4485,6 @@
   "flickReplay": "Auno Replay",
   "@flickReplay": {
     "description": "lib/features/menu/screens/menu_screen.dart:1089"
-  },
-  "flickScansForPlayStoreUpdates": "Auno Player busca actualizaciones en Play Store cuando tienes conexión a internet",
-  "@flickScansForPlayStoreUpdates": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:175"
   },
   "flickWillForceYourChosenCodec": "Auno Player forzará el códec que elegiste al conectarse",
   "@flickWillForceYourChosenCodec": {
@@ -4702,10 +4629,6 @@
       }
     }
   },
-  "freeOpenSource": "Gratis y de código abierto",
-  "@freeOpenSource": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:143"
-  },
   "freq": "Frec.",
   "@freq": {
     "description": "lib/features/settings/screens/equalizer_screen.dart:2623"
@@ -4771,10 +4694,6 @@
   "@fullscreen": {
     "description": "lib/features/player/widgets/player_layout_sheet.dart:152"
   },
-  "fundingNativeDsdDsfPlaybackDevelopment": "Financia el desarrollo de la reproducción DSD/DSF nativa, una función muy solicitada por los audiófilos.",
-  "@fundingNativeDsdDsfPlaybackDevelopment": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:182"
-  },
   "fxOff": "Efectos desactivados",
   "@fxOff": {
     "description": "lib/features/settings/screens/equalizer_screen.dart:3511"
@@ -4827,10 +4746,6 @@
   "getStarted": "Comenzar",
   "@getStarted": {
     "description": "lib/features/onboarding/screens/onboarding_screen.dart:269"
-  },
-  "getTheLatestApkFromFlick": "Descarga el APK más reciente desde github.com/ryouhtml/AunoPlayer/releases",
-  "@getTheLatestApkFromFlick": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:639"
   },
   "getYourApiCredentials": "Obtener credenciales de API",
   "@getYourApiCredentials": {
@@ -5242,10 +5157,6 @@
   "@impulseResponse": {
     "description": "lib/features/settings/screens/equalizer_screen.dart:3762"
   },
-  "inAppUpdates": "Actualizaciones desde la app",
-  "@inAppUpdates": {
-    "description": "lib/features/settings/screens/privacy_policy_screen.dart:74"
-  },
   "inLabel": "en {folder}",
   "@inLabel": {
     "description": "lib/features/settings/screens/duplicate_cleaner_screen.dart:1555",
@@ -5373,10 +5284,6 @@
   "jumpBackIn": "Retomar",
   "@jumpBackIn": {
     "description": "lib/features/menu/screens/menu_screen.dart:1310"
-  },
-  "jumpToTheFlickListingAnd": "Ve a la ficha de Auno Player y actualiza desde allí",
-  "@jumpToTheFlickListingAnd": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:632"
   },
   "jun": "jun",
   "@jun": {
@@ -5634,10 +5541,6 @@
   "latestArrivalsFromYourLibrary": "Lo último que llegó a tu biblioteca",
   "@latestArrivalsFromYourLibrary": {
     "description": "lib/features/menu/screens/menu_screen.dart:1775"
-  },
-  "latestUpdate": "Última actualización",
-  "@latestUpdate": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:250"
   },
   "layered": "En capas",
   "@layered": {
@@ -5962,10 +5865,6 @@
   "@loadingFavoritesRecentSessionsGenerated": {
     "description": "lib/features/menu/screens/menu_screen.dart:2260"
   },
-  "loadingPatchNotes": "Cargando notas de la versión…",
-  "@loadingPatchNotes": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:276"
-  },
   "loadingReplay": "Cargando Replay",
   "@loadingReplay": {
     "description": "lib/features/recap/screens/listening_recap_screen.dart:235"
@@ -6010,14 +5909,6 @@
   "lookingForCoverArtFromMusicbrainz": "Buscando portadas en MusicBrainz y Cover Art Archive.",
   "@lookingForCoverArtFromMusicbrainz": {
     "description": "lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:471"
-  },
-  "lookingForTheLatestFlickRelease": "Buscando la versión más reciente de Auno Player",
-  "@lookingForTheLatestFlickRelease": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:136"
-  },
-  "lookingForTheLatestPlayStore": "Buscando la actualización más reciente de Play Store",
-  "@lookingForTheLatestPlayStore": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:135"
   },
   "lossless": " Sin pérdida",
   "@lossless": {
@@ -6757,10 +6648,6 @@
   "@noCategoriesSelected": {
     "description": "lib/features/search/screens/search_screen.dart:315"
   },
-  "noChangelogNotesForThisVersion": "Aún no hay notas de cambios para esta versión.",
-  "@noChangelogNotesForThisVersion": {
-    "description": "lib/features/whats_new/widgets/whats_new_bottom_sheet.dart:56"
-  },
   "noCustomAlbumArtIsSet": "Todavía no hay una portada personalizada para el álbum.",
   "@noCustomAlbumArtIsSet": {
     "description": "l10n pass: user-visible service error"
@@ -6846,10 +6733,6 @@
   "@noNewAdditionsYet": {
     "description": "lib/features/recently_added/screens/recently_added_screen.dart:318"
   },
-  "noNewUpdateFound": "No se encontraron actualizaciones nuevas.",
-  "@noNewUpdateFound": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:95"
-  },
   "noOnlineArtworkFound": "No se encontraron portadas en línea",
   "@noOnlineArtworkFound": {
     "description": "lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:489"
@@ -6857,10 +6740,6 @@
   "noOutputDevicesAvailable": "No hay dispositivos de salida disponibles.",
   "@noOutputDevicesAvailable": {
     "description": "lib/features/settings/screens/casting_settings_screen.dart:264"
-  },
-  "noPatchNotesAvailableYet": "Aún no hay notas de la versión.",
-  "@noPatchNotesAvailableYet": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:251"
   },
   "noPlaybackYet": "Aún no hay reproducciones",
   "@noPlaybackYet": {
@@ -6931,10 +6810,6 @@
   "noUpcomingQueueItemsYet": "Aún no hay canciones siguientes en la cola.",
   "@noUpcomingQueueItemsYet": {
     "description": "lib/features/queue/screens/queue_screen.dart:507"
-  },
-  "noUpdateAvailable": "No hay actualizaciones disponibles",
-  "@noUpdateAvailable": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:165"
   },
   "noUrbData": "No hay datos URB",
   "@noUrbData": {
@@ -7048,10 +6923,6 @@
   "@offCropsToFillTheSquare": {
     "description": "lib/features/settings/screens/library_settings_screen.dart:2197"
   },
-  "offline": "Sin conexión",
-  "@offline": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:158"
-  },
   "onAndroidTheStandardJustAudio": "En Android, la ruta de reproducción estándar de just_audio ahora aplica equivalentes nativos del ecualizador, la dinámica, el balance y los efectos espaciales en los dispositivos compatibles. El motor Rust sigue ofreciendo la versión más precisa de estos controles, por lo que algunos resultados en Android son aproximados.",
   "@onAndroidTheStandardJustAudio": {
     "description": "lib/features/settings/screens/equalizer_screen.dart:3911"
@@ -7128,10 +6999,6 @@
   "@openBluetoothCodecSettings": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:351"
   },
-  "openFullNotes": "Abrir notas completas",
-  "@openFullNotes": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:401"
-  },
   "openInAppleMusic": "Abrir en Apple Music",
   "@openInAppleMusic": {
     "description": "lib/features/albums/screens/album_detail_screen.dart:360"
@@ -7139,10 +7006,6 @@
   "openInBrowser": "Abrir en el navegador",
   "@openInBrowser": {
     "description": "lib/features/settings/screens/network_server_edit_screen.dart:623"
-  },
-  "openInPlayStore": "Abrir en Play Store",
-  "@openInPlayStore": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:631"
   },
   "openLibrary": "Abrir biblioteca",
   "@openLibrary": {
@@ -7160,17 +7023,9 @@
   "@openPlayer": {
     "description": "lib/features/menu/screens/menu_screen.dart:1319"
   },
-  "openReleaseNotes": "Abrir notas de la versión",
-  "@openReleaseNotes": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:312"
-  },
   "openSourceLicenses": "Abrir licencias de código abierto",
   "@openSourceLicenses": {
     "description": "lib/features/settings/screens/app_info_settings_screen.dart:660"
-  },
-  "openThePlayStoreToInstall": "Abre Play Store para instalar la versión más reciente de Auno Player",
-  "@openThePlayStoreToInstall": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:144"
   },
   "openedFromLocker": "Abierto desde Locker",
   "@openedFromLocker": {
@@ -7304,10 +7159,6 @@
   "pasteYourListenbrainzToken": "Pega tu token de ListenBrainz",
   "@pasteYourListenbrainzToken": {
     "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:741"
-  },
-  "patchNotes": "Notas de la versión",
-  "@patchNotes": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:259"
   },
   "pause": "Pausar",
   "@pause": {
@@ -7449,10 +7300,6 @@
   "playNext": "Reproducir a continuación",
   "@playNext": {
     "description": "lib/features/queue/screens/queue_screen.dart:843"
-  },
-  "playStoreUpdatesUseGooglePlay": "Las actualizaciones de Play Store usan la API de actualización dentro de Google Play (sujeta a las políticas de privacidad de Google). Las notas de la versión se obtienen desde la API de GitHub Releases sin enviar datos personales.",
-  "@playStoreUpdatesUseGooglePlay": {
-    "description": "lib/features/settings/screens/privacy_policy_screen.dart:76"
   },
   "playback": "Reproducción",
   "@playback": {
@@ -8000,14 +7847,6 @@
   "@reconnectNow": {
     "description": "lib/widgets/uac2/uac2_connection_manager.dart:205"
   },
-  "reconnectToTheInternetToScan": "Vuelve a conectarte a internet para buscar actualizaciones",
-  "@reconnectToTheInternetToScan": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:614"
-  },
-  "reconnectToWiFiOrMobile": "Vuelve a conectarte a Wi-Fi o a los datos móviles para que Auno Player pueda buscar de nuevo",
-  "@reconnectToWiFiOrMobile": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:159"
-  },
   "reconnectionFailed": "No se pudo reconectar",
   "@reconnectionFailed": {
     "description": "lib/widgets/uac2/uac2_connection_manager.dart:72"
@@ -8514,14 +8353,6 @@
   "@routesBluetoothThroughTheRustEngine": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:434"
   },
-  "runAnotherPlayStoreUpdateScan": "Buscar actualizaciones de Play Store ahora mismo",
-  "@runAnotherPlayStoreUpdateScan": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:612"
-  },
-  "runAnotherUpdateScanRightNow": "Buscar actualizaciones ahora mismo",
-  "@runAnotherUpdateScanRightNow": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:613"
-  },
   "rustViaOboe": "Rust mediante Oboe",
   "@rustViaOboe": {
     "description": "lib/features/settings/screens/uac2_preferences_screen.dart:794"
@@ -8919,10 +8750,6 @@
         "type": "Object"
       }
     }
-  },
-  "seeWhatIsNewInThis": "Descubre las novedades de esta actualización",
-  "@seeWhatIsNewInThis": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:624"
   },
   "select": "Seleccionar",
   "@select": {
@@ -10173,10 +10000,6 @@
   "@subtle": {
     "description": "lib/models/album_color_mode.dart:22"
   },
-  "support": "Ayuda",
-  "@support": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:703"
-  },
   "surfaceShading": "Sombreado de superficie",
   "@surfaceShading": {
     "description": "lib/features/recap/screens/replay_studio_screen.dart:674"
@@ -10962,14 +10785,6 @@
   "@ultra": {
     "description": "lib/features/settings/screens/orbit_settings_screen.dart:166"
   },
-  "unableToCheckForUpdatesRight": "No se pueden buscar actualizaciones en este momento.",
-  "@unableToCheckForUpdatesRight": {
-    "description": "lib/providers/update_check_provider.dart:177"
-  },
-  "unableToLoadPatchNotesRight": "No se pueden cargar las notas de la versión en este momento.",
-  "@unableToLoadPatchNotesRight": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:300"
-  },
   "unableToOpenAllFilesAccess": "No se puede abrir la configuración de acceso a todos los archivos",
   "@unableToOpenAllFilesAccess": {
     "description": "lib/features/settings/screens/library_settings_screen.dart:220"
@@ -11110,22 +10925,6 @@
       }
     }
   },
-  "update": "Actualizar",
-  "@update": {
-    "description": "lib/features/menu/screens/menu_screen.dart:1247"
-  },
-  "updateAvailable": "Actualización disponible",
-  "@updateAvailable": {
-    "description": "lib/features/menu/screens/menu_screen.dart:1226"
-  },
-  "updateAvailableOnThePlayStore": "Hay una actualización disponible en Play Store.",
-  "@updateAvailableOnThePlayStore": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:85"
-  },
-  "updateNoticeHidden": "Se ocultó el aviso de actualización.",
-  "@updateNoticeHidden": {
-    "description": "lib/features/menu/screens/menu_screen.dart:1269"
-  },
   "updated": "Actualizado: {arg1}",
   "@updated": {
     "description": "lib/features/playlists/screens/playlist_detail_screen.dart:438",
@@ -11152,10 +10951,6 @@
         "type": "Object"
       }
     }
-  },
-  "updates": "Actualizaciones",
-  "@updates": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:602"
   },
   "updatesAboutAndSupport": "Actualizaciones, información y ayuda",
   "@updatesAboutAndSupport": {
@@ -11226,10 +11021,6 @@
   "usbDacAutoBitPerfectOffers": "Se restablecieron las ofertas automáticas de modo bit perfecto para DAC USB.",
   "@usbDacAutoBitPerfectOffers": {
     "description": "lib/features/settings/screens/uac2_preferences_screen.dart:522"
-  },
-  "usbDacsHeadphonesAndReferenceGear": "DAC USB, audífonos y equipos de referencia para probar y mejorar la calidad de reproducción.",
-  "@usbDacsHeadphonesAndReferenceGear": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:175"
   },
   "usbDeviceAccess": "Acceso al dispositivo USB",
   "@usbDeviceAccess": {
@@ -11378,15 +11169,6 @@
     "description": "lib/features/settings/screens/app_info_settings_screen.dart:454",
     "placeholders": {
       "kAppVersion": {
-        "type": "Object"
-      }
-    }
-  },
-  "version2": "Versión {arg1}",
-  "@version2": {
-    "description": "lib/features/whats_new/widgets/whats_new_bottom_sheet.dart:126",
-    "placeholders": {
-      "arg1": {
         "type": "Object"
       }
     }
@@ -11590,10 +11372,6 @@
   "@whatItShows": {
     "description": "lib/features/manual/data/manual_data.dart"
   },
-  "whatSNew": "Novedades",
-  "@whatSNew": {
-    "description": "lib/features/whats_new/widgets/whats_new_bottom_sheet.dart:22"
-  },
   "whenBitPerfectOutputIs": "Cuando la salida bit perfecta está activa, una cápsula muestra la frecuencia de muestreo y la profundidad de bits que se envían al DAC.",
   "@whenBitPerfectOutputIs": {
     "description": "lib/features/manual/data/manual_data.dart"
@@ -11609,10 +11387,6 @@
   "whereTheFocalSongSitsVertically": "Posición vertical de la canción destacada",
   "@whereTheFocalSongSitsVertically": {
     "description": "lib/features/settings/screens/orbit_settings_screen.dart:39"
-  },
-  "whereYourMoneyGoes": "A dónde va tu dinero",
-  "@whereYourMoneyGoes": {
-    "description": "lib/features/settings/screens/support_flick_screen.dart:161"
   },
   "whisperWorld": "Mundo susurrante",
   "@whisperWorld": {
@@ -11764,14 +11538,6 @@
   "@yesterday": {
     "description": "lib/data/repositories/recently_played_repository.dart:285"
   },
-  "youAlreadyHaveTheLatestFlick": "Ya tienes la versión más reciente de Auno Player",
-  "@youAlreadyHaveTheLatestFlick": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:168"
-  },
-  "youAlreadyHaveTheLatestPlay": "Ya tienes la versión más reciente de Play Store",
-  "@youAlreadyHaveTheLatestPlay": {
-    "description": "lib/features/settings/screens/app_info_settings_screen.dart:167"
-  },
   "youCanAlsoChangeTheCodec": "También puedes cambiar el códec en Opciones para desarrolladores de Android, en «Códec de audio Bluetooth».",
   "@youCanAlsoChangeTheCodec": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:612"
@@ -11919,58 +11685,6 @@
   "yourYearlyRecapFillsInAs": "Tu resumen anual se completa a medida que escuchas música durante el año.",
   "@yourYearlyRecapFillsInAs": {
     "description": "lib/data/repositories/recently_played_repository.dart:39"
-  },
-  "aNewerFlickBuildOnGithub": "Una versión más reciente de Auno Player está disponible en GitHub.",
-  "@aNewerFlickBuildOnGithub": {
-    "description": "GitHub update banner for stable releases."
-  },
-  "betaUpdateAvailable": "Actualización beta disponible",
-  "@betaUpdateAvailable": {
-    "description": "GitHub update banner title for pre-releases."
-  },
-  "betaUpdateSubtitle": "Hay una versión preliminar disponible para pruebas.",
-  "@betaUpdateSubtitle": {
-    "description": "Explains that the offered beta build is for testing."
-  },
-  "downloadBetaUpdate": "Descargar beta",
-  "@downloadBetaUpdate": {
-    "description": "Action label for downloading a pre-release APK."
-  },
-  "getBetaUpdate": "Obtén la versión beta desde GitHub.",
-  "@getBetaUpdate": {
-    "description": "Subtitle for downloading a pre-release APK."
-  },
-  "updateAvailableOnGithub": "Actualización disponible en GitHub.",
-  "@updateAvailableOnGithub": {
-    "description": "Toast shown when a GitHub update is available."
-  },
-  "updateChannel": "Canal de actualizaciones",
-  "@updateChannel": {
-    "description": "Settings section for choosing stable or beta updates."
-  },
-  "updateChannelStable": "Versiones estables",
-  "@updateChannelStable": {
-    "description": "Update channel option for stable releases only."
-  },
-  "updateChannelStableSubtitle": "Ofrecer solo versiones finales de Auno Player.",
-  "@updateChannelStableSubtitle": {
-    "description": "Explains the stable update channel."
-  },
-  "updateChannelBeta": "Versiones preliminares",
-  "@updateChannelBeta": {
-    "description": "Update channel option for pre-releases only."
-  },
-  "updateChannelBetaSubtitle": "Ofrecer solo versiones beta para pruebas.",
-  "@updateChannelBetaSubtitle": {
-    "description": "Explains the beta update channel."
-  },
-  "updateChannelBoth": "Estables y preliminares",
-  "@updateChannelBoth": {
-    "description": "Update channel option for both release types."
-  },
-  "updateChannelBothSubtitle": "Mostrar avisos de ambos canales.",
-  "@updateChannelBothSubtitle": {
-    "description": "Explains the combined update channel."
   },
   "analyzeTrack": "Analizar pista",
   "@analyzeTrack": {

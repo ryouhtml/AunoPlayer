@@ -59,7 +59,6 @@ import 'package:auno_player/models/nav_bar_config.dart';
 import 'package:auno_player/models/song_view_mode.dart';
 import 'package:auno_player/features/milestone/widgets/milestone_card.dart';
 import 'package:auno_player/features/milestone/widgets/streak_popup.dart';
-import 'package:auno_player/features/whats_new/widgets/whats_new_bottom_sheet.dart';
 import 'package:auno_player/core/utils/dev_log.dart';
 import 'package:auno_player/l10n/l10n.dart';
 
@@ -139,7 +138,6 @@ class _MainShellState extends ConsumerState<MainShell>
   late final ProviderSubscription<int> _navigationIndexSubscription;
   late final NavBarVisibilityObserver _navBarVisibilityObserver;
   late final ProviderSubscription<PlayerState> _widgetSyncSubscription;
-  late final ProviderSubscription<AppPreferences>? _appPreferencesSubscription;
   late final WidgetIntentHandler _widgetIntentHandler;
 
   // Track previous song to detect changes
@@ -169,7 +167,6 @@ class _MainShellState extends ConsumerState<MainShell>
     _previousSong = ref.read(currentSongProvider);
     _playerService = ref.read(playerServiceProvider);
     ref.read(equalizerProvider);
-    ref.read(updateCheckProvider.notifier);
     final initialConfig = ref.read(navBarConfigProvider);
     final defaultPage =
         initialConfig.orderedButtons.contains(NavBarButton.songs)
@@ -350,7 +347,6 @@ class _MainShellState extends ConsumerState<MainShell>
       }
       _maybeOpenExternalPlayer(ref.read(currentSongProvider));
       _refreshLibraryDeletions();
-      ref.read(updateCheckProvider.notifier).refreshIfOnline();
       ref.read(autoLibrarySyncServiceProvider);
 
       final tutorialState = ref.read(tutorialProvider);
@@ -358,7 +354,6 @@ class _MainShellState extends ConsumerState<MainShell>
         ref.read(tutorialProvider.notifier).start();
       }
 
-      _maybeShowWhatsNew();
       unawaited(_playerService.recordActivityDayAndCheckMilestones());
     });
 
@@ -448,37 +443,6 @@ class _MainShellState extends ConsumerState<MainShell>
     );
   }
 
-  void _maybeShowWhatsNew() {
-    if (!mounted) return;
-    if (!ref.read(onboardingCompletedProvider)) {
-      return;
-    }
-
-    // Wait for the AppPreferencesNotifier to publish its loaded state. The
-    // listener fires when the real SharedPreferences values replace the
-    // default values, which is the moment we can decide whether a "What's
-    // New" sheet should appear.
-    _appPreferencesSubscription = ref.listenManual<AppPreferences>(
-      appPreferencesProvider,
-      (previous, next) {
-        if (!mounted) return;
-        if (ref.read(tutorialProvider).active) return;
-        final notifier = ref.read(whatsNewProvider.notifier);
-        notifier.evaluate();
-        final pending = ref.read(whatsNewProvider).pendingEntry;
-        if (pending == null) {
-          return;
-        }
-
-        // Persist the dismissal before showing so a force-quit between now
-        // and the user actually tapping "Got it" doesn't re-trigger on the
-        // next launch.
-        unawaited(notifier.markCurrentVersionSeen());
-        unawaited(WhatsNewBottomSheet.show(context, entry: pending));
-      },
-    );
-  }
-
   void _onPlaybackDesyncChanged() {
     if (!mounted) return;
     final desynced = _playerService.playbackDesyncedNotifier.value;
@@ -552,7 +516,6 @@ class _MainShellState extends ConsumerState<MainShell>
     _navigationIndexSubscription.close();
     _widgetSyncSubscription.close();
     WidgetSyncService.instance.stopReplaySync();
-    _appPreferencesSubscription?.close();
     unawaited(_widgetIntentHandler.detach());
     _pageController.removeListener(_onPageScroll);
     _pageController.dispose();
@@ -652,7 +615,6 @@ class _MainShellState extends ConsumerState<MainShell>
     if (state == AppLifecycleState.resumed) {
       _startIdleTimer();
       unawaited(ref.read(playerServiceProvider).onAppResumed());
-      ref.read(updateCheckProvider.notifier).refreshIfOnline();
       ref.read(lastFmScrobbleQueueProvider).flush().catchError((e) {
         devLog('[LastFm] queue flush on resume failed: $e');
       });

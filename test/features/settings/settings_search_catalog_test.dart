@@ -85,14 +85,10 @@ void main() {
       'privacyPolicy',
       'logs',
     };
-    // Transient update and playback states are information, not independently
-    // addressable settings.
+    // Transient playback and connectivity states are information, not
+    // independently addressable settings.
     const statusKeys = {
-      'checkingForUpdates',
-      'updateAvailable',
-      'couldNotCheckForUpdates',
       'offline',
-      'noUpdateAvailable',
       'visualizerAnimationsOffTitle',
     };
     for (final stem

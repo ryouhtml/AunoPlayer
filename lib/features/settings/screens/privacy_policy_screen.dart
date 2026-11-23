@@ -72,11 +72,6 @@ class PrivacyPolicyScreen extends StatelessWidget {
                               l10n.flickCanReceivePlaybackHandoffsFrom,
                         ),
                         _Section(
-                          title: l10n.englishForFilipino.inAppUpdates,
-                          content:
-                              l10n.playStoreUpdatesUseGooglePlay,
-                        ),
-                        _Section(
                           title: l10n.englishForFilipino.childrenSPrivacy,
                           content:
                               l10n.theAppDoesNotKnowinglyCollect,

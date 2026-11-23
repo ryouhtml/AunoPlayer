@@ -245,7 +245,6 @@ void main() {
         strings.tracksLikedSongsPlaylists(0, 0, 0),
         '0 na kanta\n0 mga paborito mo\n0 playlist',
       );
-      expect(strings.updateAvailable, 'Yun oh! May bagong update na naman!');
       expect(strings.playingLabel, 'Tumutugtog');
       expect(strings.nowPlaying, 'Kasalukuyang tumutugtog');
       expect(

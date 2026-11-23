@@ -41,7 +41,6 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_displaymode: ^0.7.0
-  flutter_markdown: ^0.7.7
   flutter_riverpod: ^3.0.3
   flutter_rust_bridge: ^2.13.0
   flutter_secure_storage: ^10.3.4
@@ -66,7 +65,6 @@ dependencies:
   rust_lib_flick_player:
     path: rust_builder
   shared_preferences: ^2.2.2
-  in_app_update: ^5.0.0
   share_plus: ^10.1.4
   skeletonizer: ^3.0.0
   url_launcher: ^6.3.2
