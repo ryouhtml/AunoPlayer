@@ -734,17 +734,6 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
             dominantColor: albumColor,
             placeholder: placeholder,
             errorWidget: placeholder,
-            albumName: song.album,
-            artistName:
-                (song.albumArtist != null &&
-                    song.albumArtist!.trim().isNotEmpty)
-                ? song.albumArtist
-                : song.artist,
-            representativeSongTitle: song.title,
-            preferVertical: true,
-            // In the standard layout the art card carries Motion Art; only the
-            // immersive full-bleed view needs a second video layer.
-            motionEnabled: _isImmersiveFullView,
           )
         : CachedImageWidget(
             imagePath: song.albumArt,
@@ -1408,7 +1397,6 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
                           onVinylChanged: (v) => _isVinylMode = v,
                           onToggleLyrics: () => _setLyricsMode(!_isLyricsMode),
                           showWaveform: false,
-                          motionArtEnabled: isCurrent,
                           active: isCurrent,
                         );
                       },
@@ -1516,8 +1504,7 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
                                     visualizerAnimationStyle: visStyle,
                                     visualizerFrequencyMode: visFreq,
                                     visualizerMovementMode: visMove,
-                                    motionArtEnabled: isCurrent,
-                                    artworkCardArtworkScale:
+                                              artworkCardArtworkScale:
                                         appPrefs.artworkCardArtworkScale,
                                     artworkCardTextScale:
                                         appPrefs.artworkCardTextScale,
@@ -1818,7 +1805,6 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
                         onVinylChanged: (v) => _isVinylMode = v,
                         onToggleLyrics: () => _setLyricsMode(!_isLyricsMode),
                         showWaveform: false,
-                        motionArtEnabled: isCurrent,
                         active: isCurrent,
                       );
                     },
@@ -1888,7 +1874,6 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
                 onVinylChanged: (v) => _isVinylMode = v,
                 onToggleLyrics: () => _setLyricsMode(!_isLyricsMode),
                 showWaveform: false,
-                motionArtEnabled: true,
                 active: true,
               ),
               actions: showActions ? actionRowBuilder(song) : null,

@@ -11,7 +11,6 @@ import 'package:auno_player/core/utils/responsive.dart';
 import 'package:auno_player/models/playlist.dart';
 import 'package:auno_player/providers/playlist_provider.dart';
 import 'package:auno_player/providers/songs_provider.dart';
-import 'package:auno_player/services/sources/network_source_service.dart';
 import 'package:auno_player/widgets/common/cached_image_widget.dart';
 import 'package:auno_player/widgets/common/flick_artwork_placeholder.dart';
 import 'package:auno_player/widgets/common/surface_icon_button.dart';
@@ -115,8 +114,6 @@ class PlaylistsScreen extends ConsumerWidget {
                   _showCreatePlaylistDialog(context, ref);
                 } else if (value == 'import_m3u') {
                   _importPlaylist(context, ref);
-                } else if (value == 'sync_servers') {
-                  _syncServerPlaylists(context, ref);
                 }
               },
               itemBuilder: (context) => [
@@ -137,16 +134,6 @@ class PlaylistsScreen extends ConsumerWidget {
                       Icon(LucideIcons.fileUp, size: 18),
                       SizedBox(width: 8),
                       Text(l10n.englishForFilipino.importM3uM3u8),
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  value: 'sync_servers',
-                  child: Row(
-                    children: [
-                      Icon(LucideIcons.refreshCw, size: 18),
-                      SizedBox(width: 8),
-                      Text(l10n.englishForFilipino.syncServerPlaylists),
                     ],
                   ),
                 ),
@@ -288,21 +275,9 @@ class PlaylistsScreen extends ConsumerWidget {
         itemCount: playlists.length,
       itemBuilder: (context, index) {
         final playlist = playlists[index];
-        final serversAsync = ref.watch(networkServersProvider);
-        String? serverLabel;
-        final serverId = playlist.networkServerId;
-        if (serverId != null && serversAsync.value != null) {
-          for (final server in serversAsync.value!) {
-            if (server.id == serverId) {
-              serverLabel = server.label;
-              break;
-            }
-          }
-        }
         return _PlaylistCard(
           key: ValueKey(playlist.id),
           playlist: playlist,
-          serverLabel: serverLabel,
           onTap: () {
             NavigationHelper.pushFade(
               context,
@@ -347,85 +322,46 @@ class PlaylistsScreen extends ConsumerWidget {
     // Chinese still receive their own copy.
     final l10n = context.l10n.englishForFilipino;
     final controller = TextEditingController();
-    final serversAsync = ref.watch(networkServersProvider);
-    final servers = serversAsync.value
-            ?.where((s) => s.protocol == NetworkProtocol.subsonic)
-            .toList() ??
-        const [];
-    // ponytail: 0 = "this device"; Isar ids start at 1 so it never collides.
-    var serverId = 0;
 
     showFlickDialog(
       context: context,
       barrierLabel: l10n.createPlaylist,
-      builder: (dialogContext) => StatefulBuilder(
-        builder: (innerContext, setDialogState) => FlickDialog(
-          title: l10n.createPlaylist,
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              FlickTextField(
-                controller: controller,
-                hint: l10n.playlistName,
-                autofocus: true,
-                onSubmitted: (_) => _createPlaylist(
-                  context,
-                  ref,
-                  controller.text,
-                  controller,
-                  dialogContext: dialogContext,
-                  serverId: serverId,
-                ),
-              ),
-              if (servers.isNotEmpty) ...[
-                const SizedBox(height: AppConstants.spacingMd),
-                DropdownButtonFormField<int>(
-                  initialValue: serverId,
-                  decoration: InputDecoration(
-                    labelText: l10n.storeOn,
-                    labelStyle: TextStyle(color: context.adaptiveTextTertiary),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.glassBorder),
-                    ),
-                  ),
-                  style: TextStyle(color: context.adaptiveTextPrimary),
-                  dropdownColor: AppColors.surface,
-                  items: [
-                    DropdownMenuItem(
-                      value: 0,
-                      child: Text(l10n.thisDevice),
-                    ),
-                    for (final server in servers)
-                      DropdownMenuItem(
-                        value: server.id,
-                        child: Text(server.label),
-                      ),
-                  ],
-                  onChanged: (value) =>
-                      setDialogState(() => serverId = value ?? 0),
-                ),
-              ],
-            ],
-          ),
-          actions: [
-            FlickDialogButton(
-              label: l10n.cancel,
-              onPressed: () => Navigator.pop(dialogContext),
-            ),
-            FlickDialogButton(
-              label: l10n.create,
-              style: FlickDialogButtonStyle.primary,
-              onPressed: () => _createPlaylist(
+      builder: (dialogContext) => FlickDialog(
+        title: l10n.createPlaylist,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FlickTextField(
+              controller: controller,
+              hint: l10n.playlistName,
+              autofocus: true,
+              onSubmitted: (_) => _createPlaylist(
                 context,
                 ref,
                 controller.text,
                 controller,
                 dialogContext: dialogContext,
-                serverId: serverId,
               ),
             ),
           ],
         ),
+        actions: [
+          FlickDialogButton(
+            label: l10n.cancel,
+            onPressed: () => Navigator.pop(dialogContext),
+          ),
+          FlickDialogButton(
+            label: l10n.create,
+            style: FlickDialogButtonStyle.primary,
+            onPressed: () => _createPlaylist(
+              context,
+              ref,
+              controller.text,
+              controller,
+              dialogContext: dialogContext,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -436,7 +372,6 @@ class PlaylistsScreen extends ConsumerWidget {
     String name,
     TextEditingController controller, {
     BuildContext? dialogContext,
-    int serverId = 0,
   }) async {
     if (name.trim().isEmpty) {
       ScaffoldMessenger.of(context).showFlickSnackBar(
@@ -445,10 +380,7 @@ class PlaylistsScreen extends ConsumerWidget {
       return;
     }
 
-    final playlist = await ref.read(playlistsProvider.notifier).createPlaylist(
-      name,
-      serverId: serverId == 0 ? null : serverId,
-    );
+    final playlist = await ref.read(playlistsProvider.notifier).createPlaylist(name);
 
     if (playlist == null) {
       if (context.mounted) {
@@ -469,29 +401,6 @@ class PlaylistsScreen extends ConsumerWidget {
       ScaffoldMessenger.of(context).showFlickSnackBar(
         SnackBar(content: Text(l10n.englishForFilipino.playlistCreated(playlist.name))),
       );
-    }
-  }
-
-  Future<void> _syncServerPlaylists(BuildContext context, WidgetRef ref) async {
-    try {
-      final synced = await ref
-          .read(playlistsProvider.notifier)
-          .syncServerPlaylists();
-      if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showFlickSnackBar(
-        SnackBar(
-          content: Text(
-            synced == 0
-                ? l10n.englishForFilipino.noServerPlaylistsFound
-                : l10n.englishForFilipino.syncedPlaylistFromServers(synced),
-          ),
-        ),
-      );
-    } catch (e) {
-      if (!context.mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showFlickSnackBar(SnackBar(content: Text(l10n.englishForFilipino.serverPlaylistSyncFailed(e))));
     }
   }
 
@@ -552,7 +461,6 @@ class PlaylistsScreen extends ConsumerWidget {
 
 class _PlaylistCard extends StatelessWidget {
   final Playlist playlist;
-  final String? serverLabel;
   final VoidCallback onTap;
   final VoidCallback onRename;
   final VoidCallback onDelete;
@@ -564,7 +472,6 @@ class _PlaylistCard extends StatelessWidget {
   const _PlaylistCard({
     super.key,
     required this.playlist,
-    this.serverLabel,
     required this.onTap,
     required this.onRename,
     required this.onDelete,
@@ -609,9 +516,7 @@ class _PlaylistCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        serverLabel == null
-                            ? l10n.song2(playlist.songIds.length)
-                            : l10n.song3(playlist.songIds.length, serverLabel!),
+                        l10n.song2(playlist.songIds.length),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: context.adaptiveTextTertiary,
                         ),

@@ -1,7 +1,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto">
-    <!-- Internet permission for Last.fm scrobbling and online features -->
+    <!-- Internet permission for online lyrics -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- USB Host (optional): for UAC 2.0 DAC/AMP detection on Android -->
     <uses-feature android:name="android.hardware.usb.host" android:required="false" />
@@ -35,9 +35,6 @@
         android:icon="@mipmap/launcher_icon"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true">
-        <meta-data
-            android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
-            android:value="com.aunoplayer.auno.CastOptionsProvider" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -92,15 +89,6 @@
             android:name=".MusicNotificationService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
-
-        <!-- Publishes DLNA renderers as MediaRouter routes for system UI -->
-        <service
-            android:name=".DlnaRouteProviderService"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.media.MediaRouteProviderService" />
-            </intent-filter>
-        </service>
 
         <!-- Home-screen widgets -->
         <receiver
@@ -163,7 +151,7 @@
         </intent>
         <!-- url_launcher: Android 11+ (API 30+) package-visibility requires
              declaring the browser VIEW intent or launchUrl throws
-             ACTIVITY_NOT_FOUND. Needed for Tidal/Last.fm OAuth device flow. -->
+             ACTIVITY_NOT_FOUND. Used when opening links in a browser. -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.BROWSABLE" />

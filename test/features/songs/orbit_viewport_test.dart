@@ -104,7 +104,6 @@ Future<ProviderContainer> _pumpScreen(
         appPreferencesProvider.overrideWith(_OrbitPreferences.new),
         navBarConfigProvider.overrideWith(_NavBarWithoutSearch.new),
         currentSongProvider.overrideWith((ref) => _songs[15]),
-        isCastingProvider.overrideWith((ref) => false),
       ],
       child: MaterialApp(
         theme: AppTheme.darkTheme,

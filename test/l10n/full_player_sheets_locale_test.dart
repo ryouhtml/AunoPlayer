@@ -192,7 +192,6 @@ void main() {
       en.playerMenuAddToQueue,
       en.playerMenuAddToPlaylist,
       en.playerMenuSetAlbumArt,
-      en.playerMenuRefreshAlbumArt,
       en.playerMenuEditMetadata,
       en.viewMetadata,
       en.lyrics,

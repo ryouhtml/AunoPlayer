@@ -6,7 +6,6 @@ import 'package:auno_player/core/theme/app_colors.dart';
 import 'package:auno_player/core/theme/adaptive_color_provider.dart';
 import 'package:auno_player/core/utils/responsive.dart';
 import 'package:auno_player/models/song.dart';
-import 'package:auno_player/services/motion_art/animated_artwork_service.dart';
 import 'package:auno_player/services/player_service.dart';
 import 'package:auno_player/features/player/widgets/player_navigation.dart';
 import 'package:auno_player/widgets/common/cached_image_widget.dart';
@@ -221,35 +220,6 @@ class SongActionsSheet extends ConsumerWidget {
                               ref.invalidate(songsProvider);
                             }
                           });
-                        },
-                      ),
-                      _buildSongActionTile(
-                        context: sheetContext,
-                        icon: LucideIcons.refreshCw,
-                        label: l10n.playerMenuRefreshAlbumArt,
-                        onTap: () async {
-                          Navigator.pop(sheetContext);
-                          final albumArtist = activeSong.albumArtist;
-                          await AnimatedArtworkService.instance
-                              .refreshAlbumArtwork(
-                                artist:
-                                    (albumArtist != null &&
-                                        albumArtist.trim().isNotEmpty)
-                                    ? albumArtist.trim()
-                                    : activeSong.artist,
-                                albumName: activeSong.album,
-                                songTitle: activeSong.title,
-                              );
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(context).showFlickSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  l10n.englishForFilipino.motionArtRefreshed,
-                                ),
-                                duration: Duration(seconds: 2),
-                              ),
-                            );
-                          }
                         },
                       ),
                       if (activeSong.filePath != null &&

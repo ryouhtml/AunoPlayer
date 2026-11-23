@@ -39,7 +39,7 @@ void main() {
       expect(proxySafeHeaders(const <String, String>{}), isNull);
     });
 
-    test('passes non-empty headers through for network sources', () {
+    test('passes non-empty headers through', () {
       const headers = <String, String>{'Authorization': 'Bearer token'};
       expect(proxySafeHeaders(headers), same(headers));
     });

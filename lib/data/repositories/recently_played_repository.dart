@@ -724,7 +724,7 @@ class RecentlyPlayedRepository {
   }
 
   /// Build a resolution string from entity properties. Null when the source
-  /// sync had no audio metrics (SMB/WebDAV) — callers hide the chip instead
+  /// sync had no audio metrics — callers hide the chip instead
   /// of showing a placeholder.
   String? _buildResolutionString(SongEntity entity) {
     final parts = <String>[];

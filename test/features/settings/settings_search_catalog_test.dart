@@ -81,7 +81,6 @@ void main() {
       'visualizer',
       'customizeOrbital',
       'removeDuplicates',
-      'fixMissingMetadata',
       'privacyPolicy',
       'logs',
     };

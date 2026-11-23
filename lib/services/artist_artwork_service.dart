@@ -6,18 +6,16 @@ import '../core/utils/dev_log.dart';
 import '../data/repositories/artist_repository.dart';
 import '../models/song.dart';
 import 'album_art_service.dart';
-import 'sources/network_source_service.dart';
 
 /// Provenance values stored in [ArtistEntity.artSource].
 class ArtistArtSource {
   static const embeddedArtist = 'embeddedArtist';
-  static const appleMusic = 'appleMusic';
   static const albumCover = 'albumCover';
   static const custom = 'custom';
 }
 
 /// Resolves artist pictures, preferring explicitly tagged embedded portraits
-/// over album covers and online fallbacks.
+/// over album covers and stored artwork.
 class ArtistArtworkService {
   ArtistArtworkService._();
 
@@ -38,7 +36,7 @@ class ArtistArtworkService {
 
   /// Return the best local artist picture for [artistName].
   ///
-  /// Existing embedded/custom/online art short-circuits. Otherwise the songs'
+  /// Existing embedded/custom art short-circuits. Otherwise the songs'
   /// tags are searched for picture types 7, 8 or 10. When [thorough] is false
   /// only the first playable track is checked (used by list tiles); a miss is
   /// not cached so the detail page can still do the exhaustive pass.
@@ -79,13 +77,10 @@ class ArtistArtworkService {
     final artPath = record?.artPath;
     final source = record?.artSource;
     final hasArt =
-        artPath != null &&
-        artPath.isNotEmpty &&
-        (artPath.startsWith('http') || await File(artPath).exists());
+        artPath != null && artPath.isNotEmpty && await File(artPath).exists();
 
     if (hasArt &&
         (source == ArtistArtSource.embeddedArtist ||
-            source == ArtistArtSource.appleMusic ||
             source == ArtistArtSource.custom)) {
       return artPath;
     }
@@ -129,12 +124,10 @@ class ArtistArtworkService {
     final seenPaths = <String>{};
 
     for (final song in songs) {
+      if (song.isNetworkSource) continue;
       final path = song.filePath;
       if (path == null || path.isEmpty) continue;
       if (!seenPaths.add(path)) continue;
-
-      final scheme = Uri.tryParse(path)?.scheme;
-      if (isSupportedNetworkProtocol(scheme)) continue;
 
       candidates.add(path);
       // List tiles stay cheap; the detail page does the exhaustive pass.

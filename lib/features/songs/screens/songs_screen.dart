@@ -26,7 +26,6 @@ import 'package:auno_player/features/songs/widgets/sort_filter_bottom_sheet.dart
 import 'package:auno_player/features/onboarding/tutorial_targets.dart';
 import 'package:auno_player/data/repositories/song_repository.dart';
 import 'package:auno_player/features/albums/screens/album_detail_screen.dart';
-import 'package:auno_player/features/settings/screens/casting_settings_screen.dart';
 import 'package:auno_player/providers/providers.dart';
 import 'package:auno_player/services/music_folder_service.dart';
 import 'package:auno_player/services/player_service.dart';
@@ -1995,8 +1994,6 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
             mainAxisSize: MainAxisSize.min,
             children: [
               if (isAlbumMode) ...[
-                _buildCastButton(),
-                SizedBox(width: buttonGap),
                 _buildHeaderIconButton(
                   context: context,
                   icon: LucideIcons.shuffle,
@@ -2040,23 +2037,6 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
             ],
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildCastButton() {
-    final isCasting = ref.watch(isCastingProvider);
-    return Tooltip(
-      message: isCasting ? l10n.castingTapToManage : l10n.cast,
-      child: _buildHeaderIconButton(
-        context: context,
-        icon: LucideIcons.cast,
-        iconColor: isCasting ? AppColors.accent : null,
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (_) => const CastingSettingsScreen(),
-          ),
-        ),
       ),
     );
   }

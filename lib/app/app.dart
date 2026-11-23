@@ -255,9 +255,6 @@ class _MainShellState extends ConsumerState<MainShell>
 
     _playerService.pendingMilestoneNotifier.addListener(_handleMilestone);
     _playerService.streakPopupNotifier.addListener(_handleStreakPopup);
-    _playerService.networkPlaybackErrorNotifier.addListener(
-      _handleNetworkPlaybackError,
-    );
 
     ref.listenManual<NavBarConfig>(navBarConfigProvider, (previous, next) {
       if (previous == null || !mounted) return;
@@ -419,15 +416,6 @@ class _MainShellState extends ConsumerState<MainShell>
     );
   }
 
-  void _handleNetworkPlaybackError() {
-    final message = _playerService.networkPlaybackErrorNotifier.value;
-    if (message == null || !mounted) return;
-    ScaffoldMessenger.of(context).showFlickSnackBar(
-      SnackBar(content: Text(message), duration: const Duration(seconds: 10)),
-      id: 'network-playback-error',
-    );
-  }
-
   void _handleStreakPopup() {
     final streak = _playerService.streakPopupNotifier.value;
     if (streak == null || streak < 1 || !mounted) return;
@@ -506,9 +494,6 @@ class _MainShellState extends ConsumerState<MainShell>
     );
     _playerService.pendingMilestoneNotifier.removeListener(_handleMilestone);
     _playerService.streakPopupNotifier.removeListener(_handleStreakPopup);
-    _playerService.networkPlaybackErrorNotifier.removeListener(
-      _handleNetworkPlaybackError,
-    );
     WidgetsBinding.instance.removeObserver(this);
     _navBarVisibilitySubscription.close();
     _navBarAlwaysVisibleSubscription.close();
@@ -582,45 +567,10 @@ class _MainShellState extends ConsumerState<MainShell>
       unawaited(WidgetSyncService.instance.pushPaused());
       unawaited(ref.read(playerServiceProvider).onAppPaused());
       unawaited(AppLog.instance.flushToDisk());
-
-      // Attempt to scrobble the current track before the app suspends.
-      // Only fire if playback is not active — audio apps often keep playing
-      // in the background, so treat this as a true "end" only when paused.
-      final playerState = ref.read(playerProvider);
-      final song = playerState.currentSong;
-      if (song != null && !song.isExternal && !playerState.isPlaying) {
-        final notifier = ref.read(playerProvider.notifier);
-        ref
-            .read(lastFmScrobbleProvider.notifier)
-            .onTrackEnded(
-              artist: song.artist,
-              track: song.title,
-              album: song.album,
-              albumArtist: null,
-              listenedSeconds: notifier.accumulatedListenSeconds,
-              trackDurationSeconds: playerState.duration.inSeconds,
-            );
-        ref
-            .read(listenBrainzScrobbleProvider.notifier)
-            .onTrackEnded(
-              artist: song.artist,
-              track: song.title,
-              album: song.album,
-              albumArtist: null,
-              listenedSeconds: notifier.accumulatedListenSeconds,
-              trackDurationSeconds: playerState.duration.inSeconds,
-            );
-      }
     }
     if (state == AppLifecycleState.resumed) {
       _startIdleTimer();
       unawaited(ref.read(playerServiceProvider).onAppResumed());
-      ref.read(lastFmScrobbleQueueProvider).flush().catchError((e) {
-        devLog('[LastFm] queue flush on resume failed: $e');
-      });
-      ref.read(listenbrainzScrobbleQueueProvider).flush().catchError((e) {
-        devLog('[ListenBrainz] queue flush on resume failed: $e');
-      });
       ref.read(autoLibrarySyncServiceProvider).notifyResumed();
     }
   }

@@ -26,8 +26,6 @@ class NotificationService {
     required Function(Duration) onSeek,
     required VoidCallback onToggleShuffle,
     required VoidCallback onToggleFavorite,
-    VoidCallback? onDisconnectCast,
-    Function(double)? onSetCastVolume,
   }) {
     _channel.setMethodCallHandler((call) async {
       switch (call.method) {
@@ -61,13 +59,6 @@ class NotificationService {
         case 'toggleFavorite':
           onToggleFavorite();
           break;
-        case 'disconnectCast':
-          onDisconnectCast?.call();
-          break;
-        case 'setCastVolume':
-          final volume = (call.arguments['volume'] as num?)?.toDouble();
-          if (volume != null) onSetCastVolume?.call(volume);
-          break;
       }
     });
   }
@@ -81,9 +72,6 @@ class NotificationService {
     bool isShuffle = false,
     bool isFavorite = false,
     int? color,
-    bool isCasting = false,
-    String? castDeviceName,
-    int? castVolumePercent,
   }) async {
     try {
       final args = <String, dynamic>{
@@ -95,12 +83,7 @@ class NotificationService {
         'position': position?.inMilliseconds ?? 0,
         'isShuffle': isShuffle,
         'isFavorite': isFavorite,
-        'isCasting': isCasting,
       };
-      if (castDeviceName != null) args['castDeviceName'] = castDeviceName;
-      if (castVolumePercent != null) {
-        args['castVolume'] = castVolumePercent;
-      }
       if (color != null) args['color'] = color;
       await _channel.invokeMethod('showNotification', args);
       _isNotificationVisible = true;
@@ -136,9 +119,6 @@ class NotificationService {
     bool? isShuffle,
     bool? isFavorite,
     int? color,
-    bool? isCasting,
-    String? castDeviceName,
-    int? castVolumePercent,
   }) async {
     try {
       final args = <String, dynamic>{
@@ -153,37 +133,11 @@ class NotificationService {
       if (isShuffle != null) args['isShuffle'] = isShuffle;
       if (isFavorite != null) args['isFavorite'] = isFavorite;
       if (color != null) args['color'] = color;
-      if (isCasting != null) {
-        args['isCasting'] = isCasting;
-        args['castDeviceName'] = castDeviceName;
-        if (castVolumePercent != null) args['castVolume'] = castVolumePercent;
-      }
 
       await _channel.invokeMethod('updateNotification', args);
       _isNotificationVisible = true;
     } catch (e) {
       devLog('Failed to update notification: $e');
-    }
-  }
-
-  /// Lightweight cast-only update: swaps the MediaSession between local and
-  /// remote volume without touching metadata (no favorite/color churn while
-  /// the volume slider is dragged).
-  Future<void> updateCastState({
-    required bool isCasting,
-    String? castDeviceName,
-    int? castVolumePercent,
-  }) async {
-    if (!_isNotificationVisible) return;
-    try {
-      final args = <String, dynamic>{
-        'isCasting': isCasting,
-        'castDeviceName': castDeviceName,
-      };
-      if (castVolumePercent != null) args['castVolume'] = castVolumePercent;
-      await _channel.invokeMethod('updateNotification', args);
-    } catch (e) {
-      devLog('Failed to update cast state: $e');
     }
   }
 

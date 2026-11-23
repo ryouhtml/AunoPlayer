@@ -136,16 +136,16 @@ class SongEntity {
   @Index()
   bool hasLocalEdits = false;
 
-  /// Where this song came from: null = local file, otherwise one of
-  /// 'subsonic' | 'webdav' | 'jellyfin' | 'tidal' | 'upnp'.
+  /// Where this song came from: null = a local file. Any other value marks a
+  /// legacy indexed row from a removed network source.
   @Index()
   String? sourceType;
 
-  /// The server's song id (Subsonic song id, WebDAV file URL, Jellyfin Item.Id).
+  /// Identifier of the row on the old remote server.
   @Index()
   String? remoteId;
 
-  /// [NetworkServerEntity.id] of the server this song was synced from.
+  /// Identifier of the server this song was synced from.
   @Index()
   int? remoteServerId;
 }

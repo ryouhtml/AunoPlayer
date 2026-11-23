@@ -31,7 +31,6 @@ All data generated or used by the App is stored **locally on your device** only:
 - **User-created playlists**
 - **Equalizer presets and settings**
 - **App preferences** (theme, playback settings)
-- **Last.fm scrobbling credentials** (stored securely on-device via Flutter Secure Storage)
 
 This data never leaves your device unless you explicitly use an integration described below.
 
@@ -75,24 +74,7 @@ The App accesses **USB Audio Class 2.0 (UAC 2.0)** devices (external DACs/AMPs) 
 
 ## 6. Third-Party Integrations
 
-### 6.1 Last.fm Scrobbling
-
-If you choose to connect your Last.fm account:
-
-- Your Last.fm **username and password** are stored securely on-device
-- Play data (artist, track, album, timestamp) is sent **only to Last.fm** for scrobbling purposes
-- We do not receive, store, or process this data
-
-### 6.2 Album Art Import
-
-When you use the album art import feature:
-
-- The App queries public APIs (**MusicBrainz/Cover Art Archive, iTunes, Deezer**) to find matching album art
-- Search queries are based on local music metadata (artist, album name)
-- Downloaded images are cached locally on your device
-- No personal data is sent to these services
-
-### 6.3 Moss Ecosystem (Latch Integration)
+### 6.1 Moss Ecosystem (Latch Integration)
 
 Auno Player is part of the **Moss ecosystem**. It can receive playback handoffs from **Latch** (another Moss app):
 
@@ -104,12 +86,13 @@ Auno Player is part of the **Moss ecosystem**. It can receive playback handoffs 
 
 ## 7. Internet Access
 
-The App requires internet access for:
+The App requires internet access only for **online lyrics lookup**:
 
-- Fetching album art from online sources (MusicBrainz, iTunes, Deezer)
-- Last.fm scrobbling (if enabled by you)
+- Searching LRCLib for synced lyrics when you request an online lookup
 
-No personal data is transmitted during these operations beyond what is necessary for the specific feature (e.g., album/artist name for art lookup, scrobble data for Last.fm).
+Only the track metadata needed for the lookup (title, artist, album, duration)
+is sent. No account, credentials, listening history, or personal data is
+transmitted. All other features work entirely offline.
 
 ---
 

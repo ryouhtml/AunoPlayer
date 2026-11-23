@@ -5,15 +5,12 @@ import 'package:auno_player/core/constants/app_constants.dart';
 import 'package:auno_player/features/settings/screens/app_info_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/audio_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/bluetooth_settings_screen.dart';
-import 'package:auno_player/features/settings/screens/casting_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/interface_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/library_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/playback_display_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/queue_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/ui_customization_settings_screen.dart';
-import 'package:auno_player/features/settings/screens/integrations_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/lyrics_settings_screen.dart';
-import 'package:auno_player/features/settings/screens/network_sources_screen.dart';
 import 'package:auno_player/features/settings/screens/player_layout_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/widget_settings_screen.dart';
 import 'package:auno_player/core/utils/navigation_helper.dart';
@@ -129,18 +126,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           const SettingsDivider(),
                           _CategoryTile(
-                            icon: LucideIcons.cloud,
-                            iconBg: const Color(0xFF2D6F6F),
-                            iconFg: const Color(0xFF8BFFE0),
-                            title: l10n.englishForFilipino.networkSources,
-                            subtitle: l10n.subsonicServersSyncAndStreaming,
-                            onTap: () => _navigate(
-                              context,
-                              const NetworkSourcesScreen(),
-                            ),
-                          ),
-                          const SettingsDivider(),
-                          _CategoryTile(
                             icon: LucideIcons.play,
                             iconBg: const Color(0xFF4A2D6F),
                             iconFg: const Color(0xFFD19FFF),
@@ -197,18 +182,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           const SettingsDivider(),
                           _CategoryTile(
-                            icon: LucideIcons.cast,
-                            iconBg: const Color(0xFF6F2D4A),
-                            iconFg: const Color(0xFFFF8BB8),
-                            title: l10n.englishForFilipino.casting,
-                            subtitle: l10n.dlnaUpnpAndChromecastReceivers,
-                            onTap: () => _navigate(
-                              context,
-                              const CastingSettingsScreen(),
-                            ),
-                          ),
-                          const SettingsDivider(),
-                          _CategoryTile(
                             icon: LucideIcons.fileText,
                             iconBg: const Color(0xFF4A6F2D),
                             iconFg: const Color(0xFFC4FF8B),
@@ -249,18 +222,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onTap: () => _navigate(
                               context,
                               const UiCustomizationSettingsScreen(),
-                            ),
-                          ),
-                          const SettingsDivider(),
-                          _CategoryTile(
-                            icon: LucideIcons.plug,
-                            iconBg: const Color(0xFF6F2D4A),
-                            iconFg: const Color(0xFFFF8BB8),
-                            title: l10n.englishForFilipino.integrations,
-                            subtitle: l10n.lastFmListenbrainzScrobbling,
-                            onTap: () => _navigate(
-                              context,
-                              const IntegrationsSettingsScreen(),
                             ),
                           ),
                           const SettingsDivider(),

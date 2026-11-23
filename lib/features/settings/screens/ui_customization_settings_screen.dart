@@ -185,8 +185,7 @@ class UiCustomizationSettingsScreen extends ConsumerWidget {
               ToggleSetting(
                 icon: LucideIcons.sparkles,
                 title: l10n.englishForFilipino.animatedAlbumArt,
-                subtitle:
-                    l10n.appleMusicMotionArtOnAlbums,
+                subtitle: l10n.localAlbumArtPanAndGlow,
                 value: appPreferences.animatedAlbumArt,
                 onChanged: (value) {
                   ref

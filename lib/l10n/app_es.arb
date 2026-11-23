@@ -1,4 +1,8 @@
 {
+  "artworkOnlyForLocalFiles": "Las carátulas solo se pueden cambiar en archivos locales.",
+  "@artworkOnlyForLocalFiles": {
+    "description": "Shown when attempting to change artwork for an indexed row from a removed network source."
+  },
   "lockScreenVisualizerTitle": "Visualizador en pantalla de bloqueo",
   "lockScreenVisualizerDescription": "Muestra solo un visualizador fluido a pantalla completa sobre negro puro, encima del bloqueo. Estilo AOD, no AOD del sistema. El dispositivo sigue bloqueado. No se abre automáticamente.",
   "lockScreenVisualizerOpen": "Abrir pantalla del visualizador",
@@ -110,14 +114,6 @@
   "@aboutFlickPlayer": {
     "description": "lib/features/settings/screens/app_info_settings_screen.dart:419"
   },
-  "aboutThisAlbum": "Acerca de este álbum",
-  "@aboutThisAlbum": {
-    "description": "lib/features/albums/screens/album_detail_screen.dart:519"
-  },
-  "aboutThem": "Acerca del artista",
-  "@aboutThem": {
-    "description": "Artist detail biography section and its expanded sheet."
-  },
   "absoluteVolumeSync": "Sincronización del volumen absoluto",
   "@absoluteVolumeSync": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:398"
@@ -215,10 +211,6 @@
   "addMusicWithArtistTagsTo": "Agrega música con etiquetas de artista para verlos aquí",
   "@addMusicWithArtistTagsTo": {
     "description": "lib/features/artists/screens/artists_screen.dart:485"
-  },
-  "addServer": "Agregar servidor",
-  "@addServer": {
-    "description": "lib/features/settings/screens/network_sources_screen.dart:154"
   },
   "addSongsFromThePlayerMenu": "Agrega canciones desde el menú del reproductor",
   "@addSongsFromThePlayerMenu": {
@@ -419,10 +411,6 @@
   "@afterHours": {
     "description": "lib/features/menu/screens/menu_screen.dart:1782"
   },
-  "afterScanningMatchFilesWithMissing": "Después de escanear, busca en Apple Music coincidencias para los archivos sin etiquetas. Solo las coincidencias seguras se aplican automáticamente.",
-  "@afterScanningMatchFilesWithMissing": {
-    "description": "lib/features/settings/widgets/apple_music_settings_tile.dart:40"
-  },
   "air": "Aire",
   "@air": {
     "description": "lib/features/settings/screens/equalizer_screen.dart:1891"
@@ -451,10 +439,6 @@
   "albumArt2": "Portada del álbum",
   "@albumArt2": {
     "description": "lib/features/recap/screens/replay_studio_screen.dart:598"
-  },
-  "albumArtImport": "Importar portada del álbum",
-  "@albumArtImport": {
-    "description": "lib/features/settings/screens/privacy_policy_screen.dart:64"
   },
   "albumArtist": "Artista del álbum",
   "@albumArtist": {
@@ -712,10 +696,6 @@
   "@analyzingLoudness": {
     "description": "lib/features/settings/screens/library_settings_screen.dart:825"
   },
-  "andArtwork": " y la portada",
-  "@andArtwork": {
-    "description": "lib/features/albums/widgets/identify_album_sheet.dart:58"
-  },
   "andMoreInRotation": "{arg1} y más en rotación",
   "@andMoreInRotation": {
     "description": "lib/features/menu/screens/menu_screen.dart:1439",
@@ -724,10 +704,6 @@
         "type": "Object"
       }
     }
-  },
-  "android": "Android",
-  "@android": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:121"
   },
   "androidAudioApi": "API de audio de Android",
   "@androidAudioApi": {
@@ -761,6 +737,7 @@
   "@animatedAlbumArt": {
     "description": "lib/features/settings/screens/ui_customization_settings_screen.dart:166"
   },
+  "localAlbumArtPanAndGlow": "Desplazamiento lento y brillo basado en el color dominante de la portada.",
   "animationStyle": "Estilo de animación",
   "@animationStyle": {
     "description": "lib/features/settings/screens/visualizer_settings_screen.dart:65"
@@ -781,10 +758,6 @@
   "@animationsAndHapticFeedbackToggles": {
     "description": "lib/features/manual/data/manual_data.dart"
   },
-  "apiKey": "Clave de API",
-  "@apiKey": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:447"
-  },
   "appInfo": "Información de la app",
   "@appInfo": {
     "description": "lib/features/settings/screens/app_info_settings_screen.dart:598"
@@ -800,22 +773,6 @@
   "appearsInTheOverflowMenu": "Aparece en el menú Más opciones",
   "@appearsInTheOverflowMenu": {
     "description": "lib/features/settings/screens/bottom_bar_settings_screen.dart:394"
-  },
-  "appleMusicDataUnavailable": "Datos de Apple Music no disponibles",
-  "@appleMusicDataUnavailable": {
-    "description": "lib/features/albums/screens/album_detail_screen.dart:417"
-  },
-  "appleMusicDataUpdated": "Datos de Apple Music actualizados",
-  "@appleMusicDataUpdated": {
-    "description": "lib/features/albums/screens/album_detail_screen.dart:416"
-  },
-  "appleMusicLookupFailedCheckYour": "No se pudo buscar en Apple Music. Comprueba tu conexión.",
-  "@appleMusicLookupFailedCheckYour": {
-    "description": "lib/features/albums/widgets/identify_album_sheet.dart:141"
-  },
-  "appleMusicMotionArtOnAlbums": "Portadas animadas de Apple Music en los álbumes, además de desplazamiento y zoom, brillo ambiental y transiciones suaves en las imágenes destacadas",
-  "@appleMusicMotionArtOnAlbums": {
-    "description": "lib/features/settings/screens/ui_customization_settings_screen.dart:168"
   },
   "appliedAutoeqFor": "Se aplicó AutoEQ para {arg1}",
   "@appliedAutoeqFor": {
@@ -836,19 +793,6 @@
     "placeholders": {
       "arg1": {
         "type": "Object"
-      }
-    }
-  },
-  "applySelected": "Aplicar selección",
-  "@applySelected": {
-    "description": "lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:351"
-  },
-  "applyTo": "Aplicar a {count, plural, =1{{count} canción} other{{count} canciones}}",
-  "@applyTo": {
-    "description": "lib/features/albums/widgets/identify_album_sheet.dart:581",
-    "placeholders": {
-      "count": {
-        "type": "int"
       }
     }
   },
@@ -942,23 +886,6 @@
   "@artworkCard": {
     "description": "lib/features/player/widgets/player_layout_sheet.dart:203"
   },
-  "artworkLookupFailed": "No se pudo obtener la portada (HTTP {status}).",
-  "@artworkLookupFailed": {
-    "description": "l10n pass: user-visible service error",
-    "placeholders": {
-      "status": {
-        "type": "int"
-      }
-    }
-  },
-  "artworkLookupInvalidData": "La búsqueda de portada devolvió datos no válidos.",
-  "@artworkLookupInvalidData": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "artworkLookupTemporarilyUnavailable": "La búsqueda de portada no está disponible temporalmente.",
-  "@artworkLookupTemporarilyUnavailable": {
-    "description": "l10n pass: user-visible service error"
-  },
   "artworkPlacement": "Ubicación de la portada",
   "@artworkPlacement": {
     "description": "lib/features/player/widgets/player_layout_sheet.dart:239"
@@ -1027,10 +954,6 @@
   "@auroraSounds": {
     "description": "lib/models/song.dart:319"
   },
-  "authenticationResponseMissingToken": "Falta el token en la respuesta de autenticación",
-  "@authenticationResponseMissingToken": {
-    "description": "l10n pass: user-visible service error"
-  },
   "auto": "Automático",
   "@auto": {
     "description": "lib/features/player/screens/lyrics_sync_screen.dart:1224"
@@ -1066,10 +989,6 @@
   "autoHideTimeout": "Tiempo antes de ocultarse automáticamente",
   "@autoHideTimeout": {
     "description": "lib/features/settings/screens/playback_display_settings_screen.dart:205"
-  },
-  "autoIdentifyUntaggedAlbums": "Identificar automáticamente álbumes sin etiquetas",
-  "@autoIdentifyUntaggedAlbums": {
-    "description": "lib/features/settings/widgets/apple_music_settings_tile.dart:38"
   },
   "autoNativeDsdOnDapsDop": "Automático: DSD nativo en reproductores de audio digital (DAP), DoP para DAC USB y PCM en los demás casos",
   "@autoNativeDsdOnDapsDop": {
@@ -1110,10 +1029,6 @@
   "autoplayOnQueueEnd": "Reproducción automática al final de la cola",
   "@autoplayOnQueueEnd": {
     "description": "lib/features/settings/screens/queue_settings_screen.dart:73"
-  },
-  "availableDevices": "Dispositivos disponibles",
-  "@availableDevices": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:70"
   },
   "b": "B{arg1}",
   "@b": {
@@ -1665,36 +1580,6 @@
   "@cardWidth": {
     "description": "lib/features/settings/screens/orbit_settings_screen.dart:91"
   },
-  "cast": "Transmitir",
-  "@cast": {
-    "description": "lib/features/player/widgets/player_action_button_row.dart:843"
-  },
-  "casting": "Transmitiendo",
-  "@casting": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:66"
-  },
-  "castingTapToManage": "Transmitiendo: toca para administrar",
-  "@castingTapToManage": {
-    "description": "lib/features/player/widgets/player_action_button_row.dart:843"
-  },
-  "castingTo": "Transmitiendo a {deviceName}",
-  "@castingTo": {
-    "description": "Snack bar shown after starting a cast session.",
-    "placeholders": {
-      "deviceName": {
-        "type": "Object"
-      }
-    }
-  },
-  "castingTo2": "Transmitiendo a {arg1}",
-  "@castingTo2": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:54",
-    "placeholders": {
-      "arg1": {
-        "type": "Object"
-      }
-    }
-  },
   "categories": "Categorías",
   "@categories": {
     "description": "lib/models/shuffle_mode.dart:14"
@@ -1818,10 +1703,6 @@
   "chooseWhichToKeep": "Elegir cuáles conservar",
   "@chooseWhichToKeep": {
     "description": "lib/features/settings/screens/duplicate_cleaner_screen.dart:1178"
-  },
-  "chromecast": "Chromecast",
-  "@chromecast": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:46"
   },
   "circularDotsRadiusFollowsAmplitude": "Puntos circulares: el radio sigue la amplitud",
   "@circularDotsRadiusFollowsAmplitude": {
@@ -2004,66 +1885,21 @@
   "@connect": {
     "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:785"
   },
-  "connectAMusicServer": "Conectar un servidor de música",
-  "@connectAMusicServer": {
-    "description": "lib/features/settings/screens/network_sources_screen.dart:155"
-  },
-  "connectASubsonicJellyfinWebdavUpnp": "Conecta un servidor Subsonic, Jellyfin, WebDAV, UPnP o Tidal para transmitir desde tu biblioteca remota.",
-  "@connectASubsonicJellyfinWebdavUpnp": {
-    "description": "lib/features/settings/screens/network_sources_screen.dart:199"
-  },
   "connectAUsbDacOrAudio": "Conectar un DAC USB o una interfaz de audio",
   "@connectAUsbDacOrAudio": {
     "description": "lib/features/settings/screens/uac2_settings_screen.dart:296"
-  },
-  "connectListenbrainz": "Conectar a ListenBrainz",
-  "@connectListenbrainz": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:651"
-  },
-  "connectToScrobbleYourListeningHistory": "Conéctate para registrar tu historial de escucha",
-  "@connectToScrobbleYourListeningHistory": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:979"
-  },
-  "connectToScrobbleYourMusic": "Conéctate para registrar lo que escuchas",
-  "@connectToScrobbleYourMusic": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:356"
-  },
-  "connectToSubmitYourListeningHistory": "Conéctate para enviar tu historial de escucha",
-  "@connectToSubmitYourListeningHistory": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:481"
   },
   "connected": "Conectado",
   "@connected": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:110"
   },
-  "connectedAccount": "Cuenta conectada",
-  "@connectedAccount": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:888"
-  },
-  "connectedAs": "Conectado como {username}",
-  "@connectedAs": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:770",
-    "placeholders": {
-      "username": {
-        "type": "Object"
-      }
-    }
-  },
   "connecting": "Conectando",
   "@connecting": {
     "description": "lib/features/settings/screens/uac2_settings_screen.dart:901"
   },
-  "connection": "Conexión",
-  "@connection": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:428"
-  },
   "connectionBehavior": "Comportamiento de la conexión",
   "@connectionBehavior": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:244"
-  },
-  "connectionFailedRetry": "Falló la conexión: volver a intentar",
-  "@connectionFailedRetry": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:355"
   },
   "connectionManagement": "Administración de conexiones",
   "@connectionManagement": {
@@ -2076,10 +1912,6 @@
   "connectionNoticesDescription": "Mostrar avisos cuando no hay conexión y cuando vuelve",
   "@connectionNoticesDescription": {
     "description": "Description of the connection notice visibility setting"
-  },
-  "connectionOk": "Conexión correcta",
-  "@connectionOk": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:353"
   },
   "connectionStatus": "Estado de la conexión",
   "@connectionStatus": {
@@ -2185,10 +2017,6 @@
   "@copyLink": {
     "description": "lib/features/settings/screens/logs_screen.dart:299"
   },
-  "copyYourUserTokenFromListenbrainz": "Copia tu token de usuario desde los ajustes de ListenBrainz y pégalo abajo.",
-  "@copyYourUserTokenFromListenbrainz": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:662"
-  },
   "copyright": "Derechos de autor",
   "@copyright": {
     "description": "lib/features/songs/widgets/song_actions_bottom_sheet.dart:698"
@@ -2200,14 +2028,6 @@
   "cosmicOrchestra": "Cosmic Orchestra",
   "@cosmicOrchestra": {
     "description": "lib/models/song.dart:322"
-  },
-  "couldNotConnectToLastFm": "No se pudo conectar con Last.fm. Comprueba las credenciales de la API e inténtalo de nuevo.",
-  "@couldNotConnectToLastFm": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:81"
-  },
-  "couldNotConnectToListenbrainzCheck": "No se pudo conectar con ListenBrainz. Comprueba el token e inténtalo de nuevo.",
-  "@couldNotConnectToListenbrainzCheck": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:609"
   },
   "couldNotLoadAlbumSongs": "No se pudieron cargar las canciones del álbum",
   "@couldNotLoadAlbumSongs": {
@@ -2224,23 +2044,6 @@
   "couldNotLoadIr": "No se pudo cargar la respuesta al impulso: {e}",
   "@couldNotLoadIr": {
     "description": "lib/features/settings/screens/equalizer_screen.dart:3723",
-    "placeholders": {
-      "e": {
-        "type": "Object"
-      }
-    }
-  },
-  "couldNotLoadSession": "No se pudo cargar la sesión",
-  "@couldNotLoadSession": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:755"
-  },
-  "couldNotOpenBrowser": "No se pudo abrir el navegador.",
-  "@couldNotOpenBrowser": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:683"
-  },
-  "couldNotOpenLink2": "No se pudo abrir el enlace: {e}",
-  "@couldNotOpenLink2": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:692",
     "placeholders": {
       "e": {
         "type": "Object"
@@ -2272,10 +2075,6 @@
         "type": "String"
       }
     }
-  },
-  "couldNotReachTheServer": "No se pudo acceder al servidor. Comprueba la URL y las credenciales e inténtalo de nuevo.",
-  "@couldNotReachTheServer": {
-    "description": "l10n pass: user-visible service error"
   },
   "couldNotReadTheCoverColors": "No se pudieron leer los colores de la portada. La señal sigue disponible.",
   "@couldNotReadTheCoverColors": {
@@ -2312,10 +2111,6 @@
   "couldNotUseTheSelectedLyrics": "No se pudo usar el archivo de letras seleccionado.",
   "@couldNotUseTheSelectedLyrics": {
     "description": "lib/features/player/widgets/inline_lyrics_panel.dart:142"
-  },
-  "couldnTOpenTheBrowserAutomatically": "No se pudo abrir el navegador automáticamente. Autoriza el acceso desde cualquier dispositivo con este enlace; completaremos el inicio de sesión cuando lo hagas:\n",
-  "@couldnTOpenTheBrowserAutomatically": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:589"
   },
   "countingFiles": "Contando archivos…",
   "@countingFiles": {
@@ -2469,10 +2264,6 @@
   },
   "interface": "Interfaz",
   "@interface": {
-    "description": "lib/features/manual/data/manual_data.dart"
-  },
-  "lastFmAndListenBrainzScrobbling": "Configuración del registro de reproducciones en Last.fm y ListenBrainz.",
-  "@lastFmAndListenBrainzScrobbling": {
     "description": "lib/features/manual/data/manual_data.dart"
   },
   "layoutModeSizingMiniPlayer": "Modo de diseño, tamaño, gesto del minirreproductor y botones de acciones rápidas personalizados.",
@@ -2919,19 +2710,6 @@
   "@creativeFx": {
     "description": "lib/features/settings/screens/equalizer_screen.dart:3505"
   },
-  "credentialsRejectedByReEnterThe": "{arg1} rechazó las credenciales. Vuelve a ingresar la contraseña.",
-  "@credentialsRejectedByReEnterThe": {
-    "description": "lib/features/settings/screens/network_sources_screen.dart:110",
-    "placeholders": {
-      "arg1": {
-        "type": "Object"
-      }
-    }
-  },
-  "credentialsSavedSuccessfully": "Las credenciales se guardaron correctamente.",
-  "@credentialsSavedSuccessfully": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:622"
-  },
   "crispestHeavierDuringFastScrolling": "Más nítido: mayor carga durante el desplazamiento rápido",
   "@crispestHeavierDuringFastScrolling": {
     "description": "lib/features/settings/screens/orbit_settings_screen.dart:167"
@@ -3283,15 +3061,6 @@
   "@delete": {
     "description": "lib/features/playlists/screens/playlists_screen.dart:649"
   },
-  "deleteAndAllSongsAndPlaylists": "¿Eliminar «{arg1}» y todas las canciones y listas sincronizadas desde ahí? Se conservarán las descargas en caché.",
-  "@deleteAndAllSongsAndPlaylists": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:329",
-    "placeholders": {
-      "arg1": {
-        "type": "Object"
-      }
-    }
-  },
   "deleteFile": "Eliminar archivo",
   "@deleteFile": {
     "description": "lib/features/songs/widgets/song_actions_bottom_sheet.dart:753"
@@ -3504,30 +3273,9 @@
   "@disconnectBehaviorAndCodecInfo": {
     "description": "lib/features/settings/screens/settings_screen.dart:148"
   },
-  "disconnectFrom": "Desconectar de {arg1}",
-  "@disconnectFrom": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:113",
-    "placeholders": {
-      "arg1": {
-        "type": "Object"
-      }
-    }
-  },
-  "disconnectLastFm": "¿Desconectar Last.fm?",
-  "@disconnectLastFm": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:156"
-  },
-  "disconnectListenbrainz": "¿Desconectar ListenBrainz?",
-  "@disconnectListenbrainz": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:95"
-  },
   "discord": "Discord",
   "@discord": {
     "description": "lib/features/settings/screens/app_info_settings_screen.dart:501"
-  },
-  "discoversDlnaUpnpAndChromecastReceivers": "Busca receptores DLNA, UPnP y Chromecast en tu red",
-  "@discoversDlnaUpnpAndChromecastReceivers": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:76"
   },
   "dismiss": "Descartar",
   "@dismiss": {
@@ -3572,18 +3320,6 @@
   "distanceBetweenSongsAlongTheArc": "Distancia entre canciones a lo largo del arco",
   "@distanceBetweenSongsAlongTheArc": {
     "description": "lib/features/settings/screens/orbit_settings_screen.dart:63"
-  },
-  "dlnaAndUpnpReceiversAreControlled": "Los receptores DLNA y UPnP se controlan directamente con Dart puro, sin dependencias adicionales. La compatibilidad con Chromecast usa el SDK nativo de Cast. Se pueden transmitir fuentes de red (Subsonic, WebDAV, Jellyfin y UPnP), archivos locales y canciones en caché; los archivos locales se sirven directamente desde este teléfono. Mientras transmites, las teclas de volumen y el panel de volumen del sistema controlan el dispositivo conectado.",
-  "@dlnaAndUpnpReceiversAreControlled": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:300"
-  },
-  "dlnaUpnp": "DLNA / UPnP",
-  "@dlnaUpnp": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:45"
-  },
-  "dlnaUpnpAndChromecastReceivers": "Receptores DLNA, UPnP y Chromecast",
-  "@dlnaUpnpAndChromecastReceivers": {
-    "description": "lib/features/settings/screens/settings_screen.dart:160"
   },
   "donTShowAgainToday": "No volver a mostrar hoy",
   "@donTShowAgainToday": {
@@ -3726,10 +3462,6 @@
   "@earlierStandoutsPulledBackIntoView": {
     "description": "lib/features/menu/screens/menu_screen.dart:1759"
   },
-  "editCredentials": "Editar credenciales",
-  "@editCredentials": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:921"
-  },
   "editDescription": "Editar descripción",
   "@editDescription": {
     "description": "lib/features/albums/screens/album_detail_screen.dart:313"
@@ -3742,10 +3474,6 @@
   "@editMetadata": {
     "description": "lib/features/player/widgets/song_actions_sheet.dart:268"
   },
-  "editServer": "Editar servidor",
-  "@editServer": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:368"
-  },
   "editSync": "Editar y sincronizar",
   "@editSync": {
     "description": "lib/features/player/widgets/inline_lyrics_panel.dart:208"
@@ -3753,10 +3481,6 @@
   "editText": "Editar texto",
   "@editText": {
     "description": "lib/features/player/screens/lyrics_sync_screen.dart:770"
-  },
-  "editToken": "Editar token",
-  "@editToken": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:348"
   },
   "electricSunset": "Atardecer eléctrico",
   "@electricSunset": {
@@ -3843,14 +3567,6 @@
   "@enterAYear19999": {
     "description": "lib/features/songs/screens/metadata_editor_screen.dart:115"
   },
-  "enterYourApiKey": "Ingresa tu clave de API",
-  "@enterYourApiKey": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:458"
-  },
-  "enterYourSharedSecret": "Ingresa tu secreto compartido",
-  "@enterYourSharedSecret": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:512"
-  },
   "ep": "EP {arg1}",
   "@ep": {
     "description": "lib/features/player/widgets/bit_perfect_indicator.dart:1000",
@@ -3927,10 +3643,6 @@
   "etherealTones": "Tonos etéreos",
   "@etherealTones": {
     "description": "lib/models/song.dart:349"
-  },
-  "everyAlbumHasArtistAndAlbum": "Todos los álbumes tienen etiquetas de artista y de álbum.",
-  "@everyAlbumHasArtistAndAlbum": {
-    "description": "lib/features/settings/screens/missing_metadata_screen.dart:78"
   },
   "everySongIsRemovedFromYour": "Se quitarán de tu biblioteca todas las canciones. Se conservarán los archivos del disco; vuelve a analizar las carpetas para agregarlas otra vez.",
   "@everySongIsRemovedFromYour": {
@@ -4106,15 +3818,6 @@
   "@failedToDeactivateFallback": {
     "description": "lib/widgets/uac2/uac2_fallback_manager.dart:81"
   },
-  "failedToDownloadAlbumArt": "No se pudo descargar la portada del álbum (HTTP {status}).",
-  "@failedToDownloadAlbumArt": {
-    "description": "l10n pass: user-visible service error",
-    "placeholders": {
-      "status": {
-        "type": "int"
-      }
-    }
-  },
   "failedToGetPersistedUris": "No se pudieron obtener los URI persistentes: {error}",
   "@failedToGetPersistedUris": {
     "description": "l10n pass: user-visible service error",
@@ -4234,10 +3937,6 @@
   "@failedToSaveTheRecapImage": {
     "description": "l10n pass: user-visible service error"
   },
-  "failedToSearchAlbumArtOnline": "No se pudo buscar la portada del álbum en línea.",
-  "@failedToSearchAlbumArtOnline": {
-    "description": "l10n pass: user-visible service error"
-  },
   "failedToStartStreaming": "No se pudo iniciar la transmisión",
   "@failedToStartStreaming": {
     "description": "lib/widgets/uac2/uac2_stream_config.dart:270"
@@ -4342,15 +4041,6 @@
       }
     }
   },
-  "files2": "{count, plural, =1{{count} archivo} other{{count} archivos}}",
-  "@files2": {
-    "description": "lib/features/settings/screens/missing_metadata_screen.dart:128",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "filesChecked": "Se revisaron {arg1} archivos…",
   "@filesChecked": {
     "description": "lib/features/settings/screens/library_settings_screen.dart:984",
@@ -4412,14 +4102,6 @@
   "finishingUp": "Terminando…",
   "@finishingUp": {
     "description": "lib/features/menu/screens/restarting_screen.dart:13"
-  },
-  "fix": "Corregir",
-  "@fix": {
-    "description": "lib/features/settings/screens/network_sources_screen.dart:116"
-  },
-  "fixMissingMetadata": "Corregir metadatos faltantes",
-  "@fixMissingMetadata": {
-    "description": "lib/features/settings/screens/library_settings_screen.dart:2213"
   },
   "fixedBands": "31 bandas fijas",
   "@fixedBands": {
@@ -4632,15 +4314,6 @@
   "@freshAdditions": {
     "description": "lib/features/menu/screens/menu_screen.dart:1774"
   },
-  "from": "De {sourceLabel}",
-  "@from": {
-    "description": "lib/widgets/common/fetched_description.dart:41",
-    "placeholders": {
-      "sourceLabel": {
-        "type": "Object"
-      }
-    }
-  },
   "fromSquareCornersToARounded": "De esquinas cuadradas a una barra redondeada",
   "@fromSquareCornersToARounded": {
     "description": "lib/features/settings/widgets/mini_player_customization.dart:137"
@@ -4733,10 +4406,6 @@
   "getStarted": "Comenzar",
   "@getStarted": {
     "description": "lib/features/onboarding/screens/onboarding_screen.dart:269"
-  },
-  "getYourApiCredentials": "Obtener credenciales de API",
-  "@getYourApiCredentials": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:404"
   },
   "github": "GitHub",
   "@github": {
@@ -4883,10 +4552,6 @@
   "@hideNavigationButtonsAfterBeingIdle": {
     "description": "lib/features/settings/screens/bottom_bar_settings_screen.dart:79"
   },
-  "hidePassword": "Ocultar contraseña",
-  "@hidePassword": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:765"
-  },
   "hideShortStingersRingtonesAndVoice": "Ocultar fragmentos cortos, tonos de llamada y fragmentos de voz",
   "@hideShortStingersRingtonesAndVoice": {
     "description": "lib/features/settings/screens/library_settings_screen.dart:1843"
@@ -4992,10 +4657,6 @@
   "@howWideEachCardSpansAcross": {
     "description": "lib/features/settings/screens/orbit_settings_screen.dart:92"
   },
-  "httpBasicNeedsItRecoverableStored": "HTTP Basic necesita poder recuperar la contraseña; se guarda codificada",
-  "@httpBasicNeedsItRecoverableStored": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:77"
-  },
   "hz": "{rate} Hz",
   "@hz": {
     "description": "lib/features/player/widgets/bit_perfect_indicator.dart:1145",
@@ -5035,37 +4696,9 @@
   "@iconSize": {
     "description": "lib/features/settings/screens/bottom_bar_settings_screen.dart:290"
   },
-  "identified": "{count, plural, =1{Se identificó {count} canción} other{Se identificaron {count} canciones}}{note}.",
-  "@identified": {
-    "description": "lib/features/albums/widgets/identify_album_sheet.dart:64",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      },
-      "note": {
-        "type": "Object"
-      }
-    }
-  },
-  "identifyAlbum": "Identificar álbum",
-  "@identifyAlbum": {
-    "description": "lib/features/albums/screens/album_detail_screen.dart:349"
-  },
-  "identifyAlbum2": "Identificar álbum",
-  "@identifyAlbum2": {
-    "description": "lib/features/albums/widgets/identify_album_sheet.dart:215"
-  },
-  "identifyAlbumsWithUnknownArtistOr": "Identificar álbumes con etiquetas de artista o título desconocidas",
-  "@identifyAlbumsWithUnknownArtistOr": {
-    "description": "lib/features/settings/screens/library_settings_screen.dart:2214"
-  },
   "idle": "Inactivo",
   "@idle": {
     "description": "lib/features/settings/screens/uac2_settings_screen.dart:899"
-  },
-  "ifYouConnectYourLastFm": "Si conectas tu cuenta de Last.fm, las credenciales se guardan de forma segura en el dispositivo. Los datos de reproducción solo se envían a Last.fm. No recibimos ni procesamos esos datos.",
-  "@ifYouConnectYourLastFm": {
-    "description": "lib/features/settings/screens/privacy_policy_screen.dart:61"
   },
   "ignoreTracksUnder500Kb": "Ignorar pistas de menos de 500 KB",
   "@ignoreTracksUnder500Kb": {
@@ -5170,10 +4803,6 @@
   "@incredibleOverAMonthOfDaily": {
     "description": "lib/features/milestone/widgets/streak_popup.dart:96"
   },
-  "info2": "Información",
-  "@info2": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:126"
-  },
   "initializing": "Inicializando…",
   "@initializing": {
     "description": "lib/features/settings/screens/library_settings_screen.dart:1171"
@@ -5202,10 +4831,6 @@
   "@instrumental": {
     "description": "lib/features/player/widgets/online_lyrics_search_sheet.dart:594"
   },
-  "integrations": "Integraciones",
-  "@integrations": {
-    "description": "lib/features/settings/screens/integrations_settings_screen.dart:14"
-  },
   "interactiveEq": "Ecualizador interactivo",
   "@interactiveEq": {
     "description": "lib/widgets/equalizer/interactive_eq_graph.dart:121"
@@ -5221,10 +4846,6 @@
   "interfaceLabel": "Interfaz",
   "@interfaceLabel": {
     "description": "lib/features/settings/screens/interface_settings_screen.dart:36"
-  },
-  "invalidToken": "Token no válido",
-  "@invalidToken": {
-    "description": "l10n pass: user-visible service error"
   },
   "isOfflineRetainedSongsStillListed": "{folder} está sin conexión; las canciones guardadas siguen en la lista",
   "@isOfflineRetainedSongsStillListed": {
@@ -5255,14 +4876,6 @@
   "jan": "ene",
   "@jan": {
     "description": "lib/features/milestone/screens/milestones_screen.dart:502"
-  },
-  "jellyfin": "Jellyfin",
-  "@jellyfin": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:65"
-  },
-  "jellyfinEmby": "Jellyfin · Emby",
-  "@jellyfinEmby": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:66"
   },
   "jul": "jul",
   "@jul": {
@@ -5384,10 +4997,6 @@
   "@keepsSoftwareVolumeAndDspActive": {
     "description": "lib/features/settings/screens/uac2_preferences_screen.dart:796"
   },
-  "keptInSecureStorageToRe": "Se conserva en el almacenamiento seguro para volver a iniciar sesión cuando venza el token",
-  "@keptInSecureStorageToRe": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:69"
-  },
   "keptWillBeRemoved": "{keptCount} se conservan • se quitarán {removeCount}",
   "@keptWillBeRemoved": {
     "description": "lib/features/settings/screens/duplicate_cleaner_screen.dart:1277",
@@ -5457,10 +5066,6 @@
       }
     }
   },
-  "label": "Etiqueta",
-  "@label": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:434"
-  },
   "labelOrganization": "Sello discográfico / organización",
   "@labelOrganization": {
     "description": "lib/features/songs/widgets/song_actions_bottom_sheet.dart:699"
@@ -5484,30 +5089,6 @@
   "languageSystemDefault": "Predeterminado del sistema",
   "@languageSystemDefault": {
     "description": "Language option that follows the device locale."
-  },
-  "lastFm": "Last.fm",
-  "@lastFm": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:730"
-  },
-  "lastFmConfiguration": "Configuración de Last.fm",
-  "@lastFmConfiguration": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:347"
-  },
-  "lastFmConnected": "Last.fm conectado",
-  "@lastFmConnected": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:829"
-  },
-  "lastFmConnected2": "Se conectó Last.fm.",
-  "@lastFmConnected2": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:97"
-  },
-  "lastFmListenbrainzScrobbling": "Registro de reproducciones en Last.fm y ListenBrainz",
-  "@lastFmListenbrainzScrobbling": {
-    "description": "lib/features/settings/screens/settings_screen.dart:211"
-  },
-  "lastFmScrobbling": "Registro de reproducciones en Last.fm",
-  "@lastFmScrobbling": {
-    "description": "lib/features/settings/screens/privacy_policy_screen.dart:59"
   },
   "lastPick": "Última selección",
   "@lastPick": {
@@ -5568,10 +5149,6 @@
   "leMsbLittleEndianSubslotMsb": "LE-MSB: subranura en orden little-endian, primero el bit más significativo",
   "@leMsbLittleEndianSubslotMsb": {
     "description": "lib/features/settings/screens/uac2_preferences_screen.dart:1720"
-  },
-  "leaveEmptyToKeepTheCurrent": "Déjalo vacío para conservar las credenciales actuales",
-  "@leaveEmptyToKeepTheCurrent": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:460"
   },
   "left": "Izquierda",
   "@left": {
@@ -5771,22 +5348,6 @@
   "@list": {
     "description": "lib/models/song_view_mode.dart:19"
   },
-  "listAvailableLocalAudioOutputDevices": "Mostrar los dispositivos locales de salida de audio disponibles",
-  "@listAvailableLocalAudioOutputDevices": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:258"
-  },
-  "listenbrainz": "ListenBrainz",
-  "@listenbrainz": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:426"
-  },
-  "listenbrainzConnected": "ListenBrainz conectado",
-  "@listenbrainzConnected": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:259"
-  },
-  "listenbrainzConnected2": "Se conectó ListenBrainz.",
-  "@listenbrainzConnected2": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:599"
-  },
   "listeningHours": "Horas de escucha",
   "@listeningHours": {
     "description": "lib/features/milestone/screens/milestones_screen.dart:377"
@@ -5856,10 +5417,6 @@
   "@loadingReplay": {
     "description": "lib/features/recap/screens/listening_recap_screen.dart:235"
   },
-  "loadingSession": "Cargando sesión…",
-  "@loadingSession": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:737"
-  },
   "localData": "Datos locales",
   "@localData": {
     "description": "lib/features/settings/screens/privacy_policy_screen.dart:39"
@@ -5892,10 +5449,6 @@
   "look": "Apariencia",
   "@look": {
     "description": "lib/features/recap/screens/replay_studio_screen.dart:520"
-  },
-  "lookingForCoverArtFromMusicbrainz": "Buscando portadas en MusicBrainz y Cover Art Archive.",
-  "@lookingForCoverArtFromMusicbrainz": {
-    "description": "lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:471"
   },
   "lossless": " Sin pérdida",
   "@lossless": {
@@ -6032,15 +5585,6 @@
   "@matchAudioFilename": {
     "description": "lib/features/settings/screens/lyrics_settings_screen.dart:25"
   },
-  "matchByArtistAlbumAndTrack": "Identificar {count, plural, =1{{count} archivo} other{{count} archivos}} por artista, álbum y duración de la pista",
-  "@matchByArtistAlbumAndTrack": {
-    "description": "lib/features/albums/widgets/identify_album_sheet.dart:225",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "matchEqToYourHeadphoneModel": "Ajustar el ecualizador a tu modelo de audífonos",
   "@matchEqToYourHeadphoneModel": {
     "description": "lib/features/settings/screens/equalizer_screen.dart:759"
@@ -6048,10 +5592,6 @@
   "matchNavigation": "Igualar navegación",
   "@matchNavigation": {
     "description": "lib/features/settings/widgets/mini_player_customization.dart:82"
-  },
-  "matches": "Coincidencias",
-  "@matches": {
-    "description": "lib/features/albums/widgets/identify_album_sheet.dart:354"
   },
   "maxB": "Máx. {arg1} B",
   "@maxB": {
@@ -6185,10 +5725,6 @@
   "@minimize": {
     "description": "lib/features/settings/screens/library_settings_screen.dart:1058"
   },
-  "minimserverServiioKodi": "MinimServer · Serviio · Kodi",
-  "@minimserverServiioKodi": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:82"
-  },
   "mirrorTest": "Prueba de espejo",
   "@mirrorTest": {
     "description": "lib/features/player/widgets/player_layout_sheet.dart:1187"
@@ -6197,7 +5733,7 @@
   "@mirrored": {
     "description": "lib/features/settings/screens/visualizer_settings_screen.dart:103"
   },
-  "mitLicenseCopyrightC2026Flick": "Licencia MIT\n\nCopyright (c) 2026 Colaboradores de Auno Player\n\nPor la presente se concede permiso, sin cargo, a toda persona que obtenga una copia de este software y de los archivos de documentación asociados (el «Software») para tratar el Software sin restricciones, incluidos, entre otros, los derechos de usar, copiar, modificar, combinar, publicar, distribuir, sublicenciar o vender copias del Software, y permitir que las personas a quienes se proporcione el Software lo hagan, sujeto a las siguientes condiciones:\n\nEl aviso de derechos de autor anterior y este aviso de permiso deben incluirse en todas las copias o partes sustanciales del Software.\n\nEL SOFTWARE SE PROPORCIONA «TAL CUAL», SIN GARANTÍAS DE NINGÚN TIPO, EXPRESAS O IMPLÍCITAS, INCLUIDAS, ENTRE OTRAS, LAS GARANTÍAS DE COMERCIABILIDAD, IDONEIDAD PARA UN FIN DETERMINADO Y NO INFRACCIÓN. EN NINGÚN CASO LOS AUTORES O TITULARES DE LOS DERECHOS DE AUTOR SERÁN RESPONSABLES DE NINGUNA RECLAMACIÓN, DAÑO U OTRA RESPONSABILIDAD, YA SEA EN UNA ACCIÓN CONTRACTUAL, EXTRACONTRACTUAL O DE OTRO TIPO, QUE SURJA DE, SE DERIVE DE O ESTÉ RELACIONADA CON EL SOFTWARE O SU USO U OTRAS OPERACIONES CON EL SOFTWARE.\n",
+  "mitLicenseCopyrightC2026Flick": "Licencia Pública General de GNU v3.0 o posterior\n\nCopyright (c) 2026 Colaboradores de Auno Player\n\nEste programa es software libre: puedes redistribuirlo y/o modificarlo bajo los términos de la Licencia Pública General de GNU publicada por la Free Software Foundation, ya sea la versión 3 de la licencia o (a tu elección) cualquier versión posterior.\n\nEste programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA; ni siquiera la garantía implícita de COMERCIABILIDAD o APTITUD PARA UN PROPÓSITO PARTICULAR. Consulta la Licencia Pública General de GNU para más detalles.\n\nDeberías haber recibido una copia de la Licencia Pública General de GNU junto con este programa. Si no es así, consulta <https://www.gnu.org/licenses/>.",
   "@mitLicenseCopyrightC2026Flick": {
     "description": "lib/features/settings/screens/app_info_settings_screen.dart:516"
   },
@@ -6324,10 +5860,6 @@
   "@mossEcosystem": {
     "description": "lib/features/settings/screens/privacy_policy_screen.dart:69"
   },
-  "mostDlnaServersNeedNoPassword": "La mayoría de los servidores DLNA no requieren contraseña",
-  "@mostDlnaServersNeedNoPassword": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:85"
-  },
   "mostPlayed": "Más reproducidas",
   "@mostPlayed": {
     "description": "lib/features/artists/screens/artist_detail_screen.dart:701"
@@ -6340,22 +5872,6 @@
         "type": "Object"
       }
     }
-  },
-  "motionArtInBitPerfect": "Motion Art en modo bit perfecto",
-  "@motionArtInBitPerfect": {
-    "description": "lib/features/settings/screens/playback_display_settings_screen.dart:64"
-  },
-  "motionArtIsReplacedWhileBit": "La animación de portada se reemplaza mientras está activa la salida bit perfecta",
-  "@motionArtIsReplacedWhileBit": {
-    "description": "lib/features/settings/screens/playback_display_settings_screen.dart:67"
-  },
-  "motionArtPlaysDuringBitPerfect": "La animación de portada se reproduce con audio bit perfecto (puede interrumpir la reproducción en algunos DAP)",
-  "@motionArtPlaysDuringBitPerfect": {
-    "description": "lib/features/settings/screens/playback_display_settings_screen.dart:66"
-  },
-  "motionArtRefreshed": "Se actualizó la animación de portada",
-  "@motionArtRefreshed": {
-    "description": "lib/features/player/widgets/song_actions_sheet.dart:255"
   },
   "moveEveryStampedLyricForwardOr": "Desplazar todas las líneas de letras sincronizadas hacia adelante o hacia atrás a la vez.",
   "@moveEveryStampedLyricForwardOr": {
@@ -6427,15 +5943,6 @@
   "@mute": {
     "description": "lib/widgets/uac2/iso_volume_popup.dart:260"
   },
-  "my": "Mi {arg1}",
-  "@my": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:435",
-    "placeholders": {
-      "arg1": {
-        "type": "Object"
-      }
-    }
-  },
   "nDb": "{arg1}%\n{arg2} dB",
   "@nDb": {
     "description": "lib/widgets/uac2/iso_volume_popup.dart:292",
@@ -6485,10 +5992,6 @@
   "@natureAmbient": {
     "description": "lib/models/song.dart:317"
   },
-  "navidromeAirsonicGonic": "Navidrome · Airsonic · Gonic",
-  "@navidromeAirsonicGonic": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:58"
-  },
   "navigationAppearance": "Apariencia de navegación",
   "@navigationAppearance": {
     "description": "lib/features/settings/screens/bottom_bar_settings_screen.dart:216"
@@ -6500,10 +6003,6 @@
   "navigationDefaultsRestored": "Se restablecieron los valores predeterminados de navegación",
   "@navigationDefaultsRestored": {
     "description": "lib/features/settings/screens/bottom_bar_settings_screen.dart:298"
-  },
-  "needsMetadata": "Faltan metadatos",
-  "@needsMetadata": {
-    "description": "lib/features/settings/screens/missing_metadata_screen.dart:87"
   },
   "negotiated": "Negociado: {arg1}",
   "@negotiated": {
@@ -6534,10 +6033,6 @@
   "@network": {
     "description": "lib/models/playback_context.dart:16"
   },
-  "networkSources": "Fuentes de red",
-  "@networkSources": {
-    "description": "lib/features/settings/screens/network_sources_screen.dart:136"
-  },
   "neutral": "{amount}% neutral",
   "@neutral": {
     "description": "lib/features/settings/screens/equalizer_screen.dart:3492",
@@ -6546,10 +6041,6 @@
         "type": "Object"
       }
     }
-  },
-  "neverSynced": "Nunca sincronizado",
-  "@neverSynced": {
-    "description": "lib/features/settings/screens/network_sources_screen.dart:318"
   },
   "newLabel": "Nuevo",
   "@newLabel": {
@@ -6582,10 +6073,6 @@
       }
     }
   },
-  "nextcloudOwncloudSabredav": "Nextcloud · ownCloud · SabreDAV",
-  "@nextcloudOwncloudSabredav": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:74"
-  },
   "night": "Noche",
   "@night": {
     "description": "lib/features/recap/widgets/replay_card_options.dart:11"
@@ -6606,10 +6093,6 @@
   "@noAlbumsFound": {
     "description": "lib/features/albums/screens/albums_screen.dart:442"
   },
-  "noAppleMusicReleaseFoundTry": "No se encontró el lanzamiento en Apple Music. Prueba a editar el nombre del artista o del álbum y vuelve a buscar.",
-  "@noAppleMusicReleaseFoundTry": {
-    "description": "lib/features/albums/widgets/identify_album_sheet.dart:339"
-  },
   "noArtistsFound": "No se encontraron artistas",
   "@noArtistsFound": {
     "description": "lib/features/artists/screens/artists_screen.dart:477"
@@ -6626,10 +6109,6 @@
   "noAudioWasFoundIfThis": "No se encontró audio. Si esta carpeta contiene música, es posible que un archivo .nomedia la esté ocultando o que Android aún no la haya indexado. Prueba a activar el análisis profundo o quita cualquier archivo .nomedia y vuelve a analizarla.",
   "@noAudioWasFoundIfThis": {
     "description": "lib/features/settings/screens/library_settings_screen.dart:1427"
-  },
-  "noCastingDevicesFoundMakeSure": "No se encontraron dispositivos para transmitir. Asegúrate de que el teléfono y el receptor estén conectados a la misma red.",
-  "@noCastingDevicesFoundMakeSure": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:204"
   },
   "noCategoriesSelected": "No hay categorías seleccionadas",
   "@noCategoriesSelected": {
@@ -6667,10 +6146,6 @@
   "@noHistoryYet": {
     "description": "lib/features/recently_played/screens/recently_played_screen.dart:346"
   },
-  "noInternetConnectionPleaseCheckYour": "No hay conexión a internet. Comprueba la red e inténtalo de nuevo.",
-  "@noInternetConnectionPleaseCheckYour": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:80"
-  },
   "noLibraryFilesForThisAlbum": "No se encontraron archivos de la biblioteca para este álbum.",
   "@noLibraryFilesForThisAlbum": {
     "description": "l10n pass: user-visible service error"
@@ -6686,10 +6161,6 @@
   "noLyricsYet": "Aún no hay letras",
   "@noLyricsYet": {
     "description": "lib/features/player/widgets/inline_lyrics_panel.dart:413"
-  },
-  "noMatchFound": "No se encontró ninguna coincidencia",
-  "@noMatchFound": {
-    "description": "lib/features/albums/widgets/identify_album_sheet.dart:524"
   },
   "noMatches": "No hay coincidencias.",
   "@noMatches": {
@@ -6719,14 +6190,6 @@
   "noNewAdditionsYet": "Todavía no hay canciones nuevas",
   "@noNewAdditionsYet": {
     "description": "lib/features/recently_added/screens/recently_added_screen.dart:318"
-  },
-  "noOnlineArtworkFound": "No se encontraron portadas en línea",
-  "@noOnlineArtworkFound": {
-    "description": "lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:489"
-  },
-  "noOutputDevicesAvailable": "No hay dispositivos de salida disponibles.",
-  "@noOutputDevicesAvailable": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:264"
   },
   "noPlaybackYet": "Aún no hay reproducciones",
   "@noPlaybackYet": {
@@ -6773,14 +6236,6 @@
   "noScanResultsYet": "Aún no hay resultados del análisis",
   "@noScanResultsYet": {
     "description": "lib/features/settings/screens/duplicate_cleaner_screen.dart:229"
-  },
-  "noServerPlaylistsFound": "No se encontraron listas de reproducción en el servidor",
-  "@noServerPlaylistsFound": {
-    "description": "lib/features/playlists/screens/playlists_screen.dart:472"
-  },
-  "noServersConnected": "No hay servidores conectados",
-  "@noServersConnected": {
-    "description": "lib/features/settings/screens/network_sources_screen.dart:190"
   },
   "noSongPlaying": "No se está reproduciendo ninguna canción",
   "@noSongPlaying": {
@@ -6890,10 +6345,6 @@
   "@numberOnArt": {
     "description": "lib/models/song_tile_thumbnail_mode.dart:22"
   },
-  "oauthSignInNoPasswordStored": "Inicio de sesión con OAuth; aquí no se guarda ninguna contraseña",
-  "@oauthSignInNoPasswordStored": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:101"
-  },
   "oceanWaves": "Olas del océano",
   "@oceanWaves": {
     "description": "lib/models/song.dart:312"
@@ -6958,14 +6409,6 @@
   "@onboardingWelcomeTitle": {
     "description": "lib/features/onboarding/screens/onboarding_screen.dart:30"
   },
-  "onlineArtistAlbumInformation": "Información de artistas y álbumes en línea",
-  "@onlineArtistAlbumInformation": {
-    "description": "lib/features/settings/widgets/apple_music_settings_tile.dart"
-  },
-  "onlineResults": "Resultados en línea",
-  "@onlineResults": {
-    "description": "lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:365"
-  },
   "onlyLibraryEntriesAreRemovedYour": "Solo se quitan las entradas de la biblioteca; los archivos de audio permanecen en el disco.",
   "@onlyLibraryEntriesAreRemovedYour": {
     "description": "lib/features/settings/screens/duplicate_cleaner_screen.dart:557"
@@ -6986,21 +6429,9 @@
   "@openBluetoothCodecSettings": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:351"
   },
-  "openInAppleMusic": "Abrir en Apple Music",
-  "@openInAppleMusic": {
-    "description": "lib/features/albums/screens/album_detail_screen.dart:360"
-  },
-  "openInBrowser": "Abrir en el navegador",
-  "@openInBrowser": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:623"
-  },
   "openLibrary": "Abrir biblioteca",
   "@openLibrary": {
     "description": "lib/features/menu/screens/menu_screen.dart:1322"
-  },
-  "openListenbrainzOrgSettings": "Abrir listenbrainz.org/settings",
-  "@openListenbrainzOrgSettings": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:717"
   },
   "openManual": "Abrir manual",
   "@openManual": {
@@ -7086,10 +6517,6 @@
   "@output": {
     "description": "lib/features/settings/screens/casting_settings_screen.dart:281"
   },
-  "outputDevice": "Dispositivo de salida",
-  "@outputDevice": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:120"
-  },
   "outputMode": "Modo de salida",
   "@outputMode": {
     "description": "lib/features/settings/screens/bluetooth_settings_screen.dart:408"
@@ -7135,17 +6562,9 @@
   "@passthrough": {
     "description": "lib/features/player/widgets/bit_perfect_indicator.dart:682"
   },
-  "password": "Contraseña",
-  "@password": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:456"
-  },
   "pasteOrTypeTheSongLyrics": "Pega o escribe aquí la letra de la canción, una línea por renglón",
   "@pasteOrTypeTheSongLyrics": {
     "description": "lib/features/player/screens/lyrics_sync_screen.dart:623"
-  },
-  "pasteYourListenbrainzToken": "Pega tu token de ListenBrainz",
-  "@pasteYourListenbrainzToken": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:741"
   },
   "pause": "Pausar",
   "@pause": {
@@ -7414,10 +6833,6 @@
   "@playerMenuEditMetadata": {
     "description": "Full-player song actions sheet; Taglish uses supplied wording."
   },
-  "playerMenuRefreshAlbumArt": "Actualizar portada animada",
-  "@playerMenuRefreshAlbumArt": {
-    "description": "Full-player song actions sheet; Taglish calls this album art."
-  },
   "playerMenuSetAlbumArt": "Establecer portada del álbum",
   "@playerMenuSetAlbumArt": {
     "description": "Full-player song actions sheet; Taglish uses supplied wording."
@@ -7514,10 +6929,6 @@
   "pleaseEnterAPlaylistName": "Ingresa un nombre para la lista de reproducción",
   "@pleaseEnterAPlaylistName": {
     "description": "lib/features/playlists/screens/playlists_screen.dart:430"
-  },
-  "pleaseEnterYourListenbrainzUserToken": "Ingresa tu token de usuario de ListenBrainz.",
-  "@pleaseEnterYourListenbrainzUserToken": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:584"
   },
   "portrait": "Vertical",
   "@portrait": {
@@ -7667,10 +7078,6 @@
   "progressBar": "Barra de progreso",
   "@progressBar": {
     "description": "lib/features/settings/screens/ui_customization_settings_screen.dart:234"
-  },
-  "protocol": "Protocolo",
-  "@protocol": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:372"
   },
   "pulledFromYourLateSessionPlays": "Basado en las canciones que escuchaste en tus últimas sesiones nocturnas",
   "@pulledFromYourLateSessionPlays": {
@@ -7846,10 +7253,6 @@
   "@recorded": {
     "description": "lib/features/player/widgets/bit_perfect_indicator.dart:869"
   },
-  "refreshAppleMusic": "Actualizar Apple Music",
-  "@refreshAppleMusic": {
-    "description": "lib/features/albums/screens/album_detail_screen.dart:365"
-  },
   "refreshDevices": "Actualizar dispositivos",
   "@refreshDevices": {
     "description": "lib/features/settings/screens/uac2_settings_screen.dart:443"
@@ -7858,17 +7261,9 @@
   "@refreshDevices2": {
     "description": "lib/widgets/uac2/uac2_device_selector.dart:179"
   },
-  "refreshOutputs": "Actualizar salidas",
-  "@refreshOutputs": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:257"
-  },
   "refreshRate": "Frecuencia de actualización",
   "@refreshRate": {
     "description": "lib/features/settings/screens/interface_settings_screen.dart:206"
-  },
-  "refreshingAppleMusicData": "Actualizando los datos de Apple Music",
-  "@refreshingAppleMusicData": {
-    "description": "lib/features/albums/screens/album_detail_screen.dart:402"
   },
   "registeredNotClaimed": "Registrado, sin asignar",
   "@registeredNotClaimed": {
@@ -7964,14 +7359,6 @@
   "removeSelected": "Quitar selección",
   "@removeSelected": {
     "description": "lib/features/queue/screens/queue_screen.dart:371"
-  },
-  "removeServer": "¿Quitar el servidor?",
-  "@removeServer": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:327"
-  },
-  "removeServer2": "Quitar servidor",
-  "@removeServer2": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:520"
   },
   "removeTheDatabaseEntriesOrDelete": "Quitar las entradas de la base de datos o eliminar los archivos del dispositivo. Esta acción no se puede deshacer.",
   "@removeTheDatabaseEntriesOrDelete": {
@@ -8316,10 +7703,6 @@
   "@ripSource": {
     "description": "lib/features/player/widgets/bit_perfect_indicator.dart:1078"
   },
-  "root": "Raíz",
-  "@root": {
-    "description": "lib/services/sources/upnp_service.dart:239"
-  },
   "rotationSeek": "búsqueda rotatoria",
   "@rotationSeek": {
     "description": "lib/features/player/widgets/album_art_box.dart:704"
@@ -8379,10 +7762,6 @@
   "@sCurve": {
     "description": "lib/features/settings/screens/audio_settings_screen.dart:248"
   },
-  "sambaWindowsShareTransportPending": "Samba · recurso compartido de Windows",
-  "@sambaWindowsShareTransportPending": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:90"
-  },
   "sampleArtist": "Artista de ejemplo",
   "@sampleArtist": {
     "description": "lib/features/settings/widgets/mini_player_customization.dart:370"
@@ -8422,10 +7801,6 @@
   "saveChanges": "Guardar cambios",
   "@saveChanges": {
     "description": "lib/features/songs/screens/metadata_editor_screen.dart:545"
-  },
-  "saveConnect": "Guardar y conectar",
-  "@saveConnect": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:656"
   },
   "saveCreatesAnLrcFileIf": "Al guardar, se crea un archivo `.lrc`. Si algunas líneas aún no tienen tiempo marcado, Auno Player lo completa automáticamente para que el archivo siga funcionando. Las líneas con todas las palabras marcadas se exportan con tiempos de karaoke para cada palabra.",
   "@saveCreatesAnLrcFileIf": {
@@ -8574,10 +7949,6 @@
   "@scanFailedPleaseTryAgain": {
     "description": "lib/features/settings/screens/library_settings_screen.dart:556"
   },
-  "scanForDevices": "Buscar dispositivos",
-  "@scanForDevices": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:75"
-  },
   "scanProgress": "Progreso del análisis",
   "@scanProgress": {
     "description": "lib/widgets/common/floating_scan_progress.dart:489"
@@ -8627,10 +7998,6 @@
   "@search": {
     "description": "lib/providers/tutorial_provider.dart:21"
   },
-  "searchAgain": "Buscar de nuevo",
-  "@searchAgain": {
-    "description": "lib/features/albums/widgets/identify_album_sheet.dart:241"
-  },
   "searchArtistTitle": "Buscar artista + título…",
   "@searchArtistTitle": {
     "description": "lib/features/player/widgets/online_lyrics_search_sheet.dart:618"
@@ -8638,10 +8005,6 @@
   "searchArtists": "Buscar artistas…",
   "@searchArtists": {
     "description": "lib/features/artists/screens/artists_screen.dart:297"
-  },
-  "searchFailed": "Error en la búsqueda",
-  "@searchFailed": {
-    "description": "lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:479"
   },
   "searchFailed2": "Error en la búsqueda: {e}",
   "@searchFailed2": {
@@ -8705,18 +8068,6 @@
   "@searchYourLibrary": {
     "description": "lib/features/search/screens/search_screen.dart:240"
   },
-  "searching": "Buscando…",
-  "@searching": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:75"
-  },
-  "searchingOnline": "Buscando en línea",
-  "@searchingOnline": {
-    "description": "lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:469"
-  },
-  "searchingTheLocalNetwork": "Buscando en la red local…",
-  "@searchingTheLocalNetwork": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:205"
-  },
   "secondsOfInactivityBeforeCollapsing": "Segundos de inactividad antes de contraer",
   "@secondsOfInactivityBeforeCollapsing": {
     "description": "lib/features/settings/screens/bottom_bar_settings_screen.dart:93"
@@ -8745,10 +8096,6 @@
   "selectALineAndEdit": "1. Selecciona una línea y edita directamente su marca de tiempo o usa «Usar hora actual».\n2. En la línea de tiempo de palabras, arrastra un límite para alargar o acortar el segmento anterior; los cambios se ajustan a intervalos de 10 ms.\n3. Toca letras en el inspector para dividir una palabra en sílabas con tiempos separados (ritmo lento y luego rápido) y después arrastra sus límites.\n4. Arrastra el último límite (o usa Duración ±) para cambiar el tiempo de la línea siguiente. Usa Autorrellenar para distribuir las palabras uniformemente.\n5. Usa los controles de desplazamiento para mover a la vez todas las letras marcadas.\n6. Guarda para generar el archivo `.lrc` final.",
   "@selectALineAndEdit": {
     "description": "lib/features/player/screens/lyrics_sync_screen.dart:694"
-  },
-  "selectARelease": "Seleccionar un lanzamiento",
-  "@selectARelease": {
-    "description": "lib/features/albums/widgets/identify_album_sheet.dart:580"
   },
   "selectAll": "Seleccionar todo",
   "@selectAll": {
@@ -8811,23 +8158,6 @@
   "@serialNumber": {
     "description": "lib/features/settings/screens/uac2_settings_screen.dart:482"
   },
-  "serverPlaylistSyncFailed": "No se pudo sincronizar la lista de reproducción del servidor: {e}",
-  "@serverPlaylistSyncFailed": {
-    "description": "lib/features/playlists/screens/playlists_screen.dart:481",
-    "placeholders": {
-      "e": {
-        "type": "Object"
-      }
-    }
-  },
-  "serverUrl": "URL del servidor",
-  "@serverUrl": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:442"
-  },
-  "session": "Sesión",
-  "@session": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:107"
-  },
   "setAlbumArt": "Establecer portada del álbum",
   "@setAlbumArt": {
     "description": "lib/features/player/widgets/song_actions_sheet.dart:220"
@@ -8864,10 +8194,6 @@
         "type": "Object"
       }
     }
-  },
-  "sharedSecret": "Secreto compartido",
-  "@sharedSecret": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:500"
   },
   "sharpRecommended": "Nítido (recomendado)",
   "@sharpRecommended": {
@@ -8908,10 +8234,6 @@
   "showAlbumArtworkOnTheMini": "Mostrar la portada del álbum en el minirreproductor",
   "@showAlbumArtworkOnTheMini": {
     "description": "lib/features/settings/screens/widget_settings_screen.dart:201"
-  },
-  "showAppleMusicBiographiesRecommendationsAnd": "Mostrar biografías de Apple Music, artistas similares, canciones destacadas, notas de los álbumes y retratos de los artistas.",
-  "@showAppleMusicBiographiesRecommendationsAnd": {
-    "description": "lib/features/settings/widgets/apple_music_settings_tile.dart"
   },
   "showArtist": "Mostrar artista",
   "@showArtist": {
@@ -8976,10 +8298,6 @@
   "showOtherArtistsOnAlbumPages": "Mostrar otros artistas en las páginas de álbumes",
   "@showOtherArtistsOnAlbumPages": {
     "description": "lib/features/artists/screens/artists_screen.dart:763"
-  },
-  "showPassword": "Mostrar contraseña",
-  "@showPassword": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:765"
   },
   "showPlaylistPreviewsOnTheHome": "Mostrar vistas previas de listas en la pantalla de inicio",
   "@showPlaylistPreviewsOnTheHome": {
@@ -9135,22 +8453,6 @@
   "shuffleSongsInCurrentList": "Mezclar canciones de la lista actual",
   "@shuffleSongsInCurrentList": {
     "description": "lib/models/shuffle_mode.dart:20"
-  },
-  "signInFailedRetry": "Error al iniciar sesión: volver a intentar",
-  "@signInFailedRetry": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:355"
-  },
-  "signInWithTidal": "Iniciar sesión con Tidal",
-  "@signInWithTidal": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:360"
-  },
-  "signInWithYourAccountHifi": "Inicia sesión con tu cuenta · HiFi sin pérdida",
-  "@signInWithYourAccountHifi": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:98"
-  },
-  "signInWithYourOwnTidal": "Inicia sesión con tu cuenta de Tidal. El audio sin pérdida HiFi (FLAC/ALAC) se reproduce con el motor bit perfecto; Tidal restringe HiRes/MQA y Atmos, que mostrarán un error en lugar de reproducirse.",
-  "@signInWithYourOwnTidal": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:419"
   },
   "signal": "Señal",
   "@signal": {
@@ -9328,17 +8630,9 @@
   "@signalVerifiedInLog": {
     "description": "lib/features/player/widgets/audio_signal_report.dart"
   },
-  "signedIn": "Sesión iniciada",
-  "@signedIn": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:353"
-  },
   "silkySmoothBZierCurvesFluid": "Curvas de Bézier muy suaves y fluidas, con un movimiento natural",
   "@silkySmoothBZierCurvesFluid": {
     "description": "lib/features/settings/screens/visualizer_settings_screen.dart:95"
-  },
-  "similarArtists": "Artistas similares",
-  "@similarArtists": {
-    "description": "lib/features/artists/screens/artist_detail_screen.dart:730"
   },
   "simple": "Simple",
   "@simple": {
@@ -9397,57 +8691,6 @@
   "@slope": {
     "description": "lib/providers/equalizer_provider.dart:64"
   },
-  "smbInvalidServerUrl": "Usa smb://servidor/recurso o smb://servidor/recurso/carpeta. Ingresa las credenciales en los campos de usuario y contraseña, no en la URL.",
-  "smbSigningRequired": "El servidor requiere firma SMB. Usa una cuenta permitida por la política de seguridad del servidor; es posible que no se permita el acceso de invitado.",
-  "smbCacheWriteFailed": "No se pudo guardar la descarga SMB. Comprueba el espacio libre en el teléfono e inténtalo de nuevo.",
-  "smbDownloadIncomplete": "La descarga SMB no terminó. Comprueba la conexión e inténtalo de nuevo; no se reproducirá ningún archivo parcial.",
-  "smbPathNotFound": "No se encontró la carpeta o el archivo SMB. Comprueba la carpeta en la URL del servidor o vuelve a sincronizar la biblioteca.",
-  "smbDecodeFailed": "Se descargó el archivo SMB, pero no se pudo iniciar la reproducción. Prueba el mismo archivo localmente en Auno Player y comprueba la salida de audio seleccionada.",
-  "smbOperationFailed": "Falló la operación SMB. Ejecuta Probar conexión y comprueba la etapa o el código SMB en el registro antes de volver a intentarlo.",
-  "smbAccessDenied": "Acceso denegado. Comprueba que la cuenta tenga permiso para leer este recurso compartido.",
-  "@smbAccessDenied": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "smbAuthFailed": "El servidor rechazó el nombre de usuario o la contraseña. Comprueba la cuenta: Samba podría asignar los usuarios desconocidos como invitados.",
-  "@smbAuthFailed": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "smbConnectionRefused": "Se rechazó la conexión. Comprueba que el uso compartido de archivos esté activado y que el puerto 445 esté accesible.",
-  "@smbConnectionRefused": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "smbCouldNotReach": "No se pudo acceder al servidor. Comprueba la dirección IP y que el teléfono esté conectado a la misma red.",
-  "@smbCouldNotReach": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "smbHostNotResolved": "No se pudo encontrar el nombre del servidor. Prueba con la dirección IP; Android no puede resolver nombres NetBIOS ni .local.",
-  "@smbHostNotResolved": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "smbMissingServerAddress": "Falta la dirección del servidor: usa smb://host/recurso (por ejemplo, smb://nas/musica).",
-  "@smbMissingServerAddress": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "smbMissingShareName": "Falta el nombre del recurso compartido: usa smb://host/recurso (por ejemplo, smb://nas/musica).",
-  "@smbMissingShareName": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "smbServerUnresponsive": "El servidor dejó de responder. Comprueba el servidor e inténtalo de nuevo.",
-  "@smbServerUnresponsive": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "smbShareNotFound": "El servidor respondió, pero no se encontró el recurso compartido. Comprueba su nombre en la URL.",
-  "@smbShareNotFound": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "smbSharesCanBeAddedNow": "Los recursos SMB2/3 se conectan con el cliente integrado. Ingresa la URL del recurso (smb://host/recurso) e inicia sesión si el servidor lo solicita.",
-  "@smbSharesCanBeAddedNow": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:405"
-  },
-  "smbTimedOut": "Se agotó el tiempo de espera. Usa la IP del servidor (no un nombre NetBIOS o .local), comprueba el puerto 445 y asegúrate de que el teléfono esté en la misma red.",
-  "@smbTimedOut": {
-    "description": "l10n pass: user-visible service error"
-  },
   "smooth": "Suave",
   "@smooth": {
     "description": "lib/features/settings/screens/visualizer_settings_screen.dart:177"
@@ -9494,18 +8737,6 @@
     "placeholders": {
       "count": {
         "type": "int"
-      }
-    }
-  },
-  "song3": "{count, plural, =1{{count} canción} other{{count} canciones}} · {server}",
-  "@song3": {
-    "description": "lib/features/playlists/screens/playlists_screen.dart:593",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      },
-      "server": {
-        "type": "Object"
       }
     }
   },
@@ -9683,15 +8914,6 @@
       }
     }
   },
-  "songsFound": "Se encontraron {arg1} canciones",
-  "@songsFound": {
-    "description": "lib/features/settings/screens/network_sources_screen.dart:406",
-    "placeholders": {
-      "arg1": {
-        "type": "Object"
-      }
-    }
-  },
   "songsIn": "{songs, plural, =1{{songs} canción} other{{songs} canciones}} en {folders, plural, =1{{folders} carpeta} other{{folders} carpetas}}",
   "@songsIn": {
     "description": "lib/features/settings/screens/library_settings_screen.dart:1600",
@@ -9861,10 +9083,6 @@
   "@stopAtTheEndOfThe": {
     "description": "lib/features/settings/screens/queue_settings_screen.dart:51"
   },
-  "stopCasting": "Detener transmisión",
-  "@stopCasting": {
-    "description": "lib/features/settings/screens/casting_settings_screen.dart:112"
-  },
   "stopStreaming": "Detener transmisión",
   "@stopStreaming": {
     "description": "lib/widgets/uac2/uac2_stream_config.dart:207"
@@ -9905,18 +9123,6 @@
   "storagePermissions": "Permisos de almacenamiento",
   "@storagePermissions": {
     "description": "lib/features/settings/screens/privacy_policy_screen.dart:49"
-  },
-  "storeOn": "Guardar en",
-  "@storeOn": {
-    "description": "lib/features/playlists/screens/playlists_screen.dart:372"
-  },
-  "storedAsASaltedHashNever": "Se guarda como un hash con sal, nunca como texto sin cifrar",
-  "@storedAsASaltedHashNever": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:61"
-  },
-  "storedEncodedPlaybackUnavailableInThis": "Se guarda codificado en Base64; es necesario para iniciar sesión con NTLM",
-  "@storedEncodedPlaybackUnavailableInThis": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:93"
   },
   "stormChasers": "Cazatormentas",
   "@stormChasers": {
@@ -9970,14 +9176,6 @@
         "type": "int"
       }
     }
-  },
-  "subsonic": "Subsonic",
-  "@subsonic": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:57"
-  },
-  "subsonicServersSyncAndStreaming": "Servidores Subsonic, sincronización y transmisión",
-  "@subsonicServersSyncAndStreaming": {
-    "description": "lib/features/settings/screens/settings_screen.dart:94"
   },
   "subtle": "Sutil",
   "@subtle": {
@@ -10043,52 +9241,13 @@
   "@sync": {
     "description": "lib/app/app.dart:491"
   },
-  "syncFailed": "Error al sincronizar: {e}",
-  "@syncFailed": {
-    "description": "lib/features/settings/screens/network_sources_screen.dart:112",
-    "placeholders": {
-      "e": {
-        "type": "Object"
-      }
-    }
-  },
-  "syncNow": "Sincronizar ahora",
-  "@syncNow": {
-    "description": "lib/features/settings/screens/network_sources_screen.dart:285"
-  },
-  "syncServerPlaylists": "Sincronizar listas del servidor",
-  "@syncServerPlaylists": {
-    "description": "lib/features/playlists/screens/playlists_screen.dart:144"
-  },
   "synced": "Sincronizado",
   "@synced": {
     "description": "lib/features/player/widgets/online_lyrics_search_sheet.dart:568"
   },
-  "synced2": "Sincronizado: {arg1}",
-  "@synced2": {
-    "description": "lib/features/settings/screens/network_sources_screen.dart:318",
-    "placeholders": {
-      "arg1": {
-        "type": "Object"
-      }
-    }
-  },
   "syncedLrc": "LRC sincronizado",
   "@syncedLrc": {
     "description": "lib/features/player/widgets/online_lyrics_search_sheet.dart:377"
-  },
-  "syncedPlaylistFromServers": "{count, plural, =1{Se sincronizó {count} lista de reproducción} other{Se sincronizaron {count} listas de reproducción}} desde los servidores",
-  "@syncedPlaylistFromServers": {
-    "description": "lib/features/playlists/screens/playlists_screen.dart:473",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "syncing": "Sincronizando…",
-  "@syncing": {
-    "description": "lib/features/settings/screens/network_sources_screen.dart:365"
   },
   "synthwaveCity": "Ciudad synthwave",
   "@synthwaveCity": {
@@ -10174,10 +9333,6 @@
       }
     }
   },
-  "testConnection": "Probar conexión",
-  "@testConnection": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:360"
-  },
   "textGestures": "Texto y gestos",
   "@textGestures": {
     "description": "lib/features/settings/widgets/mini_player_customization.dart:229"
@@ -10201,10 +9356,6 @@
   "theAppDoesNotKnowinglyCollect": "La app no recopila deliberadamente información de nadie, sin importar su edad.",
   "@theAppDoesNotKnowinglyCollect": {
     "description": "lib/features/settings/screens/privacy_policy_screen.dart:81"
-  },
-  "theAppQueriesPublicApisMusicbrainz": "La app consulta API públicas (MusicBrainz/Cover Art Archive, iTunes y Deezer) para encontrar portadas de álbumes coincidentes. Las búsquedas usan metadatos locales de música. Las imágenes descargadas se guardan en caché local.",
-  "@theAppQueriesPublicApisMusicbrainz": {
-    "description": "lib/features/settings/screens/privacy_policy_screen.dart:66"
   },
   "theAudioEngineDeterminesHowYour": "El motor de audio determina cómo se reproduce la música. Cada opción equilibra de forma distinta la confiabilidad, la calidad y la compatibilidad.",
   "@theAudioEngineDeterminesHowYour": {
@@ -10237,10 +9388,6 @@
   "thisClearsYourCurrentDayStreak": "Esto borrará tu racha actual y los hitos de racha que hayas desbloqueado. Esta acción no se puede deshacer.",
   "@thisClearsYourCurrentDayStreak": {
     "description": "lib/features/settings/screens/interface_settings_screen.dart:22"
-  },
-  "thisDevice": "Este dispositivo",
-  "@thisDevice": {
-    "description": "lib/features/playlists/screens/playlists_screen.dart:383"
   },
   "thisFolderAppearsToBeEmpty": "Esta carpeta parece estar vacía",
   "@thisFolderAppearsToBeEmpty": {
@@ -10275,10 +9422,6 @@
   "@thisSongHasNoFilePath": {
     "description": "lib/services/metadata_editor_service.dart:61"
   },
-  "thisSongIsMissingAlbumMetadata": "A esta canción le faltan los metadatos del álbum, por lo que la búsqueda en línea es limitada.",
-  "@thisSongIsMissingAlbumMetadata": {
-    "description": "lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:491"
-  },
   "thisSongOnly": "Solo esta canción",
   "@thisSongOnly": {
     "description": "lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:412"
@@ -10302,115 +9445,6 @@
   "thunderRoad": "Thunder Road",
   "@thunderRoad": {
     "description": "lib/models/song.dart:375"
-  },
-  "tidal": "Tidal",
-  "@tidal": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:97"
-  },
-  "tidalAppKeyRejected": "Tidal rechazó la clave de inicio de sesión de la app. Estas claves cambian, así que la integrada podría estar desactualizada (una limitación conocida de la integración no oficial).",
-  "@tidalAppKeyRejected": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "tidalCouldNotReach": "No se pudo acceder a Tidal (HTTP {status}). Comprueba tu conexión.",
-  "@tidalCouldNotReach": {
-    "description": "l10n pass: user-visible service error",
-    "placeholders": {
-      "status": {
-        "type": "int"
-      }
-    }
-  },
-  "tidalEncryptedTrack": "La pista {trackId} está cifrada (HiRes/MQA). Solo se admite audio HiFi sin pérdida que no esté cifrado.",
-  "@tidalEncryptedTrack": {
-    "description": "l10n pass: user-visible service error",
-    "placeholders": {
-      "trackId": {
-        "type": "String"
-      }
-    }
-  },
-  "tidalManifestDecodeFailed": "No se pudo decodificar el manifiesto de Tidal para la pista {trackId}: {error}",
-  "@tidalManifestDecodeFailed": {
-    "description": "l10n pass: user-visible service error",
-    "placeholders": {
-      "trackId": {
-        "type": "String"
-      },
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "tidalManifestNoStream": "La pista {trackId} no tiene una URL de transmisión en su manifiesto.",
-  "@tidalManifestNoStream": {
-    "description": "l10n pass: user-visible service error",
-    "placeholders": {
-      "trackId": {
-        "type": "String"
-      }
-    }
-  },
-  "tidalNoPlayableStream": "No hay una transmisión reproducible para esta pista.",
-  "@tidalNoPlayableStream": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "tidalNoSignInCode": "Tidal no devolvió un código de inicio de sesión.",
-  "@tidalNoSignInCode": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "tidalNotSignedIn": "No iniciaste sesión en Tidal. Toca Iniciar sesión con Tidal.",
-  "@tidalNotSignedIn": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "tidalOpenLinkManually": "No se pudo abrir el navegador automáticamente. Abre este enlace en cualquier dispositivo para terminar de iniciar sesión y luego toca Iniciar sesión otra vez:\n\n{uri}",
-  "@tidalOpenLinkManually": {
-    "description": "l10n pass: user-visible service error",
-    "placeholders": {
-      "uri": {
-        "type": "String"
-      }
-    }
-  },
-  "tidalSessionExpired": "La sesión de Tidal venció. Vuelve a iniciar sesión.",
-  "@tidalSessionExpired": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "tidalSignInDenied": "Se rechazó el inicio de sesión en Tidal.",
-  "@tidalSignInDenied": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "tidalSignInExpired": "El código de inicio de sesión de Tidal venció. Inténtalo de nuevo.",
-  "@tidalSignInExpired": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "tidalSignInRefused": "Tidal rechazó el inicio de sesión. Inténtalo de nuevo.",
-  "@tidalSignInRefused": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "tidalSignInTimedOut": "Se agotó el tiempo de espera para iniciar sesión en Tidal.",
-  "@tidalSignInTimedOut": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "tidalTokenRefreshFailed": "No se pudo actualizar el token de Tidal.",
-  "@tidalTokenRefreshFailed": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "tidalTooManyRequests": "Demasiadas solicitudes a Tidal. Espera un momento e inténtalo de nuevo.",
-  "@tidalTooManyRequests": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "tidalUnavailable": "Tidal no está disponible ahora. Inténtalo de nuevo en un momento.",
-  "@tidalUnavailable": {
-    "description": "l10n pass: user-visible service error"
-  },
-  "tidalUnsupportedFormat": "La pista {trackId} usa un formato de Tidal no compatible (HiRes/MQA/Atmos). Solo se admite audio HiFi sin pérdida que no esté cifrado.",
-  "@tidalUnsupportedFormat": {
-    "description": "l10n pass: user-visible service error",
-    "placeholders": {
-      "trackId": {
-        "type": "String"
-      }
-    }
   },
   "time": "Hora",
   "@time": {
@@ -10471,10 +9505,6 @@
   "topArtists": "Artistas destacados",
   "@topArtists": {
     "description": "lib/features/recap/widgets/replay_poster.dart:17"
-  },
-  "topSongs": "Canciones destacadas",
-  "@topSongs": {
-    "description": "lib/features/recap/screens/listening_recap_screen.dart:456"
   },
   "topSongs2": "Canciones destacadas",
   "@topSongs2": {
@@ -10610,15 +9640,6 @@
       }
     }
   },
-  "tracks8": "{arg1} pistas",
-  "@tracks8": {
-    "description": "lib/features/albums/widgets/identify_album_sheet.dart:458",
-    "placeholders": {
-      "arg1": {
-        "type": "Object"
-      }
-    }
-  },
   "tracksLikedSongsPlaylists": "{songCount} pistas, {favoriteCount} canciones que te gustan, {playlistCount} listas de reproducción",
   "@tracksLikedSongsPlaylists": {
     "description": "lib/features/menu/screens/menu_screen.dart:1156",
@@ -10678,10 +9699,6 @@
   "tryOriginalSearch": "Probar la búsqueda original",
   "@tryOriginalSearch": {
     "description": "lib/features/player/widgets/online_lyrics_search_sheet.dart:782"
-  },
-  "tryPickingALocalImageIf": "Prueba a elegir una imagen local si los metadatos del lanzamiento son poco comunes.",
-  "@tryPickingALocalImageIf": {
-    "description": "lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:492"
   },
   "turnOff432HzTuningTo": "Desactiva la afinación a 432 Hz para usar el fundido cruzado",
   "@turnOff432HzTuningTo": {
@@ -10838,10 +9855,6 @@
   "@unknownFolder": {
     "description": "lib/features/search/providers/global_search_provider.dart:106"
   },
-  "unknownLastFmError": "Error desconocido de Last.fm",
-  "@unknownLastFmError": {
-    "description": "l10n pass: user-visible service error"
-  },
   "unknownTitle": "Título desconocido",
   "@unknownTitle": {
     "description": "lib/services/playlist_service.dart:688"
@@ -10964,10 +9977,6 @@
   "uploadLogsAsALink": "¿Subir los registros como enlace?",
   "@uploadLogsAsALink": {
     "description": "lib/features/settings/screens/logs_screen.dart:128"
-  },
-  "upnpDlna": "UPnP / DLNA",
-  "@upnpDlna": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:81"
   },
   "urbPacket": "Paquete URB",
   "@urbPacket": {
@@ -11096,14 +10105,6 @@
   "useTheVerifiedDirectUsbPath": "Usar la ruta USB directa verificada y desactivar los controles de DSP por software que impedirían la reproducción bit perfecta en un DAC USB externo.",
   "@useTheVerifiedDirectUsbPath": {
     "description": "lib/features/settings/screens/uac2_preferences_screen.dart:399"
-  },
-  "userToken": "Token de usuario",
-  "@userToken": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:740"
-  },
-  "username": "Nombre de usuario",
-  "@username": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:450"
   },
   "using": "Usando {arg1}",
   "@using": {
@@ -11277,22 +10278,9 @@
       }
     }
   },
-  "waitingForBrowserAuthorization": "Esperando la autorización del navegador…",
-  "@waitingForBrowserAuthorization": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:978"
-  },
   "waitingForPlayback": "Esperando la reproducción",
   "@waitingForPlayback": {
     "description": "lib/features/settings/screens/uac2_preferences_screen.dart:1110"
-  },
-  "was": "era: {arg1}",
-  "@was": {
-    "description": "lib/features/albums/widgets/identify_album_sheet.dart:537",
-    "placeholders": {
-      "arg1": {
-        "type": "Object"
-      }
-    }
   },
   "wave": "Onda",
   "@wave": {
@@ -11334,10 +10322,6 @@
         "type": "int"
       }
     }
-  },
-  "webdav": "WebDAV",
-  "@webdav": {
-    "description": "lib/features/settings/screens/network_server_edit_screen.dart:73"
   },
   "weekly": "Semanal",
   "@weekly": {
@@ -11581,10 +10565,6 @@
   "@yourListeningHistoryIsStillYours": {
     "description": "lib/features/recap/screens/listening_recap_screen.dart:249"
   },
-  "yourListensWillRemainOnListenbrainz": "Tus reproducciones seguirán en ListenBrainz, pero Auno Player dejará de enviarlas.",
-  "@yourListensWillRemainOnListenbrainz": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:136"
-  },
   "yourLogsAreUploadedToDpaste": "Tus registros se suben a dpaste.com como un enlace no listado que vence en 30 días. Cualquier persona con el enlace podrá leerlos; los registros pueden incluir rutas de archivos y detalles del dispositivo.",
   "@yourLogsAreUploadedToDpaste": {
     "description": "lib/features/settings/screens/logs_screen.dart:130"
@@ -11596,14 +10576,6 @@
   "yourMostReplayedTrack": "La pista que más repetiste",
   "@yourMostReplayedTrack": {
     "description": "lib/features/recap/widgets/replay_sections.dart:111"
-  },
-  "yourMusicIsBeingScrobbled": "Se están registrando tus reproducciones",
-  "@yourMusicIsBeingScrobbled": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:837"
-  },
-  "yourMusicIsBeingSubmitted": "Se están enviando tus reproducciones",
-  "@yourMusicIsBeingSubmitted": {
-    "description": "lib/features/settings/widgets/listenbrainz_settings_tile.dart:267"
   },
   "yourMusicOnRepeat": "Tu música. Una y otra vez.",
   "@yourMusicOnRepeat": {
@@ -11624,10 +10596,6 @@
   "yourPlaylists": "Tus listas de reproducción",
   "@yourPlaylists": {
     "description": "lib/features/menu/screens/menu_screen.dart:972"
-  },
-  "yourScrobblingHistoryWillRemainOn": "Tu historial de reproducciones seguirá en Last.fm, pero Auno Player dejará de enviar los registros.",
-  "@yourScrobblingHistoryWillRemainOn": {
-    "description": "lib/features/settings/widgets/lastfm_settings_tile.dart:198"
   },
   "yourSessionHistory": "Tu historial de sesiones",
   "@yourSessionHistory": {

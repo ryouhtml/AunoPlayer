@@ -956,7 +956,6 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Export CSV'), findsOneWidget);
       expect(find.text('Export TXT'), findsOneWidget);
-      expect(find.text('Support Auno Player on Ko-fi'), findsOneWidget);
       expect(tester.takeException(), isNull);
     },
   );

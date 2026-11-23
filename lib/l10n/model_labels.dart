@@ -140,7 +140,6 @@ extension PlayerActionButtonL10n on PlayerActionButton {
     PlayerActionButton.usbVolume => l10n.usbVolume,
     PlayerActionButton.equalizer => l10n.equalizer,
     PlayerActionButton.volume => l10n.volume,
-    PlayerActionButton.cast => l10n.cast,
   };
 }
 

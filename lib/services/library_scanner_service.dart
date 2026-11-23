@@ -17,8 +17,6 @@ import '../services/uac2_preferences_service.dart';
 import '../services/audio_preload_service.dart';
 import '../services/album_art_service.dart';
 import '../services/album_art_import_service.dart';
-import '../services/apple_music/apple_music_settings.dart';
-import '../services/apple_music/auto_metadata_enricher.dart';
 import '../services/artwork_backfill_tracker.dart';
 import '../src/rust/api/scanner.dart'; // Rust bridge
 import 'package:auno_player/core/utils/dev_log.dart';
@@ -606,14 +604,6 @@ class LibraryScannerService {
               total,
             ),
           );
-          try {
-            if (await AppleMusicSettings().autoEnrichEnabled()) {
-              final models = await _songRepository.getSongsByFolder(folderUri);
-              await AutoMetadataEnricher.instance.enrichMissing(models);
-            }
-          } catch (error) {
-            devLog('Auto metadata enrichment failed for $folderUri: $error');
-          }
         });
         unawaited(
           task.whenComplete(

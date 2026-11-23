@@ -44,10 +44,7 @@ import 'package:auno_player/services/uac2_service.dart';
 import 'package:auno_player/services/usb_dac_volume_restore.dart';
 import 'package:auno_player/services/alac_converter_service.dart';
 import 'package:auno_player/services/playback_cache_preferences_service.dart';
-import 'package:auno_player/services/remote_source_service.dart';
-import 'package:auno_player/services/sources/smb_failure.dart';
 import 'package:auno_player/services/wav_stream_audio_source.dart';
-import 'package:auno_player/services/casting/casting_service.dart';
 import 'package:auno_player/core/utils/app_log.dart';
 import 'package:auno_player/core/utils/dev_log.dart';
 import 'package:auno_player/core/utils/volume_curve.dart';
@@ -198,21 +195,6 @@ List<Song> restorePlaybackOrder({
     restored.insert(insertionIndex.clamp(0, restored.length), current);
   }
   return restored;
-}
-
-/// Suppression policy for Apple Music motion art while bit-perfect output is
-/// active: a second output stream can preempt native DIRECT/ALSA streams, so
-/// motion art is only allowed when the user opts in or the engine is not
-/// bit-perfect.
-@visibleForTesting
-bool shouldSuppressMotionArt({
-  required bool bitPerfectEnabled,
-  required AudioEngineType engine,
-  required bool allowDuringBitPerfect,
-}) {
-  if (!bitPerfectEnabled || allowDuringBitPerfect) return false;
-  return engine == AudioEngineType.usbDacExperimental ||
-      engine == AudioEngineType.dapInternalHighRes;
 }
 
 /// The Rust engine and its direct backends emit these markers when the output
@@ -514,15 +496,12 @@ class PlayerService {
   final Future<void> Function()? _interruptionResumerOverride;
   final bool _testDirectUsb;
   final Uac2Service _uac2Service;
-  final CastingService _castingService = CastingService.instance;
-  bool get isCasting => _castingService.isActive;
   final ColorExtractionService _colorExtractionService =
       ColorExtractionService();
   final AlbumColorModePreferenceService _albumColorModePreferenceService =
       AlbumColorModePreferenceService();
   bool _priorityAnchorActive = false;
   bool _priorityAnchorEnabled = true;
-  bool _motionArtDuringBitPerfect = false;
   bool _midStreamUsbFallbackActive = false;
   bool _deadRustEngineRecoveryActive = false;
   final List<DateTime> _deadRustEngineRecoveryTimestamps = <DateTime>[];
@@ -556,9 +535,6 @@ class PlayerService {
   final ValueNotifier<bool> bitPerfectProcessingLockedNotifier = ValueNotifier(
     false,
   );
-  /// True while motion art must not start ExoPlayer: on direct/exclusive
-  /// bit-perfect paths a second audio client can preempt the native stream.
-  final ValueNotifier<bool> motionArtSuppressedNotifier = ValueNotifier(false);
   final ValueNotifier<bool> gaplessPlaybackEnabledNotifier = ValueNotifier(
     true,
   );
@@ -679,16 +655,6 @@ class PlayerService {
     Duration.zero,
   );
 
-  /// True while a network-sourced song is being resolved for playback (HTTP
-  /// stream attach or cache download). UI surfaces a loading indicator so the
-  /// user sees that their tap was registered during the network round-trip.
-  final ValueNotifier<bool> isNetworkLoadingNotifier = ValueNotifier(false);
-  final ValueNotifier<String?> networkPlaybackErrorNotifier = ValueNotifier(null);
-  // ponytail: monotonically increasing token; only the most-recent network
-  // play request is allowed to clear the loading flag. Upgrade path: a per-
-  // song Set<int> if multiple concurrent network loads ever need tracking.
-  int _networkLoadingGen = 0;
-
   // ponytail: guards the engine's position write during interactive seek
   // (vinyl spin). Local drag writes to positionNotifier stick; engine ticks
   // get re-enabled on endInteractiveSeek(). Upgrade path: per-source locks if
@@ -800,10 +766,7 @@ class PlayerService {
       onSeek: seek,
       onToggleShuffle: toggleShuffle,
       onToggleFavorite: _toggleFavoriteFromNotification,
-      onDisconnectCast: () => unawaited(_castingService.disconnect()),
-      onSetCastVolume: (volume) => unawaited(setVolume(volume)),
     );
-    _castingService.remoteVolumeNotifier.addListener(_onRemoteVolumeChanged);
     _sessionManager.selectedModeNotifier.addListener(() {
       unawaited(
         _refreshAudioOutputDiagnostics(
@@ -854,7 +817,6 @@ class PlayerService {
     unawaited(_loadCrossfadePreferences());
     unawaited(_loadFloatingPlayerPreference());
     unawaited(_loadPriorityAnchorPreference());
-    unawaited(_loadMotionArtPreference());
     _initBluetoothReconnectHandling();
     _initUsbDacDisconnectHandling();
     _initUsbDacAttachHandling();
@@ -1379,7 +1341,6 @@ class PlayerService {
     if (_currentIndex == newIndex) return;
     _currentIndex = newIndex;
     currentIndexNotifier.value = newIndex;
-    _prefetchedNextSongId = null;
     _notifyUpNextChanged();
   }
 
@@ -1731,21 +1692,6 @@ class PlayerService {
         Uac2PreferencesService.is432HzTuningEnabledSync;
     if (bitPerfectProcessingLockedNotifier.value != locked) {
       bitPerfectProcessingLockedNotifier.value = locked;
-    }
-    _updateMotionArtSuppression();
-  }
-
-  /// Motion art opens a second ExoPlayer/output stream. On direct bit-perfect
-  /// paths (native DIRECT AudioTrack / ALSA direct) that can preempt the
-  /// native stream, so suppress it unless the user explicitly opted in.
-  void _updateMotionArtSuppression() {
-    final suppressed = shouldSuppressMotionArt(
-      bitPerfectEnabled: isBitPerfectModeEnabled,
-      engine: currentEngineType,
-      allowDuringBitPerfect: _motionArtDuringBitPerfect,
-    );
-    if (motionArtSuppressedNotifier.value != suppressed) {
-      motionArtSuppressedNotifier.value = suppressed;
     }
   }
 
@@ -2433,17 +2379,6 @@ class PlayerService {
     _updatePriorityAnchor();
   }
 
-  Future<void> _loadMotionArtPreference() async {
-    _motionArtDuringBitPerfect = await _appPreferencesService
-        .getMotionArtDuringBitPerfect();
-    _updateMotionArtSuppression();
-  }
-
-  Future<void> setMotionArtDuringBitPerfect(bool value) async {
-    _motionArtDuringBitPerfect = value;
-    _updateMotionArtSuppression();
-  }
-
   Future<void> _onHwVolumeResult(bool success) async {
     if (_isDirectUsbPath) {
       if (!success) {
@@ -2612,9 +2547,9 @@ class PlayerService {
 
   /// Maximum volume the user may select right now. Extended boost (2.0) is
   /// only available on the software and system tiers when the toggle is on;
-  /// hardware, passthrough, DoP and casting paths stay clamped at 1.0.
+  /// hardware, passthrough and DoP paths stay clamped at 1.0.
   double get maxVolume {
-    if (!_extendedVolumeEnabled || _castingService.isActive) return 1.0;
+    if (!_extendedVolumeEnabled) return 1.0;
     final tier = _determineCurrentTier();
     return (tier == VolumeTier.software || tier == VolumeTier.system)
         ? 2.0
@@ -2641,7 +2576,7 @@ class PlayerService {
   /// Apply or release the LoudnessEnhancer boost on the just_audio session.
   /// [effectiveVolume] is the volume to realise on the system tier (already
   /// folded with the ReplayGain factor); pass 0.0 to release (e.g. when on
-  /// another tier or casting). Boost is used whenever the effective volume
+  /// another tier). Boost is used whenever the effective volume
   /// exceeds 1.0 — from the extended-volume toggle or from ReplayGain gain.
   Future<void> _reconcileSystemVolumeBoost(double effectiveVolume) async {
     if (!Platform.isAndroid) {
@@ -3164,7 +3099,7 @@ class PlayerService {
   }
 
   Future<bool> _applyPhysicalOutputSafetyVolume({int? generation}) async {
-    if (!_audioInitialized || _castingService.isActive) return false;
+    if (!_audioInitialized) return false;
     if (_isDirectUsbPath) {
       // Direct USB has its own verified hardware-volume restore; a software
       // ceiling would double-attenuate or silently corrupt the stream.
@@ -4229,19 +4164,6 @@ class PlayerService {
     return _updateNotificationState();
   }
 
-  // ponytail: remote volume ticks can be rapid (slider drags); keep them on the
-  // lightweight cast-only notification path instead of a full metadata refresh.
-  void _onRemoteVolumeChanged() {
-    final v = _castingService.remoteVolumeNotifier.value;
-    unawaited(
-      _notificationService.updateCastState(
-        isCasting: _castingService.isActive,
-        castDeviceName: _castingService.activeDevice?.name,
-        castVolumePercent: v == null ? null : (v * 100).round(),
-      ),
-    );
-  }
-
   Future<void> _toggleFavoriteFromNotification() async {
     final song = currentSongNotifier.value;
     if (_allowsFavoriteActions(song)) {
@@ -4297,11 +4219,6 @@ class PlayerService {
       isShuffle: isShuffleNotifier.value,
       isFavorite: isFav,
       color: notificationColor,
-      isCasting: _castingService.isActive,
-      castDeviceName: _castingService.activeDevice?.name,
-      castVolumePercent: _castingService.remoteVolumeNotifier.value == null
-          ? null
-          : (_castingService.remoteVolumeNotifier.value! * 100).round(),
     );
 
     await _showFloatingPlayerOverlay();
@@ -4649,27 +4566,6 @@ class PlayerService {
   Future<({Uri uri, Map<String, String> headers})> _resolvePlaybackUri(
     Song song,
   ) async {
-    // ponytail: HTTP-first for network sources. Hand ExoPlayer the ranged URL
-    // so playback starts while bytes stream in, instead of blocking on a full
-    // cache download before the first frame. Falls back to cache-then-play
-    // (ensureLocal) for protocols without byte-range support (SMB/UPnP) or on
-    // resolve failure. Matches the Rust backend's existing strategy.
-    // Headers must travel with the URL: WebDAV returns Basic auth and
-    // ExoPlayer fetches the stream itself.
-    if (song.isNetworkSource) {
-      try {
-        final http = await RemoteSourceService.instance.resolveHttpPlayback(
-          song,
-        );
-        if (http != null) {
-          return (uri: Uri.parse(http.url), headers: http.headers);
-        }
-      } catch (e) {
-        _debugLog(
-          '[Playback] HTTP-first resolve failed for "${song.title}": $e',
-        );
-      }
-    }
     final resolvedPath = await _resolvePreparedPlaybackPath(song);
     if (resolvedPath == null || resolvedPath.isEmpty) {
       return (uri: Uri.parse(''), headers: const <String, String>{});
@@ -4685,12 +4581,6 @@ class PlayerService {
     final filePath = song.filePath;
     if (filePath == null || filePath.isEmpty) {
       return null;
-    }
-
-    if (song.isNetworkSource) {
-      // Network songs always play from the local network cache: a cache hit
-      // is instant (gapless/crossfade handoff), a miss downloads first.
-      return RemoteSourceService.instance.ensureLocal(song);
     }
 
     final sourceKey = filePath;
@@ -4943,27 +4833,11 @@ class PlayerService {
       rustAudioService: _rustAudioService,
       ensureInitialized: () => _ensureRustEngineInitialized(playbackMode),
       resolvePlaybackPath: _resolveRustPath,
-      resolveHttpSource: _resolveRustHttpSource,
       disposeEngine: _disposeUsbEngine,
       requestAudioFocus: playbackMode == AudioEngineType.usbDacExperimental
           ? null
           : _activateAudioSessionForRustEngine,
     );
-  }
-
-  /// HTTP-first source resolver for network songs. Returns null for local
-  /// songs or protocols without byte-range support (then the engine falls back
-  /// to cache-then-play via [_resolveRustPath]).
-  Future<({String url, Map<String, String> headers})?> _resolveRustHttpSource(
-    Song song,
-  ) async {
-    if (!song.isNetworkSource) return null;
-    try {
-      return await RemoteSourceService.instance.resolveHttpPlayback(song);
-    } catch (e) {
-      _debugLog('HTTP source resolve failed: $e');
-      return null;
-    }
   }
 
   Future<void> _ensureRustEngineInitialized(
@@ -5748,7 +5622,7 @@ class PlayerService {
     required Duration position,
   }) {
     if (_usingRustBackend || !song.requiresRustDecoder) return;
-    if (song.filePath == null || _castingService.isActive) return;
+    if (song.filePath == null) return;
     if (!_rustDecoderRerouteAttempts.add(song.id)) return;
     _debugLog(
       '[Engine] ${song.title} needs the Rust decoder; rerouting from '
@@ -5807,10 +5681,6 @@ class PlayerService {
   }) {
     _debugLog('[UI] tap(${song.id})');
     if (context != null) setPlaybackContext(context);
-    // Immediate UI feedback: surface the loading state synchronously so the
-    // mini-player shows a spinner before the (possibly queued) playback
-    // request even starts running. Cleared by _playInternal's finally.
-    if (song.isNetworkSource) isNetworkLoadingNotifier.value = true;
     return _enqueuePlaybackRequest(
       () => _playInternal(song, playlist: playlist),
     );
@@ -5848,7 +5718,6 @@ class PlayerService {
   Future<void> _playInternal(Song song, {List<Song>? playlist}) async {
     await initAudio();
     await _ensurePhysicalOutputVolumeBeforePlayback();
-    final loadingGen = ++_networkLoadingGen;
     try {
       _debugLog(
         '[Playback] play() called for ${song.title} '
@@ -5899,11 +5768,6 @@ class PlayerService {
       _consumeQueueEntryAt(_currentIndex);
       _clearRestoredPlaybackContext(songId: song.id);
 
-      if (_castingService.isActive) {
-        final handled = await _castingService.delegatePlay(song);
-        if (handled) return;
-      }
-
       if (song.filePath != null) {
         await _prepareImmediatePlaybackAsset(song);
         // Route changes are already pushed into the session manager via the
@@ -5944,10 +5808,6 @@ class PlayerService {
         );
       }
     } catch (e, stackTrace) {
-      if (e is SmbFailure) {
-        _reportSmbPlaybackFailure(e);
-        return;
-      }
       final recovered = await _handleDirectUsbStartupRefusal(
         e,
         song: song,
@@ -5964,32 +5824,13 @@ class PlayerService {
       if (rustRecovered) {
         return;
       }
-      if (song.sourceType == 'smb') {
-        _reportSmbPlaybackFailure(const SmbFailure('decode', 'protocol'));
-        return;
-      }
       _debugLog(
         '[Playback] play() failed for ${song.title} '
         'on ${currentEngineType.logLabel}: $e',
       );
       debugPrintStack(stackTrace: stackTrace);
       rethrow;
-    } finally {
-      // Only the most-recent play request is allowed to clear the loading
-      // flag. Superseded requests (user tapped another song while this one
-      // was still queued/loading) leave it untouched so the spinner stays up
-      // until the latest tap resolves.
-      if (loadingGen == _networkLoadingGen) {
-        isNetworkLoadingNotifier.value = false;
-      }
     }
-  }
-
-  void _reportSmbPlaybackFailure(SmbFailure failure) {
-    AppLog.instance.add('$failure result=failed');
-    // Reset so repeated attempts with the same failure still notify the UI.
-    networkPlaybackErrorNotifier.value = null;
-    networkPlaybackErrorNotifier.value = '${failure.message} ($failure)';
   }
 
   Future<void> _playSongAtCurrentIndex() async {
@@ -6026,35 +5867,6 @@ class PlayerService {
       'duration=${_rustAudioService.crossfadeDurationNotifier.value}s',
     );
 
-    // HTTP-first: try a direct ranged stream, fall back to cache-then-play.
-    if (nextSong.isNetworkSource) {
-      try {
-        final http = await RemoteSourceService.instance
-            .resolveHttpPlayback(nextSong);
-        if (http != null) {
-          await _rustAudioService.setReplayGainDefault(
-            await _computeReplayGainDbFor(nextSong),
-          );
-          await _rustAudioService.queueNextHttp(
-            url: http.url,
-            headers: http.headers,
-            startSecs: nextSong.startOffsetMs == null
-                ? null
-                : nextSong.startOffsetMs! / 1000,
-            endSecs: nextSong.endOffsetMs == null
-                ? null
-                : nextSong.endOffsetMs! / 1000,
-          );
-          _debugLog(
-            '[crossfade] HTTP queue request returned; readiness reported separately',
-          );
-          return;
-        }
-      } catch (e) {
-        _debugLog('HTTP queue-next failed, falling back to cache: $e');
-      }
-    }
-
     final nextPath = await _resolveGaplessNextPath(nextSong);
     if (nextPath != null) {
       await _rustAudioService.setReplayGainDefault(
@@ -6080,19 +5892,10 @@ class PlayerService {
   }
 
   /// Resolve the next local path without letting an unawaited gapless
-  /// preparation task throw. Network sources (notably SMB) download on this
-  /// path; a failed transfer must leave the current track untouched and be
-  /// reported like any other SMB playback failure.
+  /// preparation task throw.
   Future<String?> _resolveGaplessNextPath(Song nextSong) async {
     try {
       return await _resolveRustPath(nextSong);
-    } on SmbFailure catch (failure) {
-      _debugLog(
-        '[crossfade] next-track SMB prepare failed: '
-        '${failure.stage}/${failure.code}',
-      );
-      _reportSmbPlaybackFailure(failure);
-      return null;
     } catch (e) {
       _debugLog('[crossfade] next-track path resolve failed: $e');
       return null;
@@ -6131,12 +5934,7 @@ class PlayerService {
   /// WavPack containers are not decodable by ExoPlayer, so retry them on the
   /// Rust decoder instead of leaving playback stalled on the failed track.
   void _onAndroidTrackError(Song song) {
-    if (!song.requiresRustDecoder) {
-      if (song.sourceType == 'smb') {
-        _reportSmbPlaybackFailure(const SmbFailure('decode', 'protocol'));
-      }
-      return;
-    }
+    if (!song.requiresRustDecoder) return;
     _debugLog(
       '[Playback] System tier failed to decode ${song.title}; '
       'retrying on the Rust decoder',
@@ -6243,10 +6041,6 @@ class PlayerService {
   }
 
   Future<void> _pauseInternal({bool releaseAudioFocus = true}) async {
-    if (_castingService.isActive) {
-      await _castingService.delegatePause();
-      return;
-    }
     _debugLog(
       '[Playback] pause() called, hasAttachedEngine=${_playbackManager.hasAttachedEngine}',
     );
@@ -6298,10 +6092,6 @@ class PlayerService {
   }
 
   Future<void> _resumeInternal() async {
-    if (_castingService.isActive) {
-      await _castingService.delegateResume();
-      return;
-    }
     await initAudio();
     await _ensurePhysicalOutputVolumeBeforePlayback();
 
@@ -6687,10 +6477,6 @@ class PlayerService {
   }
 
   Future<void> seek(Duration position) async {
-    if (_castingService.isActive) {
-      await _castingService.delegateSeek(position);
-      return;
-    }
     try {
       await _playbackManager.seek(position);
     } catch (e) {
@@ -7054,13 +6840,6 @@ class PlayerService {
     final maxForTier = tierSupportsBoost ? 2.0 : 1.0;
     final clampedVolume = volume.clamp(0.0, maxForTier).toDouble();
 
-    if (_castingService.isActive) {
-      // Cast devices cannot exceed 100 %.
-      _currentVolume = clampedVolume.clamp(0.0, 1.0);
-      await _castingService.delegateSetVolume(_currentVolume);
-      await _reconcileSystemVolumeBoost(0.0);
-      return;
-    }
     // The active transport, not the PCM bit-perfect preference, protects both
     // DoP and native DSD. Never update the UI for an ignored/failed request.
     if (_isDirectUsbPath &&
@@ -7639,9 +7418,6 @@ class PlayerService {
   void _ensurePositionSaveTimer() {
     if (_positionSaveTimer?.isActive ?? false) return;
     _positionSaveTimer?.cancel();
-    // Cover a resume that starts inside the prefetch window without waiting
-    // for the first checkpoint tick.
-    _maybePrefetchNextNetworkSong();
     _positionSaveTimer = Timer.periodic(const Duration(seconds: 5), (_) {
       // The state listener normally stops this, but a pause that lands while
       // playback is being started can precede the timer. Do not checkpoint a
@@ -7651,7 +7427,6 @@ class PlayerService {
         return;
       }
       _savePosition();
-      _maybePrefetchNextNetworkSong();
     });
   }
 
@@ -7709,40 +7484,6 @@ class PlayerService {
     isPlaying: isPlaying,
     wasPlaying: wasPlaying,
   );
-
-  /// Last song id handed to [RemoteSourceService.prefetch]. Reset whenever the
-  /// current track changes so a replayed song re-prefetches its successor.
-  String? _prefetchedNextSongId;
-
-  /// P1.7: when the current network-sourced track is within 10s of its end,
-  /// start downloading the linear-next song so gapless/crossfade handoff reads
-  /// a local path. Cache hits make repeated calls no-ops (and the marker is
-  /// reset on track change, which also covers wrap-around).
-  void _maybePrefetchNextNetworkSong() {
-    final current = currentSongNotifier.value;
-    if (current == null || !current.isNetworkSource) return;
-    if (_playlist.isEmpty || _currentIndex < 0) return;
-
-    final duration = durationNotifier.value;
-    if (duration <= Duration.zero) return;
-    if (positionNotifier.value < duration - const Duration(seconds: 10)) {
-      return;
-    }
-
-    if (_currentIndex >= _playlist.length - 1 &&
-        loopModeNotifier.value != LoopMode.all) {
-      return;
-    }
-    final nextIndex = _currentIndex >= _playlist.length - 1
-        ? 0
-        : _currentIndex + 1;
-    final next = _playlist[nextIndex];
-    if (!next.isNetworkSource) return;
-    if (next.id == _prefetchedNextSongId) return;
-
-    _prefetchedNextSongId = next.id;
-    unawaited(RemoteSourceService.instance.prefetch(next));
-  }
 
   void _startHwVolumeHealthTimer() {
     // Route snapshots can arrive faster than the interval. Reconciliation must
@@ -7854,7 +7595,6 @@ class PlayerService {
     positionNotifier.dispose();
     durationNotifier.dispose();
     bufferedPositionNotifier.dispose();
-    isNetworkLoadingNotifier.dispose();
     playbackSpeedNotifier.dispose();
     pitchSemitonesNotifier.dispose();
     sleepTimerRemainingNotifier.dispose();

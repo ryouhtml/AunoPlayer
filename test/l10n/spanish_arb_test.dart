@@ -50,8 +50,6 @@ void main() {
   test('new tutorial and artist information strings are translated', () {
     final newKeys = <String>{
       ...messageKeys.where((key) => key.startsWith('tour')),
-      'onlineArtistAlbumInformation',
-      'showAppleMusicBiographiesRecommendationsAnd',
     };
     for (final key in newKeys) {
       expect(es[key], isNot(en[key]), reason: key);
@@ -88,24 +86,6 @@ void main() {
     expect(
       spanish.experimentalDownTunePlaybackBy432,
       contains('desactiva el paso directo bit-perfect y usa la ruta DSP'),
-    );
-    expect(
-      spanish.matchByArtistAlbumAndTrack(1),
-      'Identificar 1 archivo por artista, álbum y duración de la pista',
-    );
-    expect(
-      spanish.matchByArtistAlbumAndTrack(2),
-      'Identificar 2 archivos por artista, álbum y duración de la pista',
-    );
-  });
-
-  test('identification agrees with zero, one and multiple songs', () {
-    expect(spanish.identified(0, ''), 'Se identificaron 0 canciones.');
-    expect(spanish.identified(1, ''), 'Se identificó 1 canción.');
-    expect(spanish.identified(2, ''), 'Se identificaron 2 canciones.');
-    expect(
-      spanish.identified(1, ' · portada actualizada'),
-      'Se identificó 1 canción · portada actualizada.',
     );
   });
 

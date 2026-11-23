@@ -2,8 +2,7 @@
 
 Auno Player is an offline-first Android music player: your library stays on the
 device, there is no account system, and the app does not phone home. Network
-access is limited to optional features the user configures (artwork providers,
-lyrics lookup, Last.fm scrobbling, podcast/radio streams).
+access is limited to optional online lyrics lookup the user configures.
 
 ## Supported versions
 
@@ -29,14 +28,13 @@ credentials or private file paths.
 - Path traversal or unintended file access in the library scanner, SAF, or
   metadata write-back
 - USB DAC / UAC 2.0 handling issues that could expose or corrupt data
-- Credentials (e.g. Last.fm) leaking into logs, crash output, or the UI
 - Unexpected network traffic beyond user-configured features
 - Android surface issues (exported components, deep links, permissions)
 
 ## Out of scope
 
 - Issues in third-party providers or dependencies — report those upstream
-  (MusicBrainz, iTunes, Deezer, LRCLib, Last.fm, Symphonia, …)
+  (LRCLib, Symphonia, …)
 - Compromised, rooted, or physically accessed devices
 - Denial of service from malformed local media files you chose to open
 - Social engineering

@@ -76,7 +76,6 @@ Future<void> _pumpGrid(
       overrides: [
         songsProvider.overrideWith(_AlbumSongsNotifier.new),
         currentSongProvider.overrideWith((ref) => null),
-        isCastingProvider.overrideWith((ref) => false),
       ],
       child: MaterialApp(
         theme: AppTheme.darkTheme,

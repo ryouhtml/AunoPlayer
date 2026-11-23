@@ -101,13 +101,14 @@ dart run flutter_launcher_icons
 - Ganti `LICENSE` menjadi GPL-3.0-or-later dan tambah `NOTICE` (BitChord, Mornye, Flick/MIT).
 
 ### Verification checklist — Phase 1
+Status 2026-11-23: implementasi Phase 1 selesai di `feature/auno-fase1`; codegen/analyze/test masih harus dijalankan di CI karena toolchain Flutter/Dart tidak tersedia lokal.
 - [ ] `dart run flutter_launcher_icons` sukses; mipmap/adaptive/notification/splash berasal dari `auno_logo_square.png`.
 - [ ] Skrip SHA: tidak ada aset gambar yang sama dengan `flicklogo.png`.
 - [ ] `grep -ri "flick" lib android/app/src/main/res` hanya menemukan identifier internal/komentar, bukan string yang ditampilkan atau aset.
 - [ ] `grep -riE "ko-fi|buymeacoffee|lastfm|listenbrainz|tidal|chromecast|dlna|github.com/ryouhtml|api.github.com" lib android app` kembali kosong, kecuali komentar sejarah bila perlu.
 - [ ] `grep` tetap menemukan `lrclib.net` dan `INTERNET` permission.
 - [ ] `flutter gen-l10n`, `dart run build_runner build --delete-conflicting-outputs`, `flutter analyze --no-fatal-infos`, `flutter test`.
-- [ ] Kunci ARB yang dihapus tidak menyisakan referensi getter di Dart.
+- [x] Kunci ARB yang dihapus tidak menyisakan referensi getter di Dart (script lokal, 2026-11-23).
 
 ### Anti-pattern guards — Phase 1
 - Jangan menghapus `http`/`url_launcher` tanpa grep pemakaian lirik online.

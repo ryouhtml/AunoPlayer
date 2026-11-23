@@ -392,10 +392,6 @@ final List<ManualSection> kManualSections = [
         body: (l10n) => l10n.showOrHideHomeScreen,
       ),
       ManualEntry(
-        title: (l10n) => l10n.integrations,
-        body: (l10n) => l10n.lastFmAndListenBrainzScrobbling,
-      ),
-      ManualEntry(
         title: (l10n) => l10n.widgets,
         body: (l10n) => l10n.customizeTheHomeScreenWidget,
       ),

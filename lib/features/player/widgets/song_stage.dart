@@ -85,10 +85,6 @@ class SongStage extends ConsumerWidget {
   /// Selects the full portrait stage or one pane of the landscape layout.
   final SongStagePane pane;
 
-  /// Gates Motion Art on the album art box (e.g. only the settled carousel
-  /// page keeps video running).
-  final bool motionArtEnabled;
-
   /// True only for the carousel page of the currently playing song. Peek
   /// stages render lyrics statically instead of following playback.
   final bool active;
@@ -134,7 +130,6 @@ class SongStage extends ConsumerWidget {
     required this.onToggleLyrics,
     this.showWaveform = true,
     this.pane = SongStagePane.full,
-    this.motionArtEnabled = true,
     this.active = true,
   });
 
@@ -241,7 +236,6 @@ class SongStage extends ConsumerWidget {
                         initialVinyl: vinylMode,
                         onVinylChanged: onVinylChanged,
                         showFrame: artworkCardShowFrame,
-                        motionArtEnabled: motionArtEnabled,
                       ),
               ),
             );
@@ -772,8 +766,6 @@ class SongStage extends ConsumerWidget {
                                                         onVinylChanged,
                                                     showFrame:
                                                         artworkCardShowFrame,
-                                                    motionArtEnabled:
-                                                        motionArtEnabled,
                                                   ),
                                           ),
                                         ),

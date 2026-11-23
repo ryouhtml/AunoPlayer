@@ -1,6 +1,6 @@
 class Playlist {
-  /// URI scheme used in [sourcePath] for playlists mirrored from a Subsonic
-  /// server: `subsonic://<serverId>/<remotePlaylistId>`.
+  /// Legacy URI scheme retained so old mirrored playlists can be recognised
+  /// and skipped safely: `<scheme>://<serverId>/<remotePlaylistId>`.
   static const String networkSourceScheme = 'subsonic';
 
   final String id;
@@ -19,13 +19,13 @@ class Playlist {
   /// their position in [songIds] when sorting by "Date Added".
   final Map<String, DateTime> songAddedAt;
 
-  /// True when this playlist is a mirror of a server-side (Subsonic) playlist.
+  /// True when this playlist is a legacy mirror of a server-side playlist.
   bool get isNetworkSource {
     final path = sourcePath;
     return path != null && path.startsWith('$networkSourceScheme://');
   }
 
-  /// [NetworkServerEntity.id] of the owning server, null for local playlists.
+  /// Identifier of the owning server, null for local playlists.
   int? get networkServerId {
     final path = sourcePath;
     if (path == null) return null;

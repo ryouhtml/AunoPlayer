@@ -50,23 +50,11 @@ Still deferred:
 
 ---
 
-## Casting & Streaming
-
-- [x] **DLNA casting** — stream to DLNA-compatible receivers
-- [x] **Chromecast casting** — stream to Chromecast devices
-- [x] **UPnP casting** — stream to UPnP devices
-- [x] **Chromecast Output selection** — per-output-device routing (Wired Headset/AUX, Speaker, Bluetooth, USB DAC, Other)
-
----
-
 ## UI & Themes
 
 - ~~**Liquid Glass UI Theme**~~ — almost identical to the original theme, will be replaced by light/dark theme selection instead.
 - [X] **Audio Quality Badges** — show badges under the time bar (e.g. Lossless, AAC, Hi-Res)
-- [X] **Apple Music Animated Album Art** — animated album art on player screen
-- [X] **Immersive Animated Album Player Art** — full-bleed animated player background
 - [X] **Visualizer color modes & fading blocks** — follow album-cover colors, rainbow spectrum, or monochrome; new Fading Blocks style with softly decaying trails.
-- [ ] **Offline animated album covers** ([#282](https://github.com/ryouhtml/AunoPlayer/issues/282)) — manually select a local animated cover and apply it across an album; discover named motion files beside music (for example `motion.mp4` or `cover.mp4`). Resolve manual overrides before folder artwork, online motion art, and static fallback. Preserve imported animations, use durable app storage, and support granted SAF/removable-storage folders. Keep video muted and respect reduced-motion and exclusive-output suppression. The reported inconsistent online artwork across album tracks still needs an affected album's tags/logs to reproduce.
 - [ ] **Library screen grid 3×X** — configurable grid column count
 - [ ] **Landscape mode** — proper landscape layouts for library and player screens (e.g. side-by-side player with artwork/queue, wider list/grid columns)
 
@@ -109,8 +97,6 @@ Still deferred:
 
 ## Integrations
 
-- [x] **Tidal integration** — Tidal streaming service support (reverse-engineered web/OAuth2 path: user signs in with their own account; HiFi lossless FLAC/ALAC through the bit-perfect engine; HiRes/MQA/Atmos gated by Tidal and surfaced as an error).
-- [X] **Local Media Server** — stream music from NAS / network shares. Shipped as Network Sources (`docs/NETWORK_SOURCES_PLAN.md`): Subsonic (Navidrome/Airsonic/gonic/etc.), WebDAV (Nextcloud/ownCloud/Synology/generic), Jellyfin, and UPnP/DLNA media-server browse/play, all through the existing Rust engine (bit-perfect/DSD/gapless preserved). SMB is a loud-failing placeholder recommending the WebDAV workaround.
 - [ ] **Discord Rich Presence** — show “Listening to Auno Player” with the current track, artist/album, playback timer, and Auno Player logo on Discord, including the mobile app. Feasible through Discord Social SDK 1.10+ unauthenticated Android presence when the Discord app is installed and signed in; no OAuth or account linking required. Needs Discord Developer Portal approval for a music app, the proprietary native `discord_partner_sdk.aar` (not committable to the repo), a thin Flutter/JNI bridge, and opt-in privacy handling. Local album art cannot be used; use a static Auno Player asset. **Status: still thinking about it.**
 
 ---

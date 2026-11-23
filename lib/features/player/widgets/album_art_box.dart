@@ -7,8 +7,6 @@ import 'package:auno_player/services/player_service.dart';
 import 'package:auno_player/models/song.dart';
 import 'package:auno_player/core/utils/app_haptics.dart';
 import 'package:auno_player/core/utils/responsive.dart';
-import 'package:auno_player/features/player/widgets/motion_art_widget.dart';
-import 'package:auno_player/providers/app_preferences_provider.dart';
 import 'package:auno_player/widgets/common/animated_album_art.dart';
 import 'package:auno_player/widgets/common/cached_image_widget.dart';
 import 'package:auno_player/widgets/common/flick_artwork_placeholder.dart';
@@ -23,10 +21,6 @@ class AlbumArtBox extends ConsumerStatefulWidget {
   final ValueChanged<bool>? onVinylChanged;
   final bool showFrame;
 
-  /// Gates Motion Art even when the user preference is enabled (for example
-  /// for off-screen carousel pages).
-  final bool motionArtEnabled;
-
   const AlbumArtBox({
     super.key,
     required this.song,
@@ -36,7 +30,6 @@ class AlbumArtBox extends ConsumerStatefulWidget {
     this.initialVinyl = false,
     this.onVinylChanged,
     this.showFrame = true,
-    this.motionArtEnabled = true,
   });
 
   @override
@@ -328,11 +321,7 @@ class _AlbumArtBoxState extends ConsumerState<AlbumArtBox>
     }
   }
 
-  Widget _buildArtContent({
-    required double iconSize,
-    required double t,
-    required bool motionEnabled,
-  }) {
+  Widget _buildArtContent({required double iconSize, required double t}) {
     final placeholder = Container(
       color: Colors.white.withValues(alpha: 0.05),
       child: Transform.translate(
@@ -343,39 +332,20 @@ class _AlbumArtBoxState extends ConsumerState<AlbumArtBox>
         ),
       ),
     );
-    final staticArt = CachedImageWidget(
+    if (_isVinyl) {
+      return CachedImageWidget(
+        imagePath: widget.song.albumArt,
+        audioSourcePath: widget.song.filePath,
+        fit: BoxFit.cover,
+        placeholder: placeholder,
+        errorWidget: placeholder,
+      );
+    }
+    return AnimatedAlbumArt(
       imagePath: widget.song.albumArt,
       audioSourcePath: widget.song.filePath,
-      fit: BoxFit.cover,
       placeholder: placeholder,
       errorWidget: placeholder,
-    );
-    // No Apple Motion Art: keep the art alive with the same Ken Burns treatment
-    // the detail heroes use. Static while the disc is spinning so the pan does
-    // not fight the rotation.
-    final fallback = _isVinyl
-        ? staticArt
-        : AnimatedAlbumArt(
-            imagePath: widget.song.albumArt,
-            audioSourcePath: widget.song.filePath,
-            placeholder: placeholder,
-            errorWidget: placeholder,
-          );
-    final album = widget.song.album;
-    final albumArtist = widget.song.albumArtist;
-    final useAlbum = album != null && album.trim().isNotEmpty;
-    return MotionArtView(
-      title: useAlbum ? album : widget.song.title,
-      artist: (albumArtist != null && albumArtist.trim().isNotEmpty)
-          ? albumArtist
-          : widget.song.artist,
-      album: album,
-      albumMode: useAlbum,
-      representativeSongTitle: useAlbum ? widget.song.title : null,
-      duration: widget.song.duration,
-      enabled: widget.motionArtEnabled && motionEnabled && !_isVinyl,
-      loadingFallback: staticArt,
-      fallback: fallback,
     );
   }
 
@@ -383,14 +353,6 @@ class _AlbumArtBoxState extends ConsumerState<AlbumArtBox>
   Widget build(BuildContext context) {
     final double resolvedSize =
         widget.size ?? context.responsive(280.0, 320.0, 360.0);
-
-    final motionEnabled =
-        ref.watch(
-          appPreferencesProvider.select(
-            (p) => p.animatedAlbumArt && p.animationsEnabled,
-          ),
-        ) &&
-        !MediaQuery.of(context).disableAnimations;
 
     // Update the disc center for rotation detection
     _rotationRecognizer.discCenter = () =>
@@ -536,7 +498,6 @@ class _AlbumArtBoxState extends ConsumerState<AlbumArtBox>
                               child: _buildArtContent(
                                 iconSize: iconSize,
                                 t: t,
-                                motionEnabled: motionEnabled,
                               ),
                             ),
                           )
@@ -548,7 +509,6 @@ class _AlbumArtBoxState extends ConsumerState<AlbumArtBox>
                               child: _buildArtContent(
                                 iconSize: iconSize,
                                 t: t,
-                                motionEnabled: motionEnabled,
                               ),
                             ),
                           ),

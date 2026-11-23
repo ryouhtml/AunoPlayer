@@ -25,11 +25,11 @@ Builds at [GitHub Releases](https://github.com/ryouhtml/AunoPlayer) or the [Play
 
 - **Rust audio engine** — bit-perfect USB DAC output (UAC 2.0), native DSD (DSF/DFF/WavPack), DoP, and DAP hi-res via Oboe/AAudio exclusive mode. Falls back to Android's standard pipeline when needed.
 - **31-band parametric EQ** with dynamics (compressor/limiter), convolution reverb from IR files, crossfade, and gapless playback.
-- **Library** — MediaStore scanner with differential sync, removable storage (SD/USB) via SAF, metadata editing that writes back to files, album art from MusicBrainz/iTunes/Deezer. CUE sheet support, EAC rip logs, duplicate detection.
+- **Library** — MediaStore scanner with differential sync, removable storage (SD/USB) via SAF, metadata editing that writes back to files, embedded and imported local album art. CUE sheet support, EAC rip logs, duplicate detection.
 - **Lyrics** — search via LRCLib.net, synced LRC editor, plain text fallback.
 - **Widgets** — mini player, compact, and full-size widgets that work when the app is killed.
 - **Auno Replay** — daily/weekly/monthly/yearly listening recaps you can save as PNG.
-- **Last.fm scrobbling**, adaptive theming from album art, star ratings, sleep timer, waveform seek bar, FFT visualizer, vinyl disc animation.
+- Adaptive theming from album art, star ratings, sleep timer, waveform seek bar, FFT visualizer, vinyl disc animation.
 - Receives playback handoffs from [Latch](https://github.com/moss-apps/Latch).
 
 ## Tech

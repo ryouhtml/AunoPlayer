@@ -1,8 +1,7 @@
-// The SMB failure banner is the longest string this round introduced, and it is
-// rendered inside an `Expanded` next to an icon in a settings card. Chinese is
-// shorter than English for this key, so overflow is unlikely -- but "unlikely"
-// is not "checked", and this is the one place a long exception message lands in
-// a constrained Row.
+// Long user-facing error messages are rendered inside an `Expanded` next to an
+// icon in a settings card. Chinese is usually shorter than English for these
+// keys, so overflow is unlikely -- but "unlikely" is not "checked", and this is
+// where a long message lands in a constrained Row.
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,8 +14,8 @@ import 'package:auno_player/l10n/l10n.dart';
 const List<double> _widths = <double>[320, 360, 375, 600];
 const List<double> _scales = <double>[1.0, 1.5, 2.0, 3.0];
 
-/// Mirrors the failure banner in `network_server_edit_screen.dart`: an icon, a
-/// gap, and an `Expanded` Text with bodySmall styling.
+/// Mirrors a generic failure banner: an icon, a gap, and an `Expanded` Text
+/// with bodySmall styling.
 Widget _banner(String message) {
   return Builder(
     builder: (context) => Padding(
@@ -86,13 +85,14 @@ void main() {
     LocaleController.instance.value = null;
   });
 
-  testWidgets('zh: the longest error message fits every width and scale', (
+  testWidgets('zh: long error messages fit every width and scale', (
     tester,
   ) async {
     for (final locale in const [Locale('en'), Locale('zh', 'CN')]) {
-      // Every message this round added to a user-facing banner.
+      // Representative long, user-facing messages: local features and the
+      // connectivity notice.
       await tester.pumpWidget(_host(
-        _banner(lookupAppLocalizations(locale).smbMissingServerAddress),
+        _banner(lookupAppLocalizations(locale).lockScreenVisualizerOpenFailed),
         locale,
         375,
         1,
@@ -100,18 +100,11 @@ void main() {
       await tester.pumpAndSettle();
 
       final all = <String>[
-        lookupAppLocalizations(locale).smbMissingServerAddress,
-        lookupAppLocalizations(locale).smbMissingShareName,
-        lookupAppLocalizations(locale).smbAuthFailed,
-        lookupAppLocalizations(locale).smbHostNotResolved,
-        lookupAppLocalizations(locale).smbTimedOut,
-        lookupAppLocalizations(locale).smbConnectionRefused,
-        lookupAppLocalizations(locale).smbCouldNotReach,
-        lookupAppLocalizations(locale).smbServerUnresponsive,
-        lookupAppLocalizations(locale).smbAccessDenied,
-        lookupAppLocalizations(locale).smbShareNotFound,
-        lookupAppLocalizations(locale).couldNotReachTheServer,
-        lookupAppLocalizations(locale).tidalAppKeyRejected,
+        lookupAppLocalizations(locale).lockScreenVisualizerOpenFailed,
+        lookupAppLocalizations(locale).storagePermissionRequiredForRecap,
+        lookupAppLocalizations(locale).bitPerfectUsbDacCouldNot,
+        lookupAppLocalizations(locale).youReOfflineSomeOnlineFeatures,
+        lookupAppLocalizations(locale).failedToWriteTagsToTheFile,
       ];
 
       for (final width in _widths) {

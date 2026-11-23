@@ -55,7 +55,6 @@ const _quickActionLabels = [
   'usbVolume',
   'equalizer',
   'volume',
-  'cast',
 ];
 
 void main() {
@@ -318,6 +317,5 @@ String _localized(AppLocalizations copy, String key) => switch (key) {
   'usbVolume' => copy.usbVolume,
   'equalizer' => copy.equalizer,
   'volume' => copy.volume,
-  'cast' => copy.cast,
   _ => throw ArgumentError('unknown action $key'),
 };

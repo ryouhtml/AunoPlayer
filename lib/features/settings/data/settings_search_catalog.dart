@@ -7,16 +7,12 @@ import '../screens/app_info_settings_screen.dart';
 import '../screens/audio_settings_screen.dart';
 import '../screens/bluetooth_settings_screen.dart';
 import '../screens/bottom_bar_settings_screen.dart';
-import '../screens/casting_settings_screen.dart';
 import '../screens/duplicate_cleaner_screen.dart';
 import '../screens/equalizer_screen.dart';
-import '../screens/integrations_settings_screen.dart';
 import '../screens/interface_settings_screen.dart';
 import '../screens/library_settings_screen.dart';
 import '../screens/logs_screen.dart';
 import '../screens/lyrics_settings_screen.dart';
-import '../screens/missing_metadata_screen.dart';
-import '../screens/network_sources_screen.dart';
 import '../screens/orbit_settings_screen.dart';
 import '../screens/playback_display_settings_screen.dart';
 import '../screens/player_layout_settings_screen.dart';
@@ -106,15 +102,6 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
       ],
     ),
     page(
-      'network_sources',
-      l10n.networkSources,
-      media,
-      LucideIcons.cloud,
-      (_) => const NetworkSourcesScreen(),
-      keywords:
-          'subsonic jellyfin webdav upnp dlna smb tidal server sync streaming network add source',
-    ),
-    page(
       'playback_display_settings',
       l10n.playbackDisplay,
       media,
@@ -127,10 +114,6 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
           SettingsSearchItem(
             'backgroundPlaybackAnchor',
             l10n.backgroundPlaybackAnchor,
-          ),
-          SettingsSearchItem(
-            'motionArtInBitPerfect',
-            l10n.motionArtInBitPerfect,
           ),
           SettingsSearchItem(
             'duckOnNotifications',
@@ -273,24 +256,6 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
       ],
     ),
     page(
-      'casting_settings',
-      l10n.casting,
-      media,
-      LucideIcons.cast,
-      (id) => CastingSettingsScreen(initialSection: id),
-      keywords: 'dlna upnp chromecast cast receiver',
-      sections: [
-        _section('availableDevices', l10n.availableDevices, [
-          ('scanForDevices', l10n.scanForDevices),
-        ]),
-        _section('session', l10n.session, [('stopCasting', l10n.stopCasting)]),
-        _section('outputDevice', l10n.outputDevice, [
-          ('refreshOutputs', l10n.refreshOutputs),
-        ]),
-        _section('about', l10n.about, []),
-      ],
-    ),
-    page(
       'lyrics_settings',
       l10n.lyrics,
       media,
@@ -400,30 +365,6 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
           ('moderate', l10n.moderate),
           ('vibrant', l10n.vibrant),
         ], keywords: 'palette'),
-      ],
-    ),
-    page(
-      'integrations_settings',
-      l10n.integrations,
-      system,
-      LucideIcons.plug,
-      (id) => IntegrationsSettingsScreen(initialSection: id),
-      sections: [
-        _section('integrations', l10n.integrations, [
-          ('lastFm', l10n.lastFm),
-          ('listenbrainz', l10n.listenbrainz),
-        ], keywords: 'scrobble scrobbling last.fm listenbrainz login'),
-        _section(
-          'metadata',
-          l10n.metadata,
-          [
-            ('onlineArtistAlbumInformation', l10n.onlineArtistAlbumInformation),
-            ('autoIdentifyUntaggedAlbums', l10n.autoIdentifyUntaggedAlbums),
-          ],
-          keywords:
-              'apple music artist information biography similar artists '
-              'top songs album notes portrait identification tags',
-        ),
       ],
     ),
     for (var tab = 0; tab < 4; tab++)
@@ -696,14 +637,6 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
       LucideIcons.slidersHorizontal,
       (_) => const EqualizerScreen(initialPage: 2),
       keywords: 'effects reverb convolution impulse response wet dry fx',
-    ),
-    page(
-      'missing_metadata',
-      l10n.fixMissingMetadata,
-      media,
-      LucideIcons.tags,
-      (_) => const MissingMetadataScreen(),
-      keywords: 'unknown artist album tags missing metadata',
     ),
     page(
       'duplicate_cleaner',

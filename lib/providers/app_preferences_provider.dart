@@ -605,14 +605,6 @@ class AppPreferencesNotifier extends Notifier<AppPreferences> {
         .setPriorityAnchorEnabled(value);
   }
 
-  Future<void> setMotionArtDuringBitPerfect(bool value) async {
-    if (state.motionArtDuringBitPerfect == value) return;
-    state = state.copyWith(motionArtDuringBitPerfect: value);
-    await ref
-        .read(appPreferencesServiceProvider)
-        .setMotionArtDuringBitPerfect(value);
-  }
-
   Future<void> setPauseOnBluetoothDisconnect(bool value) async {
     if (state.pauseOnBluetoothDisconnect == value) return;
     state = state.copyWith(pauseOnBluetoothDisconnect: value);

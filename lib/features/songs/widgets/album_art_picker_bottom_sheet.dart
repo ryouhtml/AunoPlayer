@@ -57,10 +57,6 @@ class _AlbumArtPickerBottomSheetState extends State<AlbumArtPickerBottomSheet> {
   final AlbumArtImportService _service = AlbumArtImportService.instance;
   final PlayerService _playerService = PlayerService();
 
-  List<AlbumArtCandidate> _candidates = const [];
-  String? _searchError;
-  int _selectedCandidateIndex = 0;
-  bool _isSearching = false;
   bool _isWorking = false;
   late bool _hasCustomArtwork;
   AlbumArtScope _scope = AlbumArtScope.wholeAlbum;
@@ -69,55 +65,6 @@ class _AlbumArtPickerBottomSheetState extends State<AlbumArtPickerBottomSheet> {
   void initState() {
     super.initState();
     _hasCustomArtwork = _service.isCustomArtworkPath(widget.song.albumArt);
-    _searchOnlineCandidates();
-  }
-
-  AlbumArtCandidate? get _selectedCandidate {
-    if (_selectedCandidateIndex < 0 ||
-        _selectedCandidateIndex >= _candidates.length) {
-      return null;
-    }
-    return _candidates[_selectedCandidateIndex];
-  }
-
-  Future<void> _searchOnlineCandidates() async {
-    if (_isWorking) {
-      return;
-    }
-
-    setState(() {
-      _isSearching = true;
-      _searchError = null;
-    });
-
-    try {
-      final candidates = await _service.searchOnlineCandidates(widget.song);
-      if (!mounted) {
-        return;
-      }
-
-      setState(() {
-        _candidates = candidates;
-        _selectedCandidateIndex = 0;
-        _searchError = null;
-      });
-    } catch (error) {
-      if (!mounted) {
-        return;
-      }
-
-      setState(() {
-        _candidates = const [];
-        _selectedCandidateIndex = 0;
-        _searchError = error.toString();
-      });
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isSearching = false;
-        });
-      }
-    }
   }
 
   Future<void> _pickLocalImage() async {
@@ -157,28 +104,6 @@ class _AlbumArtPickerBottomSheetState extends State<AlbumArtPickerBottomSheet> {
       }
       _showInlineMessage(error.toString());
     }
-  }
-
-  Future<void> _applySelectedCandidate() async {
-    final candidate = _selectedCandidate;
-    if (candidate == null || _isWorking) {
-      return;
-    }
-
-    await _runMutation(
-      action: () => _scope == AlbumArtScope.wholeAlbum
-          ? _service.applyOnlineCandidate(
-              song: widget.song,
-              candidate: candidate,
-            )
-          : _service.applyOnlineCandidateToSong(
-              song: widget.song,
-              candidate: candidate,
-            ),
-      successMessage: (result) => _scope == AlbumArtScope.wholeAlbum
-          ? l10n.englishForFilipino.updatedAlbumArtFor(result.albumName)
-          : l10n.englishForFilipino.updatedAlbumArtFor2(widget.song.title),
-    );
   }
 
   Future<void> _removeCustomArtwork() async {
@@ -295,11 +220,8 @@ class _AlbumArtPickerBottomSheetState extends State<AlbumArtPickerBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedCandidate = _selectedCandidate;
-    final previewPath = selectedCandidate?.previewUrl ?? widget.song.albumArt;
-    final previewSourcePath = selectedCandidate == null
-        ? widget.song.filePath
-        : null;
+    final previewPath = widget.song.albumArt;
+    final previewSourcePath = widget.song.filePath;
     final albumName = widget.song.album?.trim();
     final albumArtist = widget.song.albumArtist?.trim();
     final effectiveAlbumArtist = (albumArtist != null && albumArtist.isNotEmpty)
@@ -346,14 +268,6 @@ class _AlbumArtPickerBottomSheetState extends State<AlbumArtPickerBottomSheet> {
                       ],
                     ),
                   ),
-                  IconButton(
-                    onPressed: _isSearching || _isWorking
-                        ? null
-                        : _searchOnlineCandidates,
-                    icon: const Icon(LucideIcons.refreshCw, size: 18),
-                    color: context.adaptiveTextSecondary,
-                    tooltip: l10n.searchAgain,
-                  ),
                 ],
               ),
               const SizedBox(height: AppConstants.spacingSm),
@@ -363,14 +277,10 @@ class _AlbumArtPickerBottomSheetState extends State<AlbumArtPickerBottomSheet> {
                 context,
                 imagePath: previewPath,
                 audioSourcePath: previewSourcePath,
-                title: selectedCandidate == null
-                    ? (_hasCustomArtwork
-                          ? l10n.currentCustomArt
-                          : l10n.currentArtwork)
-                    : selectedCandidate.title,
-                subtitle: selectedCandidate == null
-                    ? effectiveAlbumArtist
-                    : _candidateSubtitle(selectedCandidate),
+                title: _hasCustomArtwork
+                    ? l10n.currentCustomArt
+                    : l10n.currentArtwork,
+                subtitle: effectiveAlbumArtist,
               ),
               const SizedBox(height: AppConstants.spacingMd),
               Wrap(
@@ -386,12 +296,6 @@ class _AlbumArtPickerBottomSheetState extends State<AlbumArtPickerBottomSheet> {
                       foregroundColor: Colors.black,
                     ),
                   ),
-                  if (selectedCandidate != null)
-                    OutlinedButton.icon(
-                      onPressed: _isWorking ? null : _applySelectedCandidate,
-                      icon: const Icon(LucideIcons.check, size: 18),
-                      label: Text(l10n.applySelected),
-                    ),
                   if (_hasCustomArtwork)
                     OutlinedButton.icon(
                       onPressed: _isWorking ? null : _removeCustomArtwork,
@@ -406,30 +310,6 @@ class _AlbumArtPickerBottomSheetState extends State<AlbumArtPickerBottomSheet> {
                     ),
                 ],
               ),
-              const SizedBox(height: AppConstants.spacingLg),
-              Row(
-                children: [
-                  Text(
-                    l10n.onlineResults,
-                    style: TextStyle(
-                      fontFamily: 'GoogleSansFlex',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: context.adaptiveTextPrimary,
-                    ),
-                  ),
-                  if (_isSearching) ...[
-                    const SizedBox(width: AppConstants.spacingSm),
-                    const SizedBox(
-                      width: 16,
-                      height: 16,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                  ],
-                ],
-              ),
-              const SizedBox(height: AppConstants.spacingSm),
-              _buildOnlineResults(context),
             ],
           ),
         ),
@@ -505,135 +385,6 @@ class _AlbumArtPickerBottomSheetState extends State<AlbumArtPickerBottomSheet> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildOnlineResults(BuildContext context) {
-    if (_isSearching && _candidates.isEmpty) {
-      return _buildInfoCard(
-        context,
-        icon: LucideIcons.search,
-        title: l10n.searchingOnline,
-        subtitle:
-            l10n.lookingForCoverArtFromMusicbrainz,
-      );
-    }
-
-    if (_searchError != null) {
-      return _buildInfoCard(
-        context,
-        icon: LucideIcons.wifiOff,
-        title: l10n.searchFailed,
-        subtitle: _searchError!,
-      );
-    }
-
-    if (_candidates.isEmpty) {
-      final albumName = widget.song.album?.trim();
-      return _buildInfoCard(
-        context,
-        icon: LucideIcons.imageOff,
-        title: l10n.noOnlineArtworkFound,
-        subtitle: albumName == null || albumName.isEmpty
-            ? l10n.thisSongIsMissingAlbumMetadata
-            : l10n.tryPickingALocalImageIf,
-      );
-    }
-
-    return Container(
-      constraints: const BoxConstraints(minHeight: 400),
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: _candidates.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: AppConstants.spacingSm,
-          mainAxisSpacing: AppConstants.spacingSm,
-          childAspectRatio: 0.62,
-        ),
-        itemBuilder: (context, index) {
-          final candidate = _candidates[index];
-          final isSelected = index == _selectedCandidateIndex;
-          return GestureDetector(
-            onTap: _isWorking
-                ? null
-                : () {
-                    setState(() {
-                      _selectedCandidateIndex = index;
-                    });
-                  },
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 180),
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: AppColors.surfaceLight,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: isSelected ? AppColors.accent : AppColors.glassBorder,
-                  width: isSelected ? 1.6 : 1,
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: CachedImageWidget(
-                        imagePath: candidate.previewUrl,
-                        fit: BoxFit.cover,
-                        placeholder: const ColoredBox(
-                          color: AppColors.surface,
-                          child: Icon(
-                            LucideIcons.image,
-                            color: AppColors.textTertiary,
-                          ),
-                        ),
-                        errorWidget: const ColoredBox(
-                          color: AppColors.surface,
-                          child: Icon(
-                            LucideIcons.imageOff,
-                            color: AppColors.textTertiary,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    candidate.sourceLabel,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontFamily: 'GoogleSansFlex',
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
-                      color: isSelected
-                          ? AppColors.accent
-                          : context.adaptiveTextSecondary,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    candidate.releaseDate?.isNotEmpty == true
-                        ? candidate.releaseDate!
-                        : candidate.artist,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontFamily: 'GoogleSansFlex',
-                      fontSize: 11,
-                      color: context.adaptiveTextTertiary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
       ),
     );
   }
@@ -730,63 +481,6 @@ class _AlbumArtPickerBottomSheetState extends State<AlbumArtPickerBottomSheet> {
     );
   }
 
-  Widget _buildInfoCard(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String subtitle,
-  }) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(AppConstants.spacingMd),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColors.glassBorder),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(icon, size: 18, color: context.adaptiveTextSecondary),
-          ),
-          const SizedBox(width: AppConstants.spacingSm),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontFamily: 'GoogleSansFlex',
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: context.adaptiveTextPrimary,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: TextStyle(
-                    fontFamily: 'GoogleSansFlex',
-                    fontSize: 13,
-                    color: context.adaptiveTextSecondary,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildDragHandle() {
     return Center(
       child: Container(
@@ -800,12 +494,6 @@ class _AlbumArtPickerBottomSheetState extends State<AlbumArtPickerBottomSheet> {
     );
   }
 
-  String _candidateSubtitle(AlbumArtCandidate candidate) {
-    if (candidate.releaseDate != null && candidate.releaseDate!.isNotEmpty) {
-      return '${candidate.artist} • ${candidate.releaseDate}';
-    }
-    return candidate.artist;
-  }
 }
 
 class _AlbumArtSheetResult {
