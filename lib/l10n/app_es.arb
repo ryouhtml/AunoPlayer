@@ -4913,6 +4913,34 @@
   "@karaokePreview": {
     "description": "lib/features/player/screens/lyrics_sync_screen.dart:1623"
   },
+  "karaokeSweepStyle": "Detalle del barrido",
+  "@karaokeSweepStyle": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleAuto": "Automático",
+  "@karaokeSweepStyleAuto": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleAutoDescription": "Usa el tiempo real más preciso de la letra",
+  "@karaokeSweepStyleAutoDescription": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleWord": "Palabras",
+  "@karaokeSweepStyleWord": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleWordDescription": "Barre una palabra a la vez",
+  "@karaokeSweepStyleWordDescription": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleSyllable": "Sílabas",
+  "@karaokeSweepStyleSyllable": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleSyllableDescription": "Barre cada sílaba con una marca de tiempo real",
+  "@karaokeSweepStyleSyllableDescription": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
   "kb": "{arg1} KB",
   "@kb": {
     "description": "lib/features/settings/screens/duplicate_cleaner_screen.dart:22",

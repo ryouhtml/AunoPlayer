@@ -10,6 +10,8 @@ import 'package:auno_player/features/player/widgets/album_color_helpers.dart';
 import 'package:auno_player/features/player/widgets/karaoke_lyric_line.dart';
 import 'package:auno_player/features/player/widgets/lyrics_alignment.dart';
 import 'package:auno_player/providers/app_preferences_provider.dart';
+import 'package:auno_player/providers/karaoke_provider.dart';
+import 'package:auno_player/services/karaoke_spans.dart';
 import 'package:auno_player/services/lyrics_service.dart';
 import 'package:auno_player/services/player_service.dart';
 
@@ -377,8 +379,14 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView> {
     return Colors.white;
   }
 
-  Widget _buildLine(BuildContext context, int index, LyricsAlignment alignment,
-      {required bool karaokeEnabled}) {
+  Widget _buildLine(
+    BuildContext context,
+    int index,
+    LyricsAlignment alignment, {
+    required bool karaokeEnabled,
+    required List<KaraokeLine> karaokeLines,
+    required KaraokeSweepStyle sweepStyle,
+  }) {
     final line = widget.lyrics.lines[index];
     final isActive = index == _activeLineIndex;
 
@@ -396,6 +404,11 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView> {
               unsungColor: Colors.white.withValues(alpha: 0.30),
               positionNotifier: _positionNotifier,
               active: widget.active,
+              karaokeLine: index < karaokeLines.length
+                  ? karaokeLines[index]
+                  : null,
+              sweepStyle: sweepStyle,
+              onSeek: () => unawaited(_seekToLine(index)),
             ),
           )
         : Padding(
@@ -434,8 +447,13 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView> {
     final alignment = resolveLyricsAlignment(
       ref.watch(appPreferencesProvider).lyricsTextAlign,
     );
-    final karaokeEnabled =
-        ref.watch(appPreferencesProvider).karaokeEnabled;
+    final preferences = ref.watch(appPreferencesProvider);
+    final karaokeEnabled = preferences.karaokeEnabled;
+    final karaokeLines = ref
+        .watch(karaokeNormalizerProvider)
+        .fromLyricsData(widget.lyrics);
+    final sweepStyle =
+        karaokeSweepStyleFromString(preferences.karaokeSweepStyle);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -465,6 +483,8 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView> {
                 index,
                 alignment,
                 karaokeEnabled: karaokeEnabled,
+                karaokeLines: karaokeLines,
+                sweepStyle: sweepStyle,
               ),
           ),
         );

@@ -477,6 +477,14 @@ class AppPreferencesNotifier extends Notifier<AppPreferences> {
         .setLyricsKaraokeEnabled(value);
   }
 
+  Future<void> setKaraokeSweepStyle(String value) async {
+    if (state.karaokeSweepStyle == value) return;
+    state = state.copyWith(karaokeSweepStyle: value);
+    await ref
+        .read(appPreferencesServiceProvider)
+        .setLyricsKaraokeSweepStyle(value);
+  }
+
   Future<void> setLeftActionButton(String value) async {
     if (state.leftActionButton == value) return;
     state = state.copyWith(leftActionButton: value);

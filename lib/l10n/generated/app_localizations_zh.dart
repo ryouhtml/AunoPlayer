@@ -4025,6 +4025,27 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get karaokePreview => '卡拉 OK 预览';
+  @override
+  String get karaokeSweepStyle => '扫光粒度';
+
+  @override
+  String get karaokeSweepStyleAuto => '自动';
+
+  @override
+  String get karaokeSweepStyleAutoDescription => '使用歌词中最精细的真实时间信息';
+
+  @override
+  String get karaokeSweepStyleWord => '逐词';
+
+  @override
+  String get karaokeSweepStyleWordDescription => '每次扫过一个词';
+
+  @override
+  String get karaokeSweepStyleSyllable => '逐音节';
+
+  @override
+  String get karaokeSweepStyleSyllableDescription => '扫过每个具有真实时间戳的音节';
+
 
   @override
   String kb(Object arg1) {

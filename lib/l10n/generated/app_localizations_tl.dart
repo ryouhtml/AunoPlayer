@@ -4380,6 +4380,27 @@ class AppLocalizationsTl extends AppLocalizations {
 
   @override
   String get karaokePreview => 'Paunang tingin ng karaoke';
+  @override
+  String get karaokeSweepStyle => 'Detalye ng sweep';
+
+  @override
+  String get karaokeSweepStyleAuto => 'Awtomatiko';
+
+  @override
+  String get karaokeSweepStyleAutoDescription => 'Gamitin ang pinakatumpak na tunay na timing sa lyrics';
+
+  @override
+  String get karaokeSweepStyleWord => 'Mga salita';
+
+  @override
+  String get karaokeSweepStyleWordDescription => 'Isang salita sa bawat sweep';
+
+  @override
+  String get karaokeSweepStyleSyllable => 'Mga pantig';
+
+  @override
+  String get karaokeSweepStyleSyllableDescription => 'I-sweep bawat pantig na may tunay na timestamp';
+
 
   @override
   String kb(Object arg1) {

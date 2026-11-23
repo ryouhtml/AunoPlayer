@@ -3,7 +3,7 @@
 Spesifikasi sumber: `docs/superpowers/specs/2026-11-22-auno-feature-expansion-design.md` (commit `9fafb92`).
 Plan ini dibuat dengan `make-plan`; Phase 0 (documentation discovery) sudah dijalankan dengan tiga subagent dan temuannya diringkas di bawah.
 
-Status 2026-11-23: Fase 1 selesai (`080a6d7`), Fase 2 selesai (`f162802`), Fase 3 sebagian (`967d4f4`: model/normalizer/provider/test; integrasi widget dan preferensi gaya masih tertunda). Fase 4–5 belum dimulai. Semua verifikasi Flutter/Dart masih menunggu CI karena toolchain tidak tersedia lokal.
+Status 2026-11-23: Fase 1 selesai (`080a6d7`), Fase 2 selesai (`f162802`), Fase 3 hampir selesai (`967d4f4` + integrasi widget/preferensi). Fase 4–5 belum dimulai. `cargo test --lib` lokal hijau (407 test); verifikasi Flutter/Dart masih menunggu CI karena toolchain tidak tersedia lokal.
 
 Perintah global yang dipakai berulang:
 
@@ -166,16 +166,18 @@ Status 2026-11-23: `app_id.arb` (2.377 kunci), wiring locale, dan generated copy
 - Tambah preferensi gaya sweep kata vs suku kata di `app_preferences_service.dart` dengan `@Name` bila disimpan, plus kunci ARB baru di semua locale (enkapsulasi aturan Fase 2).
 
 ### Verification checklist — Phase 3
-Status 2026-11-23: model, normalizer, helper span, provider, dan unit test sudah ditambahkan; widget integration dan preferensi gaya sweep masih tertunda.
+Status 2026-11-23: model, normalizer, helper span, provider, integrasi widget, preferensi gaya, dan unit test sudah ditambahkan. Widget test penuh serta Flutter analyze/test masih menunggu CI.
 - [x] Model `KaraokeLine`/`KaraokeWord`/`KaraokeSyllable` + `TimingSource` (`lib/services/karaoke_model.dart`).
 - [x] Normalizer LRC/LRCLib tanpa estimasi timing (`lib/services/karaoke_spans.dart`).
-- [x] Unit test parser/span: suku kata, `lineOnly`, fill/reveal (`test/services/karaoke_spans_test.dart`).
+- [x] Unit test parser/span: suku kata, `lineOnly`, fill/reveal, gaya eksplisit (`test/services/karaoke_spans_test.dart`).
 - [x] Test `karaokeControllerProvider`: posisi → baris aktif dan fill yang benar.
+- [x] Renderer menerima span baru, suku kata, baris latar, alignment, dan tap-untuk-seek (`karaoke_lyric_line.dart`).
+- [x] Caller diperbarui: `synced_lyrics_view.dart` dan preview `lyrics_sync_screen.dart`.
+- [x] Preferensi gaya sweep otomatis/kata/suku kata + 7 kunci ARB baru di semua locale.
 - [ ] Widget test: sweep kata/suku kata, tap seek, auto-scroll, baris latar.
 - [ ] Test regresi lama tetap hijau: `test/services/lyrics_word_timing_test.dart`, `test/features/player/karaoke_word_split_test.dart`.
 - [ ] `flutter analyze --no-fatal-infos`, `flutter test`; kunci ARB baru terparitas di semua locale.
 - [x] Online lyrics LRCLib masuk normalizer lewat `KaraokeNormalizer.fromOnline`.
-- [ ] Preferensi gaya sweep kata vs suku kata beserta kunci ARB baru.
 
 ### Anti-pattern guards — Phase 3
 - Jangan mengubah signature `loadLyricsForSong`, `resolveWords`, `buildLrcContent`, atau `LyricsData`.

@@ -328,10 +328,40 @@ class _RawWord {
   final List<_RawSyllable> segments;
 }
 
+/// Sweep granularity selected in lyrics settings. [auto] uses the finest
+/// timing that actually exists in the source; the explicit modes never infer
+/// missing timestamps.
+enum KaraokeSweepStyle { auto, word, syllable }
+
+KaraokeSweepStyle karaokeSweepStyleFromString(String? value) {
+  switch (value) {
+    case 'word':
+      return KaraokeSweepStyle.word;
+    case 'syllable':
+      return KaraokeSweepStyle.syllable;
+    default:
+      return KaraokeSweepStyle.auto;
+  }
+}
+
 /// Returns the renderable spans for [line], preferring syllables when the
 /// source supplied them, then words, then one whole-line reveal span.
-List<KaraokeSpan> wordSpans(KaraokeLine line) {
-  if (line.words.isEmpty) {
+List<KaraokeSpan> wordSpans(
+  KaraokeLine line, [
+  KaraokeSweepStyle style = KaraokeSweepStyle.auto,
+]) {
+  if (style == KaraokeSweepStyle.syllable && line.words.isEmpty) {
+    return [
+      KaraokeSpan(
+        text: line.text,
+        startMs: line.startMs,
+        endMs: line.endMs,
+        startChar: 0,
+        endChar: line.text.length,
+      ),
+    ];
+  }
+  if (line.words.isEmpty || style == KaraokeSweepStyle.word) {
     return [
       KaraokeSpan(
         text: line.text,
@@ -386,9 +416,13 @@ double _fillFor(KaraokeSpan span, int positionMs) {
 }
 
 /// Spans paired with their sweep fill at [positionMs].
-List<SweptSpan> sweepSpans(KaraokeLine line, int positionMs) {
+List<SweptSpan> sweepSpans(
+  KaraokeLine line,
+  int positionMs, [
+  KaraokeSweepStyle style = KaraokeSweepStyle.auto,
+]) {
   return [
-    for (final span in wordSpans(line))
+    for (final span in wordSpans(line, style))
       SweptSpan(
         span: span,
         fill: _fillFor(span, positionMs),
@@ -399,9 +433,13 @@ List<SweptSpan> sweepSpans(KaraokeLine line, int positionMs) {
 }
 
 /// Characters revealed at [positionMs], including a partially swept span.
-int revealedChars(KaraokeLine line, int positionMs) {
+int revealedChars(
+  KaraokeLine line,
+  int positionMs, [
+  KaraokeSweepStyle style = KaraokeSweepStyle.auto,
+]) {
   var revealed = 0;
-  for (final span in wordSpans(line)) {
+  for (final span in wordSpans(line, style)) {
     final fill = _fillFor(span, positionMs);
     if (fill <= 0) continue;
     final chars = span.startChar +
@@ -412,9 +450,13 @@ int revealedChars(KaraokeLine line, int positionMs) {
 }
 
 /// Characters whose spans have fully finished by [positionMs].
-int charsSungAt(KaraokeLine line, int positionMs) {
+int charsSungAt(
+  KaraokeLine line,
+  int positionMs, [
+  KaraokeSweepStyle style = KaraokeSweepStyle.auto,
+]) {
   var sung = 0;
-  for (final span in wordSpans(line)) {
+  for (final span in wordSpans(line, style)) {
     if (span.endMs <= positionMs && span.endChar > sung) sung = span.endChar;
   }
   return sung.clamp(0, line.text.length);

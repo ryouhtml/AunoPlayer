@@ -66,6 +66,24 @@ void main() {
       expect(charsSungAt(line, 1500), 3);
     });
 
+    test('explicit word style ignores syllable timings', () {
+      final spans = wordSpans(
+        syllableLine(),
+        KaraokeSweepStyle.word,
+      );
+      expect(spans.map((s) => s.text), ['Hello ', 'world']);
+    });
+
+    test('preference strings map to sweep styles', () {
+      expect(karaokeSweepStyleFromString('word'), KaraokeSweepStyle.word);
+      expect(
+        karaokeSweepStyleFromString('syllable'),
+        KaraokeSweepStyle.syllable,
+      );
+      expect(karaokeSweepStyleFromString(null), KaraokeSweepStyle.auto);
+      expect(karaokeSweepStyleFromString('unknown'), KaraokeSweepStyle.auto);
+    });
+
     test('line-only lyrics reveal the whole line, never guessed words', () {
       final line = KaraokeLine(
         text: 'Just a line',

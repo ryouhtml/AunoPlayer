@@ -4387,6 +4387,27 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get karaokePreview => 'Vista previa de karaoke';
+  @override
+  String get karaokeSweepStyle => 'Detalle del barrido';
+
+  @override
+  String get karaokeSweepStyleAuto => 'Automático';
+
+  @override
+  String get karaokeSweepStyleAutoDescription => 'Usa el tiempo real más preciso de la letra';
+
+  @override
+  String get karaokeSweepStyleWord => 'Palabras';
+
+  @override
+  String get karaokeSweepStyleWordDescription => 'Barre una palabra a la vez';
+
+  @override
+  String get karaokeSweepStyleSyllable => 'Sílabas';
+
+  @override
+  String get karaokeSweepStyleSyllableDescription => 'Barre cada sílaba con una marca de tiempo real';
+
 
   @override
   String kb(Object arg1) {

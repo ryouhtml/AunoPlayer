@@ -10,6 +10,7 @@ import 'package:auno_player/core/constants/app_constants.dart';
 import 'package:auno_player/core/theme/adaptive_color_provider.dart';
 import 'package:auno_player/core/theme/app_colors.dart';
 import 'package:auno_player/models/song.dart';
+import 'package:auno_player/services/karaoke_spans.dart';
 import 'package:auno_player/services/lyrics_service.dart';
 import 'package:auno_player/services/player_service.dart';
 import 'package:auno_player/features/player/widgets/karaoke_lyric_line.dart';
@@ -1593,6 +1594,10 @@ class _LyricsSyncScreenState extends State<LyricsSyncScreen> {
         previewIndex >= previewData.lines.length) {
       return const SizedBox.shrink();
     }
+    final normalized = KaraokeNormalizer().fromLyricsData(previewData);
+    final karaokeLine = previewIndex < normalized.length
+        ? normalized[previewIndex]
+        : null;
 
     return Container(
       width: double.infinity,
@@ -1628,6 +1633,7 @@ class _LyricsSyncScreenState extends State<LyricsSyncScreen> {
             ),
             sungColor: AppColors.textPrimary,
             unsungColor: AppColors.textTertiary,
+            karaokeLine: karaokeLine,
           ),
         ],
       ),

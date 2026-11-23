@@ -7394,6 +7394,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Karaoke Preview'**
   String get karaokePreview;
+  /// lib/features/settings/screens/lyrics_settings_screen.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Sweep detail'**
+  String get karaokeSweepStyle;
+
+  /// lib/features/settings/screens/lyrics_settings_screen.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Auto'**
+  String get karaokeSweepStyleAuto;
+
+  /// lib/features/settings/screens/lyrics_settings_screen.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Use the finest real timing in the lyrics'**
+  String get karaokeSweepStyleAutoDescription;
+
+  /// lib/features/settings/screens/lyrics_settings_screen.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Words'**
+  String get karaokeSweepStyleWord;
+
+  /// lib/features/settings/screens/lyrics_settings_screen.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Sweep one word at a time'**
+  String get karaokeSweepStyleWordDescription;
+
+  /// lib/features/settings/screens/lyrics_settings_screen.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Syllables'**
+  String get karaokeSweepStyleSyllable;
+
+  /// lib/features/settings/screens/lyrics_settings_screen.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Sweep each syllable that has a real timestamp'**
+  String get karaokeSweepStyleSyllableDescription;
+
 
   /// lib/features/settings/screens/duplicate_cleaner_screen.dart:22
   ///

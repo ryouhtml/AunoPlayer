@@ -2699,6 +2699,27 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get karaokePreview => 'Pratinjau Karaoke';
   @override
+  String get karaokeSweepStyle => 'Detail sapuan';
+
+  @override
+  String get karaokeSweepStyleAuto => 'Otomatis';
+
+  @override
+  String get karaokeSweepStyleAutoDescription => 'Gunakan timing nyata paling rinci pada lirik';
+
+  @override
+  String get karaokeSweepStyleWord => 'Kata';
+
+  @override
+  String get karaokeSweepStyleWordDescription => 'Sapu satu kata setiap kali';
+
+  @override
+  String get karaokeSweepStyleSyllable => 'Suku kata';
+
+  @override
+  String get karaokeSweepStyleSyllableDescription => 'Sapu setiap suku kata yang memiliki timing nyata';
+
+  @override
   String kb(Object arg1) => '$arg1 KB';
   @override
   String get keepAll => 'Simpan semua';

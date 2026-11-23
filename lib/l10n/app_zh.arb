@@ -1120,6 +1120,34 @@
   "justNow": "刚刚",
   "karaokeEffect": "卡拉 OK 效果",
   "karaokePreview": "卡拉 OK 预览",
+  "karaokeSweepStyle": "扫光粒度",
+  "@karaokeSweepStyle": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleAuto": "自动",
+  "@karaokeSweepStyleAuto": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleAutoDescription": "使用歌词中最精细的真实时间信息",
+  "@karaokeSweepStyleAutoDescription": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleWord": "逐词",
+  "@karaokeSweepStyleWord": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleWordDescription": "每次扫过一个词",
+  "@karaokeSweepStyleWordDescription": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleSyllable": "逐音节",
+  "@karaokeSweepStyleSyllable": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleSyllableDescription": "扫过每个具有真实时间戳的音节",
+  "@karaokeSweepStyleSyllableDescription": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
   "kb": "{arg1} KB",
   "keepAll": "全部保留",
   "keepEditing": "继续编辑",

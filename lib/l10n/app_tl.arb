@@ -969,6 +969,34 @@
   "justNow": "Ngayon lang",
   "karaokeEffect": "Karaoke effect",
   "karaokePreview": "Paunang tingin ng karaoke",
+  "karaokeSweepStyle": "Detalye ng sweep",
+  "@karaokeSweepStyle": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleAuto": "Awtomatiko",
+  "@karaokeSweepStyleAuto": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleAutoDescription": "Gamitin ang pinakatumpak na tunay na timing sa lyrics",
+  "@karaokeSweepStyleAutoDescription": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleWord": "Mga salita",
+  "@karaokeSweepStyleWord": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleWordDescription": "Isang salita sa bawat sweep",
+  "@karaokeSweepStyleWordDescription": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleSyllable": "Mga pantig",
+  "@karaokeSweepStyleSyllable": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
+  "karaokeSweepStyleSyllableDescription": "I-sweep bawat pantig na may tunay na timestamp",
+  "@karaokeSweepStyleSyllableDescription": {
+    "description": "lib/features/settings/screens/lyrics_settings_screen.dart"
+  },
   "kb": "{arg1} KB",
   "keepAll": "Itira lahat",
   "keepEditing": "Magpatuloy sa pag-edit",

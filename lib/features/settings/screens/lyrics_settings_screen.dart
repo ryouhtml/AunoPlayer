@@ -46,12 +46,48 @@ class LyricsSettingsScreen extends ConsumerWidget {
                 icon: LucideIcons.music,
                 title: l10n.englishForFilipino.karaokeEffect,
                 subtitle:
-                    l10n.sweepAHighlightThroughWordsAs,
+                    '${l10n.sweepAHighlightThroughWordsAs} · ${l10n.karaokeSweepStyle}',
                 value: appPrefs.karaokeEnabled,
                 onChanged: (value) {
                   ref
                       .read(appPreferencesProvider.notifier)
                       .setKaraokeEnabled(value);
+                },
+              ),
+              const SettingsDivider(),
+              SelectionSetting(
+                icon: Icons.auto_awesome,
+                title: l10n.karaokeSweepStyleAuto,
+                subtitle: l10n.karaokeSweepStyleAutoDescription,
+                selected: appPrefs.karaokeSweepStyle == 'auto',
+                onTap: () {
+                  ref
+                      .read(appPreferencesProvider.notifier)
+                      .setKaraokeSweepStyle('auto');
+                },
+              ),
+              const SettingsDivider(),
+              SelectionSetting(
+                icon: Icons.text_fields_rounded,
+                title: l10n.karaokeSweepStyleWord,
+                subtitle: l10n.karaokeSweepStyleWordDescription,
+                selected: appPrefs.karaokeSweepStyle == 'word',
+                onTap: () {
+                  ref
+                      .read(appPreferencesProvider.notifier)
+                      .setKaraokeSweepStyle('word');
+                },
+              ),
+              const SettingsDivider(),
+              SelectionSetting(
+                icon: Icons.segment_rounded,
+                title: l10n.karaokeSweepStyleSyllable,
+                subtitle: l10n.karaokeSweepStyleSyllableDescription,
+                selected: appPrefs.karaokeSweepStyle == 'syllable',
+                onTap: () {
+                  ref
+                      .read(appPreferencesProvider.notifier)
+                      .setKaraokeSweepStyle('syllable');
                 },
               ),
               const SettingsDivider(),

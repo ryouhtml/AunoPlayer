@@ -4328,6 +4328,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get karaokePreview => 'Karaoke Preview';
+  @override
+  String get karaokeSweepStyle => 'Sweep detail';
+
+  @override
+  String get karaokeSweepStyleAuto => 'Auto';
+
+  @override
+  String get karaokeSweepStyleAutoDescription => 'Use the finest real timing in the lyrics';
+
+  @override
+  String get karaokeSweepStyleWord => 'Words';
+
+  @override
+  String get karaokeSweepStyleWordDescription => 'Sweep one word at a time';
+
+  @override
+  String get karaokeSweepStyleSyllable => 'Syllables';
+
+  @override
+  String get karaokeSweepStyleSyllableDescription => 'Sweep each syllable that has a real timestamp';
+
 
   @override
   String kb(Object arg1) {
