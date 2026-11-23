@@ -9821,6 +9821,30 @@ class AppLocalizationsTlTglg extends AppLocalizationsTl {
   String get songs14 => 'ᜋᜅ ᜃᜈ᜔ᜆ';
 
   @override
+  String get recapActualListeningLabel => "Aktwal na pakikinig";
+  @override
+  String recapStreakDays(int days) => "${days} araw na streak";
+  @override
+  String get recapListeningClock => "Orasan ng pakikinig";
+  @override
+  String get recapListeningClockHint => "Oras ng pakikinig sa bawat oras ng araw";
+  @override
+  String recapHourLabel(int hour) => "${hour}:00";
+  @override
+  String get recapPersonality => "Personalidad sa pakikinig";
+  @override
+  String get recapPersonalityNightOwl => "Night owl";
+  @override
+  String get recapPersonalityCompletionist => "Completionist";
+  @override
+  String get recapPersonalityExplorer => "Explorer";
+  @override
+  String get recapPersonalityBalanced => "Balanced listener";
+  @override
+  String get recapFirstListened => "Unang pakikinig sa periodong ito";
+  @override
+  String get recapLocalOnlyStats => "Kinalculate sa device na ito";
+  @override
   String get indonesian => 'Indonesiyano';
   @override
   String get artworkOnlyForLocalFiles => 'Ang artwork ay mababago lamang para sa mga lokal na file.';

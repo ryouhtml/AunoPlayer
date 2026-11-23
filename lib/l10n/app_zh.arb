@@ -2524,5 +2524,29 @@
   "@audioAnalysisReportFailed": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
     "type": "text"
-  }
+  },
+  "recapActualListeningLabel": "实际收听",
+  "@recapActualListeningLabel": {"description": "Listening recap insights.", "type": "text"},
+  "recapStreakDays": "连续 {days} 天",
+  "@recapStreakDays": {"description": "Listening recap insights.", "type": "text", "placeholders": {"days": {"type": "int"}}},
+  "recapListeningClock": "收听时段",
+  "@recapListeningClock": {"description": "Listening recap insights.", "type": "text"},
+  "recapListeningClockHint": "一天中每个小时的收听时长",
+  "@recapListeningClockHint": {"description": "Listening recap insights.", "type": "text"},
+  "recapHourLabel": "{hour}:00",
+  "@recapHourLabel": {"description": "Listening recap insights.", "type": "text", "placeholders": {"hour": {"type": "int"}}},
+  "recapPersonality": "收听性格",
+  "@recapPersonality": {"description": "Listening recap insights.", "type": "text"},
+  "recapPersonalityNightOwl": "夜猫子",
+  "@recapPersonalityNightOwl": {"description": "Listening recap insights.", "type": "text"},
+  "recapPersonalityCompletionist": "完听主义者",
+  "@recapPersonalityCompletionist": {"description": "Listening recap insights.", "type": "text"},
+  "recapPersonalityExplorer": "探索者",
+  "@recapPersonalityExplorer": {"description": "Listening recap insights.", "type": "text"},
+  "recapPersonalityBalanced": "均衡听众",
+  "@recapPersonalityBalanced": {"description": "Listening recap insights.", "type": "text"},
+  "recapFirstListened": "本周期首次收听",
+  "@recapFirstListened": {"description": "Listening recap insights.", "type": "text"},
+  "recapLocalOnlyStats": "仅在此设备计算",
+  "@recapLocalOnlyStats": {"description": "Listening recap insights.", "type": "text"}
 }

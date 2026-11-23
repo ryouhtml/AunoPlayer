@@ -16381,6 +16381,18 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Indonesian'**
+  String get recapActualListeningLabel;
+  String recapStreakDays(int days);
+  String get recapListeningClock;
+  String get recapListeningClockHint;
+  String recapHourLabel(int hour);
+  String get recapPersonality;
+  String get recapPersonalityNightOwl;
+  String get recapPersonalityCompletionist;
+  String get recapPersonalityExplorer;
+  String get recapPersonalityBalanced;
+  String get recapFirstListened;
+  String get recapLocalOnlyStats;
   String get indonesian;
   /// Shown when attempting to change artwork for an indexed row from a removed network source.
   ///

@@ -205,11 +205,13 @@ Status 2026-11-23: model, normalizer, helper span, provider, integrasi widget, p
 - Tambah kunci ARB baru di semua locale.
 
 ### Verification checklist — Phase 4
-- [ ] `cargo test --lib --manifest-path rust/Cargo.toml` hijau, termasuk test DSD baru.
-- [ ] `flutter_rust_bridge_codegen generate` sukses; binding baru terlihat di `lib/src/rust/api/audio_analysis.dart`.
+Status 2026-11-23: Rust tests hijau (407 passed) dan binding FRB tergenerasi. Widget/Flutter gate masih menunggu CI.
+- [x] `cargo test --lib --manifest-path rust/Cargo.toml` hijau, termasuk test DSD baru.
+- [x] `flutter_rust_bridge_codegen generate` sukses; binding baru terlihat di `lib/src/rust/api/audio_analysis.dart`.
 - [ ] Widget test sheet: data lengkap, data sebagian, status `Busy`/`Cancelled`, retry.
+- [x] ARB paritas 2.417 kunci di `en/es/tl/id/zh`, placeholder terjaga, tidak ada key baru yang belum dipakai.
 - [ ] `flutter analyze --no-fatal-infos`, `flutter test`; ARB paritas terjaga.
-- [ ] Tidak ada entri baru di `rust/Cargo.toml` / `pubspec.yaml`.
+- [x] Tidak ada entri baru di `rust/Cargo.toml` / `pubspec.yaml`.
 
 ### Anti-pattern guards — Phase 4
 - Jangan buat engine analisis paralel; perluas file yang ada.
@@ -241,8 +243,10 @@ Status 2026-11-23: model, normalizer, helper span, provider, integrasi widget, p
 - Tambah kunci ARB baru di semua locale, termasuk `app_id.arb`.
 
 ### Verification checklist — Phase 5
-- [ ] Test repository dengan real-Isar harness (`test/services/webdav_sync_integration_test.dart:51-118`) untuk write/read/index event.
-- [ ] Test agregasi: streak, dedupe session, bucket harian/mingguan/bulanan/tahunan, fallback ke data lama.
+Status 2026-11-23: event entity, pencatatan, agregasi, insight card, pencarian history, ringkasan statistik, dan 12 kunci ARB baru sudah ditambahkan. Gate Flutter masih menunggu CI.
+- [x] Schema-ID test untuk `ListeningEventEntity` (`test/data/listening_event_entity_schema_test.dart`).
+- [x] Test agregasi: streak, dedupe session, bucket harian/mingguan/bulanan/tahunan, fallback ke data lama (`test/services/listening_stats_service_test.dart`).
+- [x] Test tracker: `sessionId` stabil saat pause/resume dan `listenedMs` aktual (`test/services/replay_play_tracker_test.dart`).
 - [ ] Widget test recap dengan fake repository (`test/features/recap/listening_recap_screen_test.dart:31-50,144-254`) untuk period selector dan reveal.
 - [ ] `flutter analyze --no-fatal-infos`, `flutter test`.
 - [ ] Tidak ada data yang dikirim keluar perangkat.

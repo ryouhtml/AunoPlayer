@@ -197,5 +197,60 @@ void main() {
         );
       },
     );
+
+    test('keeps one session id across pause/resume and reports actual listen time', () {
+      var now = DateTime(2026, 11, 23, 10);
+      var sessionCounter = 0;
+      final tracker = ReplayPlayTracker(
+        minimumPlayDuration: const Duration(seconds: 2),
+        now: () => now,
+        sessionIdFactory: () => 'session-${++sessionCounter}',
+      );
+
+      tracker.startTrack(
+        'song-1',
+        totalDuration: const Duration(seconds: 10),
+      );
+      expect(tracker.sessionId, 'session-1');
+      expect(
+        tracker.onPositionChanged(
+          songId: 'song-1',
+          position: const Duration(seconds: 1),
+        ),
+        isFalse,
+      );
+      expect(
+        tracker.onPositionChanged(
+          songId: 'song-1',
+          position: const Duration(seconds: 2),
+        ),
+        isTrue,
+      );
+
+      final event = tracker.consumeEvent(
+        title: 'Song',
+        artist: 'Artist',
+        album: 'Album',
+      );
+      expect(event, isNotNull);
+      expect(event!.sessionId, 'session-1');
+      expect(event.startedAt, DateTime(2026, 11, 23, 10));
+      expect(event.listenedMs, 2000);
+      expect(event.completedRatio, 0.2);
+      expect(event.title, 'Song');
+
+      tracker.syncPosition(
+        songId: 'song-1',
+        position: const Duration(seconds: 5),
+      );
+      expect(tracker.sessionId, 'session-1');
+      expect(
+        tracker.consumeEvent(title: 'Song', artist: 'Artist', album: 'Album'),
+        isNotNull,
+      );
+
+      tracker.startTrack('song-1');
+      expect(tracker.sessionId, 'session-2');
+    });
   });
 }

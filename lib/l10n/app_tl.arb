@@ -2516,5 +2516,29 @@
   "@audioAnalysisReportFailed": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
     "type": "text"
-  }
+  },
+  "recapActualListeningLabel": "Aktwal na pakikinig",
+  "@recapActualListeningLabel": {"description": "Listening recap insights.", "type": "text"},
+  "recapStreakDays": "{days} araw na streak",
+  "@recapStreakDays": {"description": "Listening recap insights.", "type": "text", "placeholders": {"days": {"type": "int"}}},
+  "recapListeningClock": "Orasan ng pakikinig",
+  "@recapListeningClock": {"description": "Listening recap insights.", "type": "text"},
+  "recapListeningClockHint": "Oras ng pakikinig sa bawat oras ng araw",
+  "@recapListeningClockHint": {"description": "Listening recap insights.", "type": "text"},
+  "recapHourLabel": "{hour}:00",
+  "@recapHourLabel": {"description": "Listening recap insights.", "type": "text", "placeholders": {"hour": {"type": "int"}}},
+  "recapPersonality": "Personalidad sa pakikinig",
+  "@recapPersonality": {"description": "Listening recap insights.", "type": "text"},
+  "recapPersonalityNightOwl": "Night owl",
+  "@recapPersonalityNightOwl": {"description": "Listening recap insights.", "type": "text"},
+  "recapPersonalityCompletionist": "Completionist",
+  "@recapPersonalityCompletionist": {"description": "Listening recap insights.", "type": "text"},
+  "recapPersonalityExplorer": "Explorer",
+  "@recapPersonalityExplorer": {"description": "Listening recap insights.", "type": "text"},
+  "recapPersonalityBalanced": "Balanced listener",
+  "@recapPersonalityBalanced": {"description": "Listening recap insights.", "type": "text"},
+  "recapFirstListened": "Unang pakikinig sa periodong ito",
+  "@recapFirstListened": {"description": "Listening recap insights.", "type": "text"},
+  "recapLocalOnlyStats": "Kinalculate sa device na ito",
+  "@recapLocalOnlyStats": {"description": "Listening recap insights.", "type": "text"}
 }

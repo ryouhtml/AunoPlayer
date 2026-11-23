@@ -11013,5 +11013,29 @@
   "@audioAnalysisReportFailed": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
     "type": "text"
-  }
+  },
+  "recapActualListeningLabel": "Actual listening",
+  "@recapActualListeningLabel": {"description": "Listening recap insights.", "type": "text"},
+  "recapStreakDays": "{days} day streak",
+  "@recapStreakDays": {"description": "Listening recap insights.", "type": "text", "placeholders": {"days": {"type": "int"}}},
+  "recapListeningClock": "Listening clock",
+  "@recapListeningClock": {"description": "Listening recap insights.", "type": "text"},
+  "recapListeningClockHint": "Time spent listening in each hour of the day",
+  "@recapListeningClockHint": {"description": "Listening recap insights.", "type": "text"},
+  "recapHourLabel": "{hour}:00",
+  "@recapHourLabel": {"description": "Listening recap insights.", "type": "text", "placeholders": {"hour": {"type": "int"}}},
+  "recapPersonality": "Listening personality",
+  "@recapPersonality": {"description": "Listening recap insights.", "type": "text"},
+  "recapPersonalityNightOwl": "Night owl",
+  "@recapPersonalityNightOwl": {"description": "Listening recap insights.", "type": "text"},
+  "recapPersonalityCompletionist": "Completionist",
+  "@recapPersonalityCompletionist": {"description": "Listening recap insights.", "type": "text"},
+  "recapPersonalityExplorer": "Explorer",
+  "@recapPersonalityExplorer": {"description": "Listening recap insights.", "type": "text"},
+  "recapPersonalityBalanced": "Balanced listener",
+  "@recapPersonalityBalanced": {"description": "Listening recap insights.", "type": "text"},
+  "recapFirstListened": "First listen this period",
+  "@recapFirstListened": {"description": "Listening recap insights.", "type": "text"},
+  "recapLocalOnlyStats": "Calculated on this device",
+  "@recapLocalOnlyStats": {"description": "Listening recap insights.", "type": "text"}
 }

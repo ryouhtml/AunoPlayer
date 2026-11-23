@@ -9672,6 +9672,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get audioAnalysisReportFailed => "Could not save the report.";
 
   @override
+  String get recapActualListeningLabel => "Actual listening";
+  @override
+  String recapStreakDays(int days) => "${days} day streak";
+  @override
+  String get recapListeningClock => "Listening clock";
+  @override
+  String get recapListeningClockHint => "Time spent listening in each hour of the day";
+  @override
+  String recapHourLabel(int hour) => "${hour}:00";
+  @override
+  String get recapPersonality => "Listening personality";
+  @override
+  String get recapPersonalityNightOwl => "Night owl";
+  @override
+  String get recapPersonalityCompletionist => "Completionist";
+  @override
+  String get recapPersonalityExplorer => "Explorer";
+  @override
+  String get recapPersonalityBalanced => "Balanced listener";
+  @override
+  String get recapFirstListened => "First listen this period";
+  @override
+  String get recapLocalOnlyStats => "Calculated on this device";
+  @override
   String get indonesian => 'Indonesian';
   @override
   String get artworkOnlyForLocalFiles => 'Artwork can only be changed for local files.';

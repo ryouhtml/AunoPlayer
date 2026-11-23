@@ -8962,6 +8962,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get audioAnalysisReportFailed => "无法保存报告。";
 
   @override
+  String get recapActualListeningLabel => "实际收听";
+  @override
+  String recapStreakDays(int days) => "连续 ${days} 天";
+  @override
+  String get recapListeningClock => "收听时段";
+  @override
+  String get recapListeningClockHint => "一天中每个小时的收听时长";
+  @override
+  String recapHourLabel(int hour) => "${hour}:00";
+  @override
+  String get recapPersonality => "收听性格";
+  @override
+  String get recapPersonalityNightOwl => "夜猫子";
+  @override
+  String get recapPersonalityCompletionist => "完听主义者";
+  @override
+  String get recapPersonalityExplorer => "探索者";
+  @override
+  String get recapPersonalityBalanced => "均衡听众";
+  @override
+  String get recapFirstListened => "本周期首次收听";
+  @override
+  String get recapLocalOnlyStats => "仅在此设备计算";
+  @override
   String get indonesian => '印度尼西亚语';
   @override
   String get artworkOnlyForLocalFiles => '只能更改本地文件的封面。';

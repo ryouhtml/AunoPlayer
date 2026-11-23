@@ -6179,6 +6179,30 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get audioAnalysisReportFailed => "Laporan gagal disimpan.";
   @override
+  String get recapActualListeningLabel => "Durasi dengar aktual";
+  @override
+  String recapStreakDays(int days) => "${days} hari berturut-turut";
+  @override
+  String get recapListeningClock => "Jam mendengar";
+  @override
+  String get recapListeningClockHint => "Waktu mendengar pada setiap jam dalam sehari";
+  @override
+  String recapHourLabel(int hour) => "${hour}.00";
+  @override
+  String get recapPersonality => "Kepribadian mendengar";
+  @override
+  String get recapPersonalityNightOwl => "Burung hantu malam";
+  @override
+  String get recapPersonalityCompletionist => "Kompletis";
+  @override
+  String get recapPersonalityExplorer => "Penjelajah";
+  @override
+  String get recapPersonalityBalanced => "Pendengar seimbang";
+  @override
+  String get recapFirstListened => "Dengar pertama periode ini";
+  @override
+  String get recapLocalOnlyStats => "Dihitung di perangkat ini";
+  @override
   String get indonesian => 'Bahasa Indonesia';
   @override
   String get artworkOnlyForLocalFiles => 'Karya seni hanya dapat diubah untuk file lokal.';

@@ -37,6 +37,12 @@ class SongRepository {
     return songs;
   }
 
+  /// Get one song by its MediaStore/Isar id.
+  Future<Song?> getSongById(int id) async {
+    final entity = await _isar.songEntitys.get(id);
+    return entity == null ? null : _entityToSong(entity);
+  }
+
   /// Get songs by folder URI.
   Future<List<Song>> getSongsByFolder(String folderUri) async {
     final entities = await _isar.songEntitys

@@ -29,6 +29,7 @@ import 'package:auno_player/services/replaygain_service.dart';
 import 'package:auno_player/data/repositories/recently_played_repository.dart';
 import 'package:auno_player/data/repositories/song_repository.dart';
 import 'package:auno_player/services/playlist_service.dart';
+import 'package:auno_player/services/listening_stats_service.dart';
 import 'package:auno_player/services/replay_play_tracker.dart';
 import 'package:auno_player/services/milestone_service.dart';
 import 'package:auno_player/services/android_audio_engine.dart';
@@ -437,7 +438,9 @@ class PlayerService {
       _rustAudioService = RustAudioService(),
       _audioSessionActivationOverride = null,
       _interruptionResumerOverride = null,
-      _testDirectUsb = false {
+      _testDirectUsb = false,
+      _replayPlayTracker = ReplayPlayTracker(),
+      _listeningStatsService = ListeningStatsService() {
     _playbackManager = AudioEngineManager();
     _sessionManager = AudioSessionManager(
       onSwitchEngine: _handleEngineSwitch,
@@ -458,11 +461,16 @@ class PlayerService {
     Future<bool> Function(bool active)? audioSessionActivation,
     Future<void> Function()? interruptionResumer,
     bool directUsb = false,
+    ReplayPlayTracker? replayPlayTracker,
+    ListeningStatsService? listeningStatsService,
   }) : _uac2Service = uac2Service,
        _rustAudioService = rustAudioService ?? RustAudioService(),
        _audioSessionActivationOverride = audioSessionActivation,
        _interruptionResumerOverride = interruptionResumer,
-       _testDirectUsb = directUsb {
+       _testDirectUsb = directUsb,
+       _replayPlayTracker = replayPlayTracker ?? ReplayPlayTracker(),
+       _listeningStatsService =
+           listeningStatsService ?? ListeningStatsService() {
     _sessionManager = sessionManager;
     _playbackManager = playbackManager ?? AudioEngineManager();
     _audioInitialized = true;
@@ -518,7 +526,8 @@ class PlayerService {
   static const Duration _queueDebounce = Duration(milliseconds: 150);
   final RecentlyPlayedRepository _recentlyPlayedRepository =
       RecentlyPlayedRepository();
-  final ReplayPlayTracker _replayPlayTracker = ReplayPlayTracker();
+  final ReplayPlayTracker _replayPlayTracker;
+  final ListeningStatsService _listeningStatsService;
   static const MethodChannel _storageChannel = MethodChannel(
     'com.aunoplayer.auno/storage',
   );
@@ -3808,7 +3817,11 @@ class PlayerService {
     Song song, {
     Duration initialPosition = Duration.zero,
   }) {
-    _replayPlayTracker.startTrack(song.id, initialPosition: initialPosition);
+    _replayPlayTracker.startTrack(
+      song.id,
+      initialPosition: initialPosition,
+      totalDuration: song.duration,
+    );
   }
 
   bool _shouldPersistSong(Song? song) {
@@ -3824,7 +3837,10 @@ class PlayerService {
   }
 
   Future<void> _trackMilestones(Song song) async {
-    await _milestoneService.addListenSeconds(song.duration.inSeconds);
+    final listened = _replayPlayTracker.listenedDuration;
+    await _milestoneService.addListenSeconds(
+      listened > Duration.zero ? listened.inSeconds : song.duration.inSeconds,
+    );
     final milestone = await _milestoneService.checkMilestones();
     if (milestone != null) {
       await _milestoneService.markMilestoneShown(milestone);
@@ -3874,6 +3890,23 @@ class PlayerService {
     if (counted && _shouldPersistSong(song)) {
       unawaited(_recentlyPlayedRepository.recordPlay(song.id));
       unawaited(_trackMilestones(song));
+      final session = _replayPlayTracker.consumeEvent(
+        title: song.title,
+        artist: song.artist,
+        album: song.album ?? '',
+      );
+      if (session != null) {
+        unawaited(_recordListeningEvent(session));
+      }
+    }
+  }
+
+  /// A failed stats write must never disturb playback.
+  Future<void> _recordListeningEvent(ListeningSessionSnapshot session) async {
+    try {
+      await _listeningStatsService.recordSession(session);
+    } catch (_) {
+      // Listening stats are best-effort and local-only.
     }
   }
 

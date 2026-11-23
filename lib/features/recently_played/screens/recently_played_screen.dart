@@ -10,8 +10,10 @@ import 'package:auno_player/core/utils/responsive.dart';
 import 'package:auno_player/core/utils/navigation_helper.dart';
 import 'package:auno_player/widgets/common/blurred_song_background.dart';
 import 'package:auno_player/models/song.dart';
+import 'package:auno_player/services/listening_stats_service.dart';
 import 'package:auno_player/services/player_service.dart';
 import 'package:auno_player/data/repositories/recently_played_repository.dart';
+import 'package:auno_player/features/recap/widgets/replay_style.dart';
 import 'package:auno_player/widgets/common/cached_image_widget.dart';
 import 'package:auno_player/widgets/common/flick_artwork_placeholder.dart';
 import 'package:auno_player/widgets/common/flick_dialog.dart';
@@ -36,8 +38,13 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
   final PlayerService _playerService = PlayerService();
   final RecentlyPlayedRepository _recentlyPlayedRepository =
       RecentlyPlayedRepository();
+  final ListeningStatsService _listeningStatsService = ListeningStatsService();
   final ScrollController _scrollController = ScrollController();
+  final TextEditingController _searchController = TextEditingController();
 
+  String _query = '';
+  Duration? _actualListened;
+  int? _streakDays;
   List<RecentlyPlayedEntry> _entries = [];
   Map<String, List<RecentlyPlayedEntry>> _groupedHistory = {};
   bool _isLoading = true;
@@ -53,6 +60,7 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
     // Defer data loading to avoid jank during navigation.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadInitialHistory();
+      _loadSummary();
       _watchHistory();
     });
   }
@@ -62,13 +70,19 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
     _historySubscription?.cancel();
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
   void _watchHistory() {
     _historySubscription = _recentlyPlayedRepository.watchHistory().listen((_) {
       _resetPagination();
-      _loadInitialHistory();
+      if (_query.isEmpty) {
+        _loadInitialHistory();
+      } else {
+        unawaited(_onSearchChanged(_query));
+      }
+      unawaited(_loadSummary());
     });
   }
 
@@ -108,6 +122,51 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
     }
   }
 
+  Future<void> _loadSummary() async {
+    try {
+      final recaps = await _listeningStatsService.getRecaps(
+        periods: {ListeningRecapPeriod.yearly},
+      );
+      final recap = recaps[ListeningRecapPeriod.yearly];
+      if (!mounted || recap == null) return;
+      setState(() {
+        _actualListened = recap.actualListenedMs == null
+            ? null
+            : Duration(milliseconds: recap.actualListenedMs!);
+        _streakDays = recap.streakDays;
+      });
+    } catch (_) {
+      // Summary is optional; history remains usable without event storage.
+    }
+  }
+
+  Future<void> _onSearchChanged(String value) async {
+    final query = value.trim();
+    setState(() => _query = query);
+    if (query.isEmpty) {
+      await _loadInitialHistory();
+      return;
+    }
+    try {
+      final results = await _recentlyPlayedRepository.searchRecentHistory(query);
+      if (!mounted || _query != query) return;
+      setState(() {
+        _entries = results;
+        _groupedHistory = _groupEntries(results);
+        _hasMore = false;
+        _isLoading = false;
+      });
+    } catch (_) {
+      if (!mounted || _query != query) return;
+      setState(() {
+        _entries = const [];
+        _groupedHistory = const {};
+        _hasMore = false;
+        _isLoading = false;
+      });
+    }
+  }
+
   Future<void> _loadMoreHistory() async {
     if (!mounted || _isLoadingMore || !_hasMore) return;
 
@@ -141,7 +200,7 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
   }
 
   void _onScroll() {
-    if (!_scrollController.hasClients) return;
+    if (_query.isNotEmpty || !_scrollController.hasClients) return;
     final position = _scrollController.position;
     if (position.pixels >= position.maxScrollExtent - _kLoadMoreThreshold) {
       _loadMoreHistory();
@@ -203,6 +262,7 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
 
     if (confirmed == true) {
       await _recentlyPlayedRepository.clearHistory();
+      await _listeningStatsService.clearEvents();
       if (mounted) {
         ScaffoldMessenger.of(
           context,
@@ -222,6 +282,8 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildHeader(context),
+              _buildSearchBar(),
+              _buildSummary(),
               Expanded(
                 child: _isLoading
                     ? _buildLoadingState()
@@ -277,6 +339,66 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
               icon: LucideIcons.trash2,
               onPressed: _clearHistory,
               iconColor: context.adaptiveTextSecondary,
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSearchBar() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppConstants.spacingLg,
+        0,
+        AppConstants.spacingLg,
+        AppConstants.spacingSm,
+      ),
+      child: TextField(
+        controller: _searchController,
+        onChanged: _onSearchChanged,
+        textInputAction: TextInputAction.search,
+        decoration: InputDecoration(
+          prefixIcon: const Icon(LucideIcons.search),
+          hintText: l10n.searchSongsArtists,
+          isDense: true,
+          filled: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
+            borderSide: BorderSide.none,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSummary() {
+    if (_actualListened == null && (_streakDays ?? 0) == 0) {
+      return const SizedBox.shrink();
+    }
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppConstants.spacingLg,
+        0,
+        AppConstants.spacingLg,
+        AppConstants.spacingSm,
+      ),
+      child: Row(
+        children: [
+          if (_actualListened != null)
+            Expanded(
+              child: _SummaryTile(
+                label: l10n.recapActualListeningLabel,
+                value: ReplayStyle.durationLabel(_actualListened!),
+              ),
+            ),
+          if (_actualListened != null && (_streakDays ?? 0) > 0)
+            const SizedBox(width: AppConstants.spacingSm),
+          if ((_streakDays ?? 0) > 0)
+            Expanded(
+              child: _SummaryTile(
+                label: l10n.activeDays,
+                value: l10n.recapStreakDays(_streakDays!),
+              ),
             ),
         ],
       ),
@@ -749,6 +871,46 @@ class _MetadataChip extends StatelessWidget {
           color: context.adaptiveTextTertiary,
           fontWeight: FontWeight.w500,
         ),
+      ),
+    );
+  }
+}
+
+class _SummaryTile extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const _SummaryTile({required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(AppConstants.spacingSm),
+      decoration: BoxDecoration(
+        color: AppColors.glassBackground,
+        borderRadius: BorderRadius.circular(AppConstants.radiusSm),
+        border: Border.all(color: AppColors.glassBorder),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: context.adaptiveTextTertiary,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              color: context.adaptiveTextPrimary,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
       ),
     );
   }
