@@ -1,4 +1,8 @@
 {
+  "indonesian": "Indonesian",
+  "@indonesian": {
+    "description": "Autonym row subtitle in the language picker."
+  },
   "artworkOnlyForLocalFiles": "Artwork can only be changed for local files.",
   "@artworkOnlyForLocalFiles": {
     "description": "Shown when attempting to change artwork for an indexed row from a removed network source."
@@ -10611,26 +10615,48 @@
   },
   "eqPresetInvalidFilter": "Invalid filter line: {line}",
   "@eqPresetInvalidFilter": {
-    "placeholders": {"line": {"type": "String"}}
+    "placeholders": {
+      "line": {
+        "type": "String"
+      }
+    }
   },
   "eqPresetUnsupportedFilter": "Unsupported filter type: {type}",
   "@eqPresetUnsupportedFilter": {
-    "placeholders": {"type": {"type": "String"}}
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
   },
   "eqPresetDuplicateFilter": "Duplicate filter number: {number}",
   "@eqPresetDuplicateFilter": {
-    "placeholders": {"number": {"type": "String"}}
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
   },
   "eqPresetMissingGain": "Filter {number} is missing its gain value.",
   "@eqPresetMissingGain": {
-    "placeholders": {"number": {"type": "String"}}
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
   },
   "eqPresetValueAdjusted": "{field}: {value} adjusted to {adjusted}",
   "@eqPresetValueAdjusted": {
     "placeholders": {
-      "field": {"type": "String"},
-      "value": {"type": "String"},
-      "adjusted": {"type": "String"}
+      "field": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "adjusted": {
+        "type": "String"
+      }
     }
   },
   "yourYearlyRecapFillsInAs": "Your yearly recap fills in as you keep listening throughout the year.",
@@ -10793,7 +10819,9 @@
   "@audioAnalysisSuggestedGainTarget": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
     "placeholders": {
-      "target": {"type": "String"}
+      "target": {
+        "type": "String"
+      }
     }
   },
   "audioAnalysisClipping": "Sample clipping check",
@@ -10808,7 +10836,9 @@
   "@audioAnalysisClippingCount": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart",
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "audioAnalysisLeadingSilence": "Leading silence",

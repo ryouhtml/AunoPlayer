@@ -9726,4 +9726,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get audioAnalysisSourceNote =>
       'Medido a partir de una decodificación independiente del archivo fuente. Algunos formatos incluyen relleno del decodificador, que puede afectar la duración y las mediciones de silencio. La reproducción, el DSP y las etiquetas no cambian.';
+
+  @override
+  String get indonesian => 'Indonesio';
+  @override
+  String get artworkOnlyForLocalFiles => 'Las carátulas solo se pueden cambiar en archivos locales.';
 }

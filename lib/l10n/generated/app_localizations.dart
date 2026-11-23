@@ -7,6 +7,7 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
+import 'app_localizations_id.dart';
 import 'app_localizations_tl.dart';
 import 'app_localizations_zh.dart';
 
@@ -97,6 +98,7 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
+    Locale('id'),
     Locale('es'),
     Locale('tl'),
     Locale.fromSubtags(languageCode: 'tl', scriptCode: 'Tglg'),
@@ -16227,6 +16229,17 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Measured from a separate source-file decode. Some formats include decoder padding, which can affect duration and silence measurements. Playback, DSP, and tags are unchanged.'**
   String get audioAnalysisSourceNote;
+  /// Autonym row subtitle in the language picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Indonesian'**
+  String get indonesian;
+  /// Shown when attempting to change artwork for an indexed row from a removed network source.
+  ///
+  /// In en, this message translates to:
+  /// **'Artwork can only be changed for local files.'**
+  String get artworkOnlyForLocalFiles;
+
 }
 
 class _AppLocalizationsDelegate
@@ -16240,7 +16253,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en', 'es', 'tl', 'zh'].contains(locale.languageCode);
+      <String>['en', 'es', 'id', 'tl', 'zh'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -16265,6 +16278,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsEn();
     case 'es':
       return AppLocalizationsEs();
+    case 'id':
+      return AppLocalizationsId();
     case 'tl':
       return AppLocalizationsTl();
     case 'zh':

@@ -1,4 +1,8 @@
 {
+  "indonesian": "Indonesio",
+  "@indonesian": {
+    "description": "Autonym row subtitle in the language picker."
+  },
   "artworkOnlyForLocalFiles": "Las carátulas solo se pueden cambiar en archivos locales.",
   "@artworkOnlyForLocalFiles": {
     "description": "Shown when attempting to change artwork for an indexed row from a removed network source."
@@ -10611,26 +10615,48 @@
   },
   "eqPresetInvalidFilter": "Línea de filtro no válida: {line}",
   "@eqPresetInvalidFilter": {
-    "placeholders": {"line": {"type": "String"}}
+    "placeholders": {
+      "line": {
+        "type": "String"
+      }
+    }
   },
   "eqPresetUnsupportedFilter": "Tipo de filtro no compatible: {type}",
   "@eqPresetUnsupportedFilter": {
-    "placeholders": {"type": {"type": "String"}}
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
   },
   "eqPresetDuplicateFilter": "Número de filtro duplicado: {number}",
   "@eqPresetDuplicateFilter": {
-    "placeholders": {"number": {"type": "String"}}
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
   },
   "eqPresetMissingGain": "Falta el valor de ganancia del filtro {number}.",
   "@eqPresetMissingGain": {
-    "placeholders": {"number": {"type": "String"}}
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
   },
   "eqPresetValueAdjusted": "{field}: {value} ajustado a {adjusted}",
   "@eqPresetValueAdjusted": {
     "placeholders": {
-      "field": {"type": "String"},
-      "value": {"type": "String"},
-      "adjusted": {"type": "String"}
+      "field": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "adjusted": {
+        "type": "String"
+      }
     }
   },
   "yourYearlyRecapFillsInAs": "Tu resumen anual se completa a medida que escuchas música durante el año.",

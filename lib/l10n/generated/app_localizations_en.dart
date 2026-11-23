@@ -9606,4 +9606,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get audioAnalysisSourceNote =>
       'Measured from a separate source-file decode. Some formats include decoder padding, which can affect duration and silence measurements. Playback, DSP, and tags are unchanged.';
+
+  @override
+  String get indonesian => 'Indonesian';
+  @override
+  String get artworkOnlyForLocalFiles => 'Artwork can only be changed for local files.';
 }

@@ -131,11 +131,14 @@ Status 2026-11-23: implementasi Phase 1 selesai di `feature/auno-fase1`; codegen
 - Skrip validasi (taruh di `tool/check_arb_parity.dart` atau sejenisnya): bandingkan keyset template vs `app_id.arb`, bandingkan placeholder per kunci, valid JSON.
 
 ### Verification checklist — Phase 2
-- [ ] Skrip paritas: 0 kunci hilang, 0 kunci ekstra, 0 placeholder mismatch di semua locale.
-- [ ] `flutter gen-l10n` sukses; `app_localizations_id.dart` ada dan terdaftar.
+Status 2026-11-23: `app_id.arb` (2.377 kunci), wiring locale, dan generated copy sudah disiapkan; codegen/analyze/test belum bisa dijalankan lokal (toolchain Flutter/Dart tidak tersedia).
+- [x] Skrip paritas lokal: 0 kunci hilang, 0 kunci ekstra, 0 placeholder mismatch di semua locale (en/es/tl/id/zh).
+- [x] `arb_invariants_test.dart` sekarang memeriksa kebutuhan paritas kunci/placeholder untuk `id`.
+- [x] `app_localizations_id.dart` ada dan terdaftar di delegate/`supportedLocales`;akan diregenerasi `flutter gen-l10n` di CI.
+- [ ] `flutter gen-l10n` sukses di CI.
 - [ ] `flutter analyze --no-fatal-infos`, `flutter test`.
 - [ ] Widget test: memilih Bahasa Indonesia mengubah teks UI dan tersimpan di `AppPreferencesService`.
-- [ ] Recap/player memakai string Indonesia, bukan paksaan Inggris.
+- [x] Recap/player memakai string Indonesia: `englishForFilipino` hanya memaksa Inggris untuk locale Taglish.
 
 ### Anti-pattern guards — Phase 2
 - Jangan menerjemahkan kunci yang sudah dihapus di Fase 1.

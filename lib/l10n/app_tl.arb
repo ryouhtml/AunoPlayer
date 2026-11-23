@@ -1,4 +1,8 @@
 {
+  "indonesian": "Indonesiyano",
+  "@indonesian": {
+    "description": "Autonym row subtitle in the language picker."
+  },
   "artworkOnlyForLocalFiles": "Ang artwork ay mababago lamang para sa mga lokal na file.",
   "@artworkOnlyForLocalFiles": {
     "description": "Shown when attempting to change artwork for an indexed row from a removed network source."

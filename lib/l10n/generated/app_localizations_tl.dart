@@ -9755,4 +9755,9 @@ class AppLocalizationsTlTglg extends AppLocalizationsTl {
 
   @override
   String get songs14 => 'ᜋᜅ ᜃᜈ᜔ᜆ';
+
+  @override
+  String get indonesian => 'Indonesiyano';
+  @override
+  String get artworkOnlyForLocalFiles => 'Ang artwork ay mababago lamang para sa mga lokal na file.';
 }

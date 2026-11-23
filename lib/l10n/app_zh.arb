@@ -1,4 +1,8 @@
 {
+  "indonesian": "印度尼西亚语",
+  "@indonesian": {
+    "description": "Autonym row subtitle in the language picker."
+  },
   "artworkOnlyForLocalFiles": "只能更改本地文件的封面。",
   "@artworkOnlyForLocalFiles": {
     "description": "Shown when attempting to change artwork for an indexed row from a removed network source."

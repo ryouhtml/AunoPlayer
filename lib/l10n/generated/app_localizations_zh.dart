@@ -8896,4 +8896,9 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get audioAnalysisSourceNote =>
       '测量基于对源文件的独立解码。某些格式包含解码器填充，可能影响时长和静音测量。播放、DSP 和标签均不变。';
+
+  @override
+  String get indonesian => '印度尼西亚语';
+  @override
+  String get artworkOnlyForLocalFiles => '只能更改本地文件的封面。';
 }
