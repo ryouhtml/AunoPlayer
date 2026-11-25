@@ -628,17 +628,24 @@ class ColoredSettingsIcon extends StatelessWidget {
     required this.icon,
     required this.backgroundColor,
     required this.iconColor,
+    this.size,
+    this.iconSize,
   });
 
   final IconData icon;
   final Color backgroundColor;
   final Color iconColor;
 
+  /// Optional compact overrides; null keeps the standard settings sizing.
+  final double? size;
+  final double? iconSize;
+
   @override
   Widget build(BuildContext context) {
+    final resolvedSize = size ?? context.scaleSize(AppConstants.containerSizeMd);
     return Container(
-      width: context.scaleSize(AppConstants.containerSizeMd),
-      height: context.scaleSize(AppConstants.containerSizeMd),
+      width: resolvedSize,
+      height: resolvedSize,
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(AppConstants.radiusMd),
@@ -646,7 +653,7 @@ class ColoredSettingsIcon extends StatelessWidget {
       child: Icon(
         icon,
         color: iconColor,
-        size: context.responsiveIcon(AppConstants.iconSizeLg),
+        size: iconSize ?? context.responsiveIcon(AppConstants.iconSizeLg),
       ),
     );
   }

@@ -736,6 +736,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Auno Player';
 
   @override
+  String get splashTagline => 'BIT-PERFECT. NO COMPROMISE.';
+
+  @override
   String get appearance => 'Appearance';
 
   @override
@@ -8323,6 +8326,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get audioAnalysisSubtitle =>
       'Read-only measurements from the source file.';
+
+  @override
+  String get detailAndAudioAnalysis => 'Detail & Audio Analysis';
 
   @override
   String get analyzeTrack => 'Analyze track';

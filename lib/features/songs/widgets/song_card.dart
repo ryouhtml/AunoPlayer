@@ -66,6 +66,10 @@ class SongCard extends StatefulWidget {
   /// Background treatment used by the portrait card face.
   final OrbitCardBackgroundStyle backgroundStyle;
 
+  /// Opens the song action sheet from the artwork overflow button. When null
+  /// the affordance is hidden (e.g. selection mode or compact previews).
+  final VoidCallback? onOpenActions;
+
   const SongCard({
     super.key,
     required this.song,
@@ -86,6 +90,7 @@ class SongCard extends StatefulWidget {
     this.height,
     this.artworkAbove = false,
     this.backgroundStyle = OrbitCardBackgroundStyle.blackGradient,
+    this.onOpenActions,
   });
 
   @override
@@ -304,6 +309,12 @@ class _SongCardState extends State<SongCard> {
                     : Colors.white54,
                 size: 22,
               ),
+            )
+          else if (widget.onOpenActions != null)
+            Positioned(
+              top: AppConstants.spacingSm,
+              right: AppConstants.spacingSm,
+              child: _buildOverflowButton(),
             ),
         ],
       ),
@@ -410,10 +421,40 @@ class _SongCardState extends State<SongCard> {
                         size: 18,
                       ),
                     ),
+                  )
+                else if (widget.onOpenActions != null)
+                  Positioned(
+                    top: 4,
+                    right: 4,
+                    child: _buildOverflowButton(),
                   ),
               ],
             );
           },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOverflowButton() {
+    return Semantics(
+      button: true,
+      label: l10n.more,
+      child: Material(
+        color: Colors.black.withValues(alpha: 0.45),
+        shape: const CircleBorder(),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          customBorder: const CircleBorder(),
+          onTap: widget.onOpenActions,
+          child: const Padding(
+            padding: EdgeInsets.all(6),
+            child: Icon(
+              Icons.more_vert_rounded,
+              size: 18,
+              color: Colors.white,
+            ),
+          ),
         ),
       ),
     );

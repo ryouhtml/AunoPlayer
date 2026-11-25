@@ -397,30 +397,41 @@ class _CategoryTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(AppConstants.spacingMd),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           child: Row(
             children: [
               ColoredSettingsIcon(
                 icon: icon,
                 backgroundColor: iconBg,
                 iconColor: iconFg,
+                size: 36,
+                iconSize: 20,
               ),
-              const SizedBox(width: AppConstants.spacingMd),
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       title,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
                         color: context.adaptiveTextPrimary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        height: 1.2,
                       ),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       subtitle,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
                         color: context.adaptiveTextTertiary,
+                        fontSize: 12,
+                        height: 1.25,
                       ),
                     ),
                   ],
@@ -429,7 +440,7 @@ class _CategoryTile extends StatelessWidget {
               Icon(
                 LucideIcons.chevronRight,
                 color: context.adaptiveTextTertiary,
-                size: 20,
+                size: 18,
               ),
             ],
           ),

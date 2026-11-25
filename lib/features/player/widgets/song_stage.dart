@@ -82,6 +82,11 @@ class SongStage extends ConsumerWidget {
   final VoidCallback onToggleLyrics;
   final bool showWaveform;
 
+  /// Destination Hero tag for the album artwork shared with the mini player.
+  /// Only the carousel page of the current song may carry it, otherwise
+  /// several stages in the same route would share a tag.
+  final Object? heroTag;
+
   /// Selects the full portrait stage or one pane of the landscape layout.
   final SongStagePane pane;
 
@@ -129,9 +134,23 @@ class SongStage extends ConsumerWidget {
     this.onVinylChanged,
     required this.onToggleLyrics,
     this.showWaveform = true,
+    this.heroTag,
     this.pane = SongStagePane.full,
     this.active = true,
   });
+
+  /// Wraps album art in the shared-element Hero when this stage is the
+  /// destination of a mini-player morph. When no tag is supplied the artwork
+  /// is returned untouched so peek stages stay lightweight.
+  Widget _heroWrapped(Widget child) {
+    final tag = heroTag;
+    if (tag == null) return child;
+    return Hero(
+      tag: tag,
+      transitionOnUserGestures: true,
+      child: child,
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -228,14 +247,16 @@ class SongStage extends ConsumerWidget {
                         albumColor: albumColor,
                         showFrame: artworkCardShowFrame,
                       )
-                    : AlbumArtBox(
-                        song: song,
-                        size: artworkSize,
-                        playerService: playerService,
-                        onRotationEnabledChanged: onRotationEnabledChanged,
-                        initialVinyl: vinylMode,
-                        onVinylChanged: onVinylChanged,
-                        showFrame: artworkCardShowFrame,
+                    : _heroWrapped(
+                        AlbumArtBox(
+                          song: song,
+                          size: artworkSize,
+                          playerService: playerService,
+                          onRotationEnabledChanged: onRotationEnabledChanged,
+                          initialVinyl: vinylMode,
+                          onVinylChanged: onVinylChanged,
+                          showFrame: artworkCardShowFrame,
+                        ),
                       ),
               ),
             );
@@ -754,18 +775,20 @@ class SongStage extends ConsumerWidget {
                                                     showFrame:
                                                         artworkCardShowFrame,
                                                   )
-                                                : AlbumArtBox(
-                                                    song: song,
-                                                    size: artworkSize,
-                                                    playerService:
-                                                        playerService,
-                                                    onRotationEnabledChanged:
-                                                        onRotationEnabledChanged,
-                                                    initialVinyl: vinylMode,
-                                                    onVinylChanged:
-                                                        onVinylChanged,
-                                                    showFrame:
-                                                        artworkCardShowFrame,
+                                                : _heroWrapped(
+                                                    AlbumArtBox(
+                                                      song: song,
+                                                      size: artworkSize,
+                                                      playerService:
+                                                          playerService,
+                                                      onRotationEnabledChanged:
+                                                          onRotationEnabledChanged,
+                                                      initialVinyl: vinylMode,
+                                                      onVinylChanged:
+                                                          onVinylChanged,
+                                                      showFrame:
+                                                          artworkCardShowFrame,
+                                                    ),
                                                   ),
                                           ),
                                         ),

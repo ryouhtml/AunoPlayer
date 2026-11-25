@@ -770,6 +770,10 @@
   "@appTitle": {
     "description": "Application name. Used by MaterialApp.onGenerateTitle and shown in the Android task switcher."
   },
+  "splashTagline": "BIT-PERFECT. TANPA KOMPROMI.",
+  "@splashTagline": {
+    "description": "Short tagline under the logo on the animated splash screen."
+  },
   "appearance": "Tampilan",
   "@appearance": {
     "description": "lib/features/settings/screens/bottom_bar_settings_screen.dart:253"
@@ -10697,6 +10701,10 @@
   "audioAnalysisSubtitle": "Pengukuran hanya-baca dari file sumber.",
   "@audioAnalysisSubtitle": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "detailAndAudioAnalysis": "Detail & Analisis Audio",
+  "@detailAndAudioAnalysis": {
+    "description": "Song action tile that opens the local audio inspector."
   },
   "analyzeTrack": "Analisis trek",
   "@analyzeTrack": {

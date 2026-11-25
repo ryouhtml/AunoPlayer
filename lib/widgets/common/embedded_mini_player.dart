@@ -74,7 +74,7 @@ class _EmbeddedMiniPlayerState extends ConsumerState<EmbeddedMiniPlayer> {
         FocusScope.of(context).unfocus();
         final result = await NavigationHelper.navigateToFullPlayer(
           context,
-          heroTag: 'mini_player_art',
+          heroTag: MiniPlayerBar.heroTagFor(song.id),
         );
         if (result != null && context.mounted) {
           ref.read(navigationIndexProvider.notifier).setIndex(result);

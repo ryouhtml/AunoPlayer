@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:auno_player/core/constants/app_constants.dart';
+import 'package:auno_player/core/motion/app_motion.dart';
 import 'package:auno_player/core/navigation/root_navigator.dart';
 import 'package:auno_player/features/player/screens/full_player_screen.dart';
 import 'package:auno_player/features/queue/screens/queue_screen.dart';
@@ -86,7 +87,7 @@ class NavigationHelper {
 
             const begin = Offset(0.0, 1.0);
             const end = Offset.zero;
-            const curve = Curves.easeOutCubic;
+            const curve = AppMotionCurves.fluidDeceleration;
 
             var tween = Tween(
               begin: begin,

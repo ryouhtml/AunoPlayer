@@ -1317,6 +1317,12 @@ abstract class AppLocalizations {
   /// **'Auno Player'**
   String get appTitle;
 
+  /// Short tagline under the logo on the animated splash screen.
+  ///
+  /// In en, this message translates to:
+  /// **'BIT-PERFECT. NO COMPROMISE.'**
+  String get splashTagline;
+
   /// lib/features/settings/screens/bottom_bar_settings_screen.dart:253
   ///
   /// In en, this message translates to:
@@ -14117,6 +14123,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Read-only measurements from the source file.'**
   String get audioAnalysisSubtitle;
+
+  /// Song action tile that opens the local audio inspector.
+  ///
+  /// In en, this message translates to:
+  /// **'Detail & Audio Analysis'**
+  String get detailAndAudioAnalysis;
 
   /// lib/features/player/widgets/audio_signal_report.dart
   ///

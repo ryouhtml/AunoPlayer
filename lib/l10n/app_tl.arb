@@ -2404,6 +2404,10 @@
   "audioAnalysisSpectrogramSection": "Spectrogram",
   "audioAnalysisSpectrogramUnavailable": "Kulang ang audio para sa spectrogram.",
   "audioAnalysisSubtitle": "Read-only na mga measurement mula sa source file.",
+  "detailAndAudioAnalysis": "Detalye at Pagsusuri ng Audio",
+  "@detailAndAudioAnalysis": {
+    "description": "Song action tile that opens the local audio inspector."
+  },
   "audioAnalysisSuggestedGain": "Suggested track gain",
   "audioAnalysisSuggestedGainTarget": "Para sa {target} LUFS target; informational lang, hindi inilalapat.",
   "audioAnalysisTrailingSilence": "Trailing silence",

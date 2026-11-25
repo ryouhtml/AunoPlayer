@@ -10872,6 +10872,10 @@
   "@audioAnalysisSubtitle": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
   },
+  "detailAndAudioAnalysis": "Detalle y análisis de audio",
+  "@detailAndAudioAnalysis": {
+    "description": "Song action tile that opens the local audio inspector."
+  },
   "audioAnalysisSuggestedGain": "Ganancia sugerida de la pista",
   "@audioAnalysisSuggestedGain": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart"

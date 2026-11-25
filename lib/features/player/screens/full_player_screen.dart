@@ -1398,6 +1398,7 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
                           onToggleLyrics: () => _setLyricsMode(!_isLyricsMode),
                           showWaveform: false,
                           active: isCurrent,
+                          heroTag: isCurrent ? widget.heroTag : null,
                         );
                       },
                     );
@@ -1543,6 +1544,8 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
                                         _setLyricsMode(!_isLyricsMode),
                                     showWaveform: false,
                                     active: isCurrent,
+                                    heroTag:
+                                        isCurrent ? widget.heroTag : null,
                                   );
                                 },
                               );
@@ -1806,6 +1809,7 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
                         onToggleLyrics: () => _setLyricsMode(!_isLyricsMode),
                         showWaveform: false,
                         active: isCurrent,
+                        heroTag: isCurrent ? widget.heroTag : null,
                       );
                     },
                   );

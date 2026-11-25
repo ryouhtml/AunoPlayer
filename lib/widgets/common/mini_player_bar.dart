@@ -14,6 +14,11 @@ import 'package:auno_player/widgets/common/flick_artwork_placeholder.dart';
 import 'package:auno_player/widgets/common/marquee_widget.dart';
 
 class MiniPlayerBar extends StatelessWidget {
+  /// Unique per song: several mini player variants can be mounted at once
+  /// (portrait/landscape), so a shared tag would trigger duplicate Hero
+  /// assertions.
+  static String heroTagFor(String songId) => 'mini_player_bar_art_$songId';
+
   final MiniPlayerConfig config;
   final String songId;
   final String title;
@@ -201,7 +206,7 @@ class MiniPlayerBar extends StatelessWidget {
           HeroMode(
             enabled: enableHero,
             child: Hero(
-              tag: 'mini_player_art',
+              tag: MiniPlayerBar.heroTagFor(songId),
               child: ClipRRect(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(

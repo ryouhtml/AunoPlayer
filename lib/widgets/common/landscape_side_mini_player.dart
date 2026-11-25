@@ -24,7 +24,9 @@ import 'package:auno_player/widgets/common/flick_artwork_placeholder.dart';
 class LandscapeSideMiniPlayer extends ConsumerStatefulWidget {
   const LandscapeSideMiniPlayer({super.key});
 
-  static const String heroTag = 'mini_player_art';
+  /// Unique per song so the artwork Hero never collides with the horizontal
+  /// mini player or with a second instance during layout changes.
+  static String heroTagFor(String songId) => 'landscape_mini_art_$songId';
 
   @override
   ConsumerState<LandscapeSideMiniPlayer> createState() =>
@@ -56,9 +58,10 @@ class _LandscapeSideMiniPlayerState
   }
 
   Future<void> _openPlayer() async {
+    final songId = ref.read(currentSongProvider)?.id ?? '';
     final result = await NavigationHelper.navigateToFullPlayer(
       context,
-      heroTag: LandscapeSideMiniPlayer.heroTag,
+      heroTag: LandscapeSideMiniPlayer.heroTagFor(songId),
     );
     if (result != null && mounted) {
       ref.read(navigationIndexProvider.notifier).setIndex(result);
@@ -218,7 +221,7 @@ class _LandscapeSideMiniPlayerState
       height: AdaptiveLayout.sideMiniPlayerWidth,
       width: double.infinity,
       child: Hero(
-        tag: LandscapeSideMiniPlayer.heroTag,
+        tag: LandscapeSideMiniPlayer.heroTagFor(song.id),
         child: AnimatedSwitcher(
           duration: duration,
           switchInCurve: Curves.easeOutCubic,

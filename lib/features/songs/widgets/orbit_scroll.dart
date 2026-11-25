@@ -58,6 +58,9 @@ class OrbitScroll extends StatefulWidget {
   /// Set of selected song IDs in multiselect mode.
   final Set<String> selectedIds;
 
+  /// Opens the action sheet for a card without changing playback.
+  final void Function(int index)? onSongActions;
+
   /// Controller for external jump-to-index actions.
   final OrbitScrollController? controller;
 
@@ -104,6 +107,7 @@ class OrbitScroll extends StatefulWidget {
     this.swipeActionsEnabled = false,
     this.isSelectionMode = false,
     this.selectedIds = const {},
+    this.onSongActions,
     this.controller,
     this.scrollDirection = Axis.vertical,
     this.radiusRatio = 1.0,
@@ -852,6 +856,9 @@ class _OrbitScrollState extends State<OrbitScroll>
               },
               onSwipeLeft: () => widget.onSongSwipedLeft?.call(actualIndex),
               onSwipeRight: () => widget.onSongSwipedRight?.call(actualIndex),
+              onOpenActions: widget.isSelectionMode
+                  ? null
+                  : () => widget.onSongActions?.call(actualIndex),
             ),
           ),
         ),

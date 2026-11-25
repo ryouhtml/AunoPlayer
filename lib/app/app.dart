@@ -59,6 +59,7 @@ import 'package:auno_player/models/nav_bar_config.dart';
 import 'package:auno_player/models/song_view_mode.dart';
 import 'package:auno_player/features/milestone/widgets/milestone_card.dart';
 import 'package:auno_player/features/milestone/widgets/streak_popup.dart';
+import 'package:auno_player/features/splash/widgets/splash_overlay.dart';
 import 'package:auno_player/core/utils/dev_log.dart';
 import 'package:auno_player/l10n/l10n.dart';
 
@@ -105,7 +106,9 @@ class FlickPlayerApp extends StatelessWidget {
                       ),
                     ),
                     child: TutorialHost(
-                      child: child ?? const SizedBox.shrink(),
+                      child: SplashOverlay(
+                        child: child ?? const SizedBox.shrink(),
+                      ),
                     ),
                   ),
                 );

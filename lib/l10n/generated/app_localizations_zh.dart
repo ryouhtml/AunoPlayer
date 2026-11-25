@@ -684,6 +684,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appTitle => 'Auno Player 音乐播放器';
 
   @override
+  String get splashTagline => 'BIT-PERFECT。绝不妥协。';
+
+  @override
   String get appearance => '外观';
 
   @override
@@ -7733,6 +7736,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get audioAnalysisSubtitle => '源文件的只读测量结果。';
+
+  @override
+  String get detailAndAudioAnalysis => '详情与音频分析';
 
   @override
   String get analyzeTrack => '分析曲目';

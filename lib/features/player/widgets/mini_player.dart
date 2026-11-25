@@ -88,7 +88,7 @@ class _MiniPlayerState extends ConsumerState<MiniPlayer> {
             AppHaptics.tap();
             NavigationHelper.navigateToFullPlayer(
               context,
-              heroTag: 'song_art_${song.id}',
+              heroTag: 'mini_player_art_${song.id}',
             );
           },
           child: Container(
@@ -166,7 +166,7 @@ class _MiniPlayerState extends ConsumerState<MiniPlayer> {
                     children: [
                       // Floating Album Art
                       Hero(
-                        tag: 'mini_player_art',
+                        tag: 'mini_player_art_${song.id}',
                         child: Container(
                           margin: const EdgeInsets.only(
                             left: 8,

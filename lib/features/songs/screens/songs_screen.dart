@@ -532,6 +532,15 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
         onSongSwipedRight: (index) async {
           await _favoriteSong(songs[index]);
         },
+        onSongActions: (index) {
+          if (index < 0 || index >= songs.length) return;
+          AppHaptics.tap();
+          SongActionsBottomSheet.show(
+            context,
+            songs[index],
+            onSelect: () => _enterSelectionMode(songs[index].id),
+          );
+        },
       ),
     );
   }

@@ -770,6 +770,10 @@
   "@appTitle": {
     "description": "Application name. Used by MaterialApp.onGenerateTitle and shown in the Android task switcher."
   },
+  "splashTagline": "BIT-PERFECT. NO COMPROMISE.",
+  "@splashTagline": {
+    "description": "Short tagline under the logo on the animated splash screen."
+  },
   "appearance": "Appearance",
   "@appearance": {
     "description": "lib/features/settings/screens/bottom_bar_settings_screen.dart:253"
@@ -10698,6 +10702,10 @@
   "audioAnalysisSubtitle": "Read-only measurements from the source file.",
   "@audioAnalysisSubtitle": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "detailAndAudioAnalysis": "Detail & Audio Analysis",
+  "@detailAndAudioAnalysis": {
+    "description": "Song action tile that opens the local audio inspector."
   },
   "analyzeTrack": "Analyze track",
   "@analyzeTrack": {
