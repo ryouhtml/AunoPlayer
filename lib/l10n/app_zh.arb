@@ -2416,6 +2416,10 @@
   "@detailAndAudioAnalysis": {
     "description": "Song action tile that opens the local audio inspector."
   },
+  "splashTagline": "BIT-PERFECT。绝不妥协。",
+  "@splashTagline": {
+    "description": "Short tagline under the logo on the animated splash screen."
+  },
   "audioAnalysisSuggestedGain": "建议曲目增益",
   "audioAnalysisSuggestedGainTarget": "以 {target} LUFS 为目标；仅供参考，不会应用。",
   "audioAnalysisTrailingSilence": "结尾静音",

@@ -2408,6 +2408,10 @@
   "@detailAndAudioAnalysis": {
     "description": "Song action tile that opens the local audio inspector."
   },
+  "splashTagline": "BIT-PERFECT. WALANG KOMPROMISO.",
+  "@splashTagline": {
+    "description": "Short tagline under the logo on the animated splash screen."
+  },
   "audioAnalysisSuggestedGain": "Suggested track gain",
   "audioAnalysisSuggestedGainTarget": "Para sa {target} LUFS target; informational lang, hindi inilalapat.",
   "audioAnalysisTrailingSilence": "Trailing silence",

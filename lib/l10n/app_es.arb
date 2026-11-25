@@ -10876,6 +10876,10 @@
   "@detailAndAudioAnalysis": {
     "description": "Song action tile that opens the local audio inspector."
   },
+  "splashTagline": "BIT-PERFECT. SIN CONCESIONES.",
+  "@splashTagline": {
+    "description": "Short tagline under the logo on the animated splash screen."
+  },
   "audioAnalysisSuggestedGain": "Ganancia sugerida de la pista",
   "@audioAnalysisSuggestedGain": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
