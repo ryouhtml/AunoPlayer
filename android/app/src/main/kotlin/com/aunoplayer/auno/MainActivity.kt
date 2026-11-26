@@ -1146,6 +1146,7 @@ class MainActivity: FlutterActivity() {
             when (call.method) {
                 "getProcessExitInfo" -> result.success(getProcessExitInfo())
                 "getBuildFlavor" -> result.success(BuildConfig.FLAVOR)
+                "getDeviceMemoryInfo" -> result.success(getDeviceMemoryInfo())
                 else -> result.notImplemented()
             }
         }
@@ -4609,6 +4610,20 @@ class MainActivity: FlutterActivity() {
             "audioFocusHeld" to (directUsbFocusGain != null),
             "audioFocusGain" to directUsbFocusGain,
             "rustAudioStateJson" to nativeGetRustAudioDebugStateJson(),
+        )
+    }
+
+    private fun getDeviceMemoryInfo(): Map<String, Any?> {
+        val activityManager =
+            getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager
+        if (activityManager == null) {
+            return mapOf("totalBytes" to 0L, "isLowRamDevice" to false)
+        }
+        val info = ActivityManager.MemoryInfo()
+        activityManager.getMemoryInfo(info)
+        return mapOf(
+            "totalBytes" to info.totalMem,
+            "isLowRamDevice" to activityManager.isLowRamDevice,
         )
     }
 

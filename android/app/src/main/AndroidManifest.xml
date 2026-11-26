@@ -81,9 +81,12 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- Skia OpenGL ES only. Impeller's shader compilation stutters on the
+             PowerVR GE8320 (Helio P35) and Adreno 506 (Snapdragon 450) GPUs
+             this app still supports. See docs/PERFORMANCE.md. -->
         <meta-data
             android:name="io.flutter.embedding.android.EnableImpeller"
-            android:resource="@bool/enable_impeller" />
+            android:value="false" />
         <!-- Media Notification Service for background playback -->
         <service
             android:name=".MusicNotificationService"
