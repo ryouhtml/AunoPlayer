@@ -104,6 +104,7 @@ void main() {
       find.byKey(const ValueKey('batchField_year')),
       '1999',
     );
+    await tester.pump();
     await tester.tap(find.text(l10n.saveChanges));
     await tester.pumpAndSettle();
 
@@ -153,6 +154,7 @@ void main() {
       find.byKey(const ValueKey('batchField_genre')),
       'Ambient',
     );
+    await tester.pump();
     await tester.tap(find.text(l10n.saveChanges));
     await tester.pumpAndSettle();
 
