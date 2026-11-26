@@ -605,10 +605,20 @@ class _AudioAnalysisSheetState extends State<AudioAnalysisSheet> {
               label: l10n.audioAnalysisBalance,
               value: _balanceLabel(analysis.balanceDb),
             ),
+          ],
+        ),
+        _AnalysisSection(
+          title: l10n.audioAnalysisNullTestSection,
+          children: [
             _AnalysisRow(
-              label: l10n.audioAnalysisSideMid,
+              label: l10n.audioAnalysisNullTestResidual,
               value: _signedLevel(analysis.sideMidDb),
             ),
+            _AnalysisRow(
+              label: l10n.audioAnalysisNullTestVerdict,
+              value: _nullTestVerdict(analysis.sideMidDb),
+            ),
+            _Note(l10n.audioAnalysisNullTestNote),
           ],
         ),
         _AnalysisSection(
@@ -1160,6 +1170,18 @@ String _crestFactor(Float64List peaks, Float64List rms) {
 
   if (peaks.length == 1) return one(0);
   return 'L ${one(0)} · R ${one(1)}';
+}
+
+/// Channel null test verdict for the real L−R residual measurement.
+///
+/// [sideMidDb] is the side-to-mid energy ratio from the decoder pass, so a
+/// lower value means the channels cancel more completely. These are listening
+/// thresholds, not a pass/fail against an encoded reference.
+String _nullTestVerdict(double? sideMidDb) {
+  if (sideMidDb == null || !sideMidDb.isFinite) return '—';
+  if (sideMidDb < -40) return l10n.audioAnalysisNullTestMono;
+  if (sideMidDb <= -12) return l10n.audioAnalysisNullTestBalanced;
+  return l10n.audioAnalysisNullTestWide;
 }
 
 String _balanceLabel(double? balanceDb) {

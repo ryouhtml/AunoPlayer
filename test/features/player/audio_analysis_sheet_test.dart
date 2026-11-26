@@ -26,6 +26,7 @@ AudioSourceAnalysis _analysis({
   int? bitDepth = 16,
   int? channels = 2,
   String? dsdVariant,
+  double? sideMidDb = -18.0,
 }) {
   return AudioSourceAnalysis(
     status: status,
@@ -37,7 +38,7 @@ AudioSourceAnalysis _analysis({
     channelPeakDb: Float64List.fromList(const [-1.0, -1.2]),
     channelRmsDb: Float64List.fromList(const [-14.0, -14.5]),
     balanceDb: 0.2,
-    sideMidDb: -18.0,
+    sideMidDb: sideMidDb,
     leadingSilenceSeconds: 0.1,
     trailingSilenceSeconds: 0.2,
     silent: false,
@@ -142,6 +143,40 @@ void main() {
     expect(find.text(l10n.audioAnalysisFileSection), findsOneWidget);
     expect(find.text('—'), findsWidgets);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('null test shows the real residual and a mono verdict',
+      (tester) async {
+    await tester.pumpWidget(
+      _app(
+        _song,
+        () => _FakeJob(Future.value(_analysis(sideMidDb: -55.0))),
+      ),
+    );
+    await tester.pump();
+    await tester.pumpAndSettle();
+
+    expect(find.text(l10n.audioAnalysisNullTestSection), findsOneWidget);
+    expect(find.text(l10n.audioAnalysisNullTestResidual), findsOneWidget);
+    expect(find.text(l10n.audioAnalysisNullTestVerdict), findsOneWidget);
+    expect(find.text(l10n.audioAnalysisNullTestNote), findsOneWidget);
+    expect(find.text('-55.0 dB'), findsOneWidget);
+    expect(find.text(l10n.audioAnalysisNullTestMono), findsOneWidget);
+  });
+
+  testWidgets('null test warns when the side image is very wide',
+      (tester) async {
+    await tester.pumpWidget(
+      _app(
+        _song,
+        () => _FakeJob(Future.value(_analysis(sideMidDb: -3.0))),
+      ),
+    );
+    await tester.pump();
+    await tester.pumpAndSettle();
+
+    expect(find.text('-3.0 dB'), findsOneWidget);
+    expect(find.text(l10n.audioAnalysisNullTestWide), findsOneWidget);
   });
 
   testWidgets('busy analysis offers a retry', (tester) async {

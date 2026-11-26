@@ -14313,14 +14313,20 @@ abstract class AppLocalizations {
   /// lib/features/player/widgets/audio_analysis_sheet.dart
   ///
   /// In en, this message translates to:
-  /// **'Side / mid'**
-  String get audioAnalysisSideMid;
-
-  /// lib/features/player/widgets/audio_analysis_sheet.dart
-  ///
-  /// In en, this message translates to:
   /// **'Integrated loudness'**
   String get audioAnalysisIntegratedLoudness;
+
+  String get audioAnalysisNullTestSection;
+  String get audioAnalysisNullTestResidual;
+  String get audioAnalysisNullTestVerdict;
+  String get audioAnalysisNullTestMono;
+  String get audioAnalysisNullTestBalanced;
+  String get audioAnalysisNullTestWide;
+  String get audioAnalysisNullTestNote;
+  String get batchEditKeepExisting;
+  String batchEditSomeSkipped(Object count);
+  String batchEditUpdated(Object count);
+  String batchEditPartial(Object arg1, Object arg2);
 
   /// lib/features/player/widgets/audio_analysis_sheet.dart
   ///

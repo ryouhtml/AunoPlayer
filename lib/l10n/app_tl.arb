@@ -1461,6 +1461,40 @@
   "queueIsEmpty": "Walang laman ang pila",
   "queued": "Naisama sa pila ang \"{arg1}\"",
   "queuedSongs": "Naisama sa pila ang {arg1} kanta",
+  "batchEditKeepExisting": "Hindi babaguhin ang blank na field sa bawat napiling kanta.",
+  "@batchEditKeepExisting": {
+    "description": "lib/features/songs/widgets/batch_metadata_editor_sheet.dart"
+  },
+  "batchEditSomeSkipped": "Lalaktawan ang {count} kanta (external, cue, o nawawalang file).",
+  "@batchEditSomeSkipped": {
+    "description": "lib/features/songs/widgets/batch_metadata_editor_sheet.dart",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "batchEditUpdated": "{count} kanta ang na-update",
+  "@batchEditUpdated": {
+    "description": "lib/features/songs/screens/songs_screen.dart",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "batchEditPartial": "{arg1} kanta ang na-update, {arg2} ang nabigo",
+  "@batchEditPartial": {
+    "description": "lib/features/songs/screens/songs_screen.dart",
+    "placeholders": {
+      "arg1": {
+        "type": "Object"
+      },
+      "arg2": {
+        "type": "Object"
+      }
+    }
+  },
   "queuedSongs3": "Naisama sa pila ang {arg1} kanta",
   "quickAccess": "Mabilisang puntahan",
   "quickActions": "Mabilisang aksiyon",
@@ -2382,6 +2416,34 @@
   "audioAnalysisFileSection": "File",
   "audioAnalysisFileSize": "Laki ng file",
   "audioAnalysisHeadroom": "True-peak headroom",
+  "audioAnalysisNullTestSection": "Null test (L-R)",
+  "@audioAnalysisNullTestSection": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestResidual": "Residual (side vs mid)",
+  "@audioAnalysisNullTestResidual": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestVerdict": "Hatol",
+  "@audioAnalysisNullTestVerdict": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestMono": "Mono-compatible",
+  "@audioAnalysisNullTestMono": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestBalanced": "Balanseadong stereo",
+  "@audioAnalysisNullTestBalanced": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestWide": "Malawak, suriin ang polarity",
+  "@audioAnalysisNullTestWide": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestNote": "Null test ng channel L-R: inihahambing ang side signal sa mono sum. Mas mababa ang residual, mas malinis ang pagkansela ng channel. Hindi ito paghahambing sa isang naka-encode na kopya.",
+  "@audioAnalysisNullTestNote": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
   "audioAnalysisIntegratedLoudness": "Integrated loudness",
   "audioAnalysisLeadingSilence": "Leading silence",
   "audioAnalysisLevelsSection": "Levels",
@@ -2398,7 +2460,6 @@
   "audioAnalysisReplayGainTag": "Gain ng tag",
   "audioAnalysisRetry": "I-analyze ulit",
   "audioAnalysisRms": "RMS",
-  "audioAnalysisSideMid": "Side / mid",
   "audioAnalysisSilenceSection": "Silence",
   "audioAnalysisSourceNote": "Sinukat mula sa hiwalay na decode ng source file. May decoder padding ang ilang format, na puwedeng makaapekto sa duration at silence measurements. Hindi nagbabago ang playback, DSP, at tags.",
   "audioAnalysisSpectrogramCaption": "0 dBFS hanggang −120 dBFS · buong track",

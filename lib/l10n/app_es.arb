@@ -7158,6 +7158,40 @@
       }
     }
   },
+  "batchEditKeepExisting": "Un campo vacio no se modifica en las canciones seleccionadas.",
+  "@batchEditKeepExisting": {
+    "description": "lib/features/songs/widgets/batch_metadata_editor_sheet.dart"
+  },
+  "batchEditSomeSkipped": "Se omitiran {count} canciones (externas, cue o archivo ausente).",
+  "@batchEditSomeSkipped": {
+    "description": "lib/features/songs/widgets/batch_metadata_editor_sheet.dart",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "batchEditUpdated": "{count} canciones actualizadas",
+  "@batchEditUpdated": {
+    "description": "lib/features/songs/screens/songs_screen.dart",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "batchEditPartial": "{arg1} canciones actualizadas, {arg2} fallidas",
+  "@batchEditPartial": {
+    "description": "lib/features/songs/screens/songs_screen.dart",
+    "placeholders": {
+      "arg1": {
+        "type": "Object"
+      },
+      "arg2": {
+        "type": "Object"
+      }
+    }
+  },
   "queuedSongs3": "Se agregaron {arg1} canciones a la cola",
   "@queuedSongs3": {
     "description": "lib/features/songs/screens/songs_screen.dart:1345",
@@ -10784,6 +10818,34 @@
   "@audioAnalysisHeadroom": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
   },
+  "audioAnalysisNullTestSection": "Prueba nula (L-R)",
+  "@audioAnalysisNullTestSection": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestResidual": "Residual (lateral vs medio)",
+  "@audioAnalysisNullTestResidual": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestVerdict": "Veredicto",
+  "@audioAnalysisNullTestVerdict": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestMono": "Compatible con mono",
+  "@audioAnalysisNullTestMono": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestBalanced": "Estereo equilibrado",
+  "@audioAnalysisNullTestBalanced": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestWide": "Amplio, revisa la polaridad",
+  "@audioAnalysisNullTestWide": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestNote": "Prueba nula de canal L-R: la senal lateral se compara con la suma mono. Un residual mas bajo indica una cancelacion mas limpia. No es una comparacion con una copia codificada.",
+  "@audioAnalysisNullTestNote": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
   "audioAnalysisIntegratedLoudness": "Sonoridad integrada",
   "@audioAnalysisIntegratedLoudness": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
@@ -10846,10 +10908,6 @@
   },
   "audioAnalysisRms": "RMS",
   "@audioAnalysisRms": {
-    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
-  },
-  "audioAnalysisSideMid": "Lateral / medio",
-  "@audioAnalysisSideMid": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
   },
   "audioAnalysisSilenceSection": "Silencio",

@@ -22,6 +22,7 @@ import 'package:auno_player/models/song_view_mode.dart';
 import 'package:auno_player/features/songs/widgets/orbit_scroll.dart';
 import 'package:auno_player/features/songs/widgets/song_fast_index_overlay.dart';
 import 'package:auno_player/features/songs/widgets/song_actions_bottom_sheet.dart';
+import 'package:auno_player/features/songs/widgets/batch_metadata_editor_sheet.dart';
 import 'package:auno_player/features/songs/widgets/sort_filter_bottom_sheet.dart';
 import 'package:auno_player/features/onboarding/tutorial_targets.dart';
 import 'package:auno_player/data/repositories/song_repository.dart';
@@ -1641,6 +1642,24 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
     }
   }
 
+  Future<void> _editSelectedMetadata() async {
+    final songs = _selectedSongs();
+    if (songs.isEmpty || !mounted) return;
+
+    final result = await BatchMetadataEditorSheet.show(context, songs);
+    if (!mounted || result == null) return;
+
+    final l10n = context.l10n.englishForFilipino;
+    if (result.updated > 0 || result.failed > 0) {
+      _showSongActionSnackBar(
+        result.failed > 0
+            ? l10n.batchEditPartial(result.updated, result.failed)
+            : l10n.batchEditUpdated(result.updated),
+      );
+    }
+    _exitSelectionMode();
+  }
+
   Future<void> _showMoreActions() async {
     final allSelected =
         _selectedIds.length == _cachedDisplaySongs.length &&
@@ -1703,6 +1722,14 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
                     onTap: () {
                       Navigator.pop(sheetContext);
                       _createPlaylistWithSelected();
+                    },
+                  ),
+                  _selectionSheetTile(
+                    icon: LucideIcons.pencil,
+                    label: l10n.editMetadata,
+                    onTap: () {
+                      Navigator.pop(sheetContext);
+                      _editSelectedMetadata();
                     },
                   ),
                   _selectionSheetTile(

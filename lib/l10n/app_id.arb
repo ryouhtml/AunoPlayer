@@ -7161,6 +7161,40 @@
       }
     }
   },
+  "batchEditKeepExisting": "Kolom kosong tidak diubah untuk setiap lagu yang dipilih.",
+  "@batchEditKeepExisting": {
+    "description": "lib/features/songs/widgets/batch_metadata_editor_sheet.dart"
+  },
+  "batchEditSomeSkipped": "{count} lagu akan dilewati (eksternal, cue, atau file hilang).",
+  "@batchEditSomeSkipped": {
+    "description": "lib/features/songs/widgets/batch_metadata_editor_sheet.dart",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "batchEditUpdated": "{count} lagu diperbarui",
+  "@batchEditUpdated": {
+    "description": "lib/features/songs/screens/songs_screen.dart",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "batchEditPartial": "{arg1} lagu diperbarui, {arg2} gagal",
+  "@batchEditPartial": {
+    "description": "lib/features/songs/screens/songs_screen.dart",
+    "placeholders": {
+      "arg1": {
+        "type": "Object"
+      },
+      "arg2": {
+        "type": "Object"
+      }
+    }
+  },
   "queuedSongs3": "{arg1} lagu dimasukkan ke antrean",
   "@queuedSongs3": {
     "description": "lib/features/songs/screens/songs_screen.dart:1345",
@@ -10826,8 +10860,32 @@
   "@audioAnalysisBalance": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
   },
-  "audioAnalysisSideMid": "Sisi / tengah",
-  "@audioAnalysisSideMid": {
+  "audioAnalysisNullTestSection": "Uji null (L-R)",
+  "@audioAnalysisNullTestSection": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestResidual": "Residu (sisi vs tengah)",
+  "@audioAnalysisNullTestResidual": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestVerdict": "Putusan",
+  "@audioAnalysisNullTestVerdict": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestMono": "Kompatibel mono",
+  "@audioAnalysisNullTestMono": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestBalanced": "Stereo seimbang",
+  "@audioAnalysisNullTestBalanced": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestWide": "Lebar, periksa polaritas",
+  "@audioAnalysisNullTestWide": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestNote": "Uji null kanal L-R: sinyal sisi dibandingkan dengan jumlah mono. Residu lebih rendah berarti kanal lebih bersih saling meniadakan. Ini bukan perbandingan dengan salinan hasil encode.",
+  "@audioAnalysisNullTestNote": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
   },
   "audioAnalysisIntegratedLoudness": "Kenyaringan terintegrasi",

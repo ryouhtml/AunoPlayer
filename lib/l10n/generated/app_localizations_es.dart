@@ -8536,8 +8536,48 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get audioAnalysisBalance => 'Balance';
 
+
+
   @override
-  String get audioAnalysisSideMid => 'Lateral / medio';
+  String get audioAnalysisNullTestSection => 'Prueba nula (L-R)';
+
+  @override
+  String get audioAnalysisNullTestResidual => 'Residual (lateral vs medio)';
+
+  @override
+  String get audioAnalysisNullTestVerdict => 'Veredicto';
+
+  @override
+  String get audioAnalysisNullTestMono => 'Compatible con mono';
+
+  @override
+  String get audioAnalysisNullTestBalanced => 'Estereo equilibrado';
+
+  @override
+  String get audioAnalysisNullTestWide => 'Amplio, revisa la polaridad';
+
+  @override
+  String get audioAnalysisNullTestNote =>
+      'Prueba nula de canal L-R: la senal lateral se compara con la suma mono. Un residual mas bajo indica una cancelacion mas limpia. No es una comparacion con una copia codificada.';
+
+  @override
+  String get batchEditKeepExisting =>
+      'Un campo vacio no se modifica en las canciones seleccionadas.';
+
+  @override
+  String batchEditSomeSkipped(Object count) {
+    return 'Se omitiran $count canciones (externas, cue o archivo ausente).';
+  }
+
+  @override
+  String batchEditUpdated(Object count) {
+    return '$count canciones actualizadas';
+  }
+
+  @override
+  String batchEditPartial(Object arg1, Object arg2) {
+    return '$arg1 canciones actualizadas, $arg2 fallidas';
+  }
 
   @override
   String get audioAnalysisIntegratedLoudness => 'Sonoridad integrada';

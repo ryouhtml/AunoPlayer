@@ -8530,8 +8530,48 @@ class AppLocalizationsTl extends AppLocalizations {
   @override
   String get audioAnalysisBalance => 'Balance';
 
+
+
   @override
-  String get audioAnalysisSideMid => 'Side / mid';
+  String get audioAnalysisNullTestSection => 'Null test (L-R)';
+
+  @override
+  String get audioAnalysisNullTestResidual => 'Residual (side vs mid)';
+
+  @override
+  String get audioAnalysisNullTestVerdict => 'Hatol';
+
+  @override
+  String get audioAnalysisNullTestMono => 'Mono-compatible';
+
+  @override
+  String get audioAnalysisNullTestBalanced => 'Balanseadong stereo';
+
+  @override
+  String get audioAnalysisNullTestWide => 'Malawak, suriin ang polarity';
+
+  @override
+  String get audioAnalysisNullTestNote =>
+      'Null test ng channel L-R: inihahambing ang side signal sa mono sum. Mas mababa ang residual, mas malinis ang pagkansela ng channel. Hindi ito paghahambing sa isang naka-encode na kopya.';
+
+  @override
+  String get batchEditKeepExisting =>
+      'Hindi babaguhin ang blank na field sa bawat napiling kanta.';
+
+  @override
+  String batchEditSomeSkipped(Object count) {
+    return 'Lalaktawan ang $count kanta (external, cue, o nawawalang file).';
+  }
+
+  @override
+  String batchEditUpdated(Object count) {
+    return '$count kanta ang na-update';
+  }
+
+  @override
+  String batchEditPartial(Object arg1, Object arg2) {
+    return '$arg1 kanta ang na-update, $arg2 ang nabigo';
+  }
 
   @override
   String get audioAnalysisIntegratedLoudness => 'Integrated loudness';

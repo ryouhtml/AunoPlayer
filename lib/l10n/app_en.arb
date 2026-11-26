@@ -7162,6 +7162,40 @@
       }
     }
   },
+  "batchEditKeepExisting": "Leave a blank field unchanged for every selected song.",
+  "@batchEditKeepExisting": {
+    "description": "lib/features/songs/widgets/batch_metadata_editor_sheet.dart"
+  },
+  "batchEditSomeSkipped": "{count} songs will be skipped (external, cue, or missing file).",
+  "@batchEditSomeSkipped": {
+    "description": "lib/features/songs/widgets/batch_metadata_editor_sheet.dart",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "batchEditUpdated": "{count} songs updated",
+  "@batchEditUpdated": {
+    "description": "lib/features/songs/screens/songs_screen.dart",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "batchEditPartial": "{arg1} songs updated, {arg2} failed",
+  "@batchEditPartial": {
+    "description": "lib/features/songs/screens/songs_screen.dart",
+    "placeholders": {
+      "arg1": {
+        "type": "Object"
+      },
+      "arg2": {
+        "type": "Object"
+      }
+    }
+  },
   "queuedSongs3": "Queued {arg1} songs",
   "@queuedSongs3": {
     "description": "lib/features/songs/screens/songs_screen.dart:1345",
@@ -10827,8 +10861,32 @@
   "@audioAnalysisBalance": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
   },
-  "audioAnalysisSideMid": "Side / mid",
-  "@audioAnalysisSideMid": {
+  "audioAnalysisNullTestSection": "Null test (L-R)",
+  "@audioAnalysisNullTestSection": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestResidual": "Residual (side vs mid)",
+  "@audioAnalysisNullTestResidual": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestVerdict": "Verdict",
+  "@audioAnalysisNullTestVerdict": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestMono": "Mono-compatible",
+  "@audioAnalysisNullTestMono": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestBalanced": "Balanced stereo",
+  "@audioAnalysisNullTestBalanced": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestWide": "Wide, check polarity",
+  "@audioAnalysisNullTestWide": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestNote": "L-R channel null test: the side signal is compared with the mono sum. A lower residual means the channels cancel more cleanly. This is not a comparison against an encoded copy.",
+  "@audioAnalysisNullTestNote": {
     "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
   },
   "audioAnalysisIntegratedLoudness": "Integrated loudness",

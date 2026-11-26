@@ -8469,8 +8469,48 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get audioAnalysisBalance => 'Keseimbangan';
 
+
+
   @override
-  String get audioAnalysisSideMid => 'Sisi / tengah';
+  String get audioAnalysisNullTestSection => 'Uji null (L-R)';
+
+  @override
+  String get audioAnalysisNullTestResidual => 'Residu (sisi vs tengah)';
+
+  @override
+  String get audioAnalysisNullTestVerdict => 'Putusan';
+
+  @override
+  String get audioAnalysisNullTestMono => 'Kompatibel mono';
+
+  @override
+  String get audioAnalysisNullTestBalanced => 'Stereo seimbang';
+
+  @override
+  String get audioAnalysisNullTestWide => 'Lebar, periksa polaritas';
+
+  @override
+  String get audioAnalysisNullTestNote =>
+      'Uji null kanal L-R: sinyal sisi dibandingkan dengan jumlah mono. Residu lebih rendah berarti kanal lebih bersih saling meniadakan. Ini bukan perbandingan dengan salinan hasil encode.';
+
+  @override
+  String get batchEditKeepExisting =>
+      'Kolom kosong tidak diubah untuk setiap lagu yang dipilih.';
+
+  @override
+  String batchEditSomeSkipped(Object count) {
+    return '$count lagu akan dilewati (eksternal, cue, atau file hilang).';
+  }
+
+  @override
+  String batchEditUpdated(Object count) {
+    return '$count lagu diperbarui';
+  }
+
+  @override
+  String batchEditPartial(Object arg1, Object arg2) {
+    return '$arg1 lagu diperbarui, $arg2 gagal';
+  }
 
   @override
   String get audioAnalysisIntegratedLoudness => 'Kenyaringan terintegrasi';

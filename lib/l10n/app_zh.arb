@@ -1611,6 +1611,40 @@
   "queueIsEmpty": "播放队列为空",
   "queued": "已加入队列「{arg1}」",
   "queuedSongs": "已加入队列 {arg1} 首歌曲",
+  "batchEditKeepExisting": "空白字段不会改动所选歌曲的现有值。",
+  "@batchEditKeepExisting": {
+    "description": "lib/features/songs/widgets/batch_metadata_editor_sheet.dart"
+  },
+  "batchEditSomeSkipped": "将跳过 {count} 首歌曲（外部、cue 或文件缺失）。",
+  "@batchEditSomeSkipped": {
+    "description": "lib/features/songs/widgets/batch_metadata_editor_sheet.dart",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "batchEditUpdated": "已更新 {count} 首歌曲",
+  "@batchEditUpdated": {
+    "description": "lib/features/songs/screens/songs_screen.dart",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "batchEditPartial": "{arg1} 首歌曲已更新，{arg2} 首失败",
+  "@batchEditPartial": {
+    "description": "lib/features/songs/screens/songs_screen.dart",
+    "placeholders": {
+      "arg1": {
+        "type": "Object"
+      },
+      "arg2": {
+        "type": "Object"
+      }
+    }
+  },
   "queuedSongs3": "已加入队列 {arg1} 首歌曲",
   "quickAccess": "快速访问",
   "quickActions": "快捷操作",
@@ -2390,6 +2424,34 @@
   "audioAnalysisFileSection": "文件",
   "audioAnalysisFileSize": "文件大小",
   "audioAnalysisHeadroom": "真峰值余量",
+  "audioAnalysisNullTestSection": "空测试 (L-R)",
+  "@audioAnalysisNullTestSection": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestResidual": "残留（侧声道对中置）",
+  "@audioAnalysisNullTestResidual": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestVerdict": "判定",
+  "@audioAnalysisNullTestVerdict": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestMono": "单声道兼容",
+  "@audioAnalysisNullTestMono": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestBalanced": "立体声平衡",
+  "@audioAnalysisNullTestBalanced": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestWide": "偏宽，请检查极性",
+  "@audioAnalysisNullTestWide": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
+  "audioAnalysisNullTestNote": "L-R 声道空测试：将侧声道信号与单声道总和比较。残留越低，声道抵消越干净。这不是与编码副本的对比。",
+  "@audioAnalysisNullTestNote": {
+    "description": "lib/features/player/widgets/audio_analysis_sheet.dart"
+  },
   "audioAnalysisIntegratedLoudness": "整体响度",
   "audioAnalysisLeadingSilence": "开头静音",
   "audioAnalysisLevelsSection": "电平",
@@ -2406,7 +2468,6 @@
   "audioAnalysisReplayGainTag": "标签增益",
   "audioAnalysisRetry": "重新分析",
   "audioAnalysisRms": "RMS",
-  "audioAnalysisSideMid": "侧 / 中",
   "audioAnalysisSilenceSection": "静音",
   "audioAnalysisSourceNote": "测量基于对源文件的独立解码。某些格式包含解码器填充，可能影响时长和静音测量。播放、DSP 和标签均不变。",
   "audioAnalysisSpectrogramCaption": "0 dBFS 至 −120 dBFS · 整首曲目",

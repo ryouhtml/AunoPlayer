@@ -7830,8 +7830,47 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get audioAnalysisBalance => '平衡';
 
+
+
   @override
-  String get audioAnalysisSideMid => '侧 / 中';
+  String get audioAnalysisNullTestSection => '空测试 (L-R)';
+
+  @override
+  String get audioAnalysisNullTestResidual => '残留（侧声道对中置）';
+
+  @override
+  String get audioAnalysisNullTestVerdict => '判定';
+
+  @override
+  String get audioAnalysisNullTestMono => '单声道兼容';
+
+  @override
+  String get audioAnalysisNullTestBalanced => '立体声平衡';
+
+  @override
+  String get audioAnalysisNullTestWide => '偏宽，请检查极性';
+
+  @override
+  String get audioAnalysisNullTestNote =>
+      'L-R 声道空测试：将侧声道信号与单声道总和比较。残留越低，声道抵消越干净。这不是与编码副本的对比。';
+
+  @override
+  String get batchEditKeepExisting => '空白字段不会改动所选歌曲的现有值。';
+
+  @override
+  String batchEditSomeSkipped(Object count) {
+    return '将跳过 $count 首歌曲（外部、cue 或文件缺失）。';
+  }
+
+  @override
+  String batchEditUpdated(Object count) {
+    return '已更新 $count 首歌曲';
+  }
+
+  @override
+  String batchEditPartial(Object arg1, Object arg2) {
+    return '$arg1 首歌曲已更新，$arg2 首失败';
+  }
 
   @override
   String get audioAnalysisIntegratedLoudness => '整体响度';
