@@ -963,6 +963,9 @@ class AppLocalizationsTl extends AppLocalizations {
   String get backOnline => 'Okay, connected ka na ulit!';
 
   @override
+  String get backToActiveLyrics => 'Bumalik sa aktibong lyrics';
+
+  @override
   String get backToLocker => 'Bumalik sa Locker';
 
   @override

@@ -953,6 +953,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backOnline => 'Back online';
 
   @override
+  String get backToActiveLyrics => 'Back to active lyrics';
+
+  @override
   String get backToLocker => 'Back to Locker';
 
   @override

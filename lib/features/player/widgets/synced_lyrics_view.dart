@@ -1,14 +1,18 @@
 import 'dart:async';
+import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart'
     show ScrollCacheExtent, ScrollDirection;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:auno_player/core/motion/app_motion.dart';
 import 'package:auno_player/core/theme/app_theme.dart';
 import 'package:auno_player/features/player/widgets/album_color_helpers.dart';
 import 'package:auno_player/features/player/widgets/karaoke_lyric_line.dart';
 import 'package:auno_player/features/player/widgets/lyrics_alignment.dart';
+import 'package:auno_player/l10n/l10n.dart';
 import 'package:auno_player/providers/app_preferences_provider.dart';
 import 'package:auno_player/providers/karaoke_provider.dart';
 import 'package:auno_player/services/karaoke_spans.dart';
@@ -51,7 +55,8 @@ class SyncedLyricsView extends ConsumerStatefulWidget {
   ConsumerState<SyncedLyricsView> createState() => _SyncedLyricsViewState();
 }
 
-class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView> {
+class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView>
+    with SingleTickerProviderStateMixin {
   static const double _anchorFraction = 0.32;
   static const int _followResumeMs = 4000;
   static const int _seekBackThresholdMs = 1200;
@@ -60,6 +65,13 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView> {
   static const double _correctionMinDeltaPx = 6;
 
   final ScrollController _scrollController = ScrollController();
+
+  /// Drives the spring that carries the list to the active line. A spring
+  /// (instead of animateTo) lets a new target interrupt mid-flight with
+  /// velocity continuity and settles without a fixed duration.
+  late final AnimationController _springController;
+  double _springFrom = 0;
+  double _springTo = 0;
 
   List<double> _inactiveEstimates = const [];
   List<double> _activeEstimates = const [];
@@ -80,6 +92,10 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView> {
   @override
   void initState() {
     super.initState();
+    _springController = AnimationController(
+      vsync: this,
+      duration: AppMotionDurations.normal,
+    )..addListener(_onSpringTick);
     _positionNotifier.addListener(_onPositionChanged);
   }
 
@@ -105,6 +121,9 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView> {
   void dispose() {
     _followResumeTimer?.cancel();
     _positionNotifier.removeListener(_onPositionChanged);
+    _springController
+      ..removeListener(_onSpringTick)
+      ..dispose();
     _scrollController.dispose();
     super.dispose();
   }
@@ -281,21 +300,42 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView> {
     return (center - anchorPx).clamp(0.0, position.maxScrollExtent);
   }
 
+  void _onSpringTick() {
+    if (!_scrollController.hasClients) return;
+    final position = _scrollController.position;
+    if (!position.hasContentDimensions) return;
+    final t = _springController.value.clamp(0.0, 1.0);
+    final target = _springFrom + (_springTo - _springFrom) * t;
+    final clamped = target.clamp(
+      position.minScrollExtent,
+      position.maxScrollExtent,
+    );
+    if ((position.pixels - clamped).abs() > 0.01) {
+      position.jumpTo(clamped);
+    }
+  }
+
   void _animateToActiveLine({bool immediate = false}) {
     if (!_scrollController.hasClients) return;
     final target = _targetFor(_activeLineIndex);
     if (target == null) return;
-    final distance = (target - _scrollController.offset).abs();
-    final durationMs = immediate
-        ? 350
-        : (250 + distance * 0.6).clamp(250, 600).round();
-    _scrollController
-        .animateTo(
-          target,
-          duration: Duration(milliseconds: durationMs),
-          curve: Curves.easeOutCubic,
-        )
-        .catchError((_) {});
+    _springController.stop();
+    if (immediate || MediaQuery.disableAnimationsOf(context)) {
+      _scrollController.jumpTo(target);
+      return;
+    }
+    if ((target - _scrollController.offset).abs() < 1.0) return;
+    _springFrom = _scrollController.offset;
+    _springTo = target;
+    _springController
+      ..value = 0.0
+      ..animateWith(
+        AppMotionSprings.simulation(
+          spring: AppMotionSprings.gentle,
+          start: 0.0,
+          end: 1.0,
+        ),
+      );
   }
 
   void _jumpToActiveLine() {
@@ -307,18 +347,24 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView> {
 
   void _suspendFollow() {
     _followResumeTimer?.cancel();
+    _springController.stop();
     _followResumeTimer = Timer(const Duration(milliseconds: _followResumeMs), () {
       if (!mounted) return;
-      _following = true;
+      _setFollowing(true);
       _animateToActiveLine();
     });
-    _following = false;
+    _setFollowing(false);
   }
 
   void _resumeFollow({bool animateNow = true}) {
     _followResumeTimer?.cancel();
-    _following = true;
+    _setFollowing(true);
     if (animateNow) _animateToActiveLine();
+  }
+
+  void _setFollowing(bool value) {
+    if (_following == value || !mounted) return;
+    setState(() => _following = value);
   }
 
   bool _onScrollNotification(ScrollNotification notification) {
@@ -350,6 +396,16 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView> {
       default:
         return 0.18;
     }
+  }
+
+  double _blurSigmaForIndex(int index) {
+    if (_activeLineIndex < 0) return 0;
+    final distance = (index - _activeLineIndex).abs();
+    // Only the handful of lines around the focus get a filter; further lines
+    // already fade with opacity, and bounding the range keeps the number of
+    // saved layers per frame small.
+    if (distance <= 1 || distance > 4) return 0;
+    return math.min(1.2, 0.35 * (distance - 1));
   }
 
   TextStyle _textStyle(bool isActive, double opacity) {
@@ -435,7 +491,52 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView> {
           child: InkWell(
             borderRadius: BorderRadius.circular(22),
             onTap: () => unawaited(_seekToLine(index)),
-            child: content,
+            child: _applyLineBlur(content, index),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Progressive blur on lines further from the active one, on top of the
+  /// opacity tiers, so focus reads instantly without a hard edge.
+  Widget _applyLineBlur(Widget content, int index) {
+    final sigma = _blurSigmaForIndex(index);
+    if (sigma <= 0 || MediaQuery.disableAnimationsOf(context)) return content;
+    return ImageFiltered(
+      imageFilter: ui.ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
+      child: content,
+    );
+  }
+
+  Widget _buildResumePill() {
+    final l10n = AppLocalizations.of(context);
+    return Material(
+      color: Colors.black.withValues(alpha: 0.74),
+      borderRadius: BorderRadius.circular(20),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: _resumeFollow,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.arrow_upward_rounded,
+                size: 14,
+                color: Colors.white,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                l10n.backToActiveLyrics,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -466,27 +567,50 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView> {
         }
 
         final anchorPx = constraints.maxHeight * _anchorFraction;
-        return NotificationListener<ScrollNotification>(
-          onNotification: _onScrollNotification,
-          child: ListView.builder(
-            controller: _scrollController,
-            scrollCacheExtent: ScrollCacheExtent.pixels(900),
-            padding: EdgeInsets.only(
-              top: anchorPx,
-              bottom: constraints.maxHeight - anchorPx,
-              left: 10,
-              right: 10,
-            ),
-            itemCount: widget.lyrics.lines.length,
-            itemBuilder: (context, index) => _buildLine(
-                context,
-                index,
-                alignment,
-                karaokeEnabled: karaokeEnabled,
-                karaokeLines: karaokeLines,
-                sweepStyle: sweepStyle,
+        return Stack(
+          children: [
+            NotificationListener<ScrollNotification>(
+              onNotification: _onScrollNotification,
+              child: ListView.builder(
+                controller: _scrollController,
+                scrollCacheExtent: ScrollCacheExtent.pixels(900),
+                padding: EdgeInsets.only(
+                  top: anchorPx,
+                  bottom: constraints.maxHeight - anchorPx,
+                  left: 10,
+                  right: 10,
+                ),
+                itemCount: widget.lyrics.lines.length,
+                itemBuilder: (context, index) => _buildLine(
+                    context,
+                    index,
+                    alignment,
+                    karaokeEnabled: karaokeEnabled,
+                    karaokeLines: karaokeLines,
+                    sweepStyle: sweepStyle,
+                  ),
               ),
-          ),
+            ),
+            // Visible while the reader is browsing away from the current line:
+            // one tap restores auto-follow.
+            Positioned(
+              top: 6,
+              left: 0,
+              right: 0,
+              child: AnimatedSwitcher(
+                duration: AppMotionDurations.fast,
+                switchInCurve: AppMotionCurves.entrance,
+                switchOutCurve: AppMotionCurves.exit,
+                transitionBuilder: (child, animation) => FadeTransition(
+                  opacity: animation,
+                  child: ScaleTransition(scale: animation, child: child),
+                ),
+                child: _following
+                    ? const SizedBox.shrink()
+                    : Center(child: _buildResumePill()),
+              ),
+            ),
+          ],
         );
       },
     );

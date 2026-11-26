@@ -965,6 +965,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get backOnline => 'De nuevo en línea';
 
   @override
+  String get backToActiveLyrics => 'Volver a la letra activa';
+
+  @override
   String get backToLocker => 'Volver a Locker';
 
   @override

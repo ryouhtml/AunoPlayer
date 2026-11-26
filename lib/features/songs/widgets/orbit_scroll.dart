@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter/rendering.dart';
 import 'package:auno_player/core/theme/app_colors.dart';
+import 'package:auno_player/core/motion/app_motion.dart';
 import 'package:auno_player/core/utils/app_haptics.dart';
 import 'package:auno_player/models/orbit_card_background_style.dart';
 import 'package:auno_player/models/song.dart';
@@ -583,6 +584,32 @@ class _OrbitScrollState extends State<OrbitScroll>
                       ),
                     ),
                   ),
+                  // Soft edge fade so cards dissolve into the stage instead of
+                  // being sliced by the viewport boundary. IgnorePointer keeps
+                  // the drag surface underneath fully interactive.
+                  Positioned.fill(
+                    child: IgnorePointer(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: horizontal
+                                ? Alignment.centerLeft
+                                : Alignment.topCenter,
+                            end: horizontal
+                                ? Alignment.centerRight
+                                : Alignment.bottomCenter,
+                            colors: const [
+                              Color(0x66000000),
+                              Color(0x00000000),
+                              Color(0x00000000),
+                              Color(0x66000000),
+                            ],
+                            stops: const [0.0, 0.06, 0.94, 1.0],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -789,13 +816,18 @@ class _OrbitScrollState extends State<OrbitScroll>
 
         double scale;
         if (distanceFromCenter < 1.0) {
+          // Bell-shaped ease between the selected and adjacent cards. Endpoints
+          // match the previous linear map so persisted scale preferences and
+          // the depth slider keep their exact meaning.
           scale =
-              widget.selectedScale -
-              (widget.selectedScale - adjacentScale) * distanceFromCenter;
+              adjacentScale +
+              (widget.selectedScale - adjacentScale) *
+                  AppMotionMath.bell(distanceFromCenter);
         } else if (distanceFromCenter < 2.0) {
           scale =
-              adjacentScale -
-              (adjacentScale - distantScale) * (distanceFromCenter - 1.0);
+              distantScale +
+              (adjacentScale - distantScale) *
+                  AppMotionMath.bell(distanceFromCenter - 1.0);
         } else {
           scale = distantScale - (distanceFromCenter - 2.0) * 0.12;
         }
@@ -803,7 +835,11 @@ class _OrbitScrollState extends State<OrbitScroll>
 
         if (scale < 0.1) continue;
 
-        final opacity = (1.0 - (distanceFromCenter * 0.25)).clamp(0.0, 1.0);
+        // Focus falls off over the visible window instead of a fixed slope, so
+        // wide and narrow layouts fade consistently.
+        final focusSpan = math.max(2.0, widget.visibleItems / 2.0);
+        final focus = AppMotionMath.bell(distanceFromCenter / focusSpan);
+        final opacity = AppMotionMath.lerpBell(focus, 0.28, 1.0);
         final isSelected = distanceFromCenter < 0.4;
 
         transform = _ItemTransform(

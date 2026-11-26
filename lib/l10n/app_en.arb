@@ -1055,6 +1055,10 @@
   "@backOnline": {
     "description": "lib/widgets/common/offline_notice.dart:137"
   },
+  "backToActiveLyrics": "Back to active lyrics",
+  "@backToActiveLyrics": {
+    "description": "lib/features/player/widgets/synced_lyrics_view.dart"
+  },
   "backToLocker": "Back to Locker",
   "@backToLocker": {
     "description": "lib/features/player/screens/full_player_screen.dart:731"

@@ -139,7 +139,8 @@ class _SongCardState extends State<SongCard> {
         oldWidget.artSizeLarge != widget.artSizeLarge ||
         oldWidget.artResolutionMultiplier != widget.artResolutionMultiplier ||
         oldWidget.artworkAbove != widget.artworkAbove ||
-        oldWidget.backgroundStyle != widget.backgroundStyle) {
+        oldWidget.backgroundStyle != widget.backgroundStyle ||
+        (oldWidget.onOpenActions == null) != (widget.onOpenActions == null)) {
       _cardFace = null;
     }
     if (songChanged ||
@@ -273,50 +274,114 @@ class _SongCardState extends State<SongCard> {
     );
   }
 
+  /// Inner padding of the portrait banner face.
+  static const double _cardInset = 10.0;
+
   Widget _buildCardFace(double artSize) {
     if (widget.artworkAbove) return _buildArtworkCard(artSize);
     return ClipRRect(
       borderRadius: const BorderRadius.all(Radius.circular(AppConstants.radiusLg)),
-      child: Stack(
-        children: [
-          Positioned.fill(child: _buildPortraitBackground(artSize)),
-          Positioned.fill(
-            child: Padding(
-              padding: const EdgeInsets.all(AppConstants.spacingMd),
-              child: Row(
-                children: [
-                  SizedBox(width: artSize + AppConstants.spacingMd),
-                  Expanded(
-                    child: _buildSongInfo(
-                      context,
-                      isSelected: widget.isSelected,
-                    ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          // Banner layout: a framed cover anchored on the right, metadata on
+          // the left over a scrimmed backdrop. The cover is clamped to the card
+          // height so a large art preference cannot overflow a short card.
+          final available = constraints.maxHeight.isFinite
+              ? constraints.maxHeight - _cardInset * 2
+              : artSize;
+          final coverSide =
+              artSize.clamp(40.0, math.max(40.0, available)).toDouble();
+          return Stack(
+            children: [
+              Positioned.fill(child: _buildPortraitBackground()),
+              Positioned.fill(
+                child: Padding(
+                  padding: const EdgeInsets.all(_cardInset),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: _buildSongInfo(
+                          context,
+                          isSelected: widget.isSelected,
+                        ),
+                      ),
+                      const SizedBox(width: AppConstants.spacingSm),
+                      _buildCoverTile(coverSide),
+                    ],
                   ),
-                ],
+                ),
               ),
+              if (widget.isSelectionMode)
+                Positioned(
+                  top: AppConstants.spacingXs,
+                  right: AppConstants.spacingXs,
+                  child: Icon(
+                    widget.isMultiSelected
+                        ? Icons.check_circle_rounded
+                        : Icons.radio_button_unchecked_rounded,
+                    color: widget.isMultiSelected
+                        ? AppColors.accent
+                        : Colors.white54,
+                    size: 22,
+                  ),
+                )
+              else if (widget.onOpenActions != null)
+                Positioned(
+                  top: AppConstants.spacingXs,
+                  right: AppConstants.spacingXs,
+                  child: _buildOverflowButton(),
+                ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  /// Sharp, framed cover tile used by the portrait banner face. Decoding stays
+  /// tied to [artSizeBase]/[artSizeLarge] so the orbit's memory budget is
+  /// unchanged even though the tile is painted on its own.
+  Widget _buildCoverTile(double side) {
+    final radius = BorderRadius.circular(AppConstants.radiusMd);
+    return SizedBox(
+      width: side,
+      height: side,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: radius,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.42),
+              blurRadius: 14,
+              offset: const Offset(0, 6),
             ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: radius,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              _buildRawImage(
+                widget.song.albumArt ?? '',
+                audioSourcePath: widget.song.filePath,
+                artSize:
+                    widget.isSelected ? widget.artSizeLarge : widget.artSizeBase,
+              ),
+              // Hairline frame keeps the cover edge visible on bright artwork.
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  borderRadius: radius,
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.14),
+                    width: 0.5,
+                  ),
+                ),
+              ),
+            ],
           ),
-          if (widget.isSelectionMode)
-            Positioned(
-              top: AppConstants.spacingSm,
-              right: AppConstants.spacingSm,
-              child: Icon(
-                widget.isMultiSelected
-                    ? Icons.check_circle_rounded
-                    : Icons.radio_button_unchecked_rounded,
-                color: widget.isMultiSelected
-                    ? AppColors.accent
-                    : Colors.white54,
-                size: 22,
-              ),
-            )
-          else if (widget.onOpenActions != null)
-            Positioned(
-              top: AppConstants.spacingSm,
-              right: AppConstants.spacingSm,
-              child: _buildOverflowButton(),
-            ),
-        ],
+        ),
       ),
     );
   }
@@ -446,7 +511,7 @@ class _SongCardState extends State<SongCard> {
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           customBorder: const CircleBorder(),
-          onTap: widget.onOpenActions,
+          onTap: () => widget.onOpenActions?.call(),
           child: const Padding(
             padding: EdgeInsets.all(6),
             child: Icon(
@@ -557,86 +622,67 @@ class _SongCardState extends State<SongCard> {
     );
   }
 
-  Widget _buildPortraitBackground(double size) {
+  Widget _buildPortraitBackground() {
     switch (widget.backgroundStyle) {
       case OrbitCardBackgroundStyle.blurGradient:
-        return _buildBlurPortraitBackground(size);
+        return _buildBlurPortraitBackground();
       case OrbitCardBackgroundStyle.albumColorGradient:
         return FutureBuilder<Color?>(
           future: _albumColorFuture,
           builder: (context, snapshot) {
-            return _buildAlbumColorPortraitBackground(size, snapshot.data);
+            return _buildAlbumColorPortraitBackground(snapshot.data);
           },
         );
       case OrbitCardBackgroundStyle.blackGradient:
-        return _buildBlackPortraitBackground(size);
+        return _buildBlackPortraitBackground();
     }
   }
 
-  Widget _buildBlackPortraitBackground(double size) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        _buildRawImage(
-          widget.song.albumArt ?? '',
-          audioSourcePath: widget.song.filePath,
-          fit: BoxFit.cover,
-          artSize: size,
+  Widget _buildBlackPortraitBackground() {
+    return const DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFF1C1C1E), Color(0xFF0B0B0C)],
         ),
-        // Keep the original two-pass black fade for the legacy style.
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Colors.transparent, Colors.black.withValues(alpha: 0.6)],
-              stops: const [0.5, 1.0],
-            ),
-          ),
-        ),
-        Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Colors.transparent, Color(0xD9000000)],
-              stops: [0.25, 0.70],
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 
-  Widget _buildBlurPortraitBackground(double size) {
+  Widget _buildBlurPortraitBackground() {
     return Stack(
       fit: StackFit.expand,
       children: [
-        _buildRawImage(
-          widget.song.albumArt ?? '',
-          audioSourcePath: widget.song.filePath,
-          fit: BoxFit.cover,
-          artSize: size,
+        const DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0xFF1A1A1D), Color(0xFF0A0A0B)],
+            ),
+          ),
         ),
-        // The blur and fade are baked once into a small cached image, so orbit
-        // motion draws a plain texture instead of rerunning a live filter. The
-        // sharp artwork above keeps its independent decode resolution.
+        // The blur is baked once into a small cached texture, so orbit motion
+        // draws a plain image instead of rerunning a live filter. It supplies
+        // ambience behind the sharp framed cover.
         OrbitCardBlur(
           imagePath: widget.song.albumArt,
           audioSourcePath: widget.song.filePath,
         ),
-        // Lighter than the black style so the blurred cover stays visible.
-        Container(
+        // Readability scrim for the metadata column; the cover tile is painted
+        // above this layer, so it stays crisp.
+        DecoratedBox(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors: [
-                Colors.transparent,
-                Colors.black.withValues(alpha: 0.56),
-                Colors.black.withValues(alpha: 0.8),
+                Colors.black.withValues(alpha: 0.74),
+                Colors.black.withValues(alpha: 0.34),
+                Colors.black.withValues(alpha: 0.58),
               ],
-              stops: const [0.22, 0.58, 0.9],
+              stops: const [0.0, 0.62, 1.0],
             ),
           ),
         ),
@@ -644,49 +690,18 @@ class _SongCardState extends State<SongCard> {
     );
   }
 
-  Widget _buildAlbumColorPortraitBackground(double size, Color? albumColor) {
-    if (albumColor == null) return _buildBlackPortraitBackground(size);
+  Widget _buildAlbumColorPortraitBackground(Color? albumColor) {
+    if (albumColor == null) return _buildBlackPortraitBackground();
 
-    final tint = albumSurface(albumColor, 0.5);
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        _buildRawImage(
-          widget.song.albumArt ?? '',
-          audioSourcePath: widget.song.filePath,
-          fit: BoxFit.cover,
-          artSize: size,
+    final tint = albumSurface(albumColor, 0.55);
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [tint, Color.lerp(tint, Colors.black, 0.72)!],
         ),
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Colors.transparent,
-                tint.withValues(alpha: 0.55),
-                tint.withValues(alpha: 0.95),
-              ],
-              stops: const [0.2, 0.55, 0.88],
-            ),
-          ),
-        ),
-        // Darken the tint just enough for white metadata on bright covers.
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Colors.transparent,
-                Colors.black.withValues(alpha: 0.12),
-                Colors.black.withValues(alpha: 0.3),
-              ],
-              stops: const [0.45, 0.7, 1.0],
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 
@@ -743,10 +758,11 @@ class _SongCardState extends State<SongCard> {
               child: Text(
                 widget.song.title,
                 style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 19,
+                  fontWeight: FontWeight.w700,
                   color: Colors.white,
-                  letterSpacing: 0.2,
+                  height: 1.1,
+                  letterSpacing: -0.3,
                 ),
                 maxLines: 1,
                 softWrap: false,
@@ -758,21 +774,23 @@ class _SongCardState extends State<SongCard> {
           Text(
             widget.song.title,
             style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
               color: Colors.white,
-              letterSpacing: 0.2,
+              height: 1.15,
+              letterSpacing: -0.2,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-        const SizedBox(height: AppConstants.spacingXxs),
+        const SizedBox(height: 3),
         Text(
           widget.song.artist,
           style: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-            color: Colors.white70,
+            fontSize: 12.5,
+            fontWeight: FontWeight.w500,
+            color: Color(0xB8FFFFFF),
+            height: 1.2,
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

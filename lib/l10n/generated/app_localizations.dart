@@ -1695,6 +1695,12 @@ abstract class AppLocalizations {
   /// **'Back online'**
   String get backOnline;
 
+  /// lib/features/player/widgets/synced_lyrics_view.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Back to active lyrics'**
+  String get backToActiveLyrics;
+
   /// lib/features/player/screens/full_player_screen.dart:731
   ///
   /// In en, this message translates to:

@@ -954,6 +954,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get backOnline => 'Kembali daring';
 
   @override
+  String get backToActiveLyrics => 'Kembali ke lirik aktif';
+
+  @override
   String get backToLocker => 'Kembali ke Loker';
 
   @override

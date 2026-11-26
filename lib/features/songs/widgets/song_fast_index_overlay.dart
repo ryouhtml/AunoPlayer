@@ -1,5 +1,8 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:auno_player/core/constants/app_constants.dart';
+import 'package:auno_player/core/motion/app_motion.dart';
 import 'package:auno_player/core/theme/adaptive_color_provider.dart';
 import 'package:auno_player/core/theme/app_colors.dart';
 
@@ -212,39 +215,68 @@ class _SongFastIndexOverlayState extends State<SongFastIndexOverlay> {
               ),
             ),
             if (_isDragging && _dragToken != null)
-              Positioned(
-                right: 34,
-                top: constraints.maxHeight * 0.5 - 24,
-                child: Container(
-                  width: 56,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: AppColors.surface.withValues(alpha: 0.92),
-                    borderRadius: BorderRadius.circular(AppConstants.radiusMd),
-                    border: Border.all(
-                      color: AppColors.accent.withValues(alpha: 0.7),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.25),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    _dragToken!,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: AppColors.accent,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
+              _buildDragBubble(tokens, spacing, constraints),
           ],
         );
       },
+    );
+  }
+
+  /// Floating token bubble that tracks the current drag position on the rail
+  /// and springs in when the scrub starts.
+  Widget _buildDragBubble(
+    List<String> tokens,
+    double spacing,
+    BoxConstraints constraints,
+  ) {
+    const bubbleWidth = 58.0;
+    const bubbleHeight = 50.0;
+    // Tokens live inside the rail's vertical padding, each in a `spacing`
+    // slot; the bubble centers on the slot of the token being scrubbed.
+    const railPadding = AppConstants.spacingSm;
+    final index = tokens.indexOf(_dragToken!);
+    final railTop = railPadding + (index + 0.5) * spacing - bubbleHeight / 2;
+    final maxTop = math.max(0.0, constraints.maxHeight - bubbleHeight);
+    final top = railTop.clamp(0.0, maxTop);
+
+    return AnimatedPositioned(
+      duration: AppConstants.animationFast,
+      curve: AppMotionCurves.fluidDeceleration,
+      right: 34,
+      top: top,
+      width: bubbleWidth,
+      height: bubbleHeight,
+      child: TweenAnimationBuilder<double>(
+        tween: Tween<double>(begin: 0.8, end: 1.0),
+        duration: AppMotionDurations.fast,
+        curve: AppMotionCurves.springy,
+        builder: (context, scale, child) =>
+            Transform.scale(scale: scale, child: child),
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.surface.withValues(alpha: 0.94),
+            borderRadius: BorderRadius.circular(AppConstants.radiusMd),
+            border: Border.all(
+              color: AppColors.accent.withValues(alpha: 0.7),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.28),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            _dragToken!,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: AppColors.accent,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -272,7 +304,9 @@ class _SongFastIndexOverlayState extends State<SongFastIndexOverlay> {
   }) {
     if (tokens.isEmpty || spacing <= 0) return null;
 
-    final adjusted = localDy.clamp(0.0, spacing * tokens.length - 0.01);
+    // Clip to the rail's padded content box, then map onto token slots.
+    final contentDy = localDy - AppConstants.spacingSm;
+    final adjusted = contentDy.clamp(0.0, spacing * tokens.length - 0.01);
     final tokenIndex = (adjusted / spacing).floor().clamp(0, tokens.length - 1);
     return tokens[tokenIndex];
   }

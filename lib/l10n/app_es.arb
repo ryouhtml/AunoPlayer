@@ -1051,6 +1051,10 @@
   "@backOnline": {
     "description": "lib/widgets/common/offline_notice.dart:137"
   },
+  "backToActiveLyrics": "Volver a la letra activa",
+  "@backToActiveLyrics": {
+    "description": "lib/features/player/widgets/synced_lyrics_view.dart"
+  },
   "backToLocker": "Volver a Locker",
   "@backToLocker": {
     "description": "lib/features/player/screens/full_player_screen.dart:731"

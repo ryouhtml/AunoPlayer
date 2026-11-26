@@ -886,6 +886,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get backOnline => '已恢复在线';
 
   @override
+  String get backToActiveLyrics => '返回当前歌词';
+
+  @override
   String get backToLocker => '返回 Locker';
 
   @override

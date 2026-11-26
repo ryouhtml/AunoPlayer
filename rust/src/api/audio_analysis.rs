@@ -114,7 +114,7 @@ fn loudness_range(block_msqs: &[f64]) -> Option<f64> {
     if lufs_vals.len() < 4 {
         return None;
     }
-    lufs_vals.sort_by(|a, b| a.partial_cmp(b).unwrap());
+    lufs_vals.sort_by(f64::total_cmp);
     let p10 = lufs_vals[((lufs_vals.len() as f64 - 1.0) * 0.10).round() as usize];
     let p95 = lufs_vals[((lufs_vals.len() as f64 - 1.0) * 0.95).round() as usize];
     Some(p95 - p10)
@@ -281,7 +281,9 @@ pub fn analyze_audio_file(path: String, peak_buckets: u32) -> Option<AudioAnalys
             ring_sum += wss;
             ring.push_back(wss);
             if ring.len() > block_size {
-                ring_sum -= ring.pop_front().unwrap();
+                if let Some(oldest) = ring.pop_front() {
+                    ring_sum -= oldest;
+                }
             }
             since_hop += 1;
             if since_hop >= hop && ring.len() >= block_size {
@@ -327,7 +329,7 @@ pub fn analyze_audio_file(path: String, peak_buckets: u32) -> Option<AudioAnalys
     let dr = if dr_vals.is_empty() {
         None
     } else {
-        dr_vals.sort_by(|a, b| b.partial_cmp(a).unwrap());
+        dr_vals.sort_by(|a, b| b.partial_cmp(a).unwrap_or(core::cmp::Ordering::Equal));
         let top = (dr_vals.len() / 5).max(1);
         Some(dr_vals[..top].iter().sum::<f64>() / top as f64)
     };
@@ -924,8 +926,14 @@ fn spectrogram_column(
     for (i, &sample) in samples.iter().enumerate() {
         fft_input[i] = sample * window[i];
     }
-    fft.process_with_scratch(fft_input, fft_output, fft_scratch)
-        .expect("FFT buffers have the planned lengths");
+    // Guard against mismatched FFT buffer lengths instead of panicking on the
+    // audio path; a failed transform leaves this column silent (zeros).
+    if fft
+        .process_with_scratch(fft_input, fft_output, fft_scratch)
+        .is_err()
+    {
+        return;
+    }
 
     let scale = (4.0 / (fft.len() - 1) as f64).powi(2);
     let power = |k: usize| {
@@ -1481,7 +1489,7 @@ fn analyze_source_audio_file_inner(
     let leading_silence_seconds = if first_loud.is_none() {
         Some(duration_seconds)
     } else {
-        Some(first_loud.unwrap() as f64 / sample_rate_f)
+        Some(first_loud.unwrap_or(0) as f64 / sample_rate_f)
     };
     let trailing_silence_seconds = if let Some(last) = last_loud {
         Some((frames_seen.saturating_sub(last + 1)) as f64 / sample_rate_f)
@@ -1501,7 +1509,7 @@ fn analyze_source_audio_file_inner(
         db.iter_mut().for_each(|power| *power = power_to_db(*power));
         db
     });
-    let left_db = data.next().unwrap();
+    let left_db = data.next().unwrap_or_default();
     let spectrogram = AudioSourceSpectrogram {
         columns: (left_db.len() / SPECTROGRAM_BINS) as u32,
         bins: SPECTROGRAM_BINS as u32,
