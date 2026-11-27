@@ -170,7 +170,7 @@ class _ProviderRow extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                configured ? Icons.public : Icons.publicOff,
+                configured ? LucideIcons.globe : LucideIcons.globeLock,
                 size: 18,
                 color: accent,
               ),
