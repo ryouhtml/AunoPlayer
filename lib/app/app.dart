@@ -61,6 +61,7 @@ import 'package:auno_player/features/milestone/widgets/milestone_card.dart';
 import 'package:auno_player/features/milestone/widgets/streak_popup.dart';
 import 'package:auno_player/features/splash/widgets/splash_overlay.dart';
 import 'package:auno_player/core/utils/dev_log.dart';
+import 'package:auno_player/core/theme/dynamic_theme_scope.dart';
 import 'package:auno_player/l10n/l10n.dart';
 
 /// Main application widget for Flick Player.
@@ -93,21 +94,23 @@ class FlickPlayerApp extends StatelessWidget {
             return Consumer(
               builder: (context, ref, _) {
                 ref.watch(lockScreenVisualizerProvider);
-                return AnnotatedRegion<SystemUiOverlayStyle>(
-                  // App-wide fallback. A route that paints a light surface
-                  // (the onboarding pages) declares its own region; once it
-                  // is gone this one takes over again instead of leaving the
-                  // old icon brightness behind.
-                  value: AppSystemUi.standard,
-                  child: ConnectionNoticeHost(
-                    showNotice: ref.watch(
-                      appPreferencesProvider.select(
-                        (preferences) => preferences.connectionNoticesEnabled,
+                return DynamicThemeScope(
+                  child: AnnotatedRegion<SystemUiOverlayStyle>(
+                    // App-wide fallback. A route that paints a light surface
+                    // (the onboarding pages) declares its own region; once it
+                    // is gone this one takes over again instead of leaving the
+                    // old icon brightness behind.
+                    value: AppSystemUi.standard,
+                    child: ConnectionNoticeHost(
+                      showNotice: ref.watch(
+                        appPreferencesProvider.select(
+                          (preferences) => preferences.connectionNoticesEnabled,
+                        ),
                       ),
-                    ),
-                    child: TutorialHost(
-                      child: SplashOverlay(
-                        child: child ?? const SizedBox.shrink(),
+                      child: TutorialHost(
+                        child: SplashOverlay(
+                          child: child ?? const SizedBox.shrink(),
+                        ),
                       ),
                     ),
                   ),

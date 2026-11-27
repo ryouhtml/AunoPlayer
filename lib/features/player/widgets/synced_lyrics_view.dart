@@ -15,6 +15,7 @@ import 'package:auno_player/features/player/widgets/lyrics_alignment.dart';
 import 'package:auno_player/l10n/l10n.dart';
 import 'package:auno_player/providers/app_preferences_provider.dart';
 import 'package:auno_player/providers/karaoke_provider.dart';
+import 'package:auno_player/providers/performance_provider.dart';
 import 'package:auno_player/services/karaoke_spans.dart';
 import 'package:auno_player/services/lyrics_service.dart';
 import 'package:auno_player/services/player_service.dart';
@@ -415,6 +416,11 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView>
       height: isActive ? 1.18 : 1.24,
       fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
       color: Colors.white.withValues(alpha: opacity),
+      shadows: isActive
+          ? null
+          : const [
+              Shadow(color: Color(0x66000000), blurRadius: 8, offset: Offset(0, 1)),
+            ],
     );
   }
 
@@ -481,17 +487,21 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView>
             ),
           );
 
-    return _MeasuredLine(
-      index: index,
-      onMeasured: _onLineMeasured,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(22),
-            onTap: () => unawaited(_seekToLine(index)),
-            child: _applyLineBlur(content, index),
+    return Transform.scale(
+      scale: isActive ? 1.05 : 0.94,
+      alignment: Alignment.center,
+      child: _MeasuredLine(
+        index: index,
+        onMeasured: _onLineMeasured,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(22),
+              onTap: () => unawaited(_seekToLine(index)),
+              child: _applyLineBlur(content, index),
+            ),
           ),
         ),
       ),
@@ -501,6 +511,9 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView>
   /// Progressive blur on lines further from the active one, on top of the
   /// opacity tiers, so focus reads instantly without a hard edge.
   Widget _applyLineBlur(Widget content, int index) {
+    // Entry-level GPUs (Helio P35 / SD450) keep the depth illusion with
+    // opacity and scale only. Blur is opt-in through the performance profile.
+    if (!ref.watch(lyricsBlurEnabledProvider)) return content;
     final sigma = _blurSigmaForIndex(index);
     if (sigma <= 0 || MediaQuery.disableAnimationsOf(context)) return content;
     return ImageFiltered(

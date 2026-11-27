@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auno_player/src/rust/frb_generated.dart';
 import 'package:auno_player/app/app.dart';
@@ -25,6 +26,17 @@ import 'package:auno_player/src/rust/api/logging.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Edge-to-edge now playing: artwork reaches y = 0 behind a transparent
+  // status bar, and the navigation bar blends into the ambient gradient.
+  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarDividerColor: Colors.transparent,
+    ),
+  );
 
   // 2–4 GB devices cannot afford Flutter's default 100 MB / 1000-entry image
   // cache. Album art is downsampled at every call site; this is the hard

@@ -15,6 +15,8 @@ import 'package:auno_player/features/player/screens/lyrics_sync_screen.dart';
 import 'package:auno_player/features/player/widgets/online_lyrics_search_sheet.dart';
 import 'package:auno_player/features/player/widgets/synced_lyrics_view.dart';
 import 'package:auno_player/providers/app_preferences_provider.dart';
+import 'package:auno_player/providers/lyrics_engine_provider.dart';
+import 'package:auno_player/services/lyrics_repository.dart';
 import 'package:auno_player/l10n/english_l10n.dart';
 class InlineLyricsPanel extends ConsumerStatefulWidget {
   final PlayerService playerService;
@@ -71,10 +73,9 @@ class _InlineLyricsPanelState extends ConsumerState<InlineLyricsPanel> {
       _lyricsData = null;
     });
 
-    final loaded = await widget.lyricsService.loadLyricsForSong(
-      song,
-      forceRefresh: true,
-    );
+    final repository = ref.read(lyricsRepositoryProvider);
+    final settings = ref.read(lyricsEngineSettingsProvider);
+    final document = await repository.loadForSong(song, settings: settings);
     final manualSource = await widget.lyricsService.getManualLyricsPathForSong(
       song,
     );
@@ -82,7 +83,7 @@ class _InlineLyricsPanelState extends ConsumerState<InlineLyricsPanel> {
     if (widget.song.id != song.id) return;
 
     setState(() {
-      _lyricsData = loaded;
+      _lyricsData = document?.toLyricsData();
       _hasManualLyricsSelection =
           manualSource != null && manualSource.isNotEmpty;
       _isLoading = false;

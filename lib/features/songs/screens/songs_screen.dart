@@ -11,6 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:auno_player/core/theme/app_colors.dart';
 import 'package:auno_player/core/theme/adaptive_color_provider.dart';
+import 'package:auno_player/core/theme/dynamic_palette.dart';
+import 'package:auno_player/core/theme/dynamic_theme_scope.dart';
 import 'package:auno_player/core/constants/app_constants.dart';
 import 'package:auno_player/core/utils/adaptive_layout.dart';
 import 'package:auno_player/core/utils/app_haptics.dart';
@@ -20,6 +22,7 @@ import 'package:auno_player/core/utils/string_sort_utils.dart';
 import 'package:auno_player/models/song.dart';
 import 'package:auno_player/models/song_view_mode.dart';
 import 'package:auno_player/features/songs/widgets/orbit_scroll.dart';
+import 'package:auno_player/features/songs/widgets/drum_scroll_item.dart';
 import 'package:auno_player/features/songs/widgets/song_fast_index_overlay.dart';
 import 'package:auno_player/features/songs/widgets/song_actions_bottom_sheet.dart';
 import 'package:auno_player/features/songs/widgets/batch_metadata_editor_sheet.dart';
@@ -34,7 +37,6 @@ import 'package:auno_player/models/nav_bar_config.dart';
 import 'package:auno_player/models/orbit_card_background_style.dart';
 import 'package:auno_player/widgets/common/glass_search_bar.dart';
 import 'package:auno_player/widgets/common/cached_image_widget.dart';
-import 'package:auno_player/widgets/common/flick_artwork_placeholder.dart';
 import 'package:auno_player/widgets/common/glass_bottom_sheet.dart';
 import 'package:auno_player/widgets/common/surface_icon_button.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -71,7 +73,7 @@ class SongsScreen extends ConsumerStatefulWidget {
 
 class _SongsScreenState extends ConsumerState<SongsScreen>
     with SingleTickerProviderStateMixin {
-  static const double _listItemExtent = 80;
+  static const double _listItemExtent = 74;
 
   static const int _defaultAlbumGridPageSize = 8;
   static const int _minAlbumGridPageSize = 1;
@@ -86,6 +88,7 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
   int _selectedIndex = 0;
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _listScrollController = ScrollController();
+  final ValueNotifier<double> _listScrollOffset = ValueNotifier<double>(0);
   final ScrollController _albumGridScrollController = ScrollController();
   final OrbitScrollController _orbitScrollController = OrbitScrollController();
   String _searchQuery = '';
@@ -134,6 +137,7 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
     _listScrollController.removeListener(_onListScroll);
     _albumGridScrollController.removeListener(_onAlbumGridScroll);
     _listScrollController.dispose();
+    _listScrollOffset.dispose();
     _albumGridScrollController.dispose();
     _searchController.dispose();
     _fastIndexTimer?.cancel();
@@ -565,6 +569,7 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
           final bottomPadding = needsScroll
               ? AppConstants.navBarHeight + 120
               : AppConstants.navBarHeight + AppConstants.spacingLg;
+          final activeSongId = ref.watch(currentSongProvider)?.id;
           return ListView.builder(
             controller: _listScrollController,
             itemExtent: _listItemExtent,
@@ -582,9 +587,12 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
               final isSelected = index == _selectedIndex;
               final isMultiSelected = _selectedIds.contains(song.id);
 
-              return Padding(
+              return DrumScrollItem(
                 key: ValueKey(song.id),
-                padding: const EdgeInsets.only(bottom: AppConstants.spacingSm),
+                index: index,
+                itemExtent: _listItemExtent,
+                viewportHeight: constraints.maxHeight,
+                scrollOffset: _listScrollOffset,
                 child: _QueueSwipeListItem(
                   swipeActionsEnabled: swipeActionsEnabled && !_selectionMode,
                   onQueued: () async {
@@ -596,6 +604,7 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
                   child: _SongListTile(
                     song: song,
                     isSelected: isSelected,
+                    isActive: song.id == activeSongId,
                     isSelectionMode: _selectionMode,
                     isMultiSelected: isMultiSelected,
                     onTap: () async {
@@ -619,6 +628,17 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
                           onSelect: () => _enterSelectionMode(song.id),
                         );
                       }
+                    },
+                    onMenu: () {
+                      if (_selectionMode) {
+                        _toggleSelection(song.id);
+                        return;
+                      }
+                      SongActionsBottomSheet.show(
+                        context,
+                        song,
+                        onSelect: () => _enterSelectionMode(song.id),
+                      );
                     },
                   ),
                 ),
@@ -1208,6 +1228,10 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
     _showFastIndexOverlay();
     if (!_listScrollController.hasClients) return;
     final position = _listScrollController.position;
+    final nextOffset = position.pixels;
+    if ((_listScrollOffset.value - nextOffset).abs() > 0.5) {
+      _listScrollOffset.value = nextOffset;
+    }
     if (position.pixels >= position.maxScrollExtent - _listLoadMoreThreshold) {
       _loadMoreListSongs();
     }
@@ -2335,131 +2359,280 @@ class _QueueSwipeListItem extends StatefulWidget {
 class _SongListTile extends StatelessWidget {
   final Song song;
   final bool isSelected;
+  final bool isActive;
   final bool isSelectionMode;
   final bool isMultiSelected;
   final Future<void> Function() onTap;
   final VoidCallback onLongPress;
+  final VoidCallback onMenu;
 
   const _SongListTile({
     required this.song,
     required this.isSelected,
+    required this.isActive,
     required this.isSelectionMode,
     required this.isMultiSelected,
     required this.onTap,
     required this.onLongPress,
+    required this.onMenu,
   });
 
   @override
   Widget build(BuildContext context) {
+    final palette =
+        DynamicThemeData.maybeOf(context) ?? DynamicThemePalette.neutral;
     final titleStyle = Theme.of(context).textTheme.bodyLarge?.copyWith(
-      color: context.adaptiveTextPrimary,
+      color: palette.onSurface,
       fontWeight: FontWeight.w600,
     );
     final subtitleStyle = Theme.of(
       context,
-    ).textTheme.bodySmall?.copyWith(color: context.adaptiveTextSecondary);
+    ).textTheme.bodySmall?.copyWith(color: palette.onSurfaceMuted);
     final durationStyle = Theme.of(context).textTheme.bodySmall?.copyWith(
-      color: context.adaptiveTextTertiary,
+      color: palette.onSurfaceMuted,
       fontFeatures: const [FontFeature.tabularFigures()],
     );
+    final selected = isSelected || isMultiSelected;
+    final borderColor = isActive
+        ? palette.accent.withValues(alpha: 0.92)
+        : selected
+            ? AppColors.accent.withValues(alpha: 0.45)
+            : AppColors.glassBorder;
 
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(AppConstants.radiusLg),
+        borderRadius: BorderRadius.circular(18),
         onTap: () async {
           AppHaptics.tap();
           await onTap();
         },
         onLongPress: onLongPress,
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppConstants.spacingMd,
-            vertical: AppConstants.spacingSm,
-          ),
+          height: 66,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppConstants.radiusLg),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: (isSelected || isMultiSelected)
-                  ? [
-                      AppColors.surfaceLight.withValues(alpha: 0.9),
-                      AppColors.surface.withValues(alpha: 0.95),
-                    ]
-                  : [
-                      AppColors.surfaceLight.withValues(alpha: 0.65),
-                      AppColors.surface.withValues(alpha: 0.78),
-                    ],
-            ),
+            borderRadius: BorderRadius.circular(18),
+            color: palette.cardTint,
             border: Border.all(
-              color: (isSelected || isMultiSelected)
-                  ? AppColors.accent.withValues(alpha: 0.45)
-                  : AppColors.glassBorder,
+              color: borderColor,
+              width: isActive ? 1.2 : 1,
             ),
+            boxShadow: isActive
+                ? [
+                    BoxShadow(
+                      color: palette.activeGlow,
+                      blurRadius: 14,
+                      spreadRadius: -2,
+                    ),
+                  ]
+                : null,
           ),
-          child: Row(
+          clipBehavior: Clip.antiAlias,
+          child: Stack(
+            fit: StackFit.expand,
             children: [
-              if (isSelectionMode) ...[
-                Icon(
-                  isMultiSelected ? LucideIcons.check : LucideIcons.circle,
-                  color: isMultiSelected
-                      ? AppColors.accent
-                      : context.adaptiveTextTertiary,
-                  size: context.responsiveIcon(AppConstants.iconSizeMd),
-                ),
-                const SizedBox(width: AppConstants.spacingMd),
-              ],
-              ClipRRect(
-                borderRadius: BorderRadius.circular(AppConstants.radiusMd),
-                child: SizedBox(
-                  width: 46,
-                  height: 46,
-                  child: CachedImageWidget(
-                    imagePath: song.albumArt,
-                    audioSourcePath: song.filePath,
-                    fit: BoxFit.cover,
-                    useThumbnail: true,
-                    thumbnailWidth: 92,
-                    thumbnailHeight: 92,
-                    placeholder: const ColoredBox(
-                      color: AppColors.surface,
-                      child: FlickArtworkPlaceholder(size: 22, opacity: 0.9),
-                    ),
-                    errorWidget: const ColoredBox(
-                      color: AppColors.surface,
-                      child: FlickArtworkPlaceholder(size: 22, opacity: 0.9),
-                    ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: FractionallySizedBox(
+                  widthFactor: 0.42,
+                  heightFactor: 1,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      CachedImageWidget(
+                        imagePath: song.albumArt,
+                        audioSourcePath: song.filePath,
+                        fit: BoxFit.cover,
+                        useThumbnail: true,
+                        thumbnailWidth: 120,
+                        thumbnailHeight: 120,
+                        placeholder: ColoredBox(color: palette.surface),
+                        errorWidget: ColoredBox(color: palette.surface),
+                      ),
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [
+                              palette.surface,
+                              palette.surface.withValues(alpha: 0.35),
+                              palette.surface.withValues(alpha: 0.05),
+                            ],
+                            stops: const [0.0, 0.45, 1.0],
+                          ),
+                        ),
+                      ),
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.16),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              const SizedBox(width: AppConstants.spacingMd),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: AppConstants.spacingMd,
+                  right: 2,
+                ),
+                child: Row(
                   children: [
-                    Text(
-                      song.title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: titleStyle,
+                    if (isSelectionMode) ...[
+                      Icon(
+                        isMultiSelected
+                            ? LucideIcons.check
+                            : LucideIcons.circle,
+                        color: isMultiSelected
+                            ? palette.accent
+                            : palette.onSurfaceMuted,
+                        size: context.responsiveIcon(
+                          AppConstants.iconSizeMd,
+                        ),
+                      ),
+                      const SizedBox(width: AppConstants.spacingSm),
+                    ],
+                    if (isActive) ...[
+                      _EqualizerBars(color: palette.accent),
+                      const SizedBox(width: 8),
+                    ],
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            song.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: titleStyle,
+                          ),
+                          const SizedBox(height: 3),
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  song.artist,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: subtitleStyle,
+                                ),
+                              ),
+                              const SizedBox(width: 6),
+                              _qualityBadge(palette),
+                              const SizedBox(width: 8),
+                              Text(
+                                song.formattedDuration,
+                                style: durationStyle,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      '${song.artist} • ${song.fileType.toUpperCase()}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: subtitleStyle,
+                    IconButton(
+                      onPressed: onMenu,
+                      visualDensity: VisualDensity.compact,
+                      iconSize: 18,
+                      color: palette.onSurfaceMuted,
+                      icon: const Icon(LucideIcons.moreVertical),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: AppConstants.spacingSm),
-              Text(song.formattedDuration, style: durationStyle),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _qualityBadge(DynamicThemePalette palette) {
+    final label = _qualityLabel();
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: palette.accent.withValues(alpha: 0.14),
+        border: Border.all(color: palette.accent.withValues(alpha: 0.28)),
+      ),
+      child: Text(
+        label,
+        maxLines: 1,
+        style: TextStyle(
+          fontFamily: 'GoogleSansFlex',
+          fontSize: 9.5,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.3,
+          color: palette.accent,
+        ),
+      ),
+    );
+  }
+
+  String _qualityLabel() {
+    if (song.isDsd) return song.dsdRateLabel;
+    final type = song.fileType.toUpperCase();
+    final rate = song.sampleRate;
+    final depth = song.bitDepth;
+    if (rate != null && rate > 0 && depth != null) {
+      final khz = rate % 1000 == 0
+          ? '${rate ~/ 1000}'
+          : (rate / 1000).toStringAsFixed(1);
+      return '$type $depth/$khz';
+    }
+    return type;
+  }
+}
+
+/// Three tiny bars that pulse while this row is the playing track.
+class _EqualizerBars extends StatefulWidget {
+  const _EqualizerBars({required this.color});
+
+  final Color color;
+
+  @override
+  State<_EqualizerBars> createState() => _EqualizerBarsState();
+}
+
+class _EqualizerBarsState extends State<_EqualizerBars>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 900),
+  )..repeat();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 14,
+      height: 14,
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, _) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              for (var i = 0; i < 3; i++)
+                Container(
+                  width: 2.6,
+                  height: 4 + (sin(_controller.value * 2 * pi + i * 1.7).abs() * 9),
+                  decoration: BoxDecoration(
+                    color: widget.color,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+            ],
+          );
+        },
       ),
     );
   }

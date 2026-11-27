@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:auno_player/features/manual/screens/manual_screen.dart';
 import 'package:auno_player/features/milestone/screens/milestones_screen.dart';
@@ -13,7 +13,9 @@ import '../screens/interface_settings_screen.dart';
 import '../screens/library_settings_screen.dart';
 import '../screens/logs_screen.dart';
 import '../screens/lyrics_settings_screen.dart';
+import '../screens/lyrics_sources_screen.dart';
 import '../screens/orbit_settings_screen.dart';
+import '../screens/performance_settings_screen.dart';
 import '../screens/playback_display_settings_screen.dart';
 import '../screens/player_layout_settings_screen.dart';
 import '../screens/privacy_policy_screen.dart';
@@ -265,6 +267,19 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
         _section('saving2', l10n.saving2, [
           ('matchAudioFilename', l10n.matchAudioFilename),
         ]),
+        _section('engine', 'Lyrics engine', [
+          ('lyricsSources', 'Lyrics sources'),
+          ('embeddedLyricsFirst', 'Embedded lyrics first'),
+          ('onlineProviders', 'Online providers'),
+        ], keywords: 'provider fallback online embedded sidecar'),
+        _section('translation', 'Translation', [
+          ('off', l10n.off),
+          ('indonesian', 'Indonesian'),
+          ('english', 'English'),
+          ('spanish', 'Spanish'),
+          ('filipino', 'Filipino'),
+          ('chinese', 'Chinese (Simplified)'),
+        ], keywords: 'translate terjemahan terjemahkan'),
         _section('display', l10n.display, [
           ('karaokeEffect', l10n.karaokeEffect),
           ('karaokeSweepStyleAuto', l10n.karaokeSweepStyleAuto),
@@ -273,6 +288,50 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
           ('left', l10n.left),
           ('center', l10n.center),
           ('right', l10n.right),
+        ]),
+      ],
+    ),
+    page(
+      'lyrics_sources',
+      'Lyrics sources',
+      media,
+      LucideIcons.globe,
+      (id) => LyricsSourcesScreen(initialSection: id),
+      keywords:
+          'lrc.red bini betterlyrics portato paxsenix spotify musixmatch '
+          'lyricsplus unison youtube captions music kugou lrclib genius '
+          'provider priority fallback online embedded',
+      sections: [
+        _section('lookupOrder', 'Lookup order', [
+          ('embeddedLyricsFirst', 'Embedded lyrics first'),
+          ('onlineProviders', 'Online providers'),
+        ]),
+        _section('providerPriority', 'Provider priority', []),
+      ],
+    ),
+    page(
+      'performance_settings',
+      'Performance',
+      system,
+      Icons.speed,
+      (id) => PerformanceSettingsScreen(initialSection: id),
+      keywords:
+          'graphics mode lite high-end blur glass lyrics device class ram '
+          'memory cores refresh rate entry level',
+      sections: [
+        _section('graphicsMode', 'Graphics mode', [
+          ('auto', 'Auto'),
+          ('lite', 'Lite'),
+          ('highEnd', 'High-End'),
+        ]),
+        _section('effects', 'Effects', [
+          ('blurEffects', 'Lyrics & glass blur'),
+        ]),
+        _section('device', 'Detected device', [
+          ('class', 'Class'),
+          ('memory', 'Memory'),
+          ('cpuCores', 'CPU cores'),
+          ('display', 'Display'),
         ]),
       ],
     ),

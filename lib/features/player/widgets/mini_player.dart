@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auno_player/core/theme/app_colors.dart';
+import 'package:auno_player/core/theme/dynamic_palette.dart';
+import 'package:auno_player/core/theme/dynamic_theme_scope.dart';
 import 'package:auno_player/core/constants/app_constants.dart';
 import 'package:auno_player/core/utils/app_haptics.dart';
 import 'package:auno_player/core/utils/navigation_helper.dart';
@@ -82,6 +84,8 @@ class _MiniPlayerState extends ConsumerState<MiniPlayer> {
       valueListenable: _playerService.currentSongNotifier,
       builder: (context, song, _) {
         if (song == null) return const SizedBox.shrink();
+        final palette =
+            DynamicThemeData.maybeOf(context) ?? DynamicThemePalette.neutral;
 
         return GestureDetector(
           onTap: () {
@@ -95,11 +99,11 @@ class _MiniPlayerState extends ConsumerState<MiniPlayer> {
             margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             height: 72,
             decoration: BoxDecoration(
-              color: AppColors.surface.withValues(alpha: 0.6),
+              color: palette.glassPill,
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
-                color: AppColors.glassBorder.withValues(alpha: 0.3),
-                width: 1.5,
+                color: palette.accent.withValues(alpha: 0.28),
+                width: 1,
               ),
               boxShadow: [
                 BoxShadow(
@@ -172,13 +176,13 @@ class _MiniPlayerState extends ConsumerState<MiniPlayer> {
                             left: 8,
                             top: 8,
                             bottom: 8,
-                            right: 14,
+                            right: 12,
                           ),
-                          width: 56,
-                          height: 56,
+                          width: 44,
+                          height: 44,
                           decoration: BoxDecoration(
                             color: AppColors.surfaceDark,
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(14),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withValues(alpha: 0.3),
@@ -188,14 +192,14 @@ class _MiniPlayerState extends ConsumerState<MiniPlayer> {
                             ],
                           ),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(14),
                             child: CachedImageWidget(
                               imagePath: song.albumArt,
                               audioSourcePath: song.filePath,
                               fit: BoxFit.cover,
                               useThumbnail: true,
-                              thumbnailWidth: 128,
-                              thumbnailHeight: 128,
+                              thumbnailWidth: 120,
+                              thumbnailHeight: 120,
                               placeholder: Container(
                                 color: AppColors.surfaceDark,
                                 child: const FlickArtworkPlaceholder(
@@ -283,20 +287,9 @@ class _MiniPlayerState extends ConsumerState<MiniPlayer> {
                           builder: (context, isPlaying, _) {
                             return Container(
                               margin: const EdgeInsets.only(right: 12),
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: isPlaying
-                                    ? AppColors.accent.withValues(alpha: 0.15)
-                                    : AppColors.glassBackgroundStrong,
-                                border: Border.all(
-                                  color: isPlaying
-                                      ? AppColors.accent.withValues(
-                                          alpha: 0.3,
-                                        )
-                                      : AppColors.glassBorder.withValues(
-                                          alpha: 0.2,
-                                        ),
-                                ),
+                                color: Colors.white,
                               ),
                               child: Material(
                                 color: Colors.transparent,
@@ -312,9 +305,7 @@ class _MiniPlayerState extends ConsumerState<MiniPlayer> {
                                       isPlaying
                                           ? LucideIcons.pause
                                           : LucideIcons.play,
-                                      color: isPlaying
-                                          ? AppColors.accentLight
-                                          : AppColors.textPrimary,
+                                      color: AppColors.background,
                                       size: 20,
                                     ),
                                   ),

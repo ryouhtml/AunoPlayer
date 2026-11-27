@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:auno_player/core/theme/adaptive_color_provider.dart';
 import 'package:auno_player/core/constants/app_constants.dart';
@@ -7,6 +8,7 @@ import 'package:auno_player/features/settings/screens/audio_settings_screen.dart
 import 'package:auno_player/features/settings/screens/bluetooth_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/interface_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/library_settings_screen.dart';
+import 'package:auno_player/features/settings/screens/performance_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/playback_display_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/queue_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/ui_customization_settings_screen.dart';
@@ -17,6 +19,7 @@ import 'package:auno_player/core/utils/navigation_helper.dart';
 import 'package:auno_player/features/settings/widgets/settings_widgets.dart';
 import 'package:auno_player/features/milestone/screens/milestones_screen.dart';
 import 'package:auno_player/features/manual/screens/manual_screen.dart';
+import 'package:auno_player/providers/lyrics_engine_provider.dart';
 import 'package:auno_player/services/milestone_service.dart';
 import 'package:auno_player/l10n/settings_l10n.dart';
 import 'package:auno_player/widgets/common/baybayin_text.dart';
@@ -25,14 +28,14 @@ import '../data/settings_search.dart';
 import '../data/settings_search_catalog.dart';
 import '../widgets/settings_search_results.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   int _milestonesUnlocked = 0;
   final _searchController = TextEditingController();
   String _query = '';
@@ -66,6 +69,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     // Background is handled by _PersistentBackground in MaterialApp.builder.
+    final lyricsProviders = ref.watch(enabledLyricsProvidersProvider);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
@@ -186,7 +190,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             iconBg: const Color(0xFF4A6F2D),
                             iconFg: const Color(0xFFC4FF8B),
                             title: l10n.englishForFilipino.lyrics,
-                            subtitle: l10n.lyricsSavingBehavior,
+                            subtitle: lyricsProviders.isEmpty
+                                ? 'No online sources enabled'
+                                : '${lyricsProviders.length} sources · '
+                                      '${lyricsProviders.first.displayName} first',
                             onTap: () => _navigate(
                               context,
                               const LyricsSettingsScreen(),
@@ -234,6 +241,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onTap: () => _navigate(
                               context,
                               const WidgetSettingsScreen(),
+                            ),
+                          ),
+                          const SettingsDivider(),
+                          _CategoryTile(
+                            icon: Icons.speed,
+                            iconBg: const Color(0xFF2D6F6F),
+                            iconFg: const Color(0xFF8BFFE8),
+                            title: 'Performance',
+                            subtitle:
+                                'Graphics mode, blur effects and device class',
+                            onTap: () => _navigate(
+                              context,
+                              const PerformanceSettingsScreen(),
                             ),
                           ),
                         ],

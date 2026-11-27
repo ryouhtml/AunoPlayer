@@ -88,7 +88,7 @@ class PlaybackClock with WidgetsBindingObserver {
     service?.positionNotifier.removeListener(_onEnginePosition);
     service?.isPlayingNotifier.removeListener(_onEnginePlayState);
     service?.playbackSpeedNotifier.removeListener(_onEngineRate);
-    if (WidgetsBinding.instance.isRootWidgetAttached) {
+    if (WidgetsBinding.instance.lifecycleState != null) {
       WidgetsBinding.instance.removeObserver(this);
     }
     _service = null;
