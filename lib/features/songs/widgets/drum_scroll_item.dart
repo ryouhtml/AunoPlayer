@@ -57,7 +57,7 @@ class DrumScrollItem extends StatelessWidget {
                 ..setEntry(3, 2, 0.0012)
                 ..rotateX(angle)
                 ..scale(scale),
-              child: child,
+              child: child!,
             ),
           );
         },
