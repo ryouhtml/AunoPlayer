@@ -67,7 +67,7 @@ class GlassmorphismContainer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final effectiveBorderRadius =
         borderRadius ?? BorderRadius.circular(AppConstants.radiusLg);
-    final blur = useFilter ?? ref.watch(blurEffectsEnabledProvider);
+    final bool blur = useFilter ?? ref.watch(blurEffectsEnabledProvider);
 
     return Container(
       margin: margin,
