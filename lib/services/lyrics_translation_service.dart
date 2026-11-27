@@ -74,7 +74,7 @@ class LyricsTranslationService {
     }
 
     final values = translated;
-    if (values == null || values.length != document.lines.length) {
+    if (values.length != document.lines.length) {
       return document;
     }
 
