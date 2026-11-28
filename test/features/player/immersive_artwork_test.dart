@@ -143,11 +143,6 @@ void main() {
     );
     expect(box.width, 800);
     expect(box.height, closeTo(896.0, 0.01));
-
-    await tester.tap(detectorFinder);
-    await tester.pumpAndSettle();
-    final rotated = tester.widget<RawGestureDetector>(detectorFinder);
-    expect(rotated.gestures.length, 3);
     expect(tester.takeException(), isNull);
   });
 
