@@ -15,15 +15,6 @@ class LyricsSettingsScreen extends ConsumerWidget {
 
   final String? initialSection;
 
-  static const _translationLanguages = <(String, String, String)>[
-    ('off', 'Off', 'Show lyrics exactly as provided'),
-    ('id', 'Indonesian', 'Translate lyrics to Bahasa Indonesia'),
-    ('en', 'English', 'Translate lyrics to English'),
-    ('es', 'Spanish', 'Translate lyrics to Spanish'),
-    ('tl', 'Filipino', 'Translate lyrics to Filipino'),
-    ('zh', 'Chinese (Simplified)', 'Translate lyrics to Simplified Chinese'),
-  ];
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appPrefs = ref.watch(appPreferencesProvider);
@@ -31,10 +22,33 @@ class LyricsSettingsScreen extends ConsumerWidget {
     final enabledProviders = ref.watch(enabledLyricsProvidersProvider);
     final engineNotifier = ref.read(lyricsEngineSettingsProvider.notifier);
 
+    final translationLanguages = <(String, String, String)>[
+      ('off', l10n.off, l10n.translationLanguageOffDescription),
+      ('id', l10n.indonesian, l10n.translationLanguageIdDescription),
+      ('en', l10n.english, l10n.translationLanguageEnDescription),
+      (
+        'es',
+        l10n.translationLanguageSpanish,
+        l10n.translationLanguageEsDescription,
+      ),
+      (
+        'tl',
+        l10n.translationLanguageFilipino,
+        l10n.translationLanguageTlDescription,
+      ),
+      (
+        'zh',
+        l10n.translationLanguageChinese,
+        l10n.translationLanguageZhDescription,
+      ),
+    ];
+
     final providerSummary = enabledProviders.isEmpty
-        ? 'No online providers enabled'
-        : '${enabledProviders.length} enabled · '
-              '${enabledProviders.first.displayName} first';
+        ? l10n.lyricsSourcesSummaryNone
+        : l10n.lyricsSourcesSummary(
+            enabledProviders.length,
+            enabledProviders.first.displayName,
+          );
 
     return SettingsScaffold(
       title: l10n.englishForFilipino.lyrics,
@@ -60,12 +74,12 @@ class LyricsSettingsScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: AppConstants.spacingLg),
-          SettingsSectionHeader('Lyrics engine', sectionId: 'engine'),
+          SettingsSectionHeader(l10n.lyricsEngine, sectionId: 'engine'),
           SettingsCard(
             children: [
               NavigationSetting(
                 icon: LucideIcons.globe,
-                title: 'Lyrics sources',
+                title: l10n.lyricsSources,
                 subtitle: providerSummary,
                 onTap: () => NavigationHelper.pushOnRoot(
                   context,
@@ -77,35 +91,35 @@ class LyricsSettingsScreen extends ConsumerWidget {
               const SettingsDivider(),
               ToggleSetting(
                 icon: LucideIcons.fileText,
-                title: 'Embedded lyrics first',
-                subtitle: 'Tags and .lrc sidecars win before any online request.',
+                title: l10n.embeddedLyricsFirst,
+                subtitle: l10n.embeddedLyricsFirstDescription,
                 value: engine.embeddedFirst,
                 onChanged: engineNotifier.setEmbeddedFirst,
               ),
               const SettingsDivider(),
               ToggleSetting(
                 icon: LucideIcons.globe,
-                title: 'Online providers',
-                subtitle: 'When off, only embedded and cached lyrics are used.',
+                title: l10n.onlineProviders,
+                subtitle: l10n.onlineProvidersDescription,
                 value: engine.onlineEnabled,
                 onChanged: engineNotifier.setOnlineEnabled,
               ),
             ],
           ),
           const SizedBox(height: AppConstants.spacingLg),
-          SettingsSectionHeader('Translation', sectionId: 'translation'),
+          SettingsSectionHeader(l10n.translation, sectionId: 'translation'),
           SettingsCard(
             children: [
-              for (var i = 0; i < _translationLanguages.length; i++) ...[
+              for (var i = 0; i < translationLanguages.length; i++) ...[
                 if (i > 0) const SettingsDivider(),
                 SelectionSetting(
                   icon: i == 0 ? Icons.translate : Icons.translate_rounded,
-                  title: _translationLanguages[i].$2,
-                  subtitle: _translationLanguages[i].$3,
+                  title: translationLanguages[i].$2,
+                  subtitle: translationLanguages[i].$3,
                   selected:
-                      engine.translationLanguage == _translationLanguages[i].$1,
+                      engine.translationLanguage == translationLanguages[i].$1,
                   onTap: () => engineNotifier.setTranslationLanguage(
-                    _translationLanguages[i].$1,
+                    translationLanguages[i].$1,
                   ),
                 ),
               ],
@@ -118,9 +132,7 @@ class LyricsSettingsScreen extends ConsumerWidget {
                 horizontal: AppConstants.spacingXs,
               ),
               child: Text(
-                'Online translation needs AUNO_LYRICS_TRANSLATE_ENDPOINT at '
-                'build time. Translations embedded in TTML files are always '
-                'shown.',
+                l10n.onlineTranslationEndpointNotice,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                   height: 1.4,

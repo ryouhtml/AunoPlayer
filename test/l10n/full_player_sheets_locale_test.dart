@@ -19,8 +19,12 @@ import 'package:auno_player/features/player/widgets/share/share_bottom_sheet.dar
 import 'package:auno_player/l10n/l10n.dart';
 import 'package:auno_player/models/playlist.dart';
 import 'package:auno_player/models/song.dart';
+import 'package:auno_player/models/synced_lyric_document.dart';
+import 'package:auno_player/providers/lyrics_engine_provider.dart';
 import 'package:auno_player/providers/player_provider.dart';
 import 'package:auno_player/providers/playlist_provider.dart';
+import 'package:auno_player/services/lyrics_engine_settings.dart';
+import 'package:auno_player/services/lyrics_repository.dart';
 import 'package:auno_player/services/lyrics_service.dart';
 import 'package:auno_player/services/player_service.dart';
 import 'package:auno_player/widgets/common/song_file_tag_extras.dart';
@@ -81,6 +85,17 @@ class _EmptyLyricsService extends LyricsService {
   Future<String?> getManualLyricsPathForSong(Song song) async => null;
 }
 
+/// The inline panel now reads through [lyricsRepositoryProvider], so the
+/// injected [LyricsService] alone no longer keeps these widget tests offline.
+class _EmptyLyricsRepository extends LyricsRepository {
+  @override
+  Future<SyncedLyricDocument?> loadForSong(
+    Song song, {
+    required LyricsEngineSettings settings,
+    bool forceRefresh = false,
+  }) async => null;
+}
+
 class _FakePlayerService extends Fake implements PlayerService {
   @override
   final ValueNotifier<Song?> currentSongNotifier = ValueNotifier(null);
@@ -104,6 +119,7 @@ Widget _host(Widget child, {Locale locale = kFilipinoLocale}) => ProviderScope(
     playerProvider.overrideWith(_EmptyPlayer.new),
     currentSongProvider.overrideWithValue(null),
     playlistsProvider.overrideWith(_EmptyPlaylists.new),
+    lyricsRepositoryProvider.overrideWithValue(_EmptyLyricsRepository()),
   ],
   child: MaterialApp(
     theme: AppTheme.darkTheme,
@@ -123,6 +139,7 @@ Widget _playlistHost(Widget child) => ProviderScope(
   overrides: [
     playerProvider.overrideWith(_EmptyPlayer.new),
     currentSongProvider.overrideWithValue(null),
+    lyricsRepositoryProvider.overrideWithValue(_EmptyLyricsRepository()),
     playlistsProvider.overrideWith(
       () => _FixturePlaylists([
         Playlist(

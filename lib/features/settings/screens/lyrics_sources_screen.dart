@@ -8,6 +8,7 @@ import 'package:auno_player/core/theme/app_colors.dart';
 import 'package:auno_player/features/settings/widgets/settings_widgets.dart';
 import 'package:auno_player/providers/lyrics_engine_provider.dart';
 import 'package:auno_player/services/lyrics_providers.dart';
+import 'package:auno_player/l10n/settings_l10n.dart';
 
 /// Multi-provider lyric engine configuration.
 ///
@@ -31,28 +32,26 @@ class LyricsSourcesScreen extends ConsumerWidget {
     }
 
     return SettingsScaffold(
-      title: 'Lyrics sources',
+      title: l10n.lyricsSources,
       initialSection: initialSection,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SettingsSectionHeader('Lookup order', sectionId: 'lookupOrder'),
+          SettingsSectionHeader(l10n.lookupOrder, sectionId: 'lookupOrder'),
           SettingsCard(
             children: [
               ToggleSetting(
                 icon: LucideIcons.fileText,
-                title: 'Embedded lyrics first',
-                subtitle:
-                    'Tags and .lrc sidecars win before any online request.',
+                title: l10n.embeddedLyricsFirst,
+                subtitle: l10n.embeddedLyricsFirstDescription,
                 value: settings.embeddedFirst,
                 onChanged: notifier.setEmbeddedFirst,
               ),
               const SettingsDivider(),
               ToggleSetting(
                 icon: LucideIcons.globe,
-                title: 'Online providers',
-                subtitle:
-                    'When off, only embedded and cached lyrics are used.',
+                title: l10n.onlineProviders,
+                subtitle: l10n.onlineProvidersDescription,
                 value: settings.onlineEnabled,
                 onChanged: notifier.setOnlineEnabled,
               ),
@@ -60,7 +59,7 @@ class LyricsSourcesScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppConstants.spacingLg),
           SettingsSectionHeader(
-            'Provider priority',
+            l10n.providerPriority,
             sectionId: 'providerPriority',
           ),
           SettingsCard(
@@ -97,9 +96,7 @@ class LyricsSourcesScreen extends ConsumerWidget {
               horizontal: AppConstants.spacingXs,
             ),
             child: Text(
-              'Drag the handle to reorder. Every lookup stops at the first '
-              'provider that returns timed lyrics, and each attempt is '
-              'limited to 4.5 seconds.',
+              l10n.providerReorderHelp,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: context.adaptiveTextTertiary,
                 height: 1.4,
@@ -111,9 +108,8 @@ class LyricsSourcesScreen extends ConsumerWidget {
             children: [
               ActionButton(
                 icon: LucideIcons.rotateCcw,
-                title: 'Reset sources',
-                subtitle:
-                    'Restore the default order and enable every provider.',
+                title: l10n.resetSources,
+                subtitle: l10n.resetSourcesDescription,
                 onTap: notifier.resetToDefaults,
               ),
             ],
@@ -146,10 +142,10 @@ class _ProviderRow extends StatelessWidget {
     final accent = enabled ? AppColors.accentLight : context.adaptiveTextTertiary;
 
     final status = !configured
-        ? 'Needs a build-time endpoint'
+        ? l10n.needsBuildTimeEndpoint
         : enabled
-        ? 'Ready'
-        : 'Disabled';
+        ? l10n.ready
+        : l10n.disabled;
 
     return Material(
       color: Colors.transparent,

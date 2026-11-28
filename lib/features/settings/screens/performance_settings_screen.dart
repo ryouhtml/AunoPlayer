@@ -7,6 +7,7 @@ import 'package:auno_player/core/theme/adaptive_color_provider.dart';
 import 'package:auno_player/features/settings/widgets/settings_widgets.dart';
 import 'package:auno_player/providers/performance_provider.dart';
 import 'package:auno_player/services/performance_tier_service.dart';
+import 'package:auno_player/l10n/settings_l10n.dart';
 
 /// Rendering budget: Auto / Lite / High-End plus the blur master switch.
 ///
@@ -27,20 +28,18 @@ class PerformanceSettingsScreen extends ConsumerWidget {
     final blurNotifier = ref.read(blurEffectsOverrideProvider.notifier);
 
     return SettingsScaffold(
-      title: 'Performance',
+      title: l10n.performance,
       initialSection: initialSection,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SettingsSectionHeader('Graphics mode', sectionId: 'graphicsMode'),
+          SettingsSectionHeader(l10n.graphicsMode, sectionId: 'graphicsMode'),
           SettingsCard(
             children: [
               SelectionSetting(
                 icon: Icons.auto_awesome,
-                title: 'Auto',
-                subtitle:
-                    'Detect the device class from memory, cores and refresh '
-                    'rate.',
+                title: l10n.auto,
+                subtitle: l10n.graphicsModeAutoDescription,
                 selected: mode == GraphicsPerformanceMode.auto,
                 onTap: () => modeNotifier.setMode(
                   GraphicsPerformanceMode.auto,
@@ -49,10 +48,8 @@ class PerformanceSettingsScreen extends ConsumerWidget {
               const SettingsDivider(),
               SelectionSetting(
                 icon: Icons.bolt,
-                title: 'Lite',
-                subtitle:
-                    'For entry-level hardware: no blur layers, smaller '
-                    'thumbnail caches.',
+                title: l10n.lite,
+                subtitle: l10n.graphicsModeLiteDescription,
                 selected: mode == GraphicsPerformanceMode.lite,
                 onTap: () => modeNotifier.setMode(
                   GraphicsPerformanceMode.lite,
@@ -61,10 +58,8 @@ class PerformanceSettingsScreen extends ConsumerWidget {
               const SettingsDivider(),
               SelectionSetting(
                 icon: Icons.speed,
-                title: 'High-End',
-                subtitle:
-                    'Unlocks depth-of-field blur and the richest ambient '
-                    'layers.',
+                title: l10n.highEnd,
+                subtitle: l10n.graphicsModeHighEndDescription,
                 selected: mode == GraphicsPerformanceMode.highEnd,
                 onTap: () => modeNotifier.setMode(
                   GraphicsPerformanceMode.highEnd,
@@ -73,15 +68,13 @@ class PerformanceSettingsScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: AppConstants.spacingLg),
-          SettingsSectionHeader('Effects', sectionId: 'effects'),
+          SettingsSectionHeader(l10n.effects, sectionId: 'effects'),
           SettingsCard(
             children: [
               ToggleSetting(
                 icon: LucideIcons.sparkles,
-                title: 'Lyrics & glass blur',
-                subtitle:
-                    'Depth-of-field blur on inactive lyric lines and frosted '
-                    'glass panels. Off by default on entry-level devices.',
+                title: l10n.lyricsGlassBlur,
+                subtitle: l10n.lyricsGlassBlurDescription,
                 value: blurEnabled,
                 onChanged: (value) => blurNotifier.setOverride(value),
               ),
@@ -89,43 +82,44 @@ class PerformanceSettingsScreen extends ConsumerWidget {
                 const SettingsDivider(),
                 ActionButton(
                   icon: LucideIcons.rotateCcw,
-                  title: 'Follow device automatically',
-                  subtitle:
-                      'Clear the manual override and use the ${_tierLabel(profile.tier)} default.',
+                  title: l10n.followDeviceAutomatically,
+                  subtitle: l10n.followDeviceAutomaticallyDescription(
+                    _tierLabel(profile.tier),
+                  ),
                   onTap: () => blurNotifier.setOverride(null),
                 ),
               ],
             ],
           ),
           const SizedBox(height: AppConstants.spacingLg),
-          SettingsSectionHeader('Detected device', sectionId: 'device'),
+          SettingsSectionHeader(l10n.detectedDevice, sectionId: 'device'),
           SettingsCard(
             children: [
               InfoSetting(
                 icon: Icons.category,
-                title: 'Class',
+                title: l10n.deviceClass,
                 subtitle: profileAsync.isLoading
-                    ? 'Detecting…'
+                    ? l10n.detecting
                     : _tierLabel(profile.tier),
               ),
               const SettingsDivider(),
               InfoSetting(
                 icon: Icons.memory,
-                title: 'Memory',
+                title: l10n.memory,
                 subtitle: profile.totalRamMb > 0
                     ? '${(profile.totalRamMb / 1024).toStringAsFixed(1)} GB'
-                    : 'Unknown',
+                    : l10n.unknown,
               ),
               const SettingsDivider(),
               InfoSetting(
                 icon: Icons.developer_board,
-                title: 'CPU cores',
+                title: l10n.cpuCores,
                 subtitle: '${profile.processorCount}',
               ),
               const SettingsDivider(),
               InfoSetting(
                 icon: Icons.monitor,
-                title: 'Display',
+                title: l10n.display,
                 subtitle: '${profile.refreshRateHz.toStringAsFixed(0)} Hz',
               ),
             ],
@@ -136,9 +130,7 @@ class PerformanceSettingsScreen extends ConsumerWidget {
               horizontal: AppConstants.spacingXs,
             ),
             child: Text(
-              'Auto picks Lite at 4 GB of RAM or less and High-End from 7 GB '
-              'with eight cores. The override is stored per device and never '
-              'touches playback quality.',
+              l10n.performanceAutoHelp,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: context.adaptiveTextTertiary,
                 height: 1.4,
@@ -154,9 +146,9 @@ class PerformanceSettingsScreen extends ConsumerWidget {
 
   static String _tierLabel(DevicePerformanceTier tier) {
     return switch (tier) {
-      DevicePerformanceTier.lite => 'Entry level',
-      DevicePerformanceTier.standard => 'Standard',
-      DevicePerformanceTier.highEnd => 'High-end',
+      DevicePerformanceTier.lite => l10n.entryLevel,
+      DevicePerformanceTier.standard => l10n.standard,
+      DevicePerformanceTier.highEnd => l10n.highEnd,
     };
   }
 }
