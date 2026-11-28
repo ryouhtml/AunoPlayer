@@ -92,7 +92,10 @@ class PerformanceSettingsScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: AppConstants.spacingLg),
-          SettingsSectionHeader(l10n.detectedDevice, sectionId: 'device'),
+          SettingsSectionHeader(
+            l10n.detectedDevice,
+            sectionId: 'detectedDevice',
+          ),
           SettingsCard(
             children: [
               InfoSetting(

@@ -267,18 +267,18 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
         _section('saving2', l10n.saving2, [
           ('matchAudioFilename', l10n.matchAudioFilename),
         ]),
-        _section('engine', 'Lyrics engine', [
-          ('lyricsSources', 'Lyrics sources'),
-          ('embeddedLyricsFirst', 'Embedded lyrics first'),
-          ('onlineProviders', 'Online providers'),
+        _section('lyricsEngine', l10n.lyricsEngine, [
+          ('lyricsSources', l10n.lyricsSources),
+          ('embeddedLyricsFirst', l10n.embeddedLyricsFirst),
+          ('onlineProviders', l10n.onlineProviders),
         ], keywords: 'provider fallback online embedded sidecar'),
-        _section('translation', 'Translation', [
+        _section('translation', l10n.translation, [
           ('off', l10n.off),
-          ('indonesian', 'Indonesian'),
-          ('english', 'English'),
-          ('spanish', 'Spanish'),
-          ('filipino', 'Filipino'),
-          ('chinese', 'Chinese (Simplified)'),
+          ('indonesian', l10n.indonesian),
+          ('english', l10n.english),
+          ('spanish', l10n.translationLanguageSpanish),
+          ('filipino', l10n.translationLanguageFilipino),
+          ('chinese', l10n.translationLanguageChinese),
         ], keywords: 'translate terjemahan terjemahkan'),
         _section('display', l10n.display, [
           ('karaokeEffect', l10n.karaokeEffect),
@@ -293,7 +293,7 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
     ),
     page(
       'lyrics_sources',
-      'Lyrics sources',
+      l10n.lyricsSources,
       media,
       LucideIcons.globe,
       (id) => LyricsSourcesScreen(initialSection: id),
@@ -302,16 +302,18 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
           'lyricsplus unison youtube captions music kugou lrclib genius '
           'provider priority fallback online embedded',
       sections: [
-        _section('lookupOrder', 'Lookup order', [
-          ('embeddedLyricsFirst', 'Embedded lyrics first'),
-          ('onlineProviders', 'Online providers'),
+        _section('lookupOrder', l10n.lookupOrder, [
+          ('embeddedLyricsFirst', l10n.embeddedLyricsFirst),
+          ('onlineProviders', l10n.onlineProviders),
         ]),
-        _section('providerPriority', 'Provider priority', []),
+        _section('providerPriority', l10n.providerPriority, [
+          ('resetSources', l10n.resetSources),
+        ]),
       ],
     ),
     page(
       'performance_settings',
-      'Performance',
+      l10n.performance,
       system,
       Icons.speed,
       (id) => PerformanceSettingsScreen(initialSection: id),
@@ -319,19 +321,20 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
           'graphics mode lite high-end blur glass lyrics device class ram '
           'memory cores refresh rate entry level',
       sections: [
-        _section('graphicsMode', 'Graphics mode', [
-          ('auto', 'Auto'),
-          ('lite', 'Lite'),
-          ('highEnd', 'High-End'),
+        _section('graphicsMode', l10n.graphicsMode, [
+          ('auto', l10n.auto),
+          ('lite', l10n.lite),
+          ('highEnd', l10n.highEnd),
         ]),
-        _section('effects', 'Effects', [
-          ('blurEffects', 'Lyrics & glass blur'),
+        _section('effects', l10n.effects, [
+          ('lyricsGlassBlur', l10n.lyricsGlassBlur),
+          ('followDeviceAutomatically', l10n.followDeviceAutomatically),
         ]),
-        _section('device', 'Detected device', [
-          ('class', 'Class'),
-          ('memory', 'Memory'),
-          ('cpuCores', 'CPU cores'),
-          ('display', 'Display'),
+        _section('detectedDevice', l10n.detectedDevice, [
+          ('deviceClass', l10n.deviceClass),
+          ('memory', l10n.memory),
+          ('cpuCores', l10n.cpuCores),
+          ('display', l10n.display),
         ]),
       ],
     ),

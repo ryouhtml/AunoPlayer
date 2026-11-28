@@ -74,7 +74,10 @@ class LyricsSettingsScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: AppConstants.spacingLg),
-          SettingsSectionHeader(l10n.lyricsEngine, sectionId: 'engine'),
+          SettingsSectionHeader(
+            l10n.lyricsEngine,
+            sectionId: 'lyricsEngine',
+          ),
           SettingsCard(
             children: [
               NavigationSetting(

@@ -11193,7 +11193,7 @@
   "@lite": {"description": "Phase 5 settings copy.", "type": "text"},
   "translationLanguageSpanish": "Spanyol",
   "@translationLanguageSpanish": {"description": "Phase 5 settings copy.", "type": "text"},
-  "translationLanguageFilipino": "Filipino",
+  "translationLanguageFilipino": "Filipina",
   "@translationLanguageFilipino": {"description": "Phase 5 settings copy.", "type": "text"},
   "translationLanguageChinese": "Tionghoa (Sederhana)",
   "@translationLanguageChinese": {"description": "Phase 5 settings copy.", "type": "text"}
