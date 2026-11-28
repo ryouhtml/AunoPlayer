@@ -135,7 +135,7 @@ void main() {
     );
     expect(selected.isSelectionMode, isTrue);
     expect(selected.isMultiSelected, isTrue);
-    expect(selected.onSwipeLeft, isNull);
+    expect(selected.swipeActionsEnabled, isFalse);
     expect(tester.takeException(), isNull);
   });
 
