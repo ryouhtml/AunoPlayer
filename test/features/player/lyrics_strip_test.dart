@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:auno_player/features/player/widgets/synced_lyrics_view.dart';
 import 'package:auno_player/l10n/l10n.dart';
 import 'package:auno_player/providers/app_preferences_provider.dart';
+import 'package:auno_player/services/app_preferences_service.dart';
 import 'package:auno_player/services/lyrics_service.dart';
 import 'package:auno_player/services/player_service.dart';
 
