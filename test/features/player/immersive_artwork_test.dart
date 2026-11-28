@@ -124,9 +124,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final detector = tester.widget<RawGestureDetector>(
-      find.byType(RawGestureDetector),
+    final detectorFinder = find.descendant(
+      of: find.byType(AlbumArtBox),
+      matching: find.byType(RawGestureDetector),
     );
+    final detector = tester.widget<RawGestureDetector>(detectorFinder);
     expect(detector.gestures.containsKey(DoubleTapGestureRecognizer), isTrue);
     expect(detector.gestures.containsKey(TapGestureRecognizer), isTrue);
     expect(detector.gestures.length, 2);
@@ -134,7 +136,7 @@ void main() {
     final box = tester.widget<SizedBox>(
       find
           .descendant(
-            of: find.byType(RawGestureDetector),
+            of: detectorFinder,
             matching: find.byType(SizedBox),
           )
           .first,
@@ -142,11 +144,9 @@ void main() {
     expect(box.width, 800);
     expect(box.height, closeTo(896.0, 0.01));
 
-    await tester.tap(find.byType(RawGestureDetector));
+    await tester.tap(detectorFinder);
     await tester.pumpAndSettle();
-    final rotated = tester.widget<RawGestureDetector>(
-      find.byType(RawGestureDetector),
-    );
+    final rotated = tester.widget<RawGestureDetector>(detectorFinder);
     expect(rotated.gestures.length, 3);
     expect(tester.takeException(), isNull);
   });
