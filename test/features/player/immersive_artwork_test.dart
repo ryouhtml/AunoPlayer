@@ -96,6 +96,7 @@ SongStage _stage({
     onNavigateToArtistDetail: (_) {},
     onNavigateToAlbumDetail: (_) {},
     buildFileInfoRow: (_, __, ___) => const SizedBox.shrink(),
+    onToggleLyrics: () {},
     immersiveShowFileInfo: false,
     showWaveform: false,
     heroTag: heroTag,
@@ -217,7 +218,7 @@ void main() {
     _setPhone(tester);
     await tester.pumpWidget(
       _host(
-        const ImmersiveMetadataRow(
+        ImmersiveMetadataRow(
           song: _song,
           onNavigateToArtistDetail: (_) {},
         ),
@@ -237,7 +238,7 @@ void main() {
     );
     await tester.pumpWidget(
       _host(
-        const ImmersiveMetadataRow(
+        ImmersiveMetadataRow(
           song: sparse,
           onNavigateToArtistDetail: (_) {},
         ),
