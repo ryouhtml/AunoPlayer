@@ -40,7 +40,7 @@ SongsScreen (default = wheel)
    ├── WheelSongList (baru, berbasis OrbitScrollController)
    │      ├── SongCardItem (thumbnail + metadata + badge)
    │      └── Tap → playSong → Navigator.push('/full_player')
-   │                         └── Hero(song-art-<id>) → AlbumArtBox fullBleed
+   │                         └── Hero(song_art_<id>) → AlbumArtBox fullBleed
    └── mode lama: list / album grid (tetap)
 
 FullPlayerScreen
@@ -97,9 +97,9 @@ Tidak ada perubahan schema Isar, tidak ada mode player baru, dan tidak ada rute 
 
 ### 5.2 Kontrol, Lirik, Queue, Inspector
 
-- `PlayerControls` dipertahankan apa adanya (shuffle/prev/play/next/repeat/favorite). Style progress bar tetap mengikuti preferensi waveform/line pengguna.
-- Lirik strip menampilkan satu baris aktif dari `SyncedLyricsView`; tap masuk/keluar mode lirik penuh. Waktu berasal dari lirik asli, tanpa auto-estimasi.
-- Panel queue memakai badan `QueueScreen` yang sudah mendukung `SliverReorderableList`. Rute queue lama tetap dipakai oleh snackbar “Lihat antrean”.
+- `PlayerControls` dipertahankan apa adanya (transport + progress); favorite dan aksi lain tetap berada di `PlayerActionButtonRow`/action sheet yang sudah ada. Style progress bar tetap mengikuti preferensi waveform/line pengguna.
+- Lirik strip menampilkan satu baris aktif dari data `LyricsData` yang sama dengan `SyncedLyricsView`; bila perlu ditambahkan mode strip pada penampil lirik, bukan widget lirik terpisah. Tap masuk/keluar mode lirik penuh. Waktu berasal dari lirik asli, tanpa auto-estimasi.
+- Panel queue memakai badan `QueueScreen` yang sudah mendukung `SliverReorderableList`; badan tersebut diekstrak dari `Scaffold`-nya agar bisa dipakai sebagai panel. Rute queue lama tetap dipakai oleh snackbar “Lihat antrean”.
 - Audio inspector membuka `AudioAnalysisSheet` dan `SongMetadataSheet` yang sudah ada. Ini mencakup codec, kedalaman bit, laju sampel, analisis, dan null test L−R asli dari `sideMidDb`.
 - Tidak meniru MD5/copy/share dari HTML referensi karena aplikasi tidak memiliki sumber nilai MD5 audio yang nyata.
 
@@ -111,7 +111,7 @@ Tidak ada perubahan schema Isar, tidak ada mode player baru, dan tidak ada rute 
 
 ## 6. Animasi Zoom Thumbnail
 
-- Tag `Hero` memakai `song-art-<song.id>` di thumbnail wheel dan di artwork full player untuk lagu yang sedang diputar.
+- Tag `Hero` memakai `song_art_<song.id>`—sama dengan tag yang sudah dikirim `NavigationHelper.navigateToFullPlayer`—di thumbnail wheel dan di artwork full player untuk lagu yang sedang diputar.
 - Durasi ~320 ms dengan kurva `easeOutCubic`, mengikuti konstanta animasi aplikasi (`AppConstants`).
 - Playback dimulai sebelum `Navigator.push('/full_player')` agar tujuan Hero sudah menampilkan lagu yang benar saat animasi selesai.
 - Bila lagu tanpa cover, placeholder yang sama dipakai di kedua sisi dengan tag Hero yang sama.
@@ -126,7 +126,8 @@ Tidak ada perubahan schema Isar, tidak ada mode player baru, dan tidak ada rute 
 - Kunci baru ditambahkan ke `app_en.arb`, `app_id.arb`, `app_es.arb`, `app_tl.arb`, dan `app_zh.arb` dengan placeholder paritas.
 - `app_tl_Tglg.arb` tidak diubah.
 - Semua string baru diakses melalui `l10n`; diakses dari `BuildContext` bila generator lokal yang dipakai file tersebut mengharuskannya.
-- Guard yang dijalankan sebelum push: `scan_hardcoded.py`, `check_arb.py`, `check_getters.py`, `check_new_keys_referenced.py`.
+- Guard lokal yang dijalankan sebelum push (berada di `C:\Users\Administrator\AppData\Local\Temp\opencode\`, bukan di repo): `scan_hardcoded.py`, `check_arb.py`, `check_getters.py`, `check_new_keys_referenced.py`.
+- Guard dalam repo yang dijalankan CI lewat `flutter test`: `test/l10n/arb_invariants_test.dart`, `source_guard_test.dart`, `hardcoded_english_test.dart`, `spanish_arb_test.dart`, dan `baybayin_pilot_test.dart`.
 
 ### 7.2 Test
 
@@ -137,8 +138,8 @@ Tidak ada perubahan schema Isar, tidak ada mode player baru, dan tidak ada rute 
 ### 7.3 Gate
 
 1. Guard l10n lokal lolos.
-2. Push ke `feature/auno-fase1` dan pantau GitHub Actions: `gen-l10n` → `build_runner` → `flutter analyze` → `flutter test`.
-3. Setelah CI hijau, jalankan build APK lewat GitHub Actions dan laporkan URL artifact. Tidak ada download ke laptop.
+2. Push ke `feature/auno-fase1`. Kedua workflow hanya berjalan pada `main` atau `workflow_dispatch`, jadi jalankan keduanya lewat `workflow_dispatch` dengan ref branch tersebut menggunakan token git yang sudah tersimpan—bukan dengan push ke `main`. Pantau `gen-l10n` → `build_runner` → `flutter analyze` → `flutter test`.
+3. Setelah CI hijau, dispatch build APK lewat GitHub Actions dan laporkan URL artifact. Tidak ada download ke laptop.
 4. Jalankan `graphify update .` setelah kode berubah bila tool tersedia.
 5. Nyatakan secara eksplisit bahwa tampilan akhir di perangkat belum diverifikasi oleh asisten.
 
