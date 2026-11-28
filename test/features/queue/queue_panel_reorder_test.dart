@@ -64,7 +64,7 @@ const _upNextB = Song(
 
 Widget _host(PlayerNotifier player) => ProviderScope(
       overrides: [
-        playerProvider.overrideWith((ref) => player),
+        playerProvider.overrideWith(() => player),
       ],
       child: MaterialApp(
         theme: AppTheme.darkTheme,
@@ -95,8 +95,8 @@ void main() {
     final lists = find.byType(SliverReorderableList);
     expect(lists, findsNWidgets(2));
 
-    tester.widget<SliverReorderableList>(lists.at(0)).onReorder(0, 2);
-    tester.widget<SliverReorderableList>(lists.at(1)).onReorder(1, 0);
+    tester.widget<SliverReorderableList>(lists.at(0)).onReorder!(0, 2);
+    tester.widget<SliverReorderableList>(lists.at(1)).onReorder!(1, 0);
     await tester.pump();
 
     expect(player.upNextMoves, [
