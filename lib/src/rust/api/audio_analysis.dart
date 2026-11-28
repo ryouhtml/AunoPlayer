@@ -6,221 +6,203 @@
 import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-// These functions are ignored because they are not marked as `pub`: `amplitude_to_db`, `analyze_source_audio_file_inner`, `column`, `empty_source_analysis`, `hann_window`, `index`, `integrated_loudness`, `interpolated_peak`, `is_cancelled`, `k_filter_coefficients`, `loudness_range`, `loudness_range`, `mean_above`, `mean_top_fifth`, `new`, `new`, `new`, `next_source_packet`, `power_to_db`, `process`, `record_energy`, `record`, `relative_gate`, `spectrogram_bin_positions`, `spectrogram_column`, `true_peak_coefficients`
-// These types are ignored because they are neither used by any `pub` functions nor (for structs and enums) marked `#[frb(unignore)]`: `Biquad`, `MeasurementHistogram`, `SpectrumColumns`
-// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `assert_fields_are_eq`, `clone`, `eq`, `fmt`
 
-/// Decode `path` once, computing waveform peaks + BS.1770 metrics.
+            // These functions are ignored because they are not marked as `pub`: `amplitude_to_db`, `analyze_source_audio_file_inner`, `bitrate_from_duration`, `channel_layout_label`, `column`, `dop_capability`, `dsd_variant_for_rate`, `empty_source_analysis`, `hann_window`, `index`, `integrated_loudness`, `interpolated_peak`, `is_cancelled`, `k_filter_coefficients`, `loudness_range`, `loudness_range`, `mean_above`, `mean_top_fifth`, `metadata_fallback_result`, `new`, `new`, `new`, `next_source_packet`, `power_to_db`, `process`, `record_energy`, `record`, `relative_gate`, `source_metadata`, `spectrogram_bin_positions`, `spectrogram_column`, `true_peak_coefficients`, `verify_source_integrity`, `wavpack_dsd_properties`
+// These types are ignored because they are neither used by any `pub` functions nor (for structs and enums) marked `#[frb(unignore)]`: `Biquad`, `MeasurementHistogram`, `SpectrumColumns`
+// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `clone`, `eq`, `fmt`
+
+
+            /// Decode `path` once, computing waveform peaks + BS.1770 metrics.
 /// Returns `None` for unsupported/unreachable files — callers treat that as a
 /// silent skip.
 ///
 /// `peak_buckets` controls the waveform resolution (typ. 240).
-Future<AudioAnalysisResult?> analyzeAudioFile({
-  required String path,
-  required int peakBuckets,
-}) => RustLib.instance.api.crateApiAudioAnalysisAnalyzeAudioFile(
-  path: path,
-  peakBuckets: peakBuckets,
-);
+Future<AudioAnalysisResult?>  analyzeAudioFile({required String path , required int peakBuckets }) => RustLib.instance.api.crateApiAudioAnalysisAnalyzeAudioFile(path: path, peakBuckets: peakBuckets);
 
-AudioSourceAnalysisJob createSourceAudioAnalysisJob() =>
-    RustLib.instance.api.crateApiAudioAnalysisCreateSourceAudioAnalysisJob();
+AudioSourceAnalysisJob  createSourceAudioAnalysisJob() => RustLib.instance.api.crateApiAudioAnalysisCreateSourceAudioAnalysisJob();
 
-// Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<AudioSourceAnalysisJob>>
-abstract class AudioSourceAnalysisJob implements RustOpaqueInterface {
-  /// Opens a separate file handle without touching playback, DSP, or tags.
-  Future<AudioSourceAnalysis> analyze({required String path});
+            
+                // Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<AudioSourceAnalysisJob>>
+                abstract class AudioSourceAnalysisJob implements RustOpaqueInterface {
+                    /// Opens a separate file handle without touching playback, DSP, or tags.
+ Future<AudioSourceAnalysis>  analyze({required String path });
 
-  void cancel();
 
-  /// Returns 0.0 when the total frame count is unknown.
-  double progress();
-}
+ void  cancel();
 
-class AudioAnalysisResult {
-  final Float32List peaks;
-  final double? lufs;
-  final double? truePeakDb;
-  final double? dr;
-  final double? lra;
-  final bool clipping;
 
-  const AudioAnalysisResult({
-    required this.peaks,
-    this.lufs,
-    this.truePeakDb,
-    this.dr,
-    this.lra,
-    required this.clipping,
-  });
+/// Returns 0.0 when the total frame count is unknown.
+ double  progress();
 
-  @override
-  int get hashCode =>
-      peaks.hashCode ^
-      lufs.hashCode ^
-      truePeakDb.hashCode ^
-      dr.hashCode ^
-      lra.hashCode ^
-      clipping.hashCode;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AudioAnalysisResult &&
-          runtimeType == other.runtimeType &&
-          peaks == other.peaks &&
-          lufs == other.lufs &&
-          truePeakDb == other.truePeakDb &&
-          dr == other.dr &&
-          lra == other.lra &&
-          clipping == other.clipping;
-}
 
-class AudioSourceAnalysis {
-  final AudioSourceAnalysisStatus status;
-  final BigInt fileSizeBytes;
-  final double? durationSeconds;
-  final int? sampleRate;
-  final int? channels;
-  final int? bitDepth;
-  final Float64List channelPeakDb;
-  final Float64List channelRmsDb;
-  final double? balanceDb;
-  final double? sideMidDb;
-  final double? leadingSilenceSeconds;
-  final double? trailingSilenceSeconds;
-  final bool silent;
-  final double? lufs;
-  final double? lra;
-  final double? truePeakDb;
-  final double? dr;
-  final bool clipping;
-  final BigInt clippedSamples;
-  final AudioSourceSpectrogram? spectrogram;
+                    
+                }
+                
 
-  const AudioSourceAnalysis({
-    required this.status,
-    required this.fileSizeBytes,
-    this.durationSeconds,
-    this.sampleRate,
-    this.channels,
-    this.bitDepth,
-    required this.channelPeakDb,
-    required this.channelRmsDb,
-    this.balanceDb,
-    this.sideMidDb,
-    this.leadingSilenceSeconds,
-    this.trailingSilenceSeconds,
-    required this.silent,
-    this.lufs,
-    this.lra,
-    this.truePeakDb,
-    this.dr,
-    required this.clipping,
-    required this.clippedSamples,
-    this.spectrogram,
-  });
+class AudioAnalysisResult  {
+                final Float32List peaks;
+final double? lufs;
+final double? truePeakDb;
+final double? dr;
+final double? lra;
+final bool clipping;
 
-  @override
-  int get hashCode =>
-      status.hashCode ^
-      fileSizeBytes.hashCode ^
-      durationSeconds.hashCode ^
-      sampleRate.hashCode ^
-      channels.hashCode ^
-      bitDepth.hashCode ^
-      channelPeakDb.hashCode ^
-      channelRmsDb.hashCode ^
-      balanceDb.hashCode ^
-      sideMidDb.hashCode ^
-      leadingSilenceSeconds.hashCode ^
-      trailingSilenceSeconds.hashCode ^
-      silent.hashCode ^
-      lufs.hashCode ^
-      lra.hashCode ^
-      truePeakDb.hashCode ^
-      dr.hashCode ^
-      clipping.hashCode ^
-      clippedSamples.hashCode ^
-      spectrogram.hashCode;
+                const AudioAnalysisResult({required this.peaks ,this.lufs ,this.truePeakDb ,this.dr ,this.lra ,required this.clipping ,});
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AudioSourceAnalysis &&
-          runtimeType == other.runtimeType &&
-          status == other.status &&
-          fileSizeBytes == other.fileSizeBytes &&
-          durationSeconds == other.durationSeconds &&
-          sampleRate == other.sampleRate &&
-          channels == other.channels &&
-          bitDepth == other.bitDepth &&
-          channelPeakDb == other.channelPeakDb &&
-          channelRmsDb == other.channelRmsDb &&
-          balanceDb == other.balanceDb &&
-          sideMidDb == other.sideMidDb &&
-          leadingSilenceSeconds == other.leadingSilenceSeconds &&
-          trailingSilenceSeconds == other.trailingSilenceSeconds &&
-          silent == other.silent &&
-          lufs == other.lufs &&
-          lra == other.lra &&
-          truePeakDb == other.truePeakDb &&
-          dr == other.dr &&
-          clipping == other.clipping &&
-          clippedSamples == other.clippedSamples &&
-          spectrogram == other.spectrogram;
-}
+
+
+
+
+        @override
+        int get hashCode => peaks.hashCode^lufs.hashCode^truePeakDb.hashCode^dr.hashCode^lra.hashCode^clipping.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is AudioAnalysisResult &&
+                runtimeType == other.runtimeType
+                && peaks == other.peaks&& lufs == other.lufs&& truePeakDb == other.truePeakDb&& dr == other.dr&& lra == other.lra&& clipping == other.clipping;
+
+            }
+
+class AudioSourceAnalysis  {
+                final AudioSourceAnalysisStatus status;
+final BigInt fileSizeBytes;
+final double? durationSeconds;
+final int? sampleRate;
+final int? channels;
+final int? bitDepth;
+final Float64List channelPeakDb;
+final Float64List channelRmsDb;
+final double? balanceDb;
+final double? sideMidDb;
+final double? leadingSilenceSeconds;
+final double? trailingSilenceSeconds;
+final bool silent;
+final double? lufs;
+final double? lra;
+final double? truePeakDb;
+final double? dr;
+final bool clipping;
+final BigInt clippedSamples;
+final AudioSourceSpectrogram? spectrogram;
+/// Codec name reported by the container or metadata reader.
+final String? codec;
+/// Upper-case container/extension, e.g. `FLAC`, `DSF`, `DFF`, `WV`.
+final String? container;
+/// Native bitrate from metadata, in bits per second.
+final BigInt? bitrateBps;
+/// Human-readable channel layout, e.g. `stereo` or `mono`.
+final String? channelLayout;
+/// DSD rate family such as `DSD64` or `DSD256`, when applicable.
+final String? dsdVariant;
+/// Whether the configured output path can carry DoP for this DSD source.
+final bool? dopCapable;
+/// Fraction of core tags present, 0.0..=1.0.
+final double? tagCompleteness;
+/// True when a full byte read matched the file size.
+final bool? integrityOk;
+/// True when the configured engine path keeps the native format.
+final bool? bitPerfectPath;
+
+                const AudioSourceAnalysis({required this.status ,required this.fileSizeBytes ,this.durationSeconds ,this.sampleRate ,this.channels ,this.bitDepth ,required this.channelPeakDb ,required this.channelRmsDb ,this.balanceDb ,this.sideMidDb ,this.leadingSilenceSeconds ,this.trailingSilenceSeconds ,required this.silent ,this.lufs ,this.lra ,this.truePeakDb ,this.dr ,required this.clipping ,required this.clippedSamples ,this.spectrogram ,this.codec ,this.container ,this.bitrateBps ,this.channelLayout ,this.dsdVariant ,this.dopCapable ,this.tagCompleteness ,this.integrityOk ,this.bitPerfectPath ,});
+
+
+
+
+
+        @override
+        int get hashCode => status.hashCode^fileSizeBytes.hashCode^durationSeconds.hashCode^sampleRate.hashCode^channels.hashCode^bitDepth.hashCode^channelPeakDb.hashCode^channelRmsDb.hashCode^balanceDb.hashCode^sideMidDb.hashCode^leadingSilenceSeconds.hashCode^trailingSilenceSeconds.hashCode^silent.hashCode^lufs.hashCode^lra.hashCode^truePeakDb.hashCode^dr.hashCode^clipping.hashCode^clippedSamples.hashCode^spectrogram.hashCode^codec.hashCode^container.hashCode^bitrateBps.hashCode^channelLayout.hashCode^dsdVariant.hashCode^dopCapable.hashCode^tagCompleteness.hashCode^integrityOk.hashCode^bitPerfectPath.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is AudioSourceAnalysis &&
+                runtimeType == other.runtimeType
+                && status == other.status&& fileSizeBytes == other.fileSizeBytes&& durationSeconds == other.durationSeconds&& sampleRate == other.sampleRate&& channels == other.channels&& bitDepth == other.bitDepth&& channelPeakDb == other.channelPeakDb&& channelRmsDb == other.channelRmsDb&& balanceDb == other.balanceDb&& sideMidDb == other.sideMidDb&& leadingSilenceSeconds == other.leadingSilenceSeconds&& trailingSilenceSeconds == other.trailingSilenceSeconds&& silent == other.silent&& lufs == other.lufs&& lra == other.lra&& truePeakDb == other.truePeakDb&& dr == other.dr&& clipping == other.clipping&& clippedSamples == other.clippedSamples&& spectrogram == other.spectrogram&& codec == other.codec&& container == other.container&& bitrateBps == other.bitrateBps&& channelLayout == other.channelLayout&& dsdVariant == other.dsdVariant&& dopCapable == other.dopCapable&& tagCompleteness == other.tagCompleteness&& integrityOk == other.integrityOk&& bitPerfectPath == other.bitPerfectPath;
+
+            }
 
 enum AudioSourceAnalysisStatus {
-  ok,
-  unsupportedFormat,
-  unsupportedMultichannel,
-  unreadable,
-  noAudioStream,
-  noSamples,
-  cancelled,
-  busy,
-}
+                    ok,
+unsupportedFormat,
+unsupportedMultichannel,
+unreadable,
+noAudioStream,
+noSamples,
+cancelled,
+busy,
+                    ;
+                    
+                }
 
-class AudioSourceSpectrogram {
-  final int columns;
-  final int bins;
-  final double minFrequencyHz;
-  final double maxFrequencyHz;
+class AudioSourceSpectrogram  {
+                final int columns;
+final int bins;
+final double minFrequencyHz;
+final double maxFrequencyHz;
+/// Row-major: `column * bins + bin`, bin 0 is the lowest frequency.
+final Float32List leftDb;
+/// Empty for mono sources.
+final Float32List rightDb;
 
-  /// Row-major: `column * bins + bin`, bin 0 is the lowest frequency.
-  final Float32List leftDb;
+                const AudioSourceSpectrogram({required this.columns ,required this.bins ,required this.minFrequencyHz ,required this.maxFrequencyHz ,required this.leftDb ,required this.rightDb ,});
 
-  /// Empty for mono sources.
-  final Float32List rightDb;
 
-  const AudioSourceSpectrogram({
-    required this.columns,
-    required this.bins,
-    required this.minFrequencyHz,
-    required this.maxFrequencyHz,
-    required this.leftDb,
-    required this.rightDb,
-  });
 
-  @override
-  int get hashCode =>
-      columns.hashCode ^
-      bins.hashCode ^
-      minFrequencyHz.hashCode ^
-      maxFrequencyHz.hashCode ^
-      leftDb.hashCode ^
-      rightDb.hashCode;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AudioSourceSpectrogram &&
-          runtimeType == other.runtimeType &&
-          columns == other.columns &&
-          bins == other.bins &&
-          minFrequencyHz == other.minFrequencyHz &&
-          maxFrequencyHz == other.maxFrequencyHz &&
-          leftDb == other.leftDb &&
-          rightDb == other.rightDb;
-}
+
+        @override
+        int get hashCode => columns.hashCode^bins.hashCode^minFrequencyHz.hashCode^maxFrequencyHz.hashCode^leftDb.hashCode^rightDb.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is AudioSourceSpectrogram &&
+                runtimeType == other.runtimeType
+                && columns == other.columns&& bins == other.bins&& minFrequencyHz == other.minFrequencyHz&& maxFrequencyHz == other.maxFrequencyHz&& leftDb == other.leftDb&& rightDb == other.rightDb;
+
+            }
+
+/// Read-only container/tag metadata gathered for source analysis.
+class SourceMetadata  {
+                final String? codec;
+final String? container;
+final double? durationSeconds;
+final int? sampleRate;
+final int? channels;
+final BigInt? bitrateBps;
+final String? channelLayout;
+final String? dsdVariant;
+final bool? dopCapable;
+final double? tagCompleteness;
+
+                const SourceMetadata({this.codec ,this.container ,this.durationSeconds ,this.sampleRate ,this.channels ,this.bitrateBps ,this.channelLayout ,this.dsdVariant ,this.dopCapable ,this.tagCompleteness ,});
+
+                static Future<SourceMetadata>  default_()=>RustLib.instance.api.crateApiAudioAnalysisSourceMetadataDefault();
+
+
+
+
+
+        @override
+        int get hashCode => codec.hashCode^container.hashCode^durationSeconds.hashCode^sampleRate.hashCode^channels.hashCode^bitrateBps.hashCode^channelLayout.hashCode^dsdVariant.hashCode^dopCapable.hashCode^tagCompleteness.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is SourceMetadata &&
+                runtimeType == other.runtimeType
+                && codec == other.codec&& container == other.container&& durationSeconds == other.durationSeconds&& sampleRate == other.sampleRate&& channels == other.channels&& bitrateBps == other.bitrateBps&& channelLayout == other.channelLayout&& dsdVariant == other.dsdVariant&& dopCapable == other.dopCapable&& tagCompleteness == other.tagCompleteness;
+
+            }
+            

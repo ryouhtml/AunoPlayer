@@ -7,12 +7,10 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:auno_player/core/theme/app_theme.dart';
-import 'package:auno_player/data/entities/network_server_entity.dart';
 import 'package:auno_player/features/playlists/screens/playlists_screen.dart';
 import 'package:auno_player/l10n/l10n.dart';
 import 'package:auno_player/providers/playlist_provider.dart';
 import 'package:auno_player/providers/player_provider.dart';
-import 'package:auno_player/services/sources/network_source_service.dart';
 
 class _EmptyPlaylists extends PlaylistsNotifier {
   @override
@@ -20,10 +18,9 @@ class _EmptyPlaylists extends PlaylistsNotifier {
       const PlaylistsState(playlists: [], isLoading: false);
 }
 
-Widget _host({List<NetworkServerEntity> servers = const []}) => ProviderScope(
+Widget _host() => ProviderScope(
   overrides: [
     playlistsProvider.overrideWith(_EmptyPlaylists.new),
-    networkServersProvider.overrideWith((ref) async => servers),
     currentSongProvider.overrideWithValue(null),
   ],
   child: MaterialApp(
@@ -85,33 +82,6 @@ void main() {
     expect(find.text(tl.playlistName), findsNothing);
     expect(find.text(tl.cancel), findsNothing);
     expect(find.text(tl.create), findsNothing);
-    expect(tester.takeException(), isNull);
-    await tester.pumpWidget(const SizedBox());
-  });
-
-  testWidgets('Taglish playlist storage options use English copy', (
-    tester,
-  ) async {
-    _setPhoneSize(tester);
-    final en = lookupFlickLocalizations(kFallbackLocale);
-    final tl = lookupFlickLocalizations(kFilipinoLocale);
-    final server = NetworkServerEntity()
-      ..id = 1
-      ..label = 'Home server'
-      ..protocol = NetworkProtocol.subsonic
-      ..baseUrl = 'https://music.example.com';
-    await tester.pumpWidget(_host(servers: [server]));
-    await tester.pumpAndSettle();
-    final container = ProviderScope.containerOf(
-      tester.element(find.byType(PlaylistsScreen)),
-    );
-    await tester.runAsync(() => container.read(networkServersProvider.future));
-    await _openCreateDialog(tester, en);
-
-    expect(find.text(en.storeOn), findsOneWidget);
-    expect(find.text(en.thisDevice), findsOneWidget);
-    expect(find.text(tl.storeOn), findsNothing);
-    expect(find.text(tl.thisDevice), findsNothing);
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox());
   });

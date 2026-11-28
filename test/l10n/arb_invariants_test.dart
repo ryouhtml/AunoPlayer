@@ -14,6 +14,9 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 const String _enPath = 'lib/l10n/app_en.arb';
+const String _esPath = 'lib/l10n/app_es.arb';
+const String _tlPath = 'lib/l10n/app_tl.arb';
+const String _idPath = 'lib/l10n/app_id.arb';
 const String _zhPath = 'lib/l10n/app_zh.arb';
 const String _allowlistPath = 'test/l10n/l10n_allowlist.json';
 const String _sourceDir = 'lib';
@@ -94,61 +97,79 @@ Set<String> _referencedKeys() {
 
 void main() {
   final en = _loadArb(_enPath);
-  final zh = _loadArb(_zhPath);
+  final locales = <String, Map<String, String>>{
+    'es': _loadArb(_esPath),
+    'id': _loadArb(_idPath),
+    'tl': _loadArb(_tlPath),
+    'zh': _loadArb(_zhPath),
+  };
 
-  test('both locales declare the same keys', () {
-    final missingInZh = en.keys.toSet().difference(zh.keys.toSet()).toList()..sort();
-    final orphanedInZh = zh.keys.toSet().difference(en.keys.toSet()).toList()..sort();
-
-    expect(
-      missingInZh,
-      isEmpty,
-      reason: '$_zhPath is missing these keys: $missingInZh\n'
-          'Run `flutter gen-l10n` and add the translations.',
-    );
-    expect(
-      orphanedInZh,
-      isEmpty,
-      reason: '$_zhPath has keys $_enPath does not: $orphanedInZh',
-    );
+  test('all locales declare the same keys', () {
     expect(en.keys.length, greaterThan(0));
+    for (final entry in locales.entries) {
+      final missing = en.keys.toSet().difference(entry.value.keys.toSet()).toList()
+        ..sort();
+      final orphaned = entry.value.keys.toSet().difference(en.keys.toSet()).toList()
+        ..sort();
+
+      expect(
+        missing,
+        isEmpty,
+        reason: '${entry.key} is missing these keys: $missing\n'
+            'Run `flutter gen-l10n` and add the translations.',
+      );
+      expect(
+        orphaned,
+        isEmpty,
+        reason: '${entry.key} has keys $_enPath does not: $orphaned',
+      );
+    }
   });
 
   test('every key is translated, or allowlisted with a reason', () {
-    final allowed = _allowlisted('untranslated');
-    final untranslated = <String, String>{
-      for (final key in en.keys)
-        if (zh[key] == en[key] && !allowed.contains(key)) key: en[key]!,
+    final translatedLocales = <String, Map<String, String>>{
+      'zh': locales['zh']!,
+      'id': locales['id']!,
     };
+    for (final entry in translatedLocales.entries) {
+      final group = entry.key == 'zh' ? 'untranslated' : 'untranslatedId';
+      final allowed = _allowlisted(group);
+      final untranslated = <String, String>{
+        for (final key in en.keys)
+          if (entry.value[key] == en[key] && !allowed.contains(key)) key: en[key]!,
+      };
 
-    expect(
-      untranslated,
-      isEmpty,
-      reason: 'These keys still show the English text in a Chinese UI:\n'
-          '${untranslated.entries.map((e) => '  ${e.key}: "${e.value}"').join('\n')}\n'
-          'Translate them, or add them to $_allowlistPath under "untranslated" '
-          'with a reason (a brand name or a unit suffix is a valid one).',
-    );
+      expect(
+        untranslated,
+        isEmpty,
+        reason: 'These keys still show the English text in the ${entry.key} UI:\n'
+            '${untranslated.entries.map((e) => '  ${e.key}: "${e.value}"').join('\n')}\n'
+            'Translate them, or add them to $_allowlistPath under "$group" '
+            'with a reason (a brand name or a unit suffix is a valid one).',
+      );
+    }
   });
 
   test('translations keep the source placeholders', () {
     final problems = <String>[];
-    for (final key in en.keys) {
-      final source = _placeholders(en[key]!);
-      final translation = _placeholders(zh[key] ?? '');
-      if (source.typed) {
-        // A plural/select translation may ignore the count it selects on, but it
-        // must not invent a placeholder the English message does not declare.
-        final extra = translation.names.difference(source.names);
-        if (extra.isNotEmpty) {
-          problems.add('$key: zh uses $extra, which "$_enPath" never declares');
+    for (final locale in locales.entries) {
+      for (final key in en.keys) {
+        final source = _placeholders(en[key]!);
+        final translation = _placeholders(locale.value[key] ?? '');
+        if (source.typed) {
+          // A plural/select translation may ignore the count it selects on, but it
+          // must not invent a placeholder the English message does not declare.
+          final extra = translation.names.difference(source.names);
+          if (extra.isNotEmpty) {
+            problems.add('$key: ${locale.key} uses $extra, which "$_enPath" never declares');
+          }
+        } else if (source.names.difference(translation.names).isNotEmpty ||
+            translation.names.difference(source.names).isNotEmpty) {
+          problems.add(
+            '$key: en uses ${source.names.toList()..sort()}, '
+            '${locale.key} uses ${translation.names.toList()..sort()}',
+          );
         }
-      } else if (source.names.difference(translation.names).isNotEmpty ||
-          translation.names.difference(source.names).isNotEmpty) {
-        problems.add(
-          '$key: en uses ${source.names.toList()..sort()}, '
-          'zh uses ${translation.names.toList()..sort()}',
-        );
       }
     }
 

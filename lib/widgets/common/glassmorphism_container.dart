@@ -1,15 +1,19 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auno_player/core/theme/app_colors.dart';
 import 'package:auno_player/core/constants/app_constants.dart';
+import 'package:auno_player/providers/performance_provider.dart';
 
 /// A reusable glassmorphism container widget.
 ///
 /// Uses [useFilter] to toggle between BackdropFilter (expensive) and
 /// simple semi-transparent container (budget-friendly for mobile).
-/// Default is true for backward compatibility, set false for performance.
-class GlassmorphismContainer extends StatelessWidget {
+/// When [useFilter] is null the global blur preference decides: it is off by
+/// default on entry-level devices and on whenever the user enables
+/// "Lyrics & glass blur" in Performance settings.
+class GlassmorphismContainer extends ConsumerWidget {
   /// Child widget to display inside the container
   final Widget child;
 
@@ -41,8 +45,8 @@ class GlassmorphismContainer extends StatelessWidget {
   final double? height;
 
   /// Whether to use BackdropFilter (expensive on mobile GPUs).
-  /// Set to false for budget-friendly semi-transparent panel.
-  final bool useFilter;
+  /// `null` follows the Performance settings blur toggle.
+  final bool? useFilter;
 
   const GlassmorphismContainer({
     super.key,
@@ -56,13 +60,14 @@ class GlassmorphismContainer extends StatelessWidget {
     this.margin = EdgeInsets.zero,
     this.width,
     this.height,
-    this.useFilter = true,
+    this.useFilter,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final effectiveBorderRadius =
         borderRadius ?? BorderRadius.circular(AppConstants.radiusLg);
+    final bool blur = useFilter ?? ref.watch(blurEffectsEnabledProvider);
 
     return Container(
       margin: margin,
@@ -70,7 +75,7 @@ class GlassmorphismContainer extends StatelessWidget {
       height: height,
       child: ClipRRect(
         borderRadius: effectiveBorderRadius,
-        child: useFilter
+        child: blur
             ? BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: blurSigma, sigmaY: blurSigma),
                 child: _buildContainer(effectiveBorderRadius),

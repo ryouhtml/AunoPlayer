@@ -12,6 +12,7 @@ import 'package:auno_player/data/repositories/song_repository.dart';
 import 'package:auno_player/features/player/widgets/ambient_background.dart';
 import 'package:auno_player/features/player/widgets/audio_visualizer.dart';
 import 'package:auno_player/features/player/widgets/player_action_button_row.dart';
+import 'package:auno_player/features/player/widgets/player_chrome_page_gesture.dart';
 import 'package:auno_player/features/player/widgets/player_controls.dart';
 import 'package:auno_player/features/player/widgets/player_layout_sheet.dart';
 import 'package:auno_player/features/player/widgets/player_navigation.dart';
@@ -22,6 +23,7 @@ import 'package:auno_player/features/player/widgets/landscape_player_layout.dart
 import 'package:auno_player/features/player/widgets/lyrics_mode_waveform_strip.dart';
 import 'package:auno_player/features/player/widgets/inline_lyrics_panel.dart';
 import 'package:auno_player/features/player/widgets/album_color_helpers.dart';
+import 'package:auno_player/features/queue/screens/queue_screen.dart';
 import 'package:auno_player/models/album_color_mode.dart';
 import 'package:auno_player/models/audio_engine_type.dart';
 import 'package:auno_player/models/immersive_background_style.dart';
@@ -76,6 +78,26 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
     Navigator.of(context).pop();
   }
 
+  void _showNowPlayingPage() {
+    _animatePlayerPage(_nowPlayingPage);
+  }
+
+  void _showQueuePage() {
+    _animatePlayerPage(_queuePage);
+  }
+
+  void _animatePlayerPage(int page) {
+    if (!mounted || _playerPage == page) return;
+    setState(() => _playerPage = page);
+    if (_playerPageController.hasClients) {
+      _playerPageController.animateToPage(
+        page,
+        duration: AppConstants.animationNormal,
+        curve: Curves.easeOutCubic,
+      );
+    }
+  }
+
   static const String _topBarTextFontFamily = 'GoogleSansFlex';
   static const FontWeight _topBarTextFontWeight = FontWeight.w500;
 
@@ -96,6 +118,11 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
   bool _isVisualizationMode = false;
   bool _isImmersiveFullView = false;
   bool _isCarouselDragging = false;
+  static const int _nowPlayingPage = 0;
+  static const int _queuePage = 1;
+  int _playerPage = _nowPlayingPage;
+  final PageController _playerPageController = PageController();
+  final GlobalKey _queueChipKey = GlobalKey();
   PlayerScreenMode _playerScreenMode = PlayerScreenMode.immersive;
   int _immersiveAutoFullViewDelaySeconds = 0;
   Timer? _immersiveFullViewTimer;
@@ -175,6 +202,7 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
     _throttledPositionNotifier.dispose();
     _zeroPosition.dispose();
     _dragController.dispose();
+    _playerPageController.dispose();
     super.dispose();
   }
 
@@ -182,6 +210,9 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
     if (_playerService.currentSongNotifier.value == null) return;
     if (_isImmersiveFullView) {
       setState(() => _isImmersiveFullView = false);
+    }
+    if (_playerPage != _nowPlayingPage) {
+      _showNowPlayingPage();
     }
     _updateTopBarTextMeasurement(_playerService.currentSongNotifier.value);
     _refreshImmersiveFullViewTimer();
@@ -734,17 +765,6 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
             dominantColor: albumColor,
             placeholder: placeholder,
             errorWidget: placeholder,
-            albumName: song.album,
-            artistName:
-                (song.albumArtist != null &&
-                    song.albumArtist!.trim().isNotEmpty)
-                ? song.albumArtist
-                : song.artist,
-            representativeSongTitle: song.title,
-            preferVertical: true,
-            // In the standard layout the art card carries Motion Art; only the
-            // immersive full-bleed view needs a second video layer.
-            motionEnabled: _isImmersiveFullView,
           )
         : CachedImageWidget(
             imagePath: song.albumArt,
@@ -817,8 +837,9 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
     Song song,
     Color? albumColor,
     AlbumColorMode albumColorMode,
-    dynamic appPrefs,
-  ) {
+    dynamic appPrefs, {
+    bool pageSwipeEnabled = true,
+  }) {
     final hideQueueBadge =
         PlayerActionButtonX.fromStorageValue(appPrefs.leftActionButton) ==
             PlayerActionButton.queue ||
@@ -828,12 +849,22 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
             PlayerActionButton.queue ||
         PlayerActionButtonX.fromStorageValue(appPrefs.rightTopActionButton) ==
             PlayerActionButton.queue;
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: context.responsive(8.0, 12.0, 16.0),
-        vertical: context.responsive(4.0, 6.0, 8.0),
-      ),
-      child: Row(
+    return PlayerChromePageGesture(
+      pageSwipeEnabled: pageSwipeEnabled && !_isCarouselDragging,
+      queueDragRegionKey: song.isFromLocker ? null : _queueChipKey,
+      onQueueDrag: song.isFromLocker
+          ? null
+          : () {
+              unawaited(_navigation.queueSong(context, song));
+            },
+      onSwipeLeft: _showQueuePage,
+      onSwipeRight: _showNowPlayingPage,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: context.responsive(8.0, 12.0, 16.0),
+          vertical: context.responsive(4.0, 6.0, 8.0),
+        ),
+        child: Row(
         children: [
           _buildChromeButton(
             context,
@@ -845,17 +876,10 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
           SizedBox(width: context.responsive(8.0, 10.0, 12.0)),
           Expanded(
             child: GestureDetector(
+              key: _queueChipKey,
               onTap: song.isFromLocker
                   ? null
                   : () => _navigation.openQueue(context),
-              onHorizontalDragEnd: song.isFromLocker
-                  ? null
-                  : (details) async {
-                      if (details.primaryVelocity != null &&
-                          details.primaryVelocity! < -400) {
-                        await _navigation.queueSong(context, song);
-                      }
-                    },
               child: ValueListenableBuilder<List<Song>>(
                 valueListenable: _playerService.upNextNotifier,
                 builder: (context, upNext, _) {
@@ -962,6 +986,7 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
             ],
           ),
         ],
+        ),
       ),
     );
   }
@@ -1408,8 +1433,8 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
                           onVinylChanged: (v) => _isVinylMode = v,
                           onToggleLyrics: () => _setLyricsMode(!_isLyricsMode),
                           showWaveform: false,
-                          motionArtEnabled: isCurrent,
                           active: isCurrent,
+                          heroTag: isCurrent ? widget.heroTag : null,
                         );
                       },
                     );
@@ -1460,8 +1485,17 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
               _buildTopChrome(context, song, albumColor, colorMode, appPrefs),
               SizedBox(height: context.responsive(8.0, 10.0, 12.0)),
               Expanded(
-                child: Stack(
+                child: PageView(
+                  controller: _playerPageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  onPageChanged: (page) {
+                    if (_playerPage != page && mounted) {
+                      setState(() => _playerPage = page);
+                    }
+                  },
                   children: [
+                    Stack(
+                      children: [
                     Positioned.fill(
                       child: ValueListenableBuilder<List<Song>>(
                         valueListenable: _playerService.upNextNotifier,
@@ -1516,8 +1550,7 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
                                     visualizerAnimationStyle: visStyle,
                                     visualizerFrequencyMode: visFreq,
                                     visualizerMovementMode: visMove,
-                                    motionArtEnabled: isCurrent,
-                                    artworkCardArtworkScale:
+                                              artworkCardArtworkScale:
                                         appPrefs.artworkCardArtworkScale,
                                     artworkCardTextScale:
                                         appPrefs.artworkCardTextScale,
@@ -1556,6 +1589,8 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
                                         _setLyricsMode(!_isLyricsMode),
                                     showWaveform: false,
                                     active: isCurrent,
+                                    heroTag:
+                                        isCurrent ? widget.heroTag : null,
                                   );
                                 },
                               );
@@ -1578,6 +1613,9 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
                           ),
                         ),
                       ),
+                      ],
+                    ),
+                    const QueuePanel(onClose: null),
                   ],
                 ),
               ),
@@ -1705,6 +1743,24 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
                   showTimeLabels: !_isLyricsMode,
                 ),
               ),
+              // Active-line strip: tap opens the full lyrics view. The panel
+              // loads through the same lyrics engine (local or online).
+              if (!_isLyricsMode &&
+                  !_isVisualizationMode &&
+                  !_isImmersiveFullView)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: InlineLyricsPanel(
+                    song: song,
+                    playerService: _playerService,
+                    lyricsService: _lyricsService,
+                    albumColor: albumColor,
+                    positionNotifier: _throttledPositionNotifier,
+                    active: true,
+                    strip: true,
+                    onStripTap: () => _setLyricsMode(!_isLyricsMode),
+                  ),
+                ),
               // Original bottom spacing: immersive 24-40, artworkCard directorySpacing 24-40
               SizedBox(height: context.responsive(24.0, 32.0, 40.0)),
             ],
@@ -1818,8 +1874,8 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
                         onVinylChanged: (v) => _isVinylMode = v,
                         onToggleLyrics: () => _setLyricsMode(!_isLyricsMode),
                         showWaveform: false,
-                        motionArtEnabled: isCurrent,
                         active: isCurrent,
+                        heroTag: isCurrent ? widget.heroTag : null,
                       );
                     },
                   );
@@ -1837,7 +1893,14 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
       child: Column(
         children: [
           const Uac2ErrorNotification(),
-          _buildTopChrome(context, song, albumColor, colorMode, appPrefs),
+          _buildTopChrome(
+            context,
+            song,
+            albumColor,
+            colorMode,
+            appPrefs,
+            pageSwipeEnabled: false,
+          ),
           const SizedBox(height: 4),
           Expanded(
             child: LandscapePlayerLayout(
@@ -1888,7 +1951,6 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
                 onVinylChanged: (v) => _isVinylMode = v,
                 onToggleLyrics: () => _setLyricsMode(!_isLyricsMode),
                 showWaveform: false,
-                motionArtEnabled: true,
                 active: true,
               ),
               actions: showActions ? actionRowBuilder(song) : null,

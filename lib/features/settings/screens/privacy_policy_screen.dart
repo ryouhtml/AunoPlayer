@@ -57,24 +57,9 @@ class PrivacyPolicyScreen extends StatelessWidget {
                               l10n.usbAudioClass20Devices,
                         ),
                         _Section(
-                          title: l10n.englishForFilipino.lastFmScrobbling,
-                          content:
-                              l10n.ifYouConnectYourLastFm,
-                        ),
-                        _Section(
-                          title: l10n.englishForFilipino.albumArtImport,
-                          content:
-                              l10n.theAppQueriesPublicApisMusicbrainz,
-                        ),
-                        _Section(
                           title: l10n.englishForFilipino.mossEcosystem,
                           content:
                               l10n.flickCanReceivePlaybackHandoffsFrom,
-                        ),
-                        _Section(
-                          title: l10n.englishForFilipino.inAppUpdates,
-                          content:
-                              l10n.playStoreUpdatesUseGooglePlay,
                         ),
                         _Section(
                           title: l10n.englishForFilipino.childrenSPrivacy,

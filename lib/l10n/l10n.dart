@@ -1,4 +1,4 @@
-// Localization entry point for Flick.
+// Localization entry point for Auno Player.
 //
 // Two accessors are provided, on purpose:
 //
@@ -45,6 +45,7 @@ const Locale kBaybayinLocale = Locale.fromSubtags(
 /// `zh` through the language-code match below.
 const List<Locale> kSupportedLocales = <Locale>[
   Locale('en'),
+  Locale('id'),
   Locale('zh', 'CN'),
   Locale('es'),
   kFilipinoLocale,

@@ -39,11 +39,6 @@ const String _sourceDir = 'lib';
 /// A new entry here needs the same scrutiny as a new entry in
 /// `l10n_allowlist.json`: it is a claim that the English text is correct.
 const Map<String, String> _allowedPaths = <String, String>{
-  'lib/features/whats_new/data/changelog_data.dart':
-      'release notes are historical product copy, one entry per shipped '
-      'version; they are not UI strings and are translated as documents',
-  'lib/features/settings/widgets/lastfm_settings_tile.dart':
-      'the literal is the URL last.fm/api/account/create, shown as link text',
   'lib/features/settings/widgets/language_settings_card.dart':
       'the language names ("English", "Taglish") are endonyms, shown '
       'verbatim in every locale the way a language picker always does',
@@ -198,14 +193,9 @@ const Map<String, String> _internalAssertionPaths = <String, String>{
       'own l10n string',
   'lib/services/android_audio_engine.dart': 'platform-channel state assertions',
   'lib/services/audio_engine_manager.dart': 'engine-not-attached assertion',
-  'lib/services/apple_music/apple_music_metadata_service.dart':
-      'transient retry reasons, consumed by the retry loop and logged',
   'lib/services/database_error.dart': 'database assertion',
   'lib/data/database.dart': 'database init assertion',
-  'lib/services/motion_art/animated_artwork_service.dart':
-      'transient retry reasons',
   'lib/services/player_service.dart': 'engine assertions',
-  'lib/services/remote_source_service.dart': 'lookup assertions',
   'lib/services/rust_audio_engine.dart': 'engine assertions',
   'lib/services/rust_audio_service.dart': 'engine assertions',
   'lib/services/usb_dac_volume_restore.dart':
@@ -214,8 +204,6 @@ const Map<String, String> _internalAssertionPaths = <String, String>{
   'lib/services/wav_stream_audio_source.dart': 'session assertions',
   'lib/services/csv_export_service.dart':
       'the recap screen swallows the failure and shows l10n.couldNotSave…',
-  'lib/features/recap/screens/replay_studio_screen.dart':
-      'the Ko-fi failure is swallowed and replaced by l10n.couldNotOpenKoFi…',
   'lib/features/playlists/screens/playlist_detail_screen.dart':
       'StateError from firstWhere orElse -- an internal invariant, not copy',
   'lib/features/playlists/utils/playlist_cover_render.dart':

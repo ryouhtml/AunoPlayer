@@ -4,21 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:auno_player/widgets/common/flick_snackbar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:auno_player/core/theme/app_colors.dart';
 import 'package:auno_player/core/theme/adaptive_color_provider.dart';
 import 'package:auno_player/core/constants/app_constants.dart';
 import 'package:auno_player/core/utils/navigation_helper.dart';
 import 'package:auno_player/data/repositories/song_repository.dart';
-import 'package:auno_player/features/albums/widgets/identify_album_sheet.dart';
 import 'package:auno_player/features/albums/widgets/album_completeness_status.dart';
 import 'package:auno_player/features/artists/screens/artist_detail_screen.dart';
 import 'package:auno_player/models/album_completeness.dart';
 import 'package:auno_player/models/playback_context.dart';
 import 'package:auno_player/models/song.dart';
-import 'package:auno_player/providers/apple_music_provider.dart';
 import 'package:auno_player/services/album_art_service.dart';
-import 'package:auno_player/services/apple_music/apple_music_metadata_service.dart';
 import 'package:auno_player/services/color_extraction_service.dart';
 import 'package:auno_player/services/player_service.dart';
 import 'package:auno_player/widgets/common/cached_image_widget.dart';
@@ -27,7 +23,6 @@ import 'package:auno_player/widgets/common/scroll_fade_wrapper.dart';
 import 'package:auno_player/widgets/common/song_tile_thumbnail.dart';
 import 'package:auno_player/widgets/common/detail_header.dart';
 import 'package:auno_player/widgets/common/detail_description.dart';
-import 'package:auno_player/widgets/common/fetched_description.dart';
 import 'package:auno_player/widgets/common/flick_dialog.dart';
 import 'package:auno_player/providers/detail_description_provider.dart';
 import 'package:auno_player/features/player/widgets/add_to_playlist_sheet.dart';
@@ -367,15 +362,6 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen>
   }
 
   void _showMore() {
-    final pageInfoEnabled =
-        ref.read(appleMusicPageInfoEnabledProvider).value ?? true;
-    final appleMusic = pageInfoEnabled
-        ? ref
-              .read(
-                appleMusicAlbumProvider((widget.albumName, widget.albumArtist)),
-              )
-              .value
-        : null;
     DetailMoreSheet.show(
       context,
       items: [
@@ -392,78 +378,12 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen>
           onTap: () => AddToPlaylistSheet.showSongs(context, widget.songs),
         ),
         DetailMoreSheetItem(
-          icon: LucideIcons.sparkles,
-          label: l10n.englishForFilipino.identifyAlbum,
-          onTap: () => IdentifyAlbumSheet.show(
-            context,
-            songs: widget.songs,
-            initialArtist: widget.albumArtist,
-            initialAlbum: widget.albumName,
-          ),
-        ),
-        if (pageInfoEnabled && appleMusic != null)
-          DetailMoreSheetItem(
-            icon: LucideIcons.externalLink,
-            label: l10n.englishForFilipino.openInAppleMusic,
-            onTap: () => _openAppleMusic(_albumAppleMusicUri(appleMusic)),
-          ),
-        if (pageInfoEnabled)
-          DetailMoreSheetItem(
-            icon: LucideIcons.refreshCw,
-            label: l10n.englishForFilipino.refreshAppleMusic,
-            onTap: _refreshAppleMusic,
-          ),
-        DetailMoreSheetItem(
           icon: LucideIcons.moonStar,
           label: l10n.englishForFilipino.sleepTimer,
           onTap: () =>
               SleepTimerBottomSheet.show(context, widget.playerService),
         ),
       ],
-    );
-  }
-
-  Uri _albumAppleMusicUri(AppleMusicAlbumData data) {
-    final url = data.match.url;
-    if (url.isNotEmpty) return Uri.parse(url);
-    return _appleMusicSearchUri('${widget.albumArtist} ${widget.albumName}');
-  }
-
-  Uri _appleMusicSearchUri(String term) {
-    final storefront = AppleMusicMetadataService.instance.deviceStorefront;
-    return Uri.parse(
-      'https://music.apple.com/$storefront/search?term=${Uri.encodeComponent(term)}',
-    );
-  }
-
-  Future<void> _openAppleMusic(Uri uri) async {
-    try {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } catch (_) {
-      // Browser unavailable; nothing to surface.
-    }
-  }
-
-  Future<void> _refreshAppleMusic() async {
-    final messenger = ScaffoldMessenger.of(context);
-    messenger.showFlickSnackBar(
-      SnackBar(content: Text(l10n.englishForFilipino.refreshingAppleMusicData)),
-    );
-    final updated = await ref
-        .read(
-          appleMusicAlbumProvider((widget.albumName, widget.albumArtist))
-              .notifier,
-        )
-        .refresh();
-    if (!mounted) return;
-    messenger.showFlickSnackBar(
-      SnackBar(
-        content: Text(
-          updated
-              ? l10n.englishForFilipino.appleMusicDataUpdated
-              : l10n.englishForFilipino.appleMusicDataUnavailable,
-        ),
-      ),
     );
   }
 
@@ -507,15 +427,6 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen>
       builder: (context, animatedBg, _) {
         final resolvedBg = animatedBg ?? AppColors.background;
         final prefs = ref.watch(appPreferencesProvider);
-        final pageInfoEnabled =
-            ref.watch(appleMusicPageInfoEnabledProvider).value ?? true;
-        final remoteAlbum = ref
-            .watch(
-              appleMusicAlbumProvider((widget.albumName, widget.albumArtist)),
-            )
-            .value;
-        final appleMusic = pageInfoEnabled ? remoteAlbum : null;
-        final albumNotes = appleMusic?.notes?.trim();
         return Stack(
           children: [
             Scaffold(
@@ -575,18 +486,9 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen>
                   const SliverToBoxAdapter(
                     child: SizedBox(height: AppConstants.spacingMd),
                   ),
-                  if (albumNotes != null && albumNotes.isNotEmpty)
-                    _buildSectionTitle(context, l10n.aboutThisAlbum),
-                 if (albumNotes != null && albumNotes.isNotEmpty)
-                     SliverToBoxAdapter(
-                       child: FetchedDescription(
-                         text: albumNotes,
-                         sheetTitle: l10n.aboutThisAlbum,
-                       ),
-                     ),
-                 const SliverToBoxAdapter(
-                   child: SizedBox(height: AppConstants.spacingLg),
-                 ),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(height: AppConstants.spacingLg),
+                  ),
                  _buildSectionTitle(context, l10n.songs14),
                 SliverPadding(
                   padding: EdgeInsets.only(
@@ -788,11 +690,6 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen>
         dominantColor: _albumColor,
         placeholder: fallback,
         errorWidget: fallback,
-        albumName: widget.albumName,
-        artistName: widget.albumArtist,
-        representativeSongTitle: widget.songs.isNotEmpty
-            ? widget.songs.first.title
-            : null,
       ),
     );
   }

@@ -64,21 +64,6 @@ class PlaybackDisplaySettingsScreen extends ConsumerWidget {
                 },
               ),
               const SettingsDivider(),
-              ToggleSetting(
-                icon: LucideIcons.clapperboard,
-                title: l10n.englishForFilipino.motionArtInBitPerfect,
-                subtitle: appPrefs.motionArtDuringBitPerfect
-                    ? l10n.motionArtPlaysDuringBitPerfect
-                    : l10n.motionArtIsReplacedWhileBit,
-                value: appPrefs.motionArtDuringBitPerfect,
-                onChanged: (value) {
-                  playerService.setMotionArtDuringBitPerfect(value);
-                  ref
-                      .read(appPreferencesProvider.notifier)
-                      .setMotionArtDuringBitPerfect(value);
-                },
-              ),
-              const SettingsDivider(),
               if (Platform.isAndroid) ...[
                 _DuckOnInterruptionTile(playerService: playerService),
                 const SettingsDivider(),

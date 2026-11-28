@@ -5,21 +5,17 @@ import 'package:auno_player/core/constants/app_constants.dart';
 import 'package:auno_player/features/settings/screens/app_info_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/audio_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/bluetooth_settings_screen.dart';
-import 'package:auno_player/features/settings/screens/casting_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/interface_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/library_settings_screen.dart';
+import 'package:auno_player/features/settings/screens/performance_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/playback_display_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/queue_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/ui_customization_settings_screen.dart';
-import 'package:auno_player/features/settings/screens/integrations_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/lyrics_settings_screen.dart';
-import 'package:auno_player/features/settings/screens/network_sources_screen.dart';
 import 'package:auno_player/features/settings/screens/player_layout_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/widget_settings_screen.dart';
-import 'package:auno_player/features/settings/screens/support_flick_screen.dart';
 import 'package:auno_player/core/utils/navigation_helper.dart';
 import 'package:auno_player/features/settings/widgets/settings_widgets.dart';
-import 'package:auno_player/features/settings/widgets/donation_coffee_icon.dart';
 import 'package:auno_player/features/milestone/screens/milestones_screen.dart';
 import 'package:auno_player/features/manual/screens/manual_screen.dart';
 import 'package:auno_player/services/milestone_service.dart';
@@ -131,18 +127,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           const SettingsDivider(),
                           _CategoryTile(
-                            icon: LucideIcons.cloud,
-                            iconBg: const Color(0xFF2D6F6F),
-                            iconFg: const Color(0xFF8BFFE0),
-                            title: l10n.englishForFilipino.networkSources,
-                            subtitle: l10n.subsonicServersSyncAndStreaming,
-                            onTap: () => _navigate(
-                              context,
-                              const NetworkSourcesScreen(),
-                            ),
-                          ),
-                          const SettingsDivider(),
-                          _CategoryTile(
                             icon: LucideIcons.play,
                             iconBg: const Color(0xFF4A2D6F),
                             iconFg: const Color(0xFFD19FFF),
@@ -199,18 +183,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           const SettingsDivider(),
                           _CategoryTile(
-                            icon: LucideIcons.cast,
-                            iconBg: const Color(0xFF6F2D4A),
-                            iconFg: const Color(0xFFFF8BB8),
-                            title: l10n.englishForFilipino.casting,
-                            subtitle: l10n.dlnaUpnpAndChromecastReceivers,
-                            onTap: () => _navigate(
-                              context,
-                              const CastingSettingsScreen(),
-                            ),
-                          ),
-                          const SettingsDivider(),
-                          _CategoryTile(
                             icon: LucideIcons.fileText,
                             iconBg: const Color(0xFF4A6F2D),
                             iconFg: const Color(0xFFC4FF8B),
@@ -255,18 +227,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           const SettingsDivider(),
                           _CategoryTile(
-                            icon: LucideIcons.plug,
-                            iconBg: const Color(0xFF6F2D4A),
-                            iconFg: const Color(0xFFFF8BB8),
-                            title: l10n.englishForFilipino.integrations,
-                            subtitle: l10n.lastFmListenbrainzScrobbling,
-                            onTap: () => _navigate(
-                              context,
-                              const IntegrationsSettingsScreen(),
-                            ),
-                          ),
-                          const SettingsDivider(),
-                          _CategoryTile(
                             icon: LucideIcons.layoutGrid,
                             iconBg: const Color(0xFF2D4A6F),
                             iconFg: const Color(0xFF8BB8FF),
@@ -275,6 +235,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onTap: () => _navigate(
                               context,
                               const WidgetSettingsScreen(),
+                            ),
+                          ),
+                          const SettingsDivider(),
+                          _CategoryTile(
+                            icon: Icons.speed,
+                            iconBg: const Color(0xFF2D6F6F),
+                            iconFg: const Color(0xFF8BFFE8),
+                            title: l10n.performance,
+                            subtitle: l10n.performanceSummary,
+                            onTap: () => _navigate(
+                              context,
+                              const PerformanceSettingsScreen(),
                             ),
                           ),
                         ],
@@ -383,20 +355,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
           ),
-          IconButton(
-            onPressed: () {
-              NavigationHelper.pushOnRoot(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (_) => const SupportFlickScreen(),
-                ),
-              );
-            },
-            icon: const DonationCoffeeIcon(),
-            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-            visualDensity: VisualDensity.standard,
-            tooltip: l10n.supportFlick,
-          ),
         ],
       ),
     );
@@ -452,30 +410,41 @@ class _CategoryTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(AppConstants.spacingMd),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           child: Row(
             children: [
               ColoredSettingsIcon(
                 icon: icon,
                 backgroundColor: iconBg,
                 iconColor: iconFg,
+                size: 36,
+                iconSize: 20,
               ),
-              const SizedBox(width: AppConstants.spacingMd),
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       title,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
                         color: context.adaptiveTextPrimary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        height: 1.2,
                       ),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       subtitle,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
                         color: context.adaptiveTextTertiary,
+                        fontSize: 12,
+                        height: 1.25,
                       ),
                     ),
                   ],
@@ -484,7 +453,7 @@ class _CategoryTile extends StatelessWidget {
               Icon(
                 LucideIcons.chevronRight,
                 color: context.adaptiveTextTertiary,
-                size: 20,
+                size: 18,
               ),
             ],
           ),

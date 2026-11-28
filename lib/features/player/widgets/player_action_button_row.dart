@@ -22,7 +22,6 @@ import 'package:auno_player/features/player/widgets/sleep_timer_bottom_sheet.dar
 import 'package:auno_player/features/player/widgets/volume_bottom_sheet.dart';
 import 'package:auno_player/features/player/widgets/share/share_bottom_sheet.dart';
 import 'package:auno_player/features/settings/screens/equalizer_screen.dart';
-import 'package:auno_player/features/settings/screens/casting_settings_screen.dart';
 import 'package:auno_player/l10n/l10n.dart';
 
 class PlayerActionButtonRow extends ConsumerStatefulWidget {
@@ -417,15 +416,6 @@ class _PlayerActionButtonRowState extends ConsumerState<PlayerActionButtonRow> {
         );
       case PlayerActionButton.volume:
         return _buildVolumeButton(
-          context: context,
-          actionPadding: actionPadding,
-          actionRadius: actionRadius,
-          actionIconSize: actionIconSize,
-          inactiveBg: inactiveBg,
-          inactiveBorder: inactiveBorder,
-        );
-      case PlayerActionButton.cast:
-        return _buildCastButton(
           context: context,
           actionPadding: actionPadding,
           actionRadius: actionRadius,
@@ -903,45 +893,4 @@ class _PlayerActionButtonRowState extends ConsumerState<PlayerActionButtonRow> {
     );
   }
 
-  Widget _buildCastButton({
-    required BuildContext context,
-    required EdgeInsets actionPadding,
-    required double actionRadius,
-    required double actionIconSize,
-    required Color inactiveBg,
-    required Color inactiveBorder,
-  }) {
-    final isCasting = ref.watch(isCastingProvider);
-    return Tooltip(
-      message: isCasting ? l10n.castingTapToManage : l10n.cast,
-      child: GestureDetector(
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const CastingSettingsScreen()),
-        ),
-        child: Container(
-          padding: actionPadding,
-          decoration: widget.compact
-              ? null
-              : BoxDecoration(
-                  color: isCasting
-                      ? AppColors.accent.withValues(alpha: 0.28)
-                      : inactiveBg,
-                  borderRadius: BorderRadius.circular(actionRadius),
-                  border: Border.all(
-                    color: isCasting
-                        ? AppColors.accent.withValues(alpha: 0.45)
-                        : inactiveBorder,
-                  ),
-                ),
-          child: Icon(
-            LucideIcons.cast,
-            color: isCasting
-                ? AppColors.accent
-                : Colors.white.withValues(alpha: 0.96),
-            size: actionIconSize,
-          ),
-        ),
-      ),
-    );
-  }
 }

@@ -6,43 +6,49 @@
 import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-/// One band. Coefficients are computed in Rust (which knows the active sample
+
+            
+
+            
+
+            /// One band. Coefficients are computed in Rust (which knows the active sample
 /// rate); Dart only describes the band.
-class EqBandSpec {
-  final EqBandType bandType;
-  final double freqHz;
-  final double gainDb;
-  final double q;
+class EqBandSpec  {
+                final EqBandType bandType;
+final double freqHz;
+final double gainDb;
+final double q;
 
-  const EqBandSpec({
-    required this.bandType,
-    required this.freqHz,
-    required this.gainDb,
-    required this.q,
-  });
+                const EqBandSpec({required this.bandType ,required this.freqHz ,required this.gainDb ,required this.q ,});
 
-  @override
-  int get hashCode =>
-      bandType.hashCode ^ freqHz.hashCode ^ gainDb.hashCode ^ q.hashCode;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is EqBandSpec &&
-          runtimeType == other.runtimeType &&
-          bandType == other.bandType &&
-          freqHz == other.freqHz &&
-          gainDb == other.gainDb &&
-          q == other.q;
-}
+
+
+
+        @override
+        int get hashCode => bandType.hashCode^freqHz.hashCode^gainDb.hashCode^q.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is EqBandSpec &&
+                runtimeType == other.runtimeType
+                && bandType == other.bandType&& freqHz == other.freqHz&& gainDb == other.gainDb&& q == other.q;
+
+            }
 
 /// Mirror of Dart ParametricBandType (allPass dropped — it is a no-op).
 enum EqBandType {
-  peaking,
-  lowShelf,
-  highShelf,
-  lowPass,
-  highPass,
-  bandPass,
-  notch,
-}
+                    peaking,
+lowShelf,
+highShelf,
+lowPass,
+highPass,
+bandPass,
+notch,
+                    ;
+                    
+                }
+            

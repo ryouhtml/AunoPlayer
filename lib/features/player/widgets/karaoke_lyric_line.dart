@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:auno_player/services/karaoke_model.dart';
+import 'package:auno_player/services/karaoke_spans.dart';
 import 'package:auno_player/services/lyrics_service.dart';
 import 'package:auno_player/services/player_service.dart';
 
@@ -28,6 +30,19 @@ class KaraokeLyricLine extends StatefulWidget {
   /// False for peek stages: no ticker, no sweep.
   final bool active;
 
+  /// Normalized BitChord-style line. When supplied, its real spans drive the
+  /// sweep; otherwise the legacy enhanced-LRC path is used unchanged.
+  final KaraokeLine? karaokeLine;
+
+  /// Granularity chosen in lyrics settings.
+  final KaraokeSweepStyle sweepStyle;
+
+  /// Optional callback so the widget itself can handle tap-to-seek.
+  final VoidCallback? onSeek;
+
+  /// Dims inactive carousel lines while keeping their text readable.
+  final bool background;
+
   const KaraokeLyricLine({
     super.key,
     required this.playerService,
@@ -40,6 +55,10 @@ class KaraokeLyricLine extends StatefulWidget {
     required this.unsungColor,
     this.positionNotifier,
     this.active = true,
+    this.karaokeLine,
+    this.sweepStyle = KaraokeSweepStyle.auto,
+    this.onSeek,
+    this.background = false,
   });
 
   @override
@@ -51,6 +70,7 @@ class _KaraokeLyricLineState extends State<KaraokeLyricLine>
   static const double _fillEpsilon = 0.0004;
 
   late List<LyricsWord> _segments;
+  List<KaraokeSpan> _spans = const [];
   Duration _basePosition = Duration.zero;
   Duration _tickerElapsed = Duration.zero;
   Duration _baseTickerElapsed = Duration.zero;
@@ -59,6 +79,8 @@ class _KaraokeLyricLineState extends State<KaraokeLyricLine>
   List<double> _lastFills = const [];
   int _builtForLineIndex = -1;
   LyricsData? _builtForLyrics;
+  KaraokeLine? _builtForKaraokeLine;
+  KaraokeSweepStyle _builtForSweepStyle = KaraokeSweepStyle.auto;
 
   ValueNotifier<Duration> get _positionNotifier =>
       widget.positionNotifier ?? widget.playerService.positionNotifier;
@@ -86,7 +108,9 @@ class _KaraokeLyricLineState extends State<KaraokeLyricLine>
       _positionNotifier.addListener(_onPositionTick);
     }
     if (!identical(oldWidget.lyrics, widget.lyrics) ||
-        oldWidget.lineIndex != widget.lineIndex) {
+        oldWidget.lineIndex != widget.lineIndex ||
+        oldWidget.karaokeLine != widget.karaokeLine ||
+        oldWidget.sweepStyle != widget.sweepStyle) {
       _resolveWords();
       _onPositionTick();
       return;
@@ -104,8 +128,13 @@ class _KaraokeLyricLineState extends State<KaraokeLyricLine>
           in widget.lyricsService.resolveWords(widget.lyrics, widget.lineIndex))
         ...LyricsService.splitKaraokeWord(word),
     ];
+    _spans = widget.karaokeLine == null
+        ? const []
+        : wordSpans(widget.karaokeLine!, widget.sweepStyle);
     _builtForLineIndex = widget.lineIndex;
     _builtForLyrics = widget.lyrics;
+    _builtForKaraokeLine = widget.karaokeLine;
+    _builtForSweepStyle = widget.sweepStyle;
     _lastFills = const [];
   }
 
@@ -125,8 +154,10 @@ class _KaraokeLyricLineState extends State<KaraokeLyricLine>
   }
 
   void _updateTicker() {
-    final shouldRun =
-        widget.active && _isPlaying && _segments.isNotEmpty && mounted;
+    final shouldRun = widget.active &&
+        _isPlaying &&
+        (_segments.isNotEmpty || _spans.isNotEmpty) &&
+        mounted;
     if (shouldRun && _ticker == null) {
       _tickerElapsed = Duration.zero;
       _baseTickerElapsed = Duration.zero;
@@ -152,13 +183,21 @@ class _KaraokeLyricLineState extends State<KaraokeLyricLine>
   }
 
   void _rebuildIfFillsChanged() {
-    if (_segments.isEmpty || !mounted) return;
+    if ((_segments.isEmpty && _spans.isEmpty) || !mounted) return;
 
     final position = _predictedPosition();
-    final nextFills = <double>[
-      for (final segment in _segments)
-        LyricsService.fillForWord(segment, position),
-    ];
+    final nextFills = _spans.isNotEmpty
+        ? sweepSpans(
+                widget.karaokeLine!,
+                position.inMilliseconds,
+                widget.sweepStyle,
+              )
+            .map((swept) => swept.fill)
+            .toList(growable: false)
+        : <double>[
+            for (final segment in _segments)
+              LyricsService.fillForWord(segment, position),
+          ];
 
     final previous = _lastFills;
     var changed = previous.length != nextFills.length;
@@ -206,6 +245,26 @@ class _KaraokeLyricLineState extends State<KaraokeLyricLine>
     );
   }
 
+  Widget _buildSpan(KaraokeSpan span, double fill) {
+    final clamped = fill.clamp(0.0, 1.0);
+    final durationMs = span.endMs - span.startMs;
+    final edgeStart = clamped >= 1.0 || durationMs <= 0
+        ? clamped
+        : (clamped - 80 / durationMs).clamp(0.0, 1.0);
+
+    return ShaderMask(
+      shaderCallback: (rect) {
+        return LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [widget.sungColor, widget.unsungColor],
+          stops: [edgeStart, clamped],
+        ).createShader(rect);
+      },
+      child: Text(span.text, style: widget.style),
+    );
+  }
+
   @override
   void dispose() {
     _ticker?.dispose();
@@ -217,32 +276,60 @@ class _KaraokeLyricLineState extends State<KaraokeLyricLine>
   @override
   Widget build(BuildContext context) {
     if (_builtForLineIndex != widget.lineIndex ||
-        !identical(_builtForLyrics, widget.lyrics)) {
+        !identical(_builtForLyrics, widget.lyrics) ||
+        !identical(_builtForKaraokeLine, widget.karaokeLine) ||
+        _builtForSweepStyle != widget.sweepStyle) {
       _resolveWords();
     }
 
-    if (_segments.isEmpty) {
-      return Text(
-        widget.lyrics.lines[widget.lineIndex].text,
+    Widget content;
+    if (_spans.isNotEmpty) {
+      final fills = _lastFills.isEmpty
+          ? List<double>.filled(_spans.length, 0.0)
+          : _lastFills;
+      content = SizedBox(
+        width: double.infinity,
+        child: Wrap(
+          alignment: _wrapAlignment,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            for (var i = 0; i < _spans.length; i++)
+              _buildSpan(_spans[i], i < fills.length ? fills[i] : 0.0),
+          ],
+        ),
+      );
+    } else if (_segments.isNotEmpty) {
+      final fills = _lastFills.isEmpty
+          ? List<double>.filled(_segments.length, 0.0)
+          : _lastFills;
+      content = SizedBox(
+        width: double.infinity,
+        child: Wrap(
+          alignment: _wrapAlignment,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            for (var i = 0; i < _segments.length; i++)
+              _buildWord(_segments[i], i < fills.length ? fills[i] : 0.0),
+          ],
+        ),
+      );
+    } else {
+      content = Text(
+        widget.karaokeLine?.text ?? widget.lyrics.lines[widget.lineIndex].text,
         textAlign: widget.textAlign,
         style: widget.style,
       );
     }
 
-    final fills = _lastFills.isEmpty
-        ? List<double>.filled(_segments.length, 0.0)
-        : _lastFills;
-
-    return SizedBox(
-      width: double.infinity,
-      child: Wrap(
-        alignment: _wrapAlignment,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          for (var i = 0; i < _segments.length; i++)
-            _buildWord(_segments[i], i < fills.length ? fills[i] : 0.0),
-        ],
-      ),
-    );
+    if (widget.onSeek != null) {
+      content = GestureDetector(
+        onTap: widget.onSeek,
+        child: content,
+      );
+    }
+    if (widget.background) {
+      content = Opacity(opacity: 0.45, child: content);
+    }
+    return content;
   }
 }

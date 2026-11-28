@@ -17,7 +17,6 @@ No audio decoding, DSP, or USB changes.
 | Playlist serialization | `lib/services/last_played_service.dart:30` | Only when queue IDs change; index integer on track changes |
 | Full-player position throttle | `lib/features/player/screens/full_player_screen.dart:121` | 250ms duplicate timer |
 | Notification rebuild | `lib/services/player_service.dart:3868` | Every 2s while playing |
-| Motion Art | `lib/features/player/widgets/motion_art_widget.dart:296` | Streams/loops video while visible; default on |
 | Visualizer | `lib/services/visualizer_source.dart:74` | 33ms data poll plus 60fps paint while visible |
 | Ken Burns artwork | `lib/widgets/common/animated_album_art.dart:49` | 60fps transform/gradient rebuild while visible |
 
@@ -36,14 +35,10 @@ No audio decoding, DSP, or USB changes.
 active. Pausing stops the timer and writes the current position once; resuming
 restarts it. Playback-state changes also stop the timer and save once when the
 engine pauses without going through the normal pause path. Stop-after-current
-and queue-end rewinds explicitly persist `Duration.zero`, and network prefetch
-still runs when checkpoints start. Covered by
+and queue-end rewinds explicitly persist `Duration.zero`. Covered by
 `test/services/player_service_position_checkpoint_test.dart` (5 checkpoint
 tests). Local focused tests pass and `flutter analyze` reports only pre-existing
-`info` diagnostics. The full `flutter test` run is currently blocked by an
-unrelated Isar core version mismatch in
-`test/services/webdav_sync_integration_test.dart`; device verification is still
-pending.
+`info` diagnostics. Device verification is still pending.
 
 `LastPlayedService` now caches the last persisted playlist IDs and index.
 Position checkpoints continue to write the song ID, position, and playing state,
@@ -106,14 +101,13 @@ commit/PR each.
 
 | # | Item | Status | Risk | Why it is deferred |
 |---|---|---|---|---|
-| 8 | Motion Art default and battery-saver behavior | Needs measurement | Medium | Video decoder plus network streaming; user-visible feature |
 | 9 | Visualizer refresh rate and mini-player defaults | Needs measurement | Medium | 33ms polling plus continuous repaint; already stops when hidden |
 | 10 | Ken Burns animation cost | Needs measurement | Low–Medium | Visual-only; possible static-glow or lower-frame-rate option |
 | 11 | 50ms event polling during active playback | Keep as-is | High if changed | Needed for track-end and gapless UI latency |
 | 12 | Global progress polling rate | Keep as-is | Medium if changed | Lyrics and karaoke may depend on the current rate |
 
-Do not change Motion Art, visualizer, or Ken Burns defaults without a profile and
-a deliberate product decision.
+Do not change visualizer or Ken Burns defaults without a profile and a
+deliberate product decision.
 
 ## Risk scale
 
@@ -130,7 +124,7 @@ device:
 
 1. Paused, screen off.
 2. Local FLAC playing, screen off.
-3. Full player open with Motion Art.
+3. Full player open with animated Ken Burns artwork.
 4. Visualizer on versus off.
 
 Use Android Studio's Energy Profiler, or:

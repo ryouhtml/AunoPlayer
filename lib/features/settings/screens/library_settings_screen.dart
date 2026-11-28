@@ -17,7 +17,6 @@ import 'package:auno_player/data/entities/folder_entity.dart';
 import 'package:auno_player/data/repositories/folder_repository.dart';
 import 'package:auno_player/data/repositories/song_repository.dart';
 import 'package:auno_player/features/settings/screens/duplicate_cleaner_screen.dart';
-import 'package:auno_player/features/settings/screens/missing_metadata_screen.dart';
 import 'package:auno_player/features/settings/widgets/settings_widgets.dart';
 import 'package:auno_player/providers/providers.dart';
 import 'package:auno_player/services/album_art_service.dart';
@@ -2209,22 +2208,6 @@ class _LibrarySettingsScreenState extends ConsumerState<LibrarySettingsScreen>
                       .read(appPreferencesProvider.notifier)
                       .setAlbumsStretchArtwork(value);
                 },
-              ),
-            ],
-          ),
-          const SizedBox(height: AppConstants.spacingLg),
-          SettingsSectionHeader(l10n.englishForFilipino.metadata, sectionId: 'metadata'),
-          SettingsCard(
-            children: [
-              NavigationSetting(
-                icon: LucideIcons.sparkles,
-                title: l10n.englishForFilipino.fixMissingMetadata,
-                subtitle: l10n.identifyAlbumsWithUnknownArtistOr,
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const MissingMetadataScreen(),
-                  ),
-                ),
               ),
             ],
           ),

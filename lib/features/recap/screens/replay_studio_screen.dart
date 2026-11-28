@@ -8,7 +8,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../data/repositories/recently_played_repository.dart';
 import '../../../core/theme/app_colors.dart';
@@ -769,15 +768,10 @@ class _ReplayStudioScreenState extends ConsumerState<ReplayStudioScreen> {
                 Icons.more_horiz_rounded,
                 color: ReplayStyle.silver,
               ),
-              onSelected: (value) =>
-                  value == 'support' ? _support() : _save(format: value),
+              onSelected: (value) => _save(format: value),
               itemBuilder: (context) => [
                 PopupMenuItem(value: 'CSV', child: Text(l10n.exportCsv)),
                 PopupMenuItem(value: 'TXT', child: Text(l10n.exportTxt)),
-                PopupMenuItem(
-                  value: 'support',
-                  child: Text(l10n.supportFlickOnKoFi),
-                ),
               ],
             ),
           ],
@@ -785,24 +779,6 @@ class _ReplayStudioScreenState extends ConsumerState<ReplayStudioScreen> {
       ),
     ),
   );
-
-  Future<void> _support() async {
-    try {
-      final opened = await launchUrl(
-        Uri.parse('https://ko-fi.com/ultraelectronica'),
-        mode: LaunchMode.externalApplication,
-      );
-      if (!opened) throw StateError('Could not open Ko-fi');
-    } catch (_) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showFlickSnackBar(
-          SnackBar(
-            content: Text(l10n.englishForFilipino.couldNotOpenKoFiPlease),
-          ),
-        );
-      }
-    }
-  }
 
   Widget _choice(
     String label,

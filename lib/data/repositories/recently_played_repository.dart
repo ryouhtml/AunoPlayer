@@ -150,6 +150,14 @@ class ListeningRecap {
   final List<RankedRecapArtist> topArtists;
   final List<RankedRecapAlbum> topAlbums;
 
+  /// Fields populated from real listening events. Legacy history fallbacks
+  /// leave them null so existing recap widgets keep their previous behavior.
+  final int? actualListenedMs;
+  final int? streakDays;
+  final Map<int, int>? hourBuckets;
+  final DateTime? firstListenedAt;
+  final String? listeningPersonality;
+
   const ListeningRecap({
     required this.period,
     required this.start,
@@ -166,6 +174,11 @@ class ListeningRecap {
     required this.topSongs,
     required this.topArtists,
     required this.topAlbums,
+    this.actualListenedMs,
+    this.streakDays,
+    this.hourBuckets,
+    this.firstListenedAt,
+    this.listeningPersonality,
   });
 
   factory ListeningRecap.empty(
@@ -341,6 +354,39 @@ class RecentlyPlayedRepository {
       );
     }
 
+    return result;
+  }
+
+  /// Search the full local history by title, artist, or album.
+  Future<List<RecentlyPlayedEntry>> searchRecentHistory(
+    String query, {
+    int limit = 200,
+  }) async {
+    final needle = query.trim().toLowerCase();
+    if (needle.isEmpty) return getRecentHistory(limit: limit);
+    final entries = await _isar.recentlyPlayedEntitys
+        .where()
+        .sortByPlayedAtDesc()
+        .findAll();
+    final allSongEntities = await _songRepository.getAllSongEntities();
+    final songMap = {for (var e in allSongEntities) e.id: e};
+    final result = <RecentlyPlayedEntry>[];
+    for (final entry in entries) {
+      final songEntity = songMap[entry.songId];
+      if (songEntity == null) continue;
+      final matches =
+          songEntity.title.toLowerCase().contains(needle) ||
+          songEntity.artist.toLowerCase().contains(needle) ||
+          (songEntity.album?.toLowerCase().contains(needle) ?? false);
+      if (!matches) continue;
+      result.add(
+        RecentlyPlayedEntry(
+          song: _entityToSong(songEntity),
+          playedAt: entry.playedAt,
+        ),
+      );
+      if (result.length >= limit) break;
+    }
     return result;
   }
 
@@ -724,7 +770,7 @@ class RecentlyPlayedRepository {
   }
 
   /// Build a resolution string from entity properties. Null when the source
-  /// sync had no audio metrics (SMB/WebDAV) — callers hide the chip instead
+  /// sync had no audio metrics — callers hide the chip instead
   /// of showing a placeholder.
   String? _buildResolutionString(SongEntity entity) {
     final parts = <String>[];

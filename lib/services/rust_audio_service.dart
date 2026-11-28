@@ -316,35 +316,6 @@ class RustAudioService {
     _updateState();
   }
 
-  /// Play a remote audio stream directly over HTTP (range-based, no cache
-  /// download before play). Auth is carried via [headers] (e.g. WebDAV Basic);
-  /// Subsonic/Jellyfin embed credentials in [url] and pass an empty map.
-  Future<void> playHttp({
-    required String url,
-    Map<String, String> headers = const {},
-    double? startSecs,
-    double? endSecs,
-  }) async {
-    if (!_initialized) {
-      throw StateError('Rust audio engine not initialized');
-    }
-    _syncDsdOutputMode();
-    _syncDsdTransportOverrides();
-    await _reviveAndRetry(
-      () => rust_audio.audioPlayFromHttp(
-        url: url,
-        headers: headers,
-        startSecs: startSecs,
-        endSecs: endSecs,
-      ),
-    );
-    final source = _httpSourceIdentity(url, startSecs, endSecs);
-    if (_currentSource != source) _nextSource = null;
-    _currentSource = source;
-    _startProgressUpdates(fast: true);
-    _updateState();
-  }
-
   /// Queue the next track for gapless playback.
   /// The next track will automatically start when the current one ends.
   Future<void> queueNext(
@@ -367,43 +338,6 @@ class RustAudioService {
     );
     _nextSource = SourceIdentity(
       path: path,
-      range: PlaybackRange(startSecs: startSecs ?? 0, endSecs: endSecs),
-    );
-  }
-
-  /// Queue a remote HTTP stream as the next track for gapless playback.
-  Future<void> queueNextHttp({
-    required String url,
-    Map<String, String> headers = const {},
-    double? startSecs,
-    double? endSecs,
-  }) async {
-    if (!_initialized) {
-      throw StateError('Rust audio engine not initialized');
-    }
-    _syncDsdOutputMode();
-    _syncDsdTransportOverrides();
-    await _reviveAndRetry(
-      () => rust_audio.audioQueueNextFromHttp(
-        url: url,
-        headers: headers,
-        startSecs: startSecs,
-        endSecs: endSecs,
-      ),
-    );
-    _nextSource = _httpSourceIdentity(url, startSecs, endSecs);
-  }
-
-  // Match decoder::url_label: native HTTP sources use a filename-only label,
-  // never a credential-bearing URL. Cache the same identity for handoffs.
-  SourceIdentity _httpSourceIdentity(
-    String url,
-    double? startSecs,
-    double? endSecs,
-  ) {
-    final label = url.split('?').first.split('/').last;
-    return SourceIdentity(
-      path: label.isEmpty ? 'http-stream' : label,
       range: PlaybackRange(startSecs: startSecs ?? 0, endSecs: endSecs),
     );
   }

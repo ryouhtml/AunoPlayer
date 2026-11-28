@@ -5,8 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../data/repositories/recently_played_repository.dart';
 import '../../../providers/app_preferences_provider.dart';
+import '../../../services/listening_stats_service.dart';
 import '../../../widgets/common/flick_artwork_placeholder.dart';
 import '../widgets/replay_card_options.dart';
+import '../widgets/replay_insights.dart';
 import '../widgets/replay_poster.dart';
 import '../widgets/replay_reveal.dart';
 import '../widgets/replay_sections.dart';
@@ -17,8 +19,13 @@ import 'package:auno_player/l10n/replay_l10n.dart';
 /// An artwork-led retrospective; poster-making lives in Replay Studio.
 class ListeningRecapScreen extends ConsumerStatefulWidget {
   final RecentlyPlayedRepository? repository;
+  final ListeningStatsService? statsService;
 
-  const ListeningRecapScreen({super.key, this.repository});
+  const ListeningRecapScreen({
+    super.key,
+    this.repository,
+    this.statsService,
+  });
 
   @override
   ConsumerState<ListeningRecapScreen> createState() =>
@@ -28,6 +35,8 @@ class ListeningRecapScreen extends ConsumerStatefulWidget {
 class _ListeningRecapScreenState extends ConsumerState<ListeningRecapScreen>
     with WidgetsBindingObserver {
   late final _repository = widget.repository ?? RecentlyPlayedRepository();
+  late final _statsService =
+      widget.statsService ?? ListeningStatsService(legacy: _repository);
   ListeningRecapPeriod _period = ListeningRecapPeriod.daily;
   Map<ListeningRecapPeriod, ListeningRecap> _recaps = {};
   StreamSubscription<void>? _history;
@@ -82,7 +91,16 @@ class _ListeningRecapScreenState extends ConsumerState<ListeningRecapScreen>
       });
     }
     try {
-      final recaps = await _repository.getListeningRecaps();
+      Map<ListeningRecapPeriod, ListeningRecap> recaps;
+      try {
+        recaps = await _statsService.getRecaps(
+          periods: ListeningRecapPeriod.values.toSet(),
+        );
+      } catch (_) {
+        // Event storage is best-effort; legacy history remains authoritative
+        // for installations that never recorded a new listening session.
+        recaps = await _repository.getListeningRecaps();
+      }
       if (!mounted || generation != _loadGeneration) return;
       setState(() {
         _recaps = recaps;
@@ -395,6 +413,13 @@ class _ReplayScrollContentState extends State<_ReplayScrollContent> {
         options: widget.options,
         scrollController: _scrollController,
       ),
+      if (ReplayInsights.hasData(recap))
+        ReplayInsights(
+          key: ValueKey('${recap.period.name}-insights'),
+          recap: recap,
+          options: widget.options,
+          scrollController: _scrollController,
+        ),
       if (recap.topSongs.isNotEmpty)
         ReplayRankings(
           recap: recap,

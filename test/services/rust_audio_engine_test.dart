@@ -19,11 +19,9 @@ class FakeRustAudioService implements RustAudioService {
   final bufferLevelNotifier = ValueNotifier(0.0);
 
   final plays = <PlayCall>[];
-  final httpPlays = <PlayCall>[];
   final seeks = <Duration>[];
   @override
   String? currentPath;
-  bool failHttp = false;
   int resumes = 0;
 
   @override
@@ -40,18 +38,6 @@ class FakeRustAudioService implements RustAudioService {
   @override
   Future<void> play(String path, {double? startSecs, double? endSecs}) async {
     plays.add((path: path, start: startSecs, end: endSecs));
-    stateNotifier.value = RustPlaybackState.playing;
-  }
-
-  @override
-  Future<void> playHttp({
-    required String url,
-    Map<String, String> headers = const {},
-    double? startSecs,
-    double? endSecs,
-  }) async {
-    httpPlays.add((path: url, start: startSecs, end: endSecs));
-    if (failHttp) throw StateError('HTTP unavailable');
     stateNotifier.value = RustPlaybackState.playing;
   }
 
@@ -132,38 +118,6 @@ void main() {
     ]);
   });
 
-  for (final fallback in [false, true]) {
-    test('HTTP play retains bounds with cache fallback=$fallback', () async {
-      await engine.dispose();
-      service.failHttp = fallback;
-      engine = RustAudioEngine(
-        playbackMode: AudioEngineType.usbDacExperimental,
-        rustAudioService: service,
-        ensureInitialized: () async {},
-        resolvePlaybackPath: (song) async => song.filePath,
-        disposeEngine: () async {},
-        resolveHttpSource: (_) async => (
-          url: 'https://example.test/album.flac',
-          headers: const {'Authorization': 'test'},
-        ),
-      );
-      await engine.load(track(start: 13000, end: 31000));
-      await engine.play();
-
-      expect(service.httpPlays.single, (
-        path: 'https://example.test/album.flac',
-        start: 13.0,
-        end: 31.0,
-      ));
-      expect(
-        service.plays,
-        fallback
-            ? [(path: '/music/album.flac', start: 13.0, end: 31.0)]
-            : isEmpty,
-      );
-    });
-  }
-
   test('native progress and duration stay relative to the CUE track', () async {
     final states = <PlaybackState>[];
     final subscription = engine.playbackStateStream.listen(states.add);
@@ -201,25 +155,16 @@ void main() {
   group('managed audio focus', () {
     late bool granted;
     late int requests;
-    late bool useHttp;
 
     setUp(() async {
       await engine.dispose();
       granted = true;
       requests = 0;
-      useHttp = true;
       engine = RustAudioEngine(
         playbackMode: AudioEngineType.rustOboe,
         rustAudioService: service,
         ensureInitialized: () async {},
         resolvePlaybackPath: (song) async => song.filePath,
-        resolveHttpSource: (_) async {
-          if (!useHttp) return null;
-          return (
-            url: 'https://example.test/album.flac',
-            headers: const <String, String>{},
-          );
-        },
         disposeEngine: () async {},
         requestAudioFocus: () async {
           requests++;
@@ -234,27 +179,20 @@ void main() {
       expect(requests, 0);
     });
 
-    for (final http in [false, true]) {
-      test(
-        'loading does not acquire focus and denied play can be retried, HTTP=$http',
+    test('loading does not acquire focus and denied play can be retried',
         () async {
-          useHttp = http;
-          await engine.load(track());
-          expect(requests, 0);
-          granted = false;
-          await engine.play();
-          expect(service.plays, isEmpty);
-          expect(service.httpPlays, isEmpty);
-          expect(service.resumes, 0);
+      await engine.load(track());
+      expect(requests, 0);
+      granted = false;
+      await engine.play();
+      expect(service.plays, isEmpty);
+      expect(service.resumes, 0);
 
-          granted = true;
-          await engine.play();
-          expect(requests, 2);
-          expect(service.httpPlays, http ? hasLength(1) : isEmpty);
-          expect(service.plays, http ? isEmpty : hasLength(1));
-        },
-      );
-    }
+      granted = true;
+      await engine.play();
+      expect(requests, 2);
+      expect(service.plays, hasLength(1));
+    });
 
     test(
       'every resume reacquires focus without reloading or seeking',
@@ -272,7 +210,7 @@ void main() {
         await engine.play();
         expect(requests, 3);
         expect(service.resumes, 1);
-        expect(service.httpPlays, hasLength(1));
+        expect(service.plays, hasLength(1));
         expect(service.seeks, isEmpty);
         expect(service.positionNotifier.value, const Duration(seconds: 7));
       },
@@ -285,7 +223,7 @@ void main() {
       await engine.load(track(start: 13000, end: 31000));
       await engine.play();
       expect(requests, 2);
-      expect(service.httpPlays, hasLength(2));
+      expect(service.plays, hasLength(2));
       expect(service.resumes, 0);
     });
   });

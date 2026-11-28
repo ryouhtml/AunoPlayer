@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart' show AssetBundle, rootBundle;
-import 'package:http/http.dart' as http;
 
 import 'package:auno_player/providers/equalizer_provider.dart';
 import 'package:auno_player/services/autoeq_format.dart';
@@ -104,23 +102,17 @@ class AutoEqSearchResult {
 }
 
 class AutoEqCatalogService {
-  AutoEqCatalogService({AssetBundle? bundle, http.Client? client})
-    : _bundle = bundle ?? rootBundle,
-      _client = client ?? http.Client();
+  AutoEqCatalogService({AssetBundle? bundle})
+    : _bundle = bundle ?? rootBundle;
   static final AutoEqCatalogService instance = AutoEqCatalogService();
 
   final AssetBundle _bundle;
-  final http.Client _client;
 
   static const _catalogAsset = 'assets/autoeq/autoeq_catalog.json';
   static const _brandsAsset = 'assets/autoeq/autoeq_brands.json';
 
   List<AutoEqEntry>? _entriesCache;
   List<String>? _brandsCache;
-
-  _OnlineIndex? _onlineIndex;
-  static const _repoOwner = 'jaakkopasanen';
-  static const _repoName = 'AutoEq';
 
   /// Pinned to `tool/autoeq_catalog.lock.json`. Fetching raw files at a fixed
   /// commit avoids GitHub's anonymous API rate limit and keeps the index and
@@ -220,134 +212,4 @@ class AutoEqCatalogService {
     });
     return results.take(limit).toList(growable: false);
   }
-
-  /// Fetch a model not in the bundled catalog from the AutoEq repo.
-  /// Uses upstream's recommended index, avoiding GitHub's truncated recursive
-  /// tree and arbitrary source/variant selection. Requests happen only here,
-  /// after the user explicitly chooses online search.
-  /// Returns null for unavailable, ambiguous or unsupported profiles.
-  Future<AutoEqEntry?> fetchOnline(String brand, String model) async {
-    if (_norm(model).isEmpty) return null;
-    final index = await _loadOnlineIndex();
-    if (index == null) return null;
-
-    final manufacturers = index.manufacturers;
-    final brandNorm = _norm(brand);
-    final modelNorm = _norm(model);
-    if (modelNorm.isEmpty) return null;
-    // Strip a duplicated brand prefix before trying aliases. A manufacturer's
-    // canonical upstream name may add words (Simgot -> Simgot Audio), so match
-    // both the user's spelling and the canonical one.
-    final modelBody = brandNorm.isNotEmpty && modelNorm.startsWith(brandNorm)
-        ? modelNorm.substring(brandNorm.length)
-        : modelNorm;
-    // A model-only candidate is valid when no brand was supplied or the model
-    // already includes it. Otherwise a mismatched brand must not be ignored.
-    final candidates = <String>{
-      if (brandNorm.isEmpty || modelNorm.startsWith(brandNorm)) modelNorm,
-    };
-    void addCandidate(String normalizedBrand) {
-      if (normalizedBrand.isNotEmpty && modelBody.isNotEmpty) {
-        candidates.add('$normalizedBrand$modelBody');
-      }
-    }
-
-    addCandidate(brandNorm);
-    final canonicalBrand = manufacturers.canonicalBrand(brand);
-    if (canonicalBrand != null) addCandidate(_norm(canonicalBrand));
-
-    // Also resolve a full "brand model" string through the manufacturer table.
-    // This covers an empty brand field and aliases such as 7Hertz -> 7Hz.
-    final combined = [
-      brand.trim(),
-      model.trim(),
-    ].where((part) => part.isNotEmpty).join(' ');
-    if (combined.isNotEmpty) {
-      try {
-        final (resolvedBrand, resolvedModel) = manufacturers.split(combined);
-        candidates.add(_norm('$resolvedBrand$resolvedModel'));
-      } on FormatException {
-        // Unknown manufacturer: the raw candidates above may still match.
-      }
-    }
-
-    final matches = index.entries.where((e) {
-      if (candidates.contains(_norm(e.name))) return true;
-      try {
-        final (resolvedBrand, resolvedModel) = manufacturers.split(e.name);
-        return candidates.contains(_norm('$resolvedBrand$resolvedModel'));
-      } on FormatException {
-        return false;
-      }
-    }).toList();
-    // Never silently substitute e.g. HD 650 for HD 650 (different earpads).
-    if (matches.length != 1) return null;
-    final match = matches.single;
-
-    final uri = Uri.https(
-      'raw.githubusercontent.com',
-      '/$_repoOwner/$_repoName/${index.revision}/${match.path}',
-    );
-    try {
-      final resp = await _client.get(uri).timeout(const Duration(seconds: 15));
-      if (resp.statusCode != 200) return null;
-      final profile = AutoEqProfile.parse(utf8.decode(resp.bodyBytes));
-      final (resolvedBrand, resolvedModel) = index.manufacturers.split(
-        match.name,
-      );
-      return AutoEqEntry.fromJson({
-        'id': sha256.convert(utf8.encode(match.path)).toString(),
-        'b': resolvedBrand,
-        'm': resolvedModel,
-        'n': match.name,
-        't': match.type,
-        's': match.source,
-        'r': match.rig,
-        'p': match.path,
-        'c': index.revision,
-        'h': sha256.convert(resp.bodyBytes).toString(),
-        ...profile.toJson(),
-      });
-    } catch (_) {
-      return null;
-    }
-  }
-
-  Future<_OnlineIndex?> _loadOnlineIndex() async {
-    final cached = _onlineIndex;
-    if (cached != null) return cached;
-    final revision = upstreamRevision;
-    try {
-      final indexUri = Uri.https(
-        'raw.githubusercontent.com',
-        '/$_repoOwner/$_repoName/$revision/results/README.md',
-      );
-      final indexResponse = await _client
-          .get(indexUri)
-          .timeout(const Duration(seconds: 20));
-      if (indexResponse.statusCode != 200) return null;
-      final manufacturersUri = Uri.https(
-        'raw.githubusercontent.com',
-        '/$_repoOwner/$_repoName/$revision/dbtools/manufacturers.tsv',
-      );
-      final manufacturersResponse = await _client
-          .get(manufacturersUri)
-          .timeout(const Duration(seconds: 20));
-      if (manufacturersResponse.statusCode != 200) return null;
-      return _onlineIndex = _OnlineIndex(
-        revision,
-        AutoEqRecommendation.parseIndex(utf8.decode(indexResponse.bodyBytes)),
-        AutoEqManufacturers(utf8.decode(manufacturersResponse.bodyBytes)),
-      );
-    } catch (_) {
-      return null;
-    }
-  }
-}
-
-class _OnlineIndex {
-  const _OnlineIndex(this.revision, this.entries, this.manufacturers);
-  final String revision;
-  final List<AutoEqRecommendation> entries;
-  final AutoEqManufacturers manufacturers;
 }

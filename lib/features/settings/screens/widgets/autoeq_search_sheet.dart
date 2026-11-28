@@ -32,8 +32,6 @@ Future<AutoEqEntry?> showAutoEqSearchSheet(
   );
 }
 
-enum _OnlineStatusKind { searching, found, failed }
-
 class _AutoEqSearchSheet extends StatefulWidget {
   const _AutoEqSearchSheet({required this.service});
 
@@ -54,11 +52,7 @@ class _AutoEqSearchSheetState extends State<_AutoEqSearchSheet> {
   String? _brand;
   AutoEqEntry? _selected;
   bool _loading = true;
-  bool _searchingOnline = false;
-  String? _onlineStatus;
-  _OnlineStatusKind? _onlineStatusKind;
   String _lastQuery = '';
-  int _onlineRequest = 0;
 
   @override
   void initState() {
@@ -94,17 +88,9 @@ class _AutoEqSearchSheetState extends State<_AutoEqSearchSheet> {
     if (!mounted || query == _lastQuery) return;
     _lastQuery = query;
     setState(() {
-      _resetOnlineSearch();
       _selected = null;
       _recompute();
     });
-  }
-
-  void _resetOnlineSearch() {
-    _onlineRequest++;
-    _searchingOnline = false;
-    _onlineStatus = null;
-    _onlineStatusKind = null;
   }
 
   void _recompute() {
@@ -119,79 +105,13 @@ class _AutoEqSearchSheetState extends State<_AutoEqSearchSheet> {
   }
 
   void _select(AutoEqEntry entry) {
-    setState(() {
-      _resetOnlineSearch();
-      _selected = entry;
-    });
+    setState(() => _selected = entry);
   }
 
   void _apply() {
     final entry = _selected;
     if (entry == null) return;
     Navigator.of(context).pop(entry);
-  }
-
-  Future<void> _searchOnline() async {
-    if (_searchingOnline) return;
-    FocusScope.of(context).unfocus();
-    final query = _queryController.text.trim();
-    if (query.isEmpty) return;
-    String brand = _brand ?? '';
-    String model = query;
-    if (brand.isEmpty) {
-      final known = _brands.firstWhere(
-        (b) => query.toLowerCase().startsWith(b.toLowerCase()),
-        orElse: () => '',
-      );
-      if (known.isNotEmpty) {
-        brand = known;
-        model = query.substring(known.length).trim();
-      }
-    } else {
-      model = query;
-    }
-
-    final request = ++_onlineRequest;
-    setState(() {
-      _searchingOnline = true;
-      _onlineStatus = l10n.searchingOnline;
-      _onlineStatusKind = _OnlineStatusKind.searching;
-    });
-    try {
-      final entry = await _service.fetchOnline(brand, model);
-      if (!mounted || request != _onlineRequest) return;
-      if (entry != null) {
-        setState(() {
-          _selected = entry;
-          _results = [
-            AutoEqSearchResult(entry, 999),
-            ..._results.where((result) => result.entry.id != entry.id),
-          ];
-          _onlineStatus = l10n.foundOnline(entry.displayName);
-          _onlineStatusKind = _OnlineStatusKind.found;
-        });
-        if (_scrollController.hasClients) _scrollController.jumpTo(0);
-      } else {
-        setState(() {
-          _onlineStatus = l10n.autoeqOnlineSearchFailed;
-          _onlineStatusKind = _OnlineStatusKind.failed;
-        });
-      }
-    } catch (_) {
-      if (!mounted || request != _onlineRequest) return;
-      setState(() {
-        _onlineStatus = l10n.autoeqOnlineSearchFailed;
-        _onlineStatusKind = _OnlineStatusKind.failed;
-      });
-    } finally {
-      if (mounted && request == _onlineRequest) {
-        setState(() => _searchingOnline = false);
-      }
-    }
-  }
-
-  void _dismissOnlineStatus() {
-    setState(_resetOnlineSearch);
   }
 
   @override
@@ -271,8 +191,6 @@ class _AutoEqSearchSheetState extends State<_AutoEqSearchSheet> {
   }
 
   Widget _buildSearchField(BuildContext context) {
-    final canSearchOnline =
-        _queryController.text.trim().isNotEmpty && !_searchingOnline;
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: AppConstants.spacingLg,
@@ -290,7 +208,6 @@ class _AutoEqSearchSheetState extends State<_AutoEqSearchSheet> {
               child: TextField(
                 controller: _queryController,
                 textInputAction: TextInputAction.search,
-                onSubmitted: (_) => _searchOnline(),
                 style: TextStyle(color: context.adaptiveTextPrimary),
                 decoration: InputDecoration(
                   hintText: _all.isEmpty
@@ -323,26 +240,6 @@ class _AutoEqSearchSheetState extends State<_AutoEqSearchSheet> {
               ),
             ),
           ),
-          const SizedBox(width: AppConstants.spacingXs),
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.glassBackgroundStrong,
-              borderRadius: BorderRadius.circular(AppConstants.radiusMd),
-              border: Border.all(color: AppColors.glassBorder),
-            ),
-            child: IconButton(
-              key: const Key('autoeq-online-search'),
-              tooltip: l10n.searchOnline2,
-              onPressed: canSearchOnline ? _searchOnline : null,
-              icon: Icon(
-                Icons.cloud_download_outlined,
-                color: canSearchOnline
-                    ? context.adaptiveTextPrimary
-                    : context.adaptiveTextTertiary,
-                size: 20,
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -355,7 +252,6 @@ class _AutoEqSearchSheetState extends State<_AutoEqSearchSheet> {
       child: GestureDetector(
         onTap: () => setState(() {
           _brand = selected ? null : brand;
-          _resetOnlineSearch();
           _selected = null;
           _recompute();
         }),
@@ -397,33 +293,23 @@ class _AutoEqSearchSheetState extends State<_AutoEqSearchSheet> {
         ),
       );
     }
-    return Column(
-      children: [
-        if (_onlineStatus != null) _buildOnlineBanner(context),
-        Expanded(
-          child: _results.isEmpty
-              ? _buildEmptyResults(context)
-              : Scrollbar(
-                  controller: _scrollController,
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppConstants.spacingLg,
-                      vertical: AppConstants.spacingXs,
-                    ),
-                    itemCount: _results.length,
-                    itemBuilder: (context, i) =>
-                        _resultTile(context, _results[i].entry),
-                  ),
-                ),
-        ),
-      ],
-    );
+    return _results.isEmpty
+        ? _buildEmptyResults(context)
+        : Scrollbar(
+            controller: _scrollController,
+            child: ListView.builder(
+              controller: _scrollController,
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppConstants.spacingLg,
+                vertical: AppConstants.spacingXs,
+              ),
+              itemCount: _results.length,
+              itemBuilder: (context, i) => _resultTile(context, _results[i].entry),
+            ),
+          );
   }
 
   Widget _buildEmptyResults(BuildContext context) {
-    final canSearchOnline =
-        _queryController.text.trim().isNotEmpty && !_searchingOnline;
     return LayoutBuilder(
       builder: (context, constraints) => SingleChildScrollView(
         child: ConstrainedBox(
@@ -445,106 +331,11 @@ class _AutoEqSearchSheetState extends State<_AutoEqSearchSheet> {
                     textAlign: TextAlign.center,
                     style: TextStyle(color: context.adaptiveTextSecondary),
                   ),
-                  if (_queryController.text.trim().isNotEmpty) ...[
-                    const SizedBox(height: AppConstants.spacingSm),
-                    TextButton.icon(
-                      onPressed: canSearchOnline ? _searchOnline : null,
-                      icon: const Icon(Icons.cloud_download_outlined, size: 18),
-                      label: Text(l10n.searchOnline2),
-                    ),
-                  ],
                 ],
               ),
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildOnlineBanner(BuildContext context) {
-    final kind = _onlineStatusKind;
-    final failed = kind == _OnlineStatusKind.failed;
-    final found = kind == _OnlineStatusKind.found;
-    final color = failed
-        ? AppColors.error
-        : found
-        ? AppColors.success
-        : AppColors.accent;
-    return Container(
-      key: const Key('autoeq-online-status'),
-      margin: const EdgeInsets.fromLTRB(
-        AppConstants.spacingLg,
-        0,
-        AppConstants.spacingLg,
-        AppConstants.spacingXs,
-      ),
-      padding: const EdgeInsets.fromLTRB(
-        AppConstants.spacingMd,
-        AppConstants.spacingXs,
-        AppConstants.spacingXs,
-        AppConstants.spacingXs,
-      ),
-      decoration: BoxDecoration(
-        color: failed ? AppColors.errorDim : AppColors.glassBackground,
-        borderRadius: BorderRadius.circular(AppConstants.radiusMd),
-        border: Border.all(
-          color: failed ? AppColors.errorBorder : AppColors.glassBorder,
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              Icon(
-                failed
-                    ? Icons.cloud_off_outlined
-                    : found
-                    ? Icons.check_circle_outline_rounded
-                    : Icons.cloud_sync_outlined,
-                color: color,
-                size: 18,
-              ),
-              const SizedBox(width: AppConstants.spacingSm),
-              Expanded(
-                child: Semantics(
-                  liveRegion: true,
-                  child: Text(
-                    _onlineStatus!,
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: context.adaptiveTextSecondary,
-                    ),
-                  ),
-                ),
-              ),
-              IconButton(
-                onPressed: _dismissOnlineStatus,
-                tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
-                icon: Icon(
-                  Icons.close_rounded,
-                  color: context.adaptiveTextTertiary,
-                  size: 18,
-                ),
-                visualDensity: VisualDensity.compact,
-              ),
-            ],
-          ),
-          if (_searchingOnline)
-            const Padding(
-              padding: EdgeInsets.only(
-                top: AppConstants.spacingXs,
-                bottom: AppConstants.spacingXs,
-              ),
-              child: LinearProgressIndicator(
-                minHeight: 2,
-                color: AppColors.accent,
-                backgroundColor: AppColors.glassBorder,
-              ),
-            ),
-        ],
       ),
     );
   }

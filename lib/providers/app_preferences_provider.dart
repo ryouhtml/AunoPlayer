@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:auno_player/services/app_preferences_service.dart';
-import 'package:auno_player/models/update_channel.dart';
 
 final appPreferencesServiceProvider = Provider<AppPreferencesService>((ref) {
   return AppPreferencesService();
@@ -478,6 +477,14 @@ class AppPreferencesNotifier extends Notifier<AppPreferences> {
         .setLyricsKaraokeEnabled(value);
   }
 
+  Future<void> setKaraokeSweepStyle(String value) async {
+    if (state.karaokeSweepStyle == value) return;
+    state = state.copyWith(karaokeSweepStyle: value);
+    await ref
+        .read(appPreferencesServiceProvider)
+        .setLyricsKaraokeSweepStyle(value);
+  }
+
   Future<void> setLeftActionButton(String value) async {
     if (state.leftActionButton == value) return;
     state = state.copyWith(leftActionButton: value);
@@ -606,14 +613,6 @@ class AppPreferencesNotifier extends Notifier<AppPreferences> {
         .setPriorityAnchorEnabled(value);
   }
 
-  Future<void> setMotionArtDuringBitPerfect(bool value) async {
-    if (state.motionArtDuringBitPerfect == value) return;
-    state = state.copyWith(motionArtDuringBitPerfect: value);
-    await ref
-        .read(appPreferencesServiceProvider)
-        .setMotionArtDuringBitPerfect(value);
-  }
-
   Future<void> setPauseOnBluetoothDisconnect(bool value) async {
     if (state.pauseOnBluetoothDisconnect == value) return;
     state = state.copyWith(pauseOnBluetoothDisconnect: value);
@@ -730,13 +729,6 @@ class AppPreferencesNotifier extends Notifier<AppPreferences> {
     if (state.refreshRateMode == value) return;
     state = state.copyWith(refreshRateMode: value);
     await ref.read(appPreferencesServiceProvider).setRefreshRateMode(value);
-  }
-
-  Future<void> setUpdateChannel(UpdateChannel value) async {
-    await loaded;
-    if (!ref.mounted || state.updateChannel == value) return;
-    state = state.copyWith(updateChannel: value);
-    await ref.read(appPreferencesServiceProvider).setUpdateChannel(value);
   }
 
   Future<void> setVisualizerEnabled(bool value) async {

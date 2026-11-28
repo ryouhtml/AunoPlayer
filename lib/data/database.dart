@@ -5,14 +5,14 @@ import 'package:path_provider/path_provider.dart';
 
 import 'entities/artist_entity.dart';
 import 'entities/folder_entity.dart';
-import 'entities/network_server_entity.dart';
+import 'entities/listening_event_entity.dart';
 import 'entities/recently_played_entity.dart';
 import 'entities/song_audio_cache_entity.dart';
 import 'entities/song_entity.dart';
 
 export 'entities/artist_entity.dart';
 export 'entities/folder_entity.dart';
-export 'entities/network_server_entity.dart';
+export 'entities/listening_event_entity.dart';
 export 'entities/recently_played_entity.dart';
 export 'entities/song_audio_cache_entity.dart';
 export 'entities/song_entity.dart';
@@ -39,9 +39,9 @@ class Database {
       SongEntitySchema,
       FolderEntitySchema,
       RecentlyPlayedEntitySchema,
+      ListeningEventEntitySchema,
       ArtistEntitySchema,
       SongAudioCacheEntitySchema,
-      NetworkServerEntitySchema,
     ];
 
     try {
@@ -111,14 +111,14 @@ class Database {
   static IsarCollection<RecentlyPlayedEntity> get recentlyPlayed =>
       _instance!.recentlyPlayedEntitys;
 
+  /// Get the listening event collection used by statistics and recap.
+  static IsarCollection<ListeningEventEntity> get listeningEvents =>
+      instance.listeningEventEntitys;
+
   /// Get the artists collection.
   static IsarCollection<ArtistEntity> get artists => _instance!.artistEntitys;
 
   /// Get the song audio cache collection.
   static IsarCollection<SongAudioCacheEntity> get songAudioCache =>
       _instance!.songAudioCacheEntitys;
-
-  /// Get the network server collection.
-  static IsarCollection<NetworkServerEntity> get networkServers =>
-      _instance!.networkServerEntitys;
 }

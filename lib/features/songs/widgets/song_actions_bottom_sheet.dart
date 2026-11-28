@@ -9,6 +9,7 @@ import 'package:auno_player/core/theme/adaptive_color_provider.dart';
 import 'package:auno_player/core/constants/app_constants.dart';
 import 'package:auno_player/features/songs/widgets/album_art_picker_bottom_sheet.dart';
 import 'package:auno_player/features/songs/widgets/metadata_editor_bottom_sheet.dart';
+import 'package:auno_player/features/player/widgets/audio_analysis_sheet.dart';
 import 'package:auno_player/widgets/common/flick_artwork_placeholder.dart';
 import 'package:auno_player/widgets/common/flick_dialog.dart';
 import 'package:auno_player/models/song.dart';
@@ -183,6 +184,19 @@ class SongActionsBottomSheet extends ConsumerWidget {
               _showMetadataSheet(context);
             },
           ),
+          if (song.filePath != null && !song.isExternal)
+            _buildActionTile(
+              context: context,
+              icon: LucideIcons.activity,
+              label: l10n.detailAndAudioAnalysis,
+              onTap: () {
+                Navigator.pop(context);
+                Future.delayed(
+                  Duration.zero,
+                  () => showAudioAnalysisSheet(rootContext, song),
+                );
+              },
+            ),
           if (song.filePath != null && !song.isExternal)
             _buildActionTile(
               context: context,

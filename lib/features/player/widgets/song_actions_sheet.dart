@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:auno_player/widgets/common/flick_snackbar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:auno_player/core/theme/app_colors.dart';
 import 'package:auno_player/core/theme/adaptive_color_provider.dart';
 import 'package:auno_player/core/utils/responsive.dart';
 import 'package:auno_player/models/song.dart';
-import 'package:auno_player/services/motion_art/animated_artwork_service.dart';
 import 'package:auno_player/services/player_service.dart';
 import 'package:auno_player/features/player/widgets/player_navigation.dart';
 import 'package:auno_player/widgets/common/cached_image_widget.dart';
@@ -14,6 +12,7 @@ import 'package:auno_player/widgets/common/flick_artwork_placeholder.dart';
 import 'package:auno_player/features/songs/widgets/album_art_picker_bottom_sheet.dart';
 import 'package:auno_player/features/songs/widgets/metadata_editor_bottom_sheet.dart';
 import 'package:auno_player/providers/providers.dart';
+import 'package:auno_player/features/player/widgets/audio_analysis_sheet.dart';
 import 'package:auno_player/features/player/widgets/share/share_bottom_sheet.dart';
 import 'package:auno_player/features/player/widgets/song_metadata_sheet.dart';
 import 'package:auno_player/features/player/widgets/add_to_playlist_sheet.dart';
@@ -223,35 +222,6 @@ class SongActionsSheet extends ConsumerWidget {
                           });
                         },
                       ),
-                      _buildSongActionTile(
-                        context: sheetContext,
-                        icon: LucideIcons.refreshCw,
-                        label: l10n.playerMenuRefreshAlbumArt,
-                        onTap: () async {
-                          Navigator.pop(sheetContext);
-                          final albumArtist = activeSong.albumArtist;
-                          await AnimatedArtworkService.instance
-                              .refreshAlbumArtwork(
-                                artist:
-                                    (albumArtist != null &&
-                                        albumArtist.trim().isNotEmpty)
-                                    ? albumArtist.trim()
-                                    : activeSong.artist,
-                                albumName: activeSong.album,
-                                songTitle: activeSong.title,
-                              );
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(context).showFlickSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  l10n.englishForFilipino.motionArtRefreshed,
-                                ),
-                                duration: Duration(seconds: 2),
-                              ),
-                            );
-                          }
-                        },
-                      ),
                       if (activeSong.filePath != null &&
                           activeSong.startOffsetMs == null &&
                           !activeSong.isExternal)
@@ -282,6 +252,16 @@ class SongActionsSheet extends ConsumerWidget {
                           SongMetadataSheet.show(context, activeSong);
                         },
                       ),
+                      if (audioAnalysisUnavailableReason(activeSong) == null)
+                        _buildSongActionTile(
+                          context: sheetContext,
+                          icon: Icons.analytics_outlined,
+                          label: l10n.analyzeTrack,
+                          onTap: () {
+                            Navigator.pop(sheetContext);
+                            showAudioAnalysisSheet(context, activeSong);
+                          },
+                        ),
                       _buildSongActionTile(
                         context: sheetContext,
                         icon: LucideIcons.fileText,

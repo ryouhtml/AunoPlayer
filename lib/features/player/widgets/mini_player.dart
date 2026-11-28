@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auno_player/core/theme/app_colors.dart';
+import 'package:auno_player/core/theme/dynamic_palette.dart';
+import 'package:auno_player/core/theme/dynamic_theme_scope.dart';
 import 'package:auno_player/core/constants/app_constants.dart';
 import 'package:auno_player/core/utils/app_haptics.dart';
 import 'package:auno_player/core/utils/navigation_helper.dart';
@@ -82,24 +84,26 @@ class _MiniPlayerState extends ConsumerState<MiniPlayer> {
       valueListenable: _playerService.currentSongNotifier,
       builder: (context, song, _) {
         if (song == null) return const SizedBox.shrink();
+        final palette =
+            DynamicThemeData.maybeOf(context) ?? DynamicThemePalette.neutral;
 
         return GestureDetector(
           onTap: () {
             AppHaptics.tap();
             NavigationHelper.navigateToFullPlayer(
               context,
-              heroTag: 'song_art_${song.id}',
+              heroTag: 'mini_player_art_${song.id}',
             );
           },
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             height: 72,
             decoration: BoxDecoration(
-              color: AppColors.surface.withValues(alpha: 0.6),
+              color: palette.glassPill,
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
-                color: AppColors.glassBorder.withValues(alpha: 0.3),
-                width: 1.5,
+                color: palette.accent.withValues(alpha: 0.28),
+                width: 1,
               ),
               boxShadow: [
                 BoxShadow(
@@ -166,19 +170,19 @@ class _MiniPlayerState extends ConsumerState<MiniPlayer> {
                     children: [
                       // Floating Album Art
                       Hero(
-                        tag: 'mini_player_art',
+                        tag: 'mini_player_art_${song.id}',
                         child: Container(
                           margin: const EdgeInsets.only(
                             left: 8,
                             top: 8,
                             bottom: 8,
-                            right: 14,
+                            right: 12,
                           ),
-                          width: 56,
-                          height: 56,
+                          width: 44,
+                          height: 44,
                           decoration: BoxDecoration(
                             color: AppColors.surfaceDark,
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(14),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withValues(alpha: 0.3),
@@ -188,14 +192,14 @@ class _MiniPlayerState extends ConsumerState<MiniPlayer> {
                             ],
                           ),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(14),
                             child: CachedImageWidget(
                               imagePath: song.albumArt,
                               audioSourcePath: song.filePath,
                               fit: BoxFit.cover,
                               useThumbnail: true,
-                              thumbnailWidth: 128,
-                              thumbnailHeight: 128,
+                              thumbnailWidth: 120,
+                              thumbnailHeight: 120,
                               placeholder: Container(
                                 color: AppColors.surfaceDark,
                                 child: const FlickArtworkPlaceholder(
@@ -279,72 +283,37 @@ class _MiniPlayerState extends ConsumerState<MiniPlayer> {
 
                       // Play/Pause button with circular background
                       ValueListenableBuilder<bool>(
-                        valueListenable:
-                            _playerService.isNetworkLoadingNotifier,
-                        builder: (context, isLoading, _) {
-                          if (isLoading) {
+                          valueListenable: _playerService.isPlayingNotifier,
+                          builder: (context, isPlaying, _) {
                             return Container(
                               margin: const EdgeInsets.only(right: 12),
-                              width: 40,
-                              height: 40,
-                              alignment: Alignment.center,
-                              child: const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: AppColors.accent,
-                                ),
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
                               ),
-                            );
-                          }
-                          return ValueListenableBuilder<bool>(
-                            valueListenable: _playerService.isPlayingNotifier,
-                            builder: (context, isPlaying, _) {
-                              return Container(
-                                margin: const EdgeInsets.only(right: 12),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: isPlaying
-                                      ? AppColors.accent.withValues(alpha: 0.15)
-                                      : AppColors.glassBackgroundStrong,
-                                  border: Border.all(
-                                    color: isPlaying
-                                        ? AppColors.accent.withValues(
-                                            alpha: 0.3,
-                                          )
-                                        : AppColors.glassBorder.withValues(
-                                            alpha: 0.2,
-                                          ),
-                                  ),
-                                ),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    borderRadius: BorderRadius.circular(24),
-                                    onTap: () {
-                                      AppHaptics.tap();
-                                      _playerService.togglePlayPause();
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Icon(
-                                        isPlaying
-                                            ? LucideIcons.pause
-                                            : LucideIcons.play,
-                                        color: isPlaying
-                                            ? AppColors.accentLight
-                                            : AppColors.textPrimary,
-                                        size: 20,
-                                      ),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(24),
+                                  onTap: () {
+                                    AppHaptics.tap();
+                                    _playerService.togglePlayPause();
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Icon(
+                                      isPlaying
+                                          ? LucideIcons.pause
+                                          : LucideIcons.play,
+                                      color: AppColors.background,
+                                      size: 20,
                                     ),
                                   ),
                                 ),
-                              );
-                            },
-                          );
-                        },
-                      ),
+                              ),
+                            );
+                          },
+                        ),
                     ],
                   ),
                 ],

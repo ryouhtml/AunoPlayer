@@ -2,29 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:auno_player/widgets/common/flick_snackbar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'dart:io';
 import 'package:auno_player/core/theme/app_colors.dart';
 import 'package:auno_player/core/theme/adaptive_color_provider.dart';
 import 'package:auno_player/core/constants/app_constants.dart';
-import 'package:auno_player/core/utils/dev_log.dart';
 import 'package:auno_player/core/utils/navigation_helper.dart';
 import 'package:auno_player/core/utils/string_sort_utils.dart';
-import 'package:auno_player/data/repositories/artist_repository.dart';
 import 'package:auno_player/data/repositories/recently_played_repository.dart';
 import 'package:auno_player/data/repositories/song_repository.dart';
 import 'package:auno_player/features/albums/screens/album_detail_screen.dart';
 import 'package:auno_player/models/playback_context.dart';
 import 'package:auno_player/models/song.dart';
-import 'package:auno_player/providers/apple_music_provider.dart';
-import 'package:auno_player/services/apple_music/apple_music_metadata_service.dart';
 import 'package:auno_player/services/artist_artwork_service.dart';
-import 'package:auno_player/services/apple_music/apple_music_models.dart';
 import 'package:auno_player/services/color_extraction_service.dart';
 import 'package:auno_player/services/player_service.dart';
 import 'package:auno_player/widgets/common/cached_image_widget.dart';
-import 'package:auno_player/widgets/common/fetched_description.dart';
 import 'package:auno_player/widgets/common/flick_artwork_placeholder.dart';
 import 'package:auno_player/widgets/common/animated_album_art.dart';
 import 'package:auno_player/widgets/common/scroll_fade_wrapper.dart';
@@ -69,7 +60,6 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen>
   final SongRepository _songRepository = SongRepository();
   final RecentlyPlayedRepository _recentlyPlayedRepository =
       RecentlyPlayedRepository();
-  final ArtistRepository _artistRepository = ArtistRepository();
   final ColorExtractionService _colorService = ColorExtractionService();
 
   final ScrollController _scrollController = ScrollController();
@@ -148,78 +138,6 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen>
       }
       return;
     }
-
-    // Keep the album cover passed by the artists list. Only fetch an online
-    // portrait when the artist has no local artwork at all.
-    if (_artistArt != null && _artistArt!.isNotEmpty) return;
-    await _applyAppleMusicArtistArt();
-  }
-
-  Future<bool> _pageInfoEnabled() async {
-    final cached = ref.read(appleMusicPageInfoEnabledProvider).value;
-    if (cached != null) return cached;
-    return ref.read(appleMusicSettingsProvider).pageInfoEnabled();
-  }
-
-  /// Last-resort artist image: the Apple Music page image, downloaded once and
-  /// saved to the artist repository so it stays offline afterwards.
-  Future<void> _applyAppleMusicArtistArt() async {
-    if (_artistArt != null && _artistArt!.isNotEmpty) return;
-    if (!await _pageInfoEnabled() || !mounted) return;
-
-    final data = await ref.read(
-      appleMusicArtistProvider(widget.artistName).future,
-    );
-    final imageUrl = data?.info?.imageUrl;
-    if (!await _pageInfoEnabled() || !mounted) return;
-    if (imageUrl == null || imageUrl.isEmpty) return;
-
-    final bytes = await ref
-        .read(appleMusicMetadataServiceProvider)
-        .fetchArtworkBytes(imageUrl);
-    // The toggle may have been switched off while the portrait was in flight.
-    if (!await _pageInfoEnabled() || !mounted || bytes == null) return;
-
-    try {
-      final support = await getApplicationSupportDirectory();
-      final dir = Directory('${support.path}/artist_art');
-      await dir.create(recursive: true);
-      final name = widget.artistName.hashCode.toRadixString(16);
-      final file = File('${dir.path}/$name.jpg');
-      await file.writeAsBytes(bytes);
-      if (!await _pageInfoEnabled() || !mounted) return;
-      setState(() {
-        _artistArt = file.path;
-        _artistArtSourcePath = null;
-      });
-      await _artistRepository.setArt(
-        widget.artistName,
-        file.path,
-        source: ArtistArtSource.appleMusic,
-        checkedAt: DateTime.now(),
-      );
-    } catch (error) {
-      devLog('Apple Music artist art fallback failed: $error');
-    }
-  }
-
-  /// The song whose artwork is the hero image, if it is library album art.
-  /// A custom artist image saved in the repository matches no song, so those
-  /// pages keep the plain Ken Burns treatment instead of a mismatched album.
-  Song? _artistHeroSong() {
-    final art = _artistArt;
-    if (art != null && art.isNotEmpty) {
-      for (final song in widget.songs) {
-        if (song.albumArt == art) return song;
-      }
-    }
-    final source = _artistArtSourcePath;
-    if (source != null && source.isNotEmpty) {
-      for (final song in widget.songs) {
-        if (song.filePath == source) return song;
-      }
-    }
-    return null;
   }
 
   Future<void> _extractArtistColor() async {
@@ -435,11 +353,6 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen>
   }
 
   void _showMore() {
-    final pageInfoEnabled =
-        ref.read(appleMusicPageInfoEnabledProvider).value ?? true;
-    final appleMusic = pageInfoEnabled
-        ? ref.read(appleMusicArtistProvider(widget.artistName)).value
-        : null;
     DetailMoreSheet.show(
       context,
       items: [
@@ -455,18 +368,6 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen>
           label: l10n.englishForFilipino.addToPlaylist,
           onTap: () => AddToPlaylistSheet.showSongs(context, widget.songs),
         ),
-        if (pageInfoEnabled && appleMusic != null)
-          DetailMoreSheetItem(
-            icon: LucideIcons.externalLink,
-            label: l10n.englishForFilipino.openInAppleMusic,
-            onTap: () => _openAppleMusic(_artistAppleMusicUri(appleMusic)),
-          ),
-        if (pageInfoEnabled)
-          DetailMoreSheetItem(
-            icon: LucideIcons.refreshCw,
-            label: l10n.englishForFilipino.refreshAppleMusic,
-            onTap: _refreshAppleMusic,
-          ),
         DetailMoreSheetItem(
           icon: LucideIcons.moonStar,
           label: l10n.englishForFilipino.sleepTimer,
@@ -475,77 +376,6 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen>
         ),
       ],
     );
-  }
-
-  Uri _artistAppleMusicUri(AppleMusicArtistData data) {
-    final url = data.artist.url;
-    if (url != null && url.isNotEmpty) return Uri.parse(url);
-    return _appleMusicSearchUri(widget.artistName);
-  }
-
-  Uri _appleMusicSearchUri(String term) {
-    final storefront = AppleMusicMetadataService.instance.deviceStorefront;
-    return Uri.parse(
-      'https://music.apple.com/$storefront/search?term=${Uri.encodeComponent(term)}',
-    );
-  }
-
-  Future<void> _openAppleMusic(Uri uri) async {
-    try {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } catch (_) {
-      // Browser unavailable; nothing to surface.
-    }
-  }
-
-  Future<void> _refreshAppleMusic() async {
-    final messenger = ScaffoldMessenger.of(context);
-    messenger.showFlickSnackBar(
-      SnackBar(content: Text(l10n.englishForFilipino.refreshingAppleMusicData)),
-    );
-    final updated = await ref
-        .read(appleMusicArtistProvider(widget.artistName).notifier)
-        .refresh();
-    if (!mounted) return;
-    messenger.showFlickSnackBar(
-      SnackBar(
-        content: Text(
-          updated
-              ? l10n.englishForFilipino.appleMusicDataUpdated
-              : l10n.englishForFilipino.appleMusicDataUnavailable,
-        ),
-      ),
-    );
-  }
-
-  Future<void> _openSimilarArtist(String name) async {
-    final artists = await _songRepository.getSongsByArtist();
-    List<Song>? matches;
-    String resolvedName = name;
-    for (final entry in artists.entries) {
-      if (entry.key.toLowerCase() == name.toLowerCase()) {
-        matches = entry.value;
-        resolvedName = entry.key;
-        break;
-      }
-    }
-    if (!mounted) return;
-    final songs = matches;
-    if (songs != null && songs.isNotEmpty) {
-      Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (_) => ArtistDetailScreen(
-            artistName: resolvedName,
-            songs: songs,
-            artistArt: _getArt(songs),
-            artistArtSourcePath: _getSourcePath(songs),
-            playerService: widget.playerService,
-          ),
-        ),
-      );
-      return;
-    }
-    await _openAppleMusic(_appleMusicSearchUri(name));
   }
 
   int? get _artistYear {
@@ -600,18 +430,6 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen>
       builder: (context, animatedBg, _) {
       final resolvedBg = animatedBg ?? AppColors.background;
       final prefs = ref.watch(appPreferencesProvider);
-      final pageInfoEnabled =
-          ref.watch(appleMusicPageInfoEnabledProvider).value ?? true;
-      final remoteArtist = ref
-          .watch(appleMusicArtistProvider(widget.artistName))
-          .value;
-      final appleMusic = pageInfoEnabled ? remoteArtist : null;
-      final appleBio = appleMusic?.info?.biography?.trim();
-      final similarArtists =
-          appleMusic?.info?.similarArtists ??
-          const <AppleMusicSimilarArtist>[];
-      final topSongs =
-          appleMusic?.topSongs ?? const <AppleMusicTopSong>[];
         return Stack(
           children: [
             Scaffold(
@@ -664,15 +482,6 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen>
                         const SliverToBoxAdapter(
                           child: SizedBox(height: AppConstants.spacingMd),
                         ),
-                        if (appleBio != null && appleBio.isNotEmpty)
-                          _buildSectionTitle(context, l10n.aboutThem),
-                       if (appleBio != null && appleBio.isNotEmpty)
-                         SliverToBoxAdapter(
-                           child: FetchedDescription(
-                             text: appleBio,
-                             sheetTitle: l10n.aboutThem,
-                           ),
-                         ),
                        const SliverToBoxAdapter(
                          child: SizedBox(height: AppConstants.spacingLg),
                        ),
@@ -737,66 +546,6 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen>
                           ),
                         ),
                       if (!_isLoadingExtras && _mostPlayedSongs.isNotEmpty)
-                        const SliverToBoxAdapter(
-                          child: SizedBox(height: AppConstants.spacingLg),
-                        ),
-                      if (similarArtists.isNotEmpty)
-                        _buildSectionTitle(context, l10n.similarArtists),
-                      if (similarArtists.isNotEmpty)
-                        SliverToBoxAdapter(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppConstants.spacingLg,
-                            ),
-                            child: Wrap(
-                              spacing: AppConstants.spacingXs,
-                              runSpacing: AppConstants.spacingXs,
-                              children: [
-                                for (final artist in similarArtists)
-                                  _SimilarArtistChip(
-                                    name: artist.name,
-                                    onTap: () =>
-                                        _openSimilarArtist(artist.name),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      if (similarArtists.isNotEmpty)
-                        const SliverToBoxAdapter(
-                          child: SizedBox(height: AppConstants.spacingLg),
-                        ),
-                      if (topSongs.isNotEmpty)
-                        _buildSectionTitle(context, l10n.topSongs),
-                      if (topSongs.isNotEmpty)
-                        SliverToBoxAdapter(
-                          child: SizedBox(
-                            height: 72,
-                            child: ListView.separated(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: AppConstants.spacingLg,
-                              ),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: topSongs.length,
-                              separatorBuilder: (_, __) => const SizedBox(
-                                width: AppConstants.spacingMd,
-                              ),
-                              itemBuilder: (context, index) {
-                                final song = topSongs[index];
-                                return _AppleTopSongCard(
-                                  rank: index + 1,
-                                  song: song,
-                                  onTap: () => _openAppleMusic(
-                                    _appleMusicSearchUri(
-                                      '${song.artistName} ${song.trackName}',
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      if (topSongs.isNotEmpty)
                         const SliverToBoxAdapter(
                           child: SizedBox(height: AppConstants.spacingLg),
                         ),
@@ -931,7 +680,6 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen>
         errorWidget: fallback,
       );
     }
-    final heroSong = _artistHeroSong();
     return ScrollFadeWrapper(
       scrollController: _scrollController,
       child: AnimatedAlbumArt(
@@ -940,9 +688,6 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen>
         dominantColor: _artistColor,
         placeholder: fallback,
         errorWidget: fallback,
-        albumName: heroSong?.album,
-        artistName: heroSong?.albumArtist ?? heroSong?.artist,
-        representativeSongTitle: heroSong?.title,
       ),
     );
   }
@@ -1305,116 +1050,3 @@ class _SongTile extends StatelessWidget {
   }
 }
 
-class _SimilarArtistChip extends StatelessWidget {
-  final String name;
-  final VoidCallback onTap;
-
-  const _SimilarArtistChip({required this.name, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(AppConstants.radiusLg),
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppConstants.spacingMd,
-            vertical: AppConstants.spacingXs,
-          ),
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: BorderRadius.circular(AppConstants.radiusLg),
-            border: Border.all(color: AppColors.glassBorder),
-          ),
-          child: Text(
-            name,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: context.adaptiveTextPrimary,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _AppleTopSongCard extends StatelessWidget {
-  final int rank;
-  final AppleMusicTopSong song;
-  final VoidCallback onTap;
-
-  const _AppleTopSongCard({
-    required this.rank,
-    required this.song,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(AppConstants.radiusLg),
-        child: Container(
-          width: 240,
-          padding: const EdgeInsets.all(AppConstants.spacingSm),
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: BorderRadius.circular(AppConstants.radiusLg),
-          ),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 24,
-                child: Text(
-                  '$rank',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: context.adaptiveTextTertiary,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              const SizedBox(width: AppConstants.spacingSm),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      song.trackName,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: context.adaptiveTextPrimary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      song.collectionName ?? song.artistName,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: context.adaptiveTextTertiary,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              ),
-              Icon(
-                LucideIcons.music,
-                color: context.adaptiveTextSecondary,
-                size: 18,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}

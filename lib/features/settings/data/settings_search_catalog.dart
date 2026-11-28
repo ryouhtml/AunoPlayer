@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:auno_player/features/manual/screens/manual_screen.dart';
 import 'package:auno_player/features/milestone/screens/milestones_screen.dart';
@@ -7,22 +7,19 @@ import '../screens/app_info_settings_screen.dart';
 import '../screens/audio_settings_screen.dart';
 import '../screens/bluetooth_settings_screen.dart';
 import '../screens/bottom_bar_settings_screen.dart';
-import '../screens/casting_settings_screen.dart';
 import '../screens/duplicate_cleaner_screen.dart';
 import '../screens/equalizer_screen.dart';
-import '../screens/integrations_settings_screen.dart';
 import '../screens/interface_settings_screen.dart';
 import '../screens/library_settings_screen.dart';
 import '../screens/logs_screen.dart';
 import '../screens/lyrics_settings_screen.dart';
-import '../screens/missing_metadata_screen.dart';
-import '../screens/network_sources_screen.dart';
+import '../screens/lyrics_sources_screen.dart';
 import '../screens/orbit_settings_screen.dart';
+import '../screens/performance_settings_screen.dart';
 import '../screens/playback_display_settings_screen.dart';
 import '../screens/player_layout_settings_screen.dart';
 import '../screens/privacy_policy_screen.dart';
 import '../screens/queue_settings_screen.dart';
-import '../screens/support_flick_screen.dart';
 import '../screens/uac2_preferences_screen.dart';
 import '../screens/uac2_settings_screen.dart';
 import '../screens/ui_customization_settings_screen.dart';
@@ -103,17 +100,7 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
         _section('albumArtwork', l10n.albumArtwork, [
           ('stretchNonSquareArt', l10n.stretchNonSquareArt),
         ]),
-        _section('metadata', l10n.metadata, []),
       ],
-    ),
-    page(
-      'network_sources',
-      l10n.networkSources,
-      media,
-      LucideIcons.cloud,
-      (_) => const NetworkSourcesScreen(),
-      keywords:
-          'subsonic jellyfin webdav upnp dlna smb tidal server sync streaming network add source',
     ),
     page(
       'playback_display_settings',
@@ -128,10 +115,6 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
           SettingsSearchItem(
             'backgroundPlaybackAnchor',
             l10n.backgroundPlaybackAnchor,
-          ),
-          SettingsSearchItem(
-            'motionArtInBitPerfect',
-            l10n.motionArtInBitPerfect,
           ),
           SettingsSearchItem(
             'duckOnNotifications',
@@ -274,24 +257,6 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
       ],
     ),
     page(
-      'casting_settings',
-      l10n.casting,
-      media,
-      LucideIcons.cast,
-      (id) => CastingSettingsScreen(initialSection: id),
-      keywords: 'dlna upnp chromecast cast receiver',
-      sections: [
-        _section('availableDevices', l10n.availableDevices, [
-          ('scanForDevices', l10n.scanForDevices),
-        ]),
-        _section('session', l10n.session, [('stopCasting', l10n.stopCasting)]),
-        _section('outputDevice', l10n.outputDevice, [
-          ('refreshOutputs', l10n.refreshOutputs),
-        ]),
-        _section('about', l10n.about, []),
-      ],
-    ),
-    page(
       'lyrics_settings',
       l10n.lyrics,
       media,
@@ -302,11 +267,74 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
         _section('saving2', l10n.saving2, [
           ('matchAudioFilename', l10n.matchAudioFilename),
         ]),
+        _section('lyricsEngine', l10n.lyricsEngine, [
+          ('lyricsSources', l10n.lyricsSources),
+          ('embeddedLyricsFirst', l10n.embeddedLyricsFirst),
+          ('onlineProviders', l10n.onlineProviders),
+        ], keywords: 'provider fallback online embedded sidecar'),
+        _section('translation', l10n.translation, [
+          ('off', l10n.off),
+          ('indonesian', l10n.indonesian),
+          ('english', l10n.english),
+          ('spanish', l10n.translationLanguageSpanish),
+          ('filipino', l10n.translationLanguageFilipino),
+          ('chinese', l10n.translationLanguageChinese),
+        ], keywords: 'translate terjemahan terjemahkan'),
         _section('display', l10n.display, [
           ('karaokeEffect', l10n.karaokeEffect),
+          ('karaokeSweepStyleAuto', l10n.karaokeSweepStyleAuto),
+          ('karaokeSweepStyleWord', l10n.karaokeSweepStyleWord),
+          ('karaokeSweepStyleSyllable', l10n.karaokeSweepStyleSyllable),
           ('left', l10n.left),
           ('center', l10n.center),
           ('right', l10n.right),
+        ]),
+      ],
+    ),
+    page(
+      'lyrics_sources',
+      l10n.lyricsSources,
+      media,
+      LucideIcons.globe,
+      (id) => LyricsSourcesScreen(initialSection: id),
+      keywords:
+          'lrc.red bini betterlyrics portato paxsenix spotify musixmatch '
+          'lyricsplus unison youtube captions music kugou lrclib genius '
+          'provider priority fallback online embedded',
+      sections: [
+        _section('lookupOrder', l10n.lookupOrder, [
+          ('embeddedLyricsFirst', l10n.embeddedLyricsFirst),
+          ('onlineProviders', l10n.onlineProviders),
+        ]),
+        _section('providerPriority', l10n.providerPriority, [
+          ('resetSources', l10n.resetSources),
+        ]),
+      ],
+    ),
+    page(
+      'performance_settings',
+      l10n.performance,
+      system,
+      Icons.speed,
+      (id) => PerformanceSettingsScreen(initialSection: id),
+      keywords:
+          'graphics mode lite high-end blur glass lyrics device class ram '
+          'memory cores refresh rate entry level',
+      sections: [
+        _section('graphicsMode', l10n.graphicsMode, [
+          ('auto', l10n.auto),
+          ('lite', l10n.lite),
+          ('highEnd', l10n.highEnd),
+        ]),
+        _section('effects', l10n.effects, [
+          ('lyricsGlassBlur', l10n.lyricsGlassBlur),
+          ('followDeviceAutomatically', l10n.followDeviceAutomatically),
+        ]),
+        _section('detectedDevice', l10n.detectedDevice, [
+          ('deviceClass', l10n.deviceClass),
+          ('memory', l10n.memory),
+          ('cpuCores', l10n.cpuCores),
+          ('display', l10n.display),
         ]),
       ],
     ),
@@ -401,30 +429,6 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
           ('moderate', l10n.moderate),
           ('vibrant', l10n.vibrant),
         ], keywords: 'palette'),
-      ],
-    ),
-    page(
-      'integrations_settings',
-      l10n.integrations,
-      system,
-      LucideIcons.plug,
-      (id) => IntegrationsSettingsScreen(initialSection: id),
-      sections: [
-        _section('integrations', l10n.integrations, [
-          ('lastFm', l10n.lastFm),
-          ('listenbrainz', l10n.listenbrainz),
-        ], keywords: 'scrobble scrobbling last.fm listenbrainz login'),
-        _section(
-          'metadata',
-          l10n.metadata,
-          [
-            ('onlineArtistAlbumInformation', l10n.onlineArtistAlbumInformation),
-            ('autoIdentifyUntaggedAlbums', l10n.autoIdentifyUntaggedAlbums),
-          ],
-          keywords:
-              'apple music artist information biography similar artists '
-              'top songs album notes portrait identification tags',
-        ),
       ],
     ),
     for (var tab = 0; tab < 4; tab++)
@@ -699,14 +703,6 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
       keywords: 'effects reverb convolution impulse response wet dry fx',
     ),
     page(
-      'missing_metadata',
-      l10n.fixMissingMetadata,
-      media,
-      LucideIcons.tags,
-      (_) => const MissingMetadataScreen(),
-      keywords: 'unknown artist album tags missing metadata',
-    ),
-    page(
       'duplicate_cleaner',
       l10n.removeDuplicates,
       media,
@@ -745,18 +741,6 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
       LucideIcons.info,
       (id) => AppInfoSettingsScreen(initialSection: id),
       sections: [
-        _section('updates', l10n.updates, [
-          ('checkAgain', l10n.checkAgain),
-          ('automaticUpdateChecks', l10n.automaticUpdateChecks),
-          ('patchNotes', l10n.patchNotes),
-          ('openInPlayStore', l10n.openInPlayStore),
-          ('downloadUpdate', l10n.downloadUpdate),
-        ], keywords: 'check for updates version release'),
-        _section('updateChannel', l10n.updateChannel, [
-          ('updateChannelStable', l10n.updateChannelStable),
-          ('updateChannelBeta', l10n.updateChannelBeta),
-          ('updateChannelBoth', l10n.updateChannelBoth),
-        ], keywords: 'beta prerelease testing channel updates'),
         _section('about', l10n.about, [
           ('aboutFlickPlayer', l10n.aboutFlickPlayer),
           ('buildFlavor', l10n.buildFlavor),
@@ -764,7 +748,6 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
           ('viewOnboarding', l10n.viewOnboarding),
           ('interactiveTutorial', l10n.interactiveTutorial),
         ]),
-        _section('support', l10n.support, []),
       ],
     ),
     page(
@@ -774,14 +757,6 @@ List<SettingsSearchPage> buildSettingsSearchCatalog() {
       LucideIcons.shield,
       (_) => const PrivacyPolicyScreen(),
       keywords: 'privacy data',
-    ),
-    page(
-      'support_flick',
-      l10n.supportFlick,
-      about,
-      LucideIcons.heart,
-      (_) => const SupportFlickScreen(),
-      keywords: 'donate donation support coffee',
     ),
   ];
 }

@@ -1,7 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/update_channel.dart';
-
 class AppPreferences {
   final bool animationsEnabled;
   final bool hapticsEnabled;
@@ -78,7 +76,6 @@ class AppPreferences {
   final bool separateMiniPlayerFromNavBar;
   final bool keepPlayingOnQuit;
   final bool priorityAnchorEnabled;
-  final bool motionArtDuringBitPerfect;
   final bool pauseOnBluetoothDisconnect;
   final bool resumeOnBluetoothReconnect;
   final bool pauseOnUsbDacDisconnect;
@@ -96,7 +93,6 @@ class AppPreferences {
   final bool autoFocusSearch;
   final String searchPlaybackMode; // 'results', 'library', or 'queue'
   final String refreshRateMode; // 'high', 'standard', 'adaptive'
-  final UpdateChannel updateChannel;
   final bool visualizerEnabled;
   final bool lockScreenVisualizerEnabled;
   final bool simulatedAodEnabled;
@@ -134,6 +130,8 @@ class AppPreferences {
   final String replayGainMode; // 'off', 'track', or 'album'
   final String lyricsTextAlign; // 'left', 'center', or 'right'
   final bool karaokeEnabled;
+  final String
+  karaokeSweepStyle; // 'auto', 'word', or 'syllable'
   final double replayGainPreampDb;
   final bool replayGainPreventClipping;
 
@@ -213,7 +211,6 @@ class AppPreferences {
     this.separateMiniPlayerFromNavBar = false,
     this.keepPlayingOnQuit = false,
     this.priorityAnchorEnabled = true,
-    this.motionArtDuringBitPerfect = false,
     this.pauseOnBluetoothDisconnect = true,
     this.resumeOnBluetoothReconnect = false,
     this.pauseOnUsbDacDisconnect = true,
@@ -231,7 +228,6 @@ class AppPreferences {
     this.autoFocusSearch = false,
     this.searchPlaybackMode = 'results',
     this.refreshRateMode = 'adaptive',
-    this.updateChannel = UpdateChannel.stable,
     this.visualizerEnabled = true,
     this.lockScreenVisualizerEnabled = false,
     this.simulatedAodEnabled = false,
@@ -265,6 +261,7 @@ class AppPreferences {
     this.replayGainMode = 'off',
     this.lyricsTextAlign = 'center',
     this.karaokeEnabled = true,
+    this.karaokeSweepStyle = 'auto',
     this.replayGainPreampDb = 0.0,
     this.replayGainPreventClipping = true,
   });
@@ -345,7 +342,6 @@ class AppPreferences {
     bool? separateMiniPlayerFromNavBar,
     bool? keepPlayingOnQuit,
     bool? priorityAnchorEnabled,
-    bool? motionArtDuringBitPerfect,
     bool? pauseOnBluetoothDisconnect,
     bool? resumeOnBluetoothReconnect,
     bool? pauseOnUsbDacDisconnect,
@@ -363,7 +359,6 @@ class AppPreferences {
     bool? autoFocusSearch,
     String? searchPlaybackMode,
     String? refreshRateMode,
-    UpdateChannel? updateChannel,
     bool? visualizerEnabled,
     bool? lockScreenVisualizerEnabled,
     bool? simulatedAodEnabled,
@@ -397,6 +392,7 @@ class AppPreferences {
     String? replayGainMode,
     String? lyricsTextAlign,
     bool? karaokeEnabled,
+    String? karaokeSweepStyle,
     double? replayGainPreampDb,
     bool? replayGainPreventClipping,
   }) {
@@ -508,8 +504,6 @@ class AppPreferences {
       keepPlayingOnQuit: keepPlayingOnQuit ?? this.keepPlayingOnQuit,
       priorityAnchorEnabled:
           priorityAnchorEnabled ?? this.priorityAnchorEnabled,
-      motionArtDuringBitPerfect:
-          motionArtDuringBitPerfect ?? this.motionArtDuringBitPerfect,
       pauseOnBluetoothDisconnect:
           pauseOnBluetoothDisconnect ?? this.pauseOnBluetoothDisconnect,
       resumeOnBluetoothReconnect:
@@ -534,7 +528,6 @@ class AppPreferences {
       autoFocusSearch: autoFocusSearch ?? this.autoFocusSearch,
       searchPlaybackMode: searchPlaybackMode ?? this.searchPlaybackMode,
       refreshRateMode: refreshRateMode ?? this.refreshRateMode,
-      updateChannel: updateChannel ?? this.updateChannel,
       visualizerEnabled: visualizerEnabled ?? this.visualizerEnabled,
       lockScreenVisualizerEnabled:
           lockScreenVisualizerEnabled ?? this.lockScreenVisualizerEnabled,
@@ -582,6 +575,7 @@ class AppPreferences {
       replayGainMode: replayGainMode ?? this.replayGainMode,
       lyricsTextAlign: lyricsTextAlign ?? this.lyricsTextAlign,
       karaokeEnabled: karaokeEnabled ?? this.karaokeEnabled,
+      karaokeSweepStyle: karaokeSweepStyle ?? this.karaokeSweepStyle,
       replayGainPreampDb: replayGainPreampDb ?? this.replayGainPreampDb,
       replayGainPreventClipping:
           replayGainPreventClipping ?? this.replayGainPreventClipping,
@@ -673,8 +667,6 @@ class AppPreferencesService {
       'separate_mini_player_from_nav_bar';
   static const _keepPlayingOnQuitKey = 'app_keep_playing_on_quit';
   static const _priorityAnchorEnabledKey = 'app_priority_anchor_enabled';
-  static const _motionArtDuringBitPerfectKey =
-      'app_motion_art_during_bit_perfect';
   static const _pauseOnBluetoothDisconnectKey =
       'app_pause_on_bluetooth_disconnect';
   static const _resumeOnBluetoothReconnectKey =
@@ -694,7 +686,6 @@ class AppPreferencesService {
   static const _autoFocusSearchKey = 'app_auto_focus_search';
   static const _searchPlaybackModeKey = 'app_search_playback_mode';
   static const _refreshRateModeKey = 'app_refresh_rate_mode';
-  static const _updateChannelKey = 'update_channel';
   static const _visualizerEnabledKey = 'visualizer_enabled';
   static const _lockScreenVisualizerEnabledKey =
       'lock_screen_visualizer_enabled';
@@ -733,6 +724,7 @@ class AppPreferencesService {
   static const _replayGainModeKey = 'audio_replaygain_mode';
   static const _lyricsTextAlignKey = 'lyrics_text_align';
   static const _lyricsKaraokeEnabledKey = 'lyrics_karaoke_enabled';
+  static const _lyricsKaraokeSweepStyleKey = 'lyrics_karaoke_sweep_style';
   static const _replayGainPreampKey = 'audio_replaygain_preamp_db';
   static const _replayGainPreventClippingKey =
       'audio_replaygain_prevent_clipping';
@@ -847,8 +839,6 @@ class AppPreferencesService {
           prefs.getBool(_separateMiniPlayerFromNavBarKey) ?? false,
       keepPlayingOnQuit: prefs.getBool(_keepPlayingOnQuitKey) ?? false,
       priorityAnchorEnabled: prefs.getBool(_priorityAnchorEnabledKey) ?? true,
-      motionArtDuringBitPerfect:
-          prefs.getBool(_motionArtDuringBitPerfectKey) ?? false,
       pauseOnBluetoothDisconnect:
           prefs.getBool(_pauseOnBluetoothDisconnectKey) ?? true,
       resumeOnBluetoothReconnect:
@@ -871,9 +861,6 @@ class AppPreferencesService {
       autoFocusSearch: prefs.getBool(_autoFocusSearchKey) ?? false,
       searchPlaybackMode: prefs.getString(_searchPlaybackModeKey) ?? 'results',
       refreshRateMode: await _resolveRefreshRateMode(prefs),
-      updateChannel: UpdateChannel.fromStorage(
-        prefs.getString(_updateChannelKey),
-      ),
       visualizerEnabled: prefs.getBool(_visualizerEnabledKey) ?? true,
       lockScreenVisualizerEnabled:
           prefs.getBool(_lockScreenVisualizerEnabledKey) ?? false,
@@ -920,6 +907,8 @@ class AppPreferencesService {
       replayGainMode: prefs.getString(_replayGainModeKey) ?? 'off',
       lyricsTextAlign: prefs.getString(_lyricsTextAlignKey) ?? 'center',
       karaokeEnabled: prefs.getBool(_lyricsKaraokeEnabledKey) ?? true,
+      karaokeSweepStyle:
+          prefs.getString(_lyricsKaraokeSweepStyleKey) ?? 'auto',
       replayGainPreampDb: prefs.getDouble(_replayGainPreampKey) ?? 0.0,
       replayGainPreventClipping:
           prefs.getBool(_replayGainPreventClippingKey) ?? true,
@@ -1119,6 +1108,16 @@ class AppPreferencesService {
   Future<void> setLyricsKaraokeEnabled(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_lyricsKaraokeEnabledKey, value);
+  }
+
+  Future<String> getLyricsKaraokeSweepStyle() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_lyricsKaraokeSweepStyleKey) ?? 'auto';
+  }
+
+  Future<void> setLyricsKaraokeSweepStyle(String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_lyricsKaraokeSweepStyleKey, value);
   }
 
   Future<double> getReplayGainPreampDb() async {
@@ -1715,16 +1714,6 @@ class AppPreferencesService {
     await prefs.setBool(_priorityAnchorEnabledKey, value);
   }
 
-  Future<bool> getMotionArtDuringBitPerfect() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_motionArtDuringBitPerfectKey) ?? false;
-  }
-
-  Future<void> setMotionArtDuringBitPerfect(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_motionArtDuringBitPerfectKey, value);
-  }
-
   Future<bool> getPauseOnBluetoothDisconnect() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool(_pauseOnBluetoothDisconnectKey) ?? true;
@@ -1923,15 +1912,7 @@ class AppPreferencesService {
     await prefs.setString(_refreshRateModeKey, value);
   }
 
-  Future<UpdateChannel> getUpdateChannel() async {
-    final prefs = await SharedPreferences.getInstance();
-    return UpdateChannel.fromStorage(prefs.getString(_updateChannelKey));
-  }
 
-  Future<void> setUpdateChannel(UpdateChannel value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_updateChannelKey, value.storageValue);
-  }
 
   /// Returns the persisted UI language tag, or 'system' when unset.
   Future<String> getAppLocale() async {

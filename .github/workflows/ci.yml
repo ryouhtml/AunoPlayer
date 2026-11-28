@@ -108,6 +108,11 @@ jobs:
       - name: pub get
         run: flutter pub get
 
+      - name: gen-l10n
+        # Regenerates the committed scaffolds from the ARB catalogs so a
+        # missing getter or placeholder cannot pass CI unnoticed.
+        run: flutter gen-l10n
+
       - name: build_runner
         run: dart run build_runner build --delete-conflicting-outputs
 

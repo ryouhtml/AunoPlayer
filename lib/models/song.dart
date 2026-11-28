@@ -104,17 +104,17 @@ class Song {
   /// True when the song came from an external app handoff.
   final bool isExternal;
 
-  /// Package name of the app that handed this song to Flick.
+  /// Package name of the app that handed this song to Auno Player.
   final String? sourcePackage;
 
-  /// Where this song came from: null = local file, otherwise one of
-  /// 'subsonic' | 'webdav' | 'jellyfin'.
+  /// Where this song came from: null = a local file. Any other value marks a
+  /// legacy indexed row from a removed network source.
   final String? sourceType;
 
-  /// The server's song id (Subsonic song id, WebDAV file URL, Jellyfin Item.Id).
+  /// Identifier of the row on the old remote server.
   final String? remoteId;
 
-  /// [NetworkServerEntity.id] of the server this song was synced from.
+  /// Identifier of the server this song was synced from.
   final int? remoteServerId;
 
   const Song({

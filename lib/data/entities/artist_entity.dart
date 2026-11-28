@@ -15,8 +15,8 @@ class ArtistEntity {
   /// artist-specific image has been found.
   String? artPath;
 
-  /// Where [artPath] came from: 'embeddedArtist', 'appleMusic', 'albumCover',
-  /// or 'custom'. Null on records written before source tracking existed.
+  /// Where [artPath] came from: 'embeddedArtist', 'albumCover', or 'custom'.
+  /// Null on records written before source tracking existed.
   ///
   /// The Isar name sorts after existing properties so their schema ids stay
   /// stable when this field is added to an existing database.

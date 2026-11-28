@@ -15,6 +15,8 @@ import 'package:auno_player/features/player/screens/lyrics_sync_screen.dart';
 import 'package:auno_player/features/player/widgets/online_lyrics_search_sheet.dart';
 import 'package:auno_player/features/player/widgets/synced_lyrics_view.dart';
 import 'package:auno_player/providers/app_preferences_provider.dart';
+import 'package:auno_player/providers/lyrics_engine_provider.dart';
+import 'package:auno_player/services/lyrics_repository.dart';
 import 'package:auno_player/l10n/english_l10n.dart';
 class InlineLyricsPanel extends ConsumerStatefulWidget {
   final PlayerService playerService;
@@ -24,6 +26,11 @@ class InlineLyricsPanel extends ConsumerStatefulWidget {
   final ValueNotifier<Duration>? positionNotifier;
   final bool active;
 
+  /// Renders a compact active-line strip under the transport controls instead
+  /// of the full panel. Uses the same repository load as the full view.
+  final bool strip;
+  final VoidCallback? onStripTap;
+
   const InlineLyricsPanel({super.key,
     required this.playerService,
     required this.lyricsService,
@@ -31,6 +38,8 @@ class InlineLyricsPanel extends ConsumerStatefulWidget {
     this.albumColor,
     this.positionNotifier,
     this.active = true,
+    this.strip = false,
+    this.onStripTap,
   });
 
   @override
@@ -71,10 +80,9 @@ class _InlineLyricsPanelState extends ConsumerState<InlineLyricsPanel> {
       _lyricsData = null;
     });
 
-    final loaded = await widget.lyricsService.loadLyricsForSong(
-      song,
-      forceRefresh: true,
-    );
+    final repository = ref.read(lyricsRepositoryProvider);
+    final settings = ref.read(lyricsEngineSettingsProvider);
+    final document = await repository.loadForSong(song, settings: settings);
     final manualSource = await widget.lyricsService.getManualLyricsPathForSong(
       song,
     );
@@ -82,7 +90,7 @@ class _InlineLyricsPanelState extends ConsumerState<InlineLyricsPanel> {
     if (widget.song.id != song.id) return;
 
     setState(() {
-      _lyricsData = loaded;
+      _lyricsData = document?.toLyricsData();
       _hasManualLyricsSelection =
           manualSource != null && manualSource.isNotEmpty;
       _isLoading = false;
@@ -379,6 +387,24 @@ class _InlineLyricsPanelState extends ConsumerState<InlineLyricsPanel> {
   }
 
   Widget _buildBody(BuildContext context) {
+    if (widget.strip) {
+      if (_isLoading) return const SizedBox(height: 44);
+      final stripLyrics = _lyricsData;
+      if (stripLyrics == null || stripLyrics.lines.isEmpty) {
+        return const SizedBox.shrink();
+      }
+      return SyncedLyricsView(
+        playerService: widget.playerService,
+        lyricsService: widget.lyricsService,
+        lyrics: stripLyrics,
+        albumColor: widget.albumColor,
+        positionNotifier: widget.positionNotifier,
+        active: widget.active,
+        strip: true,
+        onStripTap: widget.onStripTap,
+      );
+    }
+
     if (_isLoading) {
       return const Center(
         child: CircularProgressIndicator(color: AppColors.accent),

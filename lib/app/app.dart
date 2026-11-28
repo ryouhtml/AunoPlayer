@@ -16,7 +16,6 @@ import 'package:auno_player/features/menu/screens/menu_screen.dart';
 import 'package:auno_player/features/settings/screens/settings_screen.dart';
 import 'package:auno_player/features/settings/screens/bottom_bar_settings_screen.dart';
 import 'package:auno_player/features/settings/screens/equalizer_screen.dart';
-import 'package:auno_player/features/settings/screens/support_flick_screen.dart';
 import 'package:auno_player/features/albums/screens/albums_screen.dart';
 import 'package:auno_player/features/artists/screens/artists_screen.dart';
 import 'package:auno_player/features/folders/screens/folders_screen.dart';
@@ -60,8 +59,9 @@ import 'package:auno_player/models/nav_bar_config.dart';
 import 'package:auno_player/models/song_view_mode.dart';
 import 'package:auno_player/features/milestone/widgets/milestone_card.dart';
 import 'package:auno_player/features/milestone/widgets/streak_popup.dart';
-import 'package:auno_player/features/whats_new/widgets/whats_new_bottom_sheet.dart';
+import 'package:auno_player/features/splash/widgets/splash_overlay.dart';
 import 'package:auno_player/core/utils/dev_log.dart';
+import 'package:auno_player/core/theme/dynamic_theme_scope.dart';
 import 'package:auno_player/l10n/l10n.dart';
 
 /// Main application widget for Flick Player.
@@ -94,20 +94,24 @@ class FlickPlayerApp extends StatelessWidget {
             return Consumer(
               builder: (context, ref, _) {
                 ref.watch(lockScreenVisualizerProvider);
-                return AnnotatedRegion<SystemUiOverlayStyle>(
-                  // App-wide fallback. A route that paints a light surface
-                  // (the onboarding pages) declares its own region; once it
-                  // is gone this one takes over again instead of leaving the
-                  // old icon brightness behind.
-                  value: AppSystemUi.standard,
-                  child: ConnectionNoticeHost(
-                    showNotice: ref.watch(
-                      appPreferencesProvider.select(
-                        (preferences) => preferences.connectionNoticesEnabled,
+                return DynamicThemeScope(
+                  child: AnnotatedRegion<SystemUiOverlayStyle>(
+                    // App-wide fallback. A route that paints a light surface
+                    // (the onboarding pages) declares its own region; once it
+                    // is gone this one takes over again instead of leaving the
+                    // old icon brightness behind.
+                    value: AppSystemUi.standard,
+                    child: ConnectionNoticeHost(
+                      showNotice: ref.watch(
+                        appPreferencesProvider.select(
+                          (preferences) => preferences.connectionNoticesEnabled,
+                        ),
                       ),
-                    ),
-                    child: TutorialHost(
-                      child: child ?? const SizedBox.shrink(),
+                      child: TutorialHost(
+                        child: SplashOverlay(
+                          child: child ?? const SizedBox.shrink(),
+                        ),
+                      ),
                     ),
                   ),
                 );
@@ -140,7 +144,6 @@ class _MainShellState extends ConsumerState<MainShell>
   late final ProviderSubscription<int> _navigationIndexSubscription;
   late final NavBarVisibilityObserver _navBarVisibilityObserver;
   late final ProviderSubscription<PlayerState> _widgetSyncSubscription;
-  late final ProviderSubscription<AppPreferences>? _appPreferencesSubscription;
   late final WidgetIntentHandler _widgetIntentHandler;
 
   // Track previous song to detect changes
@@ -170,7 +173,6 @@ class _MainShellState extends ConsumerState<MainShell>
     _previousSong = ref.read(currentSongProvider);
     _playerService = ref.read(playerServiceProvider);
     ref.read(equalizerProvider);
-    ref.read(updateCheckProvider.notifier);
     final initialConfig = ref.read(navBarConfigProvider);
     final defaultPage =
         initialConfig.orderedButtons.contains(NavBarButton.songs)
@@ -259,9 +261,6 @@ class _MainShellState extends ConsumerState<MainShell>
 
     _playerService.pendingMilestoneNotifier.addListener(_handleMilestone);
     _playerService.streakPopupNotifier.addListener(_handleStreakPopup);
-    _playerService.networkPlaybackErrorNotifier.addListener(
-      _handleNetworkPlaybackError,
-    );
 
     ref.listenManual<NavBarConfig>(navBarConfigProvider, (previous, next) {
       if (previous == null || !mounted) return;
@@ -351,7 +350,6 @@ class _MainShellState extends ConsumerState<MainShell>
       }
       _maybeOpenExternalPlayer(ref.read(currentSongProvider));
       _refreshLibraryDeletions();
-      ref.read(updateCheckProvider.notifier).refreshIfOnline();
       ref.read(autoLibrarySyncServiceProvider);
 
       final tutorialState = ref.read(tutorialProvider);
@@ -359,7 +357,6 @@ class _MainShellState extends ConsumerState<MainShell>
         ref.read(tutorialProvider.notifier).start();
       }
 
-      _maybeShowWhatsNew();
       unawaited(_playerService.recordActivityDayAndCheckMilestones());
     });
 
@@ -420,23 +417,8 @@ class _MainShellState extends ConsumerState<MainShell>
         milestone: milestone,
         nextMilestone: next.next,
         nextRemaining: next.next == null ? null : next.remaining,
-        supportLabel: l10n.englishForFilipino.supportFlick,
         dismissLabel: l10n.englishForFilipino.dismiss,
-        onSupportTap: () {
-          Navigator.of(
-            context,
-          ).push(MaterialPageRoute(builder: (_) => const SupportFlickScreen()));
-        },
       ),
-    );
-  }
-
-  void _handleNetworkPlaybackError() {
-    final message = _playerService.networkPlaybackErrorNotifier.value;
-    if (message == null || !mounted) return;
-    ScaffoldMessenger.of(context).showFlickSnackBar(
-      SnackBar(content: Text(message), duration: const Duration(seconds: 10)),
-      id: 'network-playback-error',
     );
   }
 
@@ -452,37 +434,6 @@ class _MainShellState extends ConsumerState<MainShell>
         streak: streak,
         onSnooze: () => MilestoneService().snoozeStreakPopup(),
       ),
-    );
-  }
-
-  void _maybeShowWhatsNew() {
-    if (!mounted) return;
-    if (!ref.read(onboardingCompletedProvider)) {
-      return;
-    }
-
-    // Wait for the AppPreferencesNotifier to publish its loaded state. The
-    // listener fires when the real SharedPreferences values replace the
-    // default values, which is the moment we can decide whether a "What's
-    // New" sheet should appear.
-    _appPreferencesSubscription = ref.listenManual<AppPreferences>(
-      appPreferencesProvider,
-      (previous, next) {
-        if (!mounted) return;
-        if (ref.read(tutorialProvider).active) return;
-        final notifier = ref.read(whatsNewProvider.notifier);
-        notifier.evaluate();
-        final pending = ref.read(whatsNewProvider).pendingEntry;
-        if (pending == null) {
-          return;
-        }
-
-        // Persist the dismissal before showing so a force-quit between now
-        // and the user actually tapping "Got it" doesn't re-trigger on the
-        // next launch.
-        unawaited(notifier.markCurrentVersionSeen());
-        unawaited(WhatsNewBottomSheet.show(context, entry: pending));
-      },
     );
   }
 
@@ -549,9 +500,6 @@ class _MainShellState extends ConsumerState<MainShell>
     );
     _playerService.pendingMilestoneNotifier.removeListener(_handleMilestone);
     _playerService.streakPopupNotifier.removeListener(_handleStreakPopup);
-    _playerService.networkPlaybackErrorNotifier.removeListener(
-      _handleNetworkPlaybackError,
-    );
     WidgetsBinding.instance.removeObserver(this);
     _navBarVisibilitySubscription.close();
     _navBarAlwaysVisibleSubscription.close();
@@ -559,7 +507,6 @@ class _MainShellState extends ConsumerState<MainShell>
     _navigationIndexSubscription.close();
     _widgetSyncSubscription.close();
     WidgetSyncService.instance.stopReplaySync();
-    _appPreferencesSubscription?.close();
     unawaited(_widgetIntentHandler.detach());
     _pageController.removeListener(_onPageScroll);
     _pageController.dispose();
@@ -626,46 +573,10 @@ class _MainShellState extends ConsumerState<MainShell>
       unawaited(WidgetSyncService.instance.pushPaused());
       unawaited(ref.read(playerServiceProvider).onAppPaused());
       unawaited(AppLog.instance.flushToDisk());
-
-      // Attempt to scrobble the current track before the app suspends.
-      // Only fire if playback is not active — audio apps often keep playing
-      // in the background, so treat this as a true "end" only when paused.
-      final playerState = ref.read(playerProvider);
-      final song = playerState.currentSong;
-      if (song != null && !song.isExternal && !playerState.isPlaying) {
-        final notifier = ref.read(playerProvider.notifier);
-        ref
-            .read(lastFmScrobbleProvider.notifier)
-            .onTrackEnded(
-              artist: song.artist,
-              track: song.title,
-              album: song.album,
-              albumArtist: null,
-              listenedSeconds: notifier.accumulatedListenSeconds,
-              trackDurationSeconds: playerState.duration.inSeconds,
-            );
-        ref
-            .read(listenBrainzScrobbleProvider.notifier)
-            .onTrackEnded(
-              artist: song.artist,
-              track: song.title,
-              album: song.album,
-              albumArtist: null,
-              listenedSeconds: notifier.accumulatedListenSeconds,
-              trackDurationSeconds: playerState.duration.inSeconds,
-            );
-      }
     }
     if (state == AppLifecycleState.resumed) {
       _startIdleTimer();
       unawaited(ref.read(playerServiceProvider).onAppResumed());
-      ref.read(updateCheckProvider.notifier).refreshIfOnline();
-      ref.read(lastFmScrobbleQueueProvider).flush().catchError((e) {
-        devLog('[LastFm] queue flush on resume failed: $e');
-      });
-      ref.read(listenbrainzScrobbleQueueProvider).flush().catchError((e) {
-        devLog('[ListenBrainz] queue flush on resume failed: $e');
-      });
       ref.read(autoLibrarySyncServiceProvider).notifyResumed();
     }
   }

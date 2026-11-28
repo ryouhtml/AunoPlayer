@@ -1,31 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'package:auno_player/features/player/widgets/motion_art_widget.dart';
 import 'package:auno_player/widgets/common/cached_image_widget.dart';
 
-/// Apple Music-style hero art: slow Ken Burns pan/zoom with a soft
-/// pulsing glow derived from the art's dominant color.
-///
-/// When [albumName] and [artistName] are supplied (album detail heroes), real
-/// Apple Music Motion Art is played instead, falling back to the Ken Burns
-/// effect whenever no motion art exists for the album.
+/// Locally rendered hero art: slow Ken Burns pan/zoom with a soft pulsing glow
+/// derived from the art's dominant color. No network lookups are performed.
 class AnimatedAlbumArt extends StatefulWidget {
   final String? imagePath;
   final String? audioSourcePath;
   final Color? dominantColor;
   final Widget? placeholder;
   final Widget? errorWidget;
-
-  /// Album metadata enabling the edition-aware Motion Art lookup.
-  final String? albumName;
-  final String? artistName;
-  final String? representativeSongTitle;
-
-  /// Prefer the portrait motion-art variant (full-bleed backgrounds).
-  final bool preferVertical;
-
-  /// When false, keeps the Ken Burns effect even if album metadata is present.
-  final bool motionEnabled;
 
   const AnimatedAlbumArt({
     super.key,
@@ -34,11 +18,6 @@ class AnimatedAlbumArt extends StatefulWidget {
     this.dominantColor,
     this.placeholder,
     this.errorWidget,
-    this.albumName,
-    this.artistName,
-    this.representativeSongTitle,
-    this.preferVertical = false,
-    this.motionEnabled = true,
   });
 
   @override
@@ -81,7 +60,7 @@ class _AnimatedAlbumArtState extends State<AnimatedAlbumArt>
       placeholder: widget.placeholder,
       errorWidget: widget.errorWidget,
     );
-    final kenBurns = ClipRect(
+    return ClipRect(
       child: AnimatedBuilder(
         animation: _controller,
         builder: (context, child) {
@@ -114,24 +93,6 @@ class _AnimatedAlbumArtState extends State<AnimatedAlbumArt>
         },
         child: image,
       ),
-    );
-
-    final album = widget.albumName?.trim() ?? '';
-    final artist = widget.artistName?.trim() ?? '';
-    if (album.isEmpty || artist.isEmpty || !widget.motionEnabled) {
-      return kenBurns;
-    }
-
-    return MotionArtView(
-      title: album,
-      album: album,
-      artist: artist,
-      albumMode: true,
-      representativeSongTitle: widget.representativeSongTitle,
-      preferVertical: widget.preferVertical,
-      enabled: !MediaQuery.of(context).disableAnimations,
-      loadingFallback: image,
-      fallback: kenBurns,
     );
   }
 }

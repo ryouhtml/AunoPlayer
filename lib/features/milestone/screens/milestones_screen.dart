@@ -226,7 +226,6 @@ class _MilestonesScreenState extends ConsumerState<MilestonesScreen> {
         achievedAt: achievedAt,
         nextMilestone: next.next,
         nextRemaining: next.next == null ? null : next.remaining,
-        supportLabel: l10n.close,
         dismissLabel: l10n.done,
       ),
     );

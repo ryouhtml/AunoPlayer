@@ -6,18 +6,23 @@
 import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-/// Crossfade curve types.
+
+            
+
+            
+
+            /// Crossfade curve types.
 enum CrossfadeCurve {
-  /// Equal power using sin/cos (recommended)
-  /// Maintains constant perceived loudness
-  equalPower,
-
-  /// Linear fade (can sound "dipped" in the middle)
-  linear,
-
-  /// Square root curve (alternative equal power)
-  squareRoot,
-
-  /// S-curve for smoother transitions
-  sCurve,
-}
+                    /// Equal power using sin/cos (recommended)
+/// Maintains constant perceived loudness
+equalPower,
+/// Linear fade (can sound "dipped" in the middle)
+linear,
+/// Square root curve (alternative equal power)
+squareRoot,
+/// S-curve for smoother transitions
+sCurve,
+                    ;
+                    
+                }
+            

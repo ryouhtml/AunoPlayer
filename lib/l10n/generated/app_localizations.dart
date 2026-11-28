@@ -7,6 +7,7 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
+import 'app_localizations_id.dart';
 import 'app_localizations_tl.dart';
 import 'app_localizations_zh.dart';
 
@@ -98,10 +99,23 @@ abstract class AppLocalizations {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
     Locale('es'),
+    Locale('id'),
     Locale('tl'),
     Locale.fromSubtags(languageCode: 'tl', scriptCode: 'Tglg'),
     Locale('zh'),
   ];
+
+  /// Autonym row subtitle in the language picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Indonesian'**
+  String get indonesian;
+
+  /// Shown when attempting to change artwork for an indexed row from a removed network source.
+  ///
+  /// In en, this message translates to:
+  /// **'Artwork can only be changed for local files.'**
+  String get artworkOnlyForLocalFiles;
 
   /// No description provided for @lockScreenVisualizerTitle.
   ///
@@ -409,12 +423,6 @@ abstract class AppLocalizations {
   /// **'Control not visible? You can continue, or use the manual below.'**
   String get tourUnavailable;
 
-  /// Personal note shown only in the Taglish locale, above the donation cards.
-  ///
-  /// In en, this message translates to:
-  /// **'Thank you for supporting Auno Player.'**
-  String get filipinoDonationNote;
-
   /// Compact player status heading; the Filipino Baybayin label says Tumutugtog.
   ///
   /// In en, this message translates to:
@@ -432,12 +440,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A little record of what stayed on repeat.'**
   String get aLittleRecordOfWhatStayed;
-
-  /// lib/features/menu/screens/menu_screen.dart:1234
-  ///
-  /// In en, this message translates to:
-  /// **'A newer Auno Player build is on the Play Store.'**
-  String get aNewerFlickBuildIsOn;
 
   /// lib/features/playlists/screens/playlists_screen.dart:444
   ///
@@ -510,18 +512,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'About Auno Player'**
   String get aboutFlickPlayer;
-
-  /// lib/features/albums/screens/album_detail_screen.dart:519
-  ///
-  /// In en, this message translates to:
-  /// **'About this album'**
-  String get aboutThisAlbum;
-
-  /// Artist detail biography section and its expanded sheet.
-  ///
-  /// In en, this message translates to:
-  /// **'About them'**
-  String get aboutThem;
 
   /// lib/features/settings/screens/bluetooth_settings_screen.dart:398
   ///
@@ -654,12 +644,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add music with artist tags to see them here'**
   String get addMusicWithArtistTagsTo;
-
-  /// lib/features/settings/screens/network_sources_screen.dart:154
-  ///
-  /// In en, this message translates to:
-  /// **'Add Server'**
-  String get addServer;
 
   /// lib/features/playlists/screens/playlist_detail_screen.dart:530
   ///
@@ -883,12 +867,6 @@ abstract class AppLocalizations {
   /// **'After Hours'**
   String get afterHours;
 
-  /// lib/features/settings/widgets/apple_music_settings_tile.dart:40
-  ///
-  /// In en, this message translates to:
-  /// **'After scanning, match files with missing tags against Apple Music. Only confident matches apply automatically.'**
-  String get afterScanningMatchFilesWithMissing;
-
   /// lib/features/settings/screens/equalizer_screen.dart:1891
   ///
   /// In en, this message translates to:
@@ -924,12 +902,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Album art'**
   String get albumArt2;
-
-  /// lib/features/settings/screens/privacy_policy_screen.dart:64
-  ///
-  /// In en, this message translates to:
-  /// **'Album Art Import'**
-  String get albumArtImport;
 
   /// lib/features/player/widgets/song_metadata_sheet.dart:68
   ///
@@ -1243,23 +1215,11 @@ abstract class AppLocalizations {
   /// **'Analyzing loudness'**
   String get analyzingLoudness;
 
-  /// lib/features/albums/widgets/identify_album_sheet.dart:58
-  ///
-  /// In en, this message translates to:
-  /// **' and artwork'**
-  String get andArtwork;
-
   /// lib/features/menu/screens/menu_screen.dart:1439
   ///
   /// In en, this message translates to:
   /// **'{arg1} and more in rotation'**
   String andMoreInRotation(Object arg1);
-
-  /// lib/features/settings/screens/casting_settings_screen.dart:121
-  ///
-  /// In en, this message translates to:
-  /// **'Android'**
-  String get android;
 
   /// lib/features/settings/screens/uac2_preferences_screen.dart:346
   ///
@@ -1309,6 +1269,12 @@ abstract class AppLocalizations {
   /// **'Animated Album Art'**
   String get animatedAlbumArt;
 
+  /// No description provided for @localAlbumArtPanAndGlow.
+  ///
+  /// In en, this message translates to:
+  /// **'Slow pan and glow from the album art\'s dominant color.'**
+  String get localAlbumArtPanAndGlow;
+
   /// lib/features/settings/screens/visualizer_settings_screen.dart:65
   ///
   /// In en, this message translates to:
@@ -1339,12 +1305,6 @@ abstract class AppLocalizations {
   /// **'Animations and haptic feedback toggles.'**
   String get animationsAndHapticFeedbackToggles;
 
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:447
-  ///
-  /// In en, this message translates to:
-  /// **'API Key'**
-  String get apiKey;
-
   /// lib/features/settings/screens/app_info_settings_screen.dart:598
   ///
   /// In en, this message translates to:
@@ -1357,6 +1317,12 @@ abstract class AppLocalizations {
   /// **'Auno Player'**
   String get appTitle;
 
+  /// Short tagline under the logo on the animated splash screen.
+  ///
+  /// In en, this message translates to:
+  /// **'BIT-PERFECT. NO COMPROMISE.'**
+  String get splashTagline;
+
   /// lib/features/settings/screens/bottom_bar_settings_screen.dart:253
   ///
   /// In en, this message translates to:
@@ -1368,30 +1334,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Appears in the overflow menu'**
   String get appearsInTheOverflowMenu;
-
-  /// lib/features/albums/screens/album_detail_screen.dart:417
-  ///
-  /// In en, this message translates to:
-  /// **'Apple Music data unavailable'**
-  String get appleMusicDataUnavailable;
-
-  /// lib/features/albums/screens/album_detail_screen.dart:416
-  ///
-  /// In en, this message translates to:
-  /// **'Apple Music data updated'**
-  String get appleMusicDataUpdated;
-
-  /// lib/features/albums/widgets/identify_album_sheet.dart:141
-  ///
-  /// In en, this message translates to:
-  /// **'Apple Music lookup failed. Check your connection.'**
-  String get appleMusicLookupFailedCheckYour;
-
-  /// lib/features/settings/screens/ui_customization_settings_screen.dart:168
-  ///
-  /// In en, this message translates to:
-  /// **'Apple Music Motion Art on albums plus pan/zoom, ambient glow and smooth fade on heroes'**
-  String get appleMusicMotionArtOnAlbums;
 
   /// lib/features/settings/screens/equalizer_screen.dart:497
   ///
@@ -1410,18 +1352,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apply {arg1}'**
   String apply2(Object arg1);
-
-  /// lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:351
-  ///
-  /// In en, this message translates to:
-  /// **'Apply Selected'**
-  String get applySelected;
-
-  /// lib/features/albums/widgets/identify_album_sheet.dart:581
-  ///
-  /// In en, this message translates to:
-  /// **'Apply to {count, plural, =1{{count} song} other{{count} songs}}'**
-  String applyTo(int count);
 
   /// lib/features/menu/screens/restarting_screen.dart:11
   ///
@@ -1543,24 +1473,6 @@ abstract class AppLocalizations {
   /// **'Artwork Card'**
   String get artworkCard;
 
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Artwork lookup failed (HTTP {status}).'**
-  String artworkLookupFailed(int status);
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Artwork lookup returned invalid data.'**
-  String get artworkLookupInvalidData;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Artwork lookup is temporarily unavailable.'**
-  String get artworkLookupTemporarilyUnavailable;
-
   /// lib/features/player/widgets/player_layout_sheet.dart:239
   ///
   /// In en, this message translates to:
@@ -1639,12 +1551,6 @@ abstract class AppLocalizations {
   /// **'Audio Signal Path'**
   String get audioSignalPath;
 
-  /// lib/features/settings/screens/support_flick_screen.dart:173
-  ///
-  /// In en, this message translates to:
-  /// **'Audio Testing Equipment'**
-  String get audioTestingEquipment;
-
   /// lib/features/milestone/screens/milestones_screen.dart:509
   ///
   /// In en, this message translates to:
@@ -1656,12 +1562,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Aurora Sounds'**
   String get auroraSounds;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Authentication response missing token'**
-  String get authenticationResponseMissingToken;
 
   /// lib/features/player/screens/lyrics_sync_screen.dart:1224
   ///
@@ -1717,12 +1617,6 @@ abstract class AppLocalizations {
   /// **'Auto-hide Timeout'**
   String get autoHideTimeout;
 
-  /// lib/features/settings/widgets/apple_music_settings_tile.dart:38
-  ///
-  /// In en, this message translates to:
-  /// **'Auto-identify untagged albums'**
-  String get autoIdentifyUntaggedAlbums;
-
   /// lib/features/settings/screens/uac2_preferences_screen.dart:1637
   ///
   /// In en, this message translates to:
@@ -1765,23 +1659,11 @@ abstract class AppLocalizations {
   /// **'AutoEQ Headphones'**
   String get autoeqHeadphones2;
 
-  /// Inline feedback when AutoEq online lookup cannot load a preset.
-  ///
-  /// In en, this message translates to:
-  /// **'Couldn\'t load an online preset. Bundled presets still work offline; check the model name or connection.'**
-  String get autoeqOnlineSearchFailed;
-
   /// lib/features/settings/screens/bluetooth_settings_screen.dart:311
   ///
   /// In en, this message translates to:
   /// **'Automatic'**
   String get automatic;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:173
-  ///
-  /// In en, this message translates to:
-  /// **'Automatic Update Checks'**
-  String get automaticUpdateChecks;
 
   /// lib/features/settings/screens/interface_settings_screen.dart:138
   ///
@@ -1794,12 +1676,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Autoplay on Queue End'**
   String get autoplayOnQueueEnd;
-
-  /// lib/features/settings/screens/casting_settings_screen.dart:70
-  ///
-  /// In en, this message translates to:
-  /// **'Available Devices'**
-  String get availableDevices;
 
   /// lib/features/settings/screens/equalizer_screen.dart:2405
   ///
@@ -1818,6 +1694,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Back online'**
   String get backOnline;
+
+  /// lib/features/player/widgets/synced_lyrics_view.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Back to active lyrics'**
+  String get backToActiveLyrics;
 
   /// lib/features/player/screens/full_player_screen.dart:731
   ///
@@ -2383,12 +2265,6 @@ abstract class AppLocalizations {
   /// **'Buttons'**
   String get buttons;
 
-  /// Buy Me a Coffee donation option label on the Support Auno Player screen.
-  ///
-  /// In en, this message translates to:
-  /// **'Buy Me a Coffee'**
-  String get buyMeACoffee;
-
   /// lib/features/songs/widgets/song_actions_bottom_sheet.dart:726
   ///
   /// In en, this message translates to:
@@ -2509,36 +2385,6 @@ abstract class AppLocalizations {
   /// **'Card Width'**
   String get cardWidth;
 
-  /// lib/features/player/widgets/player_action_button_row.dart:843
-  ///
-  /// In en, this message translates to:
-  /// **'Cast'**
-  String get cast;
-
-  /// lib/features/settings/screens/casting_settings_screen.dart:66
-  ///
-  /// In en, this message translates to:
-  /// **'Casting'**
-  String get casting;
-
-  /// lib/features/player/widgets/player_action_button_row.dart:843
-  ///
-  /// In en, this message translates to:
-  /// **'Casting — tap to manage'**
-  String get castingTapToManage;
-
-  /// Snack bar shown after starting a cast session.
-  ///
-  /// In en, this message translates to:
-  /// **'Casting to {deviceName}'**
-  String castingTo(Object deviceName);
-
-  /// lib/features/settings/screens/casting_settings_screen.dart:54
-  ///
-  /// In en, this message translates to:
-  /// **'Casting to {arg1}'**
-  String castingTo2(Object arg1);
-
   /// lib/models/shuffle_mode.dart:14
   ///
   /// In en, this message translates to:
@@ -2629,12 +2475,6 @@ abstract class AppLocalizations {
   /// **'{ch} channels'**
   String channels3(Object ch);
 
-  /// lib/features/settings/screens/app_info_settings_screen.dart:609
-  ///
-  /// In en, this message translates to:
-  /// **'Check Again'**
-  String get checkAgain;
-
   /// lib/features/settings/screens/duplicate_cleaner_screen.dart:1265
   ///
   /// In en, this message translates to:
@@ -2652,18 +2492,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Checking…'**
   String get checking;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:133
-  ///
-  /// In en, this message translates to:
-  /// **'Checking for Updates'**
-  String get checkingForUpdates;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:608
-  ///
-  /// In en, this message translates to:
-  /// **'Checking for Updates...'**
-  String get checkingForUpdates2;
 
   /// lib/features/settings/screens/privacy_policy_screen.dart:79
   ///
@@ -2700,12 +2528,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose which to keep'**
   String get chooseWhichToKeep;
-
-  /// lib/features/settings/screens/casting_settings_screen.dart:46
-  ///
-  /// In en, this message translates to:
-  /// **'Chromecast'**
-  String get chromecast;
 
   /// lib/features/settings/screens/visualizer_settings_screen.dart:112
   ///
@@ -2971,53 +2793,11 @@ abstract class AppLocalizations {
   /// **'Connect'**
   String get connect;
 
-  /// lib/features/settings/screens/network_sources_screen.dart:155
-  ///
-  /// In en, this message translates to:
-  /// **'Connect a music server'**
-  String get connectAMusicServer;
-
-  /// lib/features/settings/screens/network_sources_screen.dart:199
-  ///
-  /// In en, this message translates to:
-  /// **'Connect a Subsonic, Jellyfin, WebDAV, UPnP, or Tidal server to stream your remote library.'**
-  String get connectASubsonicJellyfinWebdavUpnp;
-
   /// lib/features/settings/screens/uac2_settings_screen.dart:296
   ///
   /// In en, this message translates to:
   /// **'Connect a USB DAC or audio interface'**
   String get connectAUsbDacOrAudio;
-
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:651
-  ///
-  /// In en, this message translates to:
-  /// **'Connect ListenBrainz'**
-  String get connectListenbrainz;
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:979
-  ///
-  /// In en, this message translates to:
-  /// **'Connect to scrobble your listening history'**
-  String get connectToScrobbleYourListeningHistory;
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:356
-  ///
-  /// In en, this message translates to:
-  /// **'Connect to scrobble your music'**
-  String get connectToScrobbleYourMusic;
-
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:481
-  ///
-  /// In en, this message translates to:
-  /// **'Connect to submit your listening history'**
-  String get connectToSubmitYourListeningHistory;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:80
-  ///
-  /// In en, this message translates to:
-  /// **'Connect to the internet to check for updates.'**
-  String get connectToTheInternetToCheck;
 
   /// lib/features/settings/screens/bluetooth_settings_screen.dart:110
   ///
@@ -3025,41 +2805,17 @@ abstract class AppLocalizations {
   /// **'Connected'**
   String get connected;
 
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:888
-  ///
-  /// In en, this message translates to:
-  /// **'Connected Account'**
-  String get connectedAccount;
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:770
-  ///
-  /// In en, this message translates to:
-  /// **'Connected as {username}'**
-  String connectedAs(Object username);
-
   /// lib/features/settings/screens/uac2_settings_screen.dart:901
   ///
   /// In en, this message translates to:
   /// **'Connecting'**
   String get connecting;
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:428
-  ///
-  /// In en, this message translates to:
-  /// **'Connection'**
-  String get connection;
-
   /// lib/features/settings/screens/bluetooth_settings_screen.dart:244
   ///
   /// In en, this message translates to:
   /// **'Connection Behavior'**
   String get connectionBehavior;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:355
-  ///
-  /// In en, this message translates to:
-  /// **'Connection Failed — Retry'**
-  String get connectionFailedRetry;
 
   /// lib/widgets/uac2/uac2_connection_manager.dart:140
   ///
@@ -3078,12 +2834,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show offline and back-online notices'**
   String get connectionNoticesDescription;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:353
-  ///
-  /// In en, this message translates to:
-  /// **'Connection OK'**
-  String get connectionOk;
 
   /// lib/features/settings/screens/uac2_settings_screen.dart:607
   ///
@@ -3199,12 +2949,6 @@ abstract class AppLocalizations {
   /// **'Copy link'**
   String get copyLink;
 
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:662
-  ///
-  /// In en, this message translates to:
-  /// **'Copy your user token from ListenBrainz settings and paste it below.'**
-  String get copyYourUserTokenFromListenbrainz;
-
   /// lib/features/songs/widgets/song_actions_bottom_sheet.dart:698
   ///
   /// In en, this message translates to:
@@ -3222,24 +2966,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cosmic Orchestra'**
   String get cosmicOrchestra;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:151
-  ///
-  /// In en, this message translates to:
-  /// **'Could Not Check for Updates'**
-  String get couldNotCheckForUpdates;
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:81
-  ///
-  /// In en, this message translates to:
-  /// **'Could not connect to Last.fm. Check your API credentials and try again.'**
-  String get couldNotConnectToLastFm;
-
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:609
-  ///
-  /// In en, this message translates to:
-  /// **'Could not connect to ListenBrainz. Check your token and try again.'**
-  String get couldNotConnectToListenbrainzCheck;
 
   /// lib/features/player/widgets/player_navigation.dart:85
   ///
@@ -3265,36 +2991,6 @@ abstract class AppLocalizations {
   /// **'Could not load IR: {e}'**
   String couldNotLoadIr(Object e);
 
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:755
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load session'**
-  String get couldNotLoadSession;
-
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:683
-  ///
-  /// In en, this message translates to:
-  /// **'Could not open browser.'**
-  String get couldNotOpenBrowser;
-
-  /// lib/features/recap/screens/replay_studio_screen.dart:796
-  ///
-  /// In en, this message translates to:
-  /// **'Could not open Ko-fi. Please try again.'**
-  String get couldNotOpenKoFiPlease;
-
-  /// lib/features/settings/screens/support_flick_screen.dart:110
-  ///
-  /// In en, this message translates to:
-  /// **'Could not open link'**
-  String get couldNotOpenLink;
-
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:692
-  ///
-  /// In en, this message translates to:
-  /// **'Could not open link: {e}'**
-  String couldNotOpenLink2(Object e);
-
   /// lib/features/recap/screens/replay_studio_screen.dart:170
   ///
   /// In en, this message translates to:
@@ -3313,35 +3009,11 @@ abstract class AppLocalizations {
   /// **'Could not open the link: {e}'**
   String couldNotOpenTheLink2(Object e);
 
-  /// lib/features/menu/screens/menu_screen.dart:229
-  ///
-  /// In en, this message translates to:
-  /// **'Could not open the Play Store.'**
-  String get couldNotOpenThePlayStore;
-
-  /// lib/features/menu/screens/menu_screen.dart:237
-  ///
-  /// In en, this message translates to:
-  /// **'Could not open the Play Store: {error}'**
-  String couldNotOpenThePlayStore2(Object error);
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:117
-  ///
-  /// In en, this message translates to:
-  /// **'Could not open the Play Store'**
-  String get couldNotOpenThePlayStore3;
-
   /// l10n pass: user-visible service error
   ///
   /// In en, this message translates to:
   /// **'Could not prepare the edited file: {error}'**
   String couldNotPrepareTheEditedFile(String error);
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Could not reach the server. Check the URL and credentials, then try again.'**
-  String get couldNotReachTheServer;
 
   /// lib/features/recap/screens/replay_studio_screen.dart:103
   ///
@@ -3396,12 +3068,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not use the selected lyrics file.'**
   String get couldNotUseTheSelectedLyrics;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:589
-  ///
-  /// In en, this message translates to:
-  /// **'Couldn\'t open the browser automatically. Authorize on any device with this link — we\'ll finish signing in once you do:'**
-  String get couldnTOpenTheBrowserAutomatically;
 
   /// lib/features/settings/screens/library_settings_screen.dart:985
   ///
@@ -3648,12 +3314,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Interface'**
   String get interface;
-
-  /// lib/features/manual/data/manual_data.dart
-  ///
-  /// In en, this message translates to:
-  /// **'Last.fm and ListenBrainz scrobbling setup.'**
-  String get lastFmAndListenBrainzScrobbling;
 
   /// lib/features/manual/data/manual_data.dart
   ///
@@ -4357,18 +4017,6 @@ abstract class AppLocalizations {
   /// **'Creative FX'**
   String get creativeFx;
 
-  /// lib/features/settings/screens/network_sources_screen.dart:110
-  ///
-  /// In en, this message translates to:
-  /// **'Credentials rejected by {arg1}. Re-enter the password.'**
-  String credentialsRejectedByReEnterThe(Object arg1);
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:622
-  ///
-  /// In en, this message translates to:
-  /// **'Credentials saved successfully!'**
-  String get credentialsSavedSuccessfully;
-
   /// lib/features/settings/screens/orbit_settings_screen.dart:167
   ///
   /// In en, this message translates to:
@@ -4801,12 +4449,6 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get delete;
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:329
-  ///
-  /// In en, this message translates to:
-  /// **'Delete \"{arg1}\" and all songs and playlists synced from it? Cached downloads are kept.'**
-  String deleteAndAllSongsAndPlaylists(Object arg1);
-
   /// lib/features/songs/widgets/song_actions_bottom_sheet.dart:753
   ///
   /// In en, this message translates to:
@@ -5095,35 +4737,11 @@ abstract class AppLocalizations {
   /// **'Disconnect behavior and codec info'**
   String get disconnectBehaviorAndCodecInfo;
 
-  /// lib/features/settings/screens/casting_settings_screen.dart:113
-  ///
-  /// In en, this message translates to:
-  /// **'Disconnect from {arg1}'**
-  String disconnectFrom(Object arg1);
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:156
-  ///
-  /// In en, this message translates to:
-  /// **'Disconnect Last.fm?'**
-  String get disconnectLastFm;
-
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:95
-  ///
-  /// In en, this message translates to:
-  /// **'Disconnect ListenBrainz?'**
-  String get disconnectListenbrainz;
-
   /// lib/features/settings/screens/app_info_settings_screen.dart:501
   ///
   /// In en, this message translates to:
   /// **'Discord'**
   String get discord;
-
-  /// lib/features/settings/screens/casting_settings_screen.dart:76
-  ///
-  /// In en, this message translates to:
-  /// **'Discovers DLNA, UPnP and Chromecast receivers on your network'**
-  String get discoversDlnaUpnpAndChromecastReceivers;
 
   /// lib/features/settings/screens/library_settings_screen.dart:2000
   ///
@@ -5191,41 +4809,11 @@ abstract class AppLocalizations {
   /// **'Distance between songs along the arc'**
   String get distanceBetweenSongsAlongTheArc;
 
-  /// lib/features/settings/screens/casting_settings_screen.dart:300
-  ///
-  /// In en, this message translates to:
-  /// **'DLNA and UPnP receivers are controlled directly in pure Dart — no extra dependencies. Chromecast support uses the native Cast SDK. Network sources (Subsonic, WebDAV, Jellyfin, UPnP), local files, and cached songs can all be cast — locals are served straight from this phone. While casting, volume keys and the system volume panel control the connected device.'**
-  String get dlnaAndUpnpReceiversAreControlled;
-
-  /// lib/features/settings/screens/casting_settings_screen.dart:45
-  ///
-  /// In en, this message translates to:
-  /// **'DLNA / UPnP'**
-  String get dlnaUpnp;
-
-  /// lib/features/settings/screens/settings_screen.dart:160
-  ///
-  /// In en, this message translates to:
-  /// **'DLNA, UPnP and Chromecast receivers'**
-  String get dlnaUpnpAndChromecastReceivers;
-
   /// lib/features/milestone/widgets/streak_popup.dart:287
   ///
   /// In en, this message translates to:
   /// **'Don\'t show again today'**
   String get donTShowAgainToday;
-
-  /// lib/features/settings/screens/support_flick_screen.dart:198
-  ///
-  /// In en, this message translates to:
-  /// **'Donate'**
-  String get donate;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:718
-  ///
-  /// In en, this message translates to:
-  /// **'Donate, fund features, and keep the app alive'**
-  String get donateFundFeaturesAndKeepThe;
 
   /// lib/features/player/screens/lyrics_sync_screen.dart:634
   ///
@@ -5268,18 +4856,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{arg1} down'**
   String down(Object arg1);
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:145
-  ///
-  /// In en, this message translates to:
-  /// **'Download the latest APK from github.com/ryouhtml/AunoPlayer/releases'**
-  String get downloadTheLatestApkFromFlick;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:638
-  ///
-  /// In en, this message translates to:
-  /// **'Download Update'**
-  String get downloadUpdate;
 
   /// lib/features/settings/widgets/mini_player_customization.dart:107
   ///
@@ -5340,12 +4916,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Drift {arg1} ms'**
   String driftMs(Object arg1);
-
-  /// lib/features/settings/screens/support_flick_screen.dart:180
-  ///
-  /// In en, this message translates to:
-  /// **'DSD / DSF Playback'**
-  String get dsdDsfPlayback;
 
   /// lib/features/player/widgets/bit_perfect_indicator.dart:713
   ///
@@ -5413,12 +4983,6 @@ abstract class AppLocalizations {
   /// **'Earlier standouts pulled back into view from your listening history.'**
   String get earlierStandoutsPulledBackIntoView;
 
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:921
-  ///
-  /// In en, this message translates to:
-  /// **'Edit Credentials'**
-  String get editCredentials;
-
   /// lib/features/albums/screens/album_detail_screen.dart:313
   ///
   /// In en, this message translates to:
@@ -5437,12 +5001,6 @@ abstract class AppLocalizations {
   /// **'Edit Metadata'**
   String get editMetadata;
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:368
-  ///
-  /// In en, this message translates to:
-  /// **'Edit Server'**
-  String get editServer;
-
   /// lib/features/player/widgets/inline_lyrics_panel.dart:208
   ///
   /// In en, this message translates to:
@@ -5454,12 +5012,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit Text'**
   String get editText;
-
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:348
-  ///
-  /// In en, this message translates to:
-  /// **'Edit Token'**
-  String get editToken;
 
   /// lib/models/song.dart:327
   ///
@@ -5569,18 +5121,6 @@ abstract class AppLocalizations {
   /// **'Enter a year (1–9999)'**
   String get enterAYear19999;
 
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:458
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your API key'**
-  String get enterYourApiKey;
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:512
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your shared secret'**
-  String get enterYourSharedSecret;
-
   /// lib/features/player/widgets/bit_perfect_indicator.dart:1000
   ///
   /// In en, this message translates to:
@@ -5658,12 +5198,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ethereal Tones'**
   String get etherealTones;
-
-  /// lib/features/settings/screens/missing_metadata_screen.dart:78
-  ///
-  /// In en, this message translates to:
-  /// **'Every album has artist and album tags.'**
-  String get everyAlbumHasArtistAndAlbum;
 
   /// lib/features/settings/screens/library_settings_screen.dart:430
   ///
@@ -5872,12 +5406,6 @@ abstract class AppLocalizations {
   /// l10n pass: user-visible service error
   ///
   /// In en, this message translates to:
-  /// **'Failed to download album art (HTTP {status}).'**
-  String failedToDownloadAlbumArt(int status);
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
   /// **'Failed to get persisted URIs: {error}'**
   String failedToGetPersistedUris(String? error);
 
@@ -5970,12 +5498,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to save the recap image to your gallery.'**
   String get failedToSaveTheRecapImage;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to search album art online.'**
-  String get failedToSearchAlbumArtOnline;
 
   /// lib/widgets/uac2/uac2_stream_config.dart:270
   ///
@@ -6121,12 +5643,6 @@ abstract class AppLocalizations {
   /// **'{done} / {total} files'**
   String files(Object done, Object total);
 
-  /// lib/features/settings/screens/missing_metadata_screen.dart:128
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{{count} file} other{{count} files}}'**
-  String files2(int count);
-
   /// lib/features/settings/screens/library_settings_screen.dart:984
   ///
   /// In en, this message translates to:
@@ -6205,18 +5721,6 @@ abstract class AppLocalizations {
   /// **'Finishing up…'**
   String get finishingUp;
 
-  /// lib/features/settings/screens/network_sources_screen.dart:116
-  ///
-  /// In en, this message translates to:
-  /// **'Fix'**
-  String get fix;
-
-  /// lib/features/settings/screens/library_settings_screen.dart:2213
-  ///
-  /// In en, this message translates to:
-  /// **'Fix Missing Metadata'**
-  String get fixMissingMetadata;
-
   /// lib/features/settings/screens/equalizer_screen.dart:1741
   ///
   /// In en, this message translates to:
@@ -6265,18 +5769,6 @@ abstract class AppLocalizations {
   /// **'Auno Player can receive playback handoffs from Locker (another Moss app). Playback intents contain only song file paths/metadata. No personal data is exchanged. The integration is entirely local.'**
   String get flickCanReceivePlaybackHandoffsFrom;
 
-  /// lib/features/settings/screens/app_info_settings_screen.dart:176
-  ///
-  /// In en, this message translates to:
-  /// **'Auno Player checks github.com/ryouhtml/AunoPlayer/releases for updates whenever you are online'**
-  String get flickChecksFlickPlayerSiteFor;
-
-  /// lib/features/settings/screens/support_flick_screen.dart:138
-  ///
-  /// In en, this message translates to:
-  /// **'Auno Player is built and maintained by one person with zero budget. No team, no funding, no ads.'**
-  String get flickIsBuiltAndMaintainedBy;
-
   /// lib/features/settings/screens/logs_screen.dart:110
   ///
   /// In en, this message translates to:
@@ -6312,18 +5804,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Auno Replay'**
   String get flickReplay;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:175
-  ///
-  /// In en, this message translates to:
-  /// **'Auno Player scans for Play Store updates whenever you are online'**
-  String get flickScansForPlayStoreUpdates;
-
-  /// lib/features/settings/screens/support_flick_screen.dart:145
-  ///
-  /// In en, this message translates to:
-  /// **'Auno Player will always be free. Donations keep the project alive without paywalls or subscriptions.'**
-  String get flickWillAlwaysBeFreeDonations;
 
   /// lib/features/settings/screens/bluetooth_settings_screen.dart:343
   ///
@@ -6481,23 +5961,11 @@ abstract class AppLocalizations {
   /// **'Format strategy is unavailable because Audio Format is disabled in Settings.'**
   String get formatStrategyIsUnavailableBecauseAudio;
 
-  /// lib/features/settings/screens/widgets/autoeq_search_sheet.dart:121
-  ///
-  /// In en, this message translates to:
-  /// **'Found \"{arg1}\" online.'**
-  String foundOnline(Object arg1);
-
   /// lib/features/player/widgets/bit_perfect_indicator.dart:988
   ///
   /// In en, this message translates to:
   /// **'{arg1} fr/pkt'**
   String frPkt(Object arg1);
-
-  /// lib/features/settings/screens/support_flick_screen.dart:143
-  ///
-  /// In en, this message translates to:
-  /// **'Free & Open Source'**
-  String get freeOpenSource;
 
   /// lib/features/settings/screens/equalizer_screen.dart:2623
   ///
@@ -6522,12 +5990,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fresh Additions'**
   String get freshAdditions;
-
-  /// lib/widgets/common/fetched_description.dart:41
-  ///
-  /// In en, this message translates to:
-  /// **'From {sourceLabel}'**
-  String from(Object sourceLabel);
 
   /// lib/features/settings/widgets/mini_player_customization.dart:137
   ///
@@ -6588,12 +6050,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fullscreen'**
   String get fullscreen;
-
-  /// lib/features/settings/screens/support_flick_screen.dart:182
-  ///
-  /// In en, this message translates to:
-  /// **'Funding native DSD/DSF playback development — a highly requested feature for audiophiles.'**
-  String get fundingNativeDsdDsfPlaybackDevelopment;
 
   /// lib/features/settings/screens/equalizer_screen.dart:3511
   ///
@@ -6666,18 +6122,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get Started'**
   String get getStarted;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:639
-  ///
-  /// In en, this message translates to:
-  /// **'Get the latest APK from github.com/ryouhtml/AunoPlayer/releases'**
-  String get getTheLatestApkFromFlick;
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:404
-  ///
-  /// In en, this message translates to:
-  /// **'Get your API credentials'**
-  String get getYourApiCredentials;
 
   /// lib/features/settings/screens/app_info_settings_screen.dart:489
   ///
@@ -6865,12 +6309,6 @@ abstract class AppLocalizations {
   /// **'Hide navigation buttons after being idle'**
   String get hideNavigationButtonsAfterBeingIdle;
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:765
-  ///
-  /// In en, this message translates to:
-  /// **'Hide password'**
-  String get hidePassword;
-
   /// lib/features/settings/screens/library_settings_screen.dart:1843
   ///
   /// In en, this message translates to:
@@ -7021,12 +6459,6 @@ abstract class AppLocalizations {
   /// **'How wide each card spans across the screen'**
   String get howWideEachCardSpansAcross;
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:77
-  ///
-  /// In en, this message translates to:
-  /// **'HTTP Basic needs it recoverable; stored encoded'**
-  String get httpBasicNeedsItRecoverableStored;
-
   /// lib/features/player/widgets/bit_perfect_indicator.dart:1145
   ///
   /// In en, this message translates to:
@@ -7063,41 +6495,11 @@ abstract class AppLocalizations {
   /// **'Icon Size'**
   String get iconSize;
 
-  /// lib/features/albums/widgets/identify_album_sheet.dart:64
-  ///
-  /// In en, this message translates to:
-  /// **'Identified {count, plural, =1{{count} song} other{{count} songs}}{note}.'**
-  String identified(int count, Object note);
-
-  /// lib/features/albums/screens/album_detail_screen.dart:349
-  ///
-  /// In en, this message translates to:
-  /// **'Identify album'**
-  String get identifyAlbum;
-
-  /// lib/features/albums/widgets/identify_album_sheet.dart:215
-  ///
-  /// In en, this message translates to:
-  /// **'Identify Album'**
-  String get identifyAlbum2;
-
-  /// lib/features/settings/screens/library_settings_screen.dart:2214
-  ///
-  /// In en, this message translates to:
-  /// **'Identify albums with unknown artist or title tags'**
-  String get identifyAlbumsWithUnknownArtistOr;
-
   /// lib/features/settings/screens/uac2_settings_screen.dart:899
   ///
   /// In en, this message translates to:
   /// **'Idle'**
   String get idle;
-
-  /// lib/features/settings/screens/privacy_policy_screen.dart:61
-  ///
-  /// In en, this message translates to:
-  /// **'If you connect your Last.fm account, credentials are stored securely on-device. Play data is sent only to Last.fm. We do not receive or process this data.'**
-  String get ifYouConnectYourLastFm;
 
   /// lib/features/settings/screens/library_settings_screen.dart:1828
   ///
@@ -7183,12 +6585,6 @@ abstract class AppLocalizations {
   /// **'Impulse response'**
   String get impulseResponse;
 
-  /// lib/features/settings/screens/privacy_policy_screen.dart:74
-  ///
-  /// In en, this message translates to:
-  /// **'In-App Updates'**
-  String get inAppUpdates;
-
   /// lib/features/settings/screens/duplicate_cleaner_screen.dart:1555
   ///
   /// In en, this message translates to:
@@ -7212,12 +6608,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Incredible — over a month of daily listening.'**
   String get incredibleOverAMonthOfDaily;
-
-  /// lib/features/settings/screens/casting_settings_screen.dart:126
-  ///
-  /// In en, this message translates to:
-  /// **'Info'**
-  String get info2;
 
   /// lib/features/settings/screens/library_settings_screen.dart:1171
   ///
@@ -7261,12 +6651,6 @@ abstract class AppLocalizations {
   /// **'Instrumental'**
   String get instrumental;
 
-  /// lib/features/settings/screens/integrations_settings_screen.dart:14
-  ///
-  /// In en, this message translates to:
-  /// **'Integrations'**
-  String get integrations;
-
   /// lib/widgets/equalizer/interactive_eq_graph.dart:121
   ///
   /// In en, this message translates to:
@@ -7290,12 +6674,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Interface'**
   String get interfaceLabel;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Invalid token'**
-  String get invalidToken;
 
   /// lib/features/settings/screens/library_settings_screen.dart:1254
   ///
@@ -7327,18 +6705,6 @@ abstract class AppLocalizations {
   /// **'Jan'**
   String get jan;
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:65
-  ///
-  /// In en, this message translates to:
-  /// **'Jellyfin'**
-  String get jellyfin;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:66
-  ///
-  /// In en, this message translates to:
-  /// **'Jellyfin · Emby'**
-  String get jellyfinEmby;
-
   /// lib/features/milestone/screens/milestones_screen.dart:508
   ///
   /// In en, this message translates to:
@@ -7350,12 +6716,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Jump Back In'**
   String get jumpBackIn;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:632
-  ///
-  /// In en, this message translates to:
-  /// **'Jump to the Auno Player listing and update from there'**
-  String get jumpToTheFlickListingAnd;
 
   /// lib/features/milestone/screens/milestones_screen.dart:507
   ///
@@ -7392,6 +6752,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Karaoke Preview'**
   String get karaokePreview;
+
+  /// lib/features/settings/screens/lyrics_settings_screen.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Sweep detail'**
+  String get karaokeSweepStyle;
+
+  /// lib/features/settings/screens/lyrics_settings_screen.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Auto'**
+  String get karaokeSweepStyleAuto;
+
+  /// lib/features/settings/screens/lyrics_settings_screen.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Use the finest real timing in the lyrics'**
+  String get karaokeSweepStyleAutoDescription;
+
+  /// lib/features/settings/screens/lyrics_settings_screen.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Words'**
+  String get karaokeSweepStyleWord;
+
+  /// lib/features/settings/screens/lyrics_settings_screen.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Sweep one word at a time'**
+  String get karaokeSweepStyleWordDescription;
+
+  /// lib/features/settings/screens/lyrics_settings_screen.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Syllables'**
+  String get karaokeSweepStyleSyllable;
+
+  /// lib/features/settings/screens/lyrics_settings_screen.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Sweep each syllable that has a real timestamp'**
+  String get karaokeSweepStyleSyllableDescription;
 
   /// lib/features/settings/screens/duplicate_cleaner_screen.dart:22
   ///
@@ -7489,12 +6891,6 @@ abstract class AppLocalizations {
   /// **'Keeps software volume and DSP active on the DAP shared path.'**
   String get keepsSoftwareVolumeAndDspActive;
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:69
-  ///
-  /// In en, this message translates to:
-  /// **'Kept in secure storage to re-sign in when the token expires'**
-  String get keptInSecureStorageToRe;
-
   /// lib/features/settings/screens/duplicate_cleaner_screen.dart:1277
   ///
   /// In en, this message translates to:
@@ -7530,18 +6926,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{arg1}kHz / {arg2}bit / {arg3}ch'**
   String khzBitCh(Object arg1, Object arg2, Object arg3);
-
-  /// Ko-fi donation option label on the Support Auno Player screen.
-  ///
-  /// In en, this message translates to:
-  /// **'Ko-fi'**
-  String get koFi;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:434
-  ///
-  /// In en, this message translates to:
-  /// **'Label'**
-  String get label;
 
   /// lib/features/songs/widgets/song_actions_bottom_sheet.dart:699
   ///
@@ -7579,42 +6963,6 @@ abstract class AppLocalizations {
   /// **'System default'**
   String get languageSystemDefault;
 
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:730
-  ///
-  /// In en, this message translates to:
-  /// **'Last.fm'**
-  String get lastFm;
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:347
-  ///
-  /// In en, this message translates to:
-  /// **'Last.fm Configuration'**
-  String get lastFmConfiguration;
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:829
-  ///
-  /// In en, this message translates to:
-  /// **'Last.fm Connected'**
-  String get lastFmConnected;
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:97
-  ///
-  /// In en, this message translates to:
-  /// **'Last.fm connected!'**
-  String get lastFmConnected2;
-
-  /// lib/features/settings/screens/settings_screen.dart:211
-  ///
-  /// In en, this message translates to:
-  /// **'Last.fm & ListenBrainz scrobbling'**
-  String get lastFmListenbrainzScrobbling;
-
-  /// lib/features/settings/screens/privacy_policy_screen.dart:59
-  ///
-  /// In en, this message translates to:
-  /// **'Last.fm Scrobbling'**
-  String get lastFmScrobbling;
-
   /// lib/features/menu/screens/menu_screen.dart:1361
   ///
   /// In en, this message translates to:
@@ -7644,12 +6992,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Latest arrivals from your library'**
   String get latestArrivalsFromYourLibrary;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:250
-  ///
-  /// In en, this message translates to:
-  /// **'Latest Update'**
-  String get latestUpdate;
 
   /// lib/features/recap/screens/replay_studio_screen.dart:580
   ///
@@ -7710,12 +7052,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'LE-MSB — little-endian subslot, MSB first'**
   String get leMsbLittleEndianSubslotMsb;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:460
-  ///
-  /// In en, this message translates to:
-  /// **'Leave empty to keep the current credentials'**
-  String get leaveEmptyToKeepTheCurrent;
 
   /// lib/features/settings/screens/lyrics_settings_screen.dart:56
   ///
@@ -7956,30 +7292,6 @@ abstract class AppLocalizations {
   /// **'List'**
   String get list;
 
-  /// lib/features/settings/screens/casting_settings_screen.dart:258
-  ///
-  /// In en, this message translates to:
-  /// **'List available local audio output devices'**
-  String get listAvailableLocalAudioOutputDevices;
-
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:426
-  ///
-  /// In en, this message translates to:
-  /// **'ListenBrainz'**
-  String get listenbrainz;
-
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:259
-  ///
-  /// In en, this message translates to:
-  /// **'ListenBrainz Connected'**
-  String get listenbrainzConnected;
-
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:599
-  ///
-  /// In en, this message translates to:
-  /// **'ListenBrainz connected!'**
-  String get listenbrainzConnected2;
-
   /// lib/features/milestone/screens/milestones_screen.dart:377
   ///
   /// In en, this message translates to:
@@ -8058,23 +7370,11 @@ abstract class AppLocalizations {
   /// **'Loading favorites, recent sessions, generated mixes, and playlists.'**
   String get loadingFavoritesRecentSessionsGenerated;
 
-  /// lib/features/settings/screens/app_info_settings_screen.dart:276
-  ///
-  /// In en, this message translates to:
-  /// **'Loading patch notes...'**
-  String get loadingPatchNotes;
-
   /// lib/features/recap/screens/listening_recap_screen.dart:235
   ///
   /// In en, this message translates to:
   /// **'Loading Replay'**
   String get loadingReplay;
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:737
-  ///
-  /// In en, this message translates to:
-  /// **'Loading session...'**
-  String get loadingSession;
 
   /// lib/features/settings/screens/privacy_policy_screen.dart:39
   ///
@@ -8123,24 +7423,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Look'**
   String get look;
-
-  /// lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:471
-  ///
-  /// In en, this message translates to:
-  /// **'Looking for cover art from MusicBrainz and Cover Art Archive.'**
-  String get lookingForCoverArtFromMusicbrainz;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:136
-  ///
-  /// In en, this message translates to:
-  /// **'Looking for the latest Auno Player release right now'**
-  String get lookingForTheLatestFlickRelease;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:135
-  ///
-  /// In en, this message translates to:
-  /// **'Looking for the latest Play Store update right now'**
-  String get lookingForTheLatestPlayStore;
 
   /// lib/widgets/common/detail_header.dart:157
   ///
@@ -8322,12 +7604,6 @@ abstract class AppLocalizations {
   /// **'Match Audio Filename'**
   String get matchAudioFilename;
 
-  /// lib/features/albums/widgets/identify_album_sheet.dart:225
-  ///
-  /// In en, this message translates to:
-  /// **'Match {count, plural, =1{{count} file} other{{count} files}} by artist, album and track length'**
-  String matchByArtistAlbumAndTrack(int count);
-
   /// lib/features/settings/screens/equalizer_screen.dart:759
   ///
   /// In en, this message translates to:
@@ -8339,12 +7615,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Match navigation'**
   String get matchNavigation;
-
-  /// lib/features/albums/widgets/identify_album_sheet.dart:354
-  ///
-  /// In en, this message translates to:
-  /// **'Matches'**
-  String get matches;
 
   /// lib/features/player/widgets/bit_perfect_indicator.dart:1012
   ///
@@ -8514,12 +7784,6 @@ abstract class AppLocalizations {
   /// **'Minimize'**
   String get minimize;
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:82
-  ///
-  /// In en, this message translates to:
-  /// **'MinimServer · Serviio · Kodi'**
-  String get minimserverServiioKodi;
-
   /// lib/features/player/widgets/player_layout_sheet.dart:1187
   ///
   /// In en, this message translates to:
@@ -8535,7 +7799,7 @@ abstract class AppLocalizations {
   /// lib/features/settings/screens/app_info_settings_screen.dart:516
   ///
   /// In en, this message translates to:
-  /// **'\nMIT License\n\nCopyright (c) 2026 Auno Player Contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n'**
+  /// **'GNU General Public License v3.0 or later\n\nCopyright (c) 2026 Auno Player Contributors\n\nThis program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.'**
   String get mitLicenseCopyrightC2026Flick;
 
   /// lib/features/settings/screens/equalizer_screen.dart:3641
@@ -8664,12 +7928,6 @@ abstract class AppLocalizations {
   /// **'Moss Ecosystem'**
   String get mossEcosystem;
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:85
-  ///
-  /// In en, this message translates to:
-  /// **'Most DLNA servers need no password'**
-  String get mostDlnaServersNeedNoPassword;
-
   /// lib/features/artists/screens/artist_detail_screen.dart:701
   ///
   /// In en, this message translates to:
@@ -8681,30 +7939,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Most replayed · {arg1}'**
   String mostReplayed(Object arg1);
-
-  /// lib/features/settings/screens/playback_display_settings_screen.dart:64
-  ///
-  /// In en, this message translates to:
-  /// **'Motion Art in Bit-Perfect'**
-  String get motionArtInBitPerfect;
-
-  /// lib/features/settings/screens/playback_display_settings_screen.dart:67
-  ///
-  /// In en, this message translates to:
-  /// **'Motion art is replaced while bit-perfect output is active'**
-  String get motionArtIsReplacedWhileBit;
-
-  /// lib/features/settings/screens/playback_display_settings_screen.dart:66
-  ///
-  /// In en, this message translates to:
-  /// **'Motion art plays during bit-perfect audio (may interrupt playback on some DAPs)'**
-  String get motionArtPlaysDuringBitPerfect;
-
-  /// lib/features/player/widgets/song_actions_sheet.dart:255
-  ///
-  /// In en, this message translates to:
-  /// **'Motion art refreshed'**
-  String get motionArtRefreshed;
 
   /// lib/features/player/screens/lyrics_sync_screen.dart:1987
   ///
@@ -8766,12 +8000,6 @@ abstract class AppLocalizations {
   /// **'Mute'**
   String get mute;
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:435
-  ///
-  /// In en, this message translates to:
-  /// **'My {arg1}'**
-  String my(Object arg1);
-
   /// lib/widgets/uac2/iso_volume_popup.dart:292
   ///
   /// In en, this message translates to:
@@ -8826,12 +8054,6 @@ abstract class AppLocalizations {
   /// **'Nature Ambient'**
   String get natureAmbient;
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:58
-  ///
-  /// In en, this message translates to:
-  /// **'Navidrome · Airsonic · Gonic'**
-  String get navidromeAirsonicGonic;
-
   /// lib/features/settings/screens/bottom_bar_settings_screen.dart:216
   ///
   /// In en, this message translates to:
@@ -8849,12 +8071,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Navigation defaults restored'**
   String get navigationDefaultsRestored;
-
-  /// lib/features/settings/screens/missing_metadata_screen.dart:87
-  ///
-  /// In en, this message translates to:
-  /// **'Needs metadata'**
-  String get needsMetadata;
 
   /// lib/features/settings/screens/bluetooth_settings_screen.dart:519
   ///
@@ -8892,23 +8108,11 @@ abstract class AppLocalizations {
   /// **'Network'**
   String get network;
 
-  /// lib/features/settings/screens/network_sources_screen.dart:136
-  ///
-  /// In en, this message translates to:
-  /// **'Network Sources'**
-  String get networkSources;
-
   /// lib/features/settings/screens/equalizer_screen.dart:3492
   ///
   /// In en, this message translates to:
   /// **'{amount}% neutral'**
   String neutral(Object amount);
-
-  /// lib/features/settings/screens/network_sources_screen.dart:318
-  ///
-  /// In en, this message translates to:
-  /// **'Never synced'**
-  String get neverSynced;
 
   /// lib/features/settings/screens/library_settings_screen.dart:1009
   ///
@@ -8940,12 +8144,6 @@ abstract class AppLocalizations {
   /// **'Next: {arg1} — {remaining} {unit} to go'**
   String nextToGo(Object arg1, Object remaining, Object unit);
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:74
-  ///
-  /// In en, this message translates to:
-  /// **'Nextcloud · ownCloud · SabreDAV'**
-  String get nextcloudOwncloudSabredav;
-
   /// lib/features/recap/widgets/replay_card_options.dart:11
   ///
   /// In en, this message translates to:
@@ -8976,12 +8174,6 @@ abstract class AppLocalizations {
   /// **'No Albums Found'**
   String get noAlbumsFound;
 
-  /// lib/features/albums/widgets/identify_album_sheet.dart:339
-  ///
-  /// In en, this message translates to:
-  /// **'No Apple Music release found. Try editing the artist or album name and searching again.'**
-  String get noAppleMusicReleaseFoundTry;
-
   /// lib/features/artists/screens/artists_screen.dart:477
   ///
   /// In en, this message translates to:
@@ -9000,23 +8192,11 @@ abstract class AppLocalizations {
   /// **'No audio was found. If this folder contains music, a .nomedia file may be hiding it, or Android hasn\'t indexed it yet. Try enabling deep scan, or remove any .nomedia file and re-scan.'**
   String get noAudioWasFoundIfThis;
 
-  /// lib/features/settings/screens/casting_settings_screen.dart:204
-  ///
-  /// In en, this message translates to:
-  /// **'No casting devices found. Make sure your phone and the receiver are on the same network.'**
-  String get noCastingDevicesFoundMakeSure;
-
   /// lib/features/search/screens/search_screen.dart:315
   ///
   /// In en, this message translates to:
   /// **'No categories selected'**
   String get noCategoriesSelected;
-
-  /// lib/features/whats_new/widgets/whats_new_bottom_sheet.dart:56
-  ///
-  /// In en, this message translates to:
-  /// **'No changelog notes for this version yet.'**
-  String get noChangelogNotesForThisVersion;
 
   /// l10n pass: user-visible service error
   ///
@@ -9066,12 +8246,6 @@ abstract class AppLocalizations {
   /// **'No History Yet'**
   String get noHistoryYet;
 
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:80
-  ///
-  /// In en, this message translates to:
-  /// **'No internet connection. Please check your network and try again.'**
-  String get noInternetConnectionPleaseCheckYour;
-
   /// l10n pass: user-visible service error
   ///
   /// In en, this message translates to:
@@ -9096,12 +8270,6 @@ abstract class AppLocalizations {
   /// **'No lyrics yet'**
   String get noLyricsYet;
 
-  /// lib/features/albums/widgets/identify_album_sheet.dart:524
-  ///
-  /// In en, this message translates to:
-  /// **'No match found'**
-  String get noMatchFound;
-
   /// lib/features/settings/screens/logs_screen.dart:441
   ///
   /// In en, this message translates to:
@@ -9123,7 +8291,7 @@ abstract class AppLocalizations {
   /// lib/features/settings/screens/widgets/autoeq_search_sheet.dart:317
   ///
   /// In en, this message translates to:
-  /// **'No matches. Try fewer words or search online.'**
+  /// **'No matches. Try fewer words.'**
   String get noMatchesTryFewerWordsOr;
 
   /// lib/features/songs/screens/songs_screen.dart:1846
@@ -9137,30 +8305,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No New Additions Yet'**
   String get noNewAdditionsYet;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:95
-  ///
-  /// In en, this message translates to:
-  /// **'No new update found.'**
-  String get noNewUpdateFound;
-
-  /// lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:489
-  ///
-  /// In en, this message translates to:
-  /// **'No online artwork found'**
-  String get noOnlineArtworkFound;
-
-  /// lib/features/settings/screens/casting_settings_screen.dart:264
-  ///
-  /// In en, this message translates to:
-  /// **'No output devices available.'**
-  String get noOutputDevicesAvailable;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:251
-  ///
-  /// In en, this message translates to:
-  /// **'No patch notes available yet.'**
-  String get noPatchNotesAvailableYet;
 
   /// lib/features/menu/screens/menu_screen.dart:1362
   ///
@@ -9216,18 +8360,6 @@ abstract class AppLocalizations {
   /// **'No scan results yet'**
   String get noScanResultsYet;
 
-  /// lib/features/playlists/screens/playlists_screen.dart:472
-  ///
-  /// In en, this message translates to:
-  /// **'No server playlists found'**
-  String get noServerPlaylistsFound;
-
-  /// lib/features/settings/screens/network_sources_screen.dart:190
-  ///
-  /// In en, this message translates to:
-  /// **'No servers connected'**
-  String get noServersConnected;
-
   /// lib/features/settings/screens/player_layout_settings_screen.dart:701
   ///
   /// In en, this message translates to:
@@ -9251,12 +8383,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No upcoming queue items yet.'**
   String get noUpcomingQueueItemsYet;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:165
-  ///
-  /// In en, this message translates to:
-  /// **'No Update Available'**
-  String get noUpdateAvailable;
 
   /// lib/features/player/widgets/bit_perfect_indicator.dart:965
   ///
@@ -9396,12 +8522,6 @@ abstract class AppLocalizations {
   /// **'Number on Art'**
   String get numberOnArt;
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:101
-  ///
-  /// In en, this message translates to:
-  /// **'OAuth sign-in; no password stored here'**
-  String get oauthSignInNoPasswordStored;
-
   /// lib/models/song.dart:312
   ///
   /// In en, this message translates to:
@@ -9425,12 +8545,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Off crops to fill the square; on stretches the artwork edge-to-edge'**
   String get offCropsToFillTheSquare;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:158
-  ///
-  /// In en, this message translates to:
-  /// **'Offline'**
-  String get offline;
 
   /// lib/features/settings/screens/equalizer_screen.dart:3911
   ///
@@ -9504,18 +8618,6 @@ abstract class AppLocalizations {
   /// **'Welcome to\nAuno Player'**
   String get onboardingWelcomeTitle;
 
-  /// lib/features/settings/widgets/apple_music_settings_tile.dart
-  ///
-  /// In en, this message translates to:
-  /// **'Online artist & album information'**
-  String get onlineArtistAlbumInformation;
-
-  /// lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:365
-  ///
-  /// In en, this message translates to:
-  /// **'Online Results'**
-  String get onlineResults;
-
   /// lib/features/settings/screens/duplicate_cleaner_screen.dart:557
   ///
   /// In en, this message translates to:
@@ -9546,41 +8648,11 @@ abstract class AppLocalizations {
   /// **'Open Bluetooth Codec Settings'**
   String get openBluetoothCodecSettings;
 
-  /// lib/features/settings/screens/app_info_settings_screen.dart:401
-  ///
-  /// In en, this message translates to:
-  /// **'Open Full Notes'**
-  String get openFullNotes;
-
-  /// lib/features/albums/screens/album_detail_screen.dart:360
-  ///
-  /// In en, this message translates to:
-  /// **'Open in Apple Music'**
-  String get openInAppleMusic;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:623
-  ///
-  /// In en, this message translates to:
-  /// **'Open in browser'**
-  String get openInBrowser;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:631
-  ///
-  /// In en, this message translates to:
-  /// **'Open in Play Store'**
-  String get openInPlayStore;
-
   /// lib/features/menu/screens/menu_screen.dart:1322
   ///
   /// In en, this message translates to:
   /// **'Open Library'**
   String get openLibrary;
-
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:717
-  ///
-  /// In en, this message translates to:
-  /// **'Open listenbrainz.org/settings'**
-  String get openListenbrainzOrgSettings;
 
   /// lib/features/onboarding/widgets/tutorial_overlay.dart:345
   ///
@@ -9594,23 +8666,11 @@ abstract class AppLocalizations {
   /// **'Open Player'**
   String get openPlayer;
 
-  /// lib/features/settings/screens/app_info_settings_screen.dart:312
-  ///
-  /// In en, this message translates to:
-  /// **'Open Release Notes'**
-  String get openReleaseNotes;
-
   /// lib/features/settings/screens/app_info_settings_screen.dart:660
   ///
   /// In en, this message translates to:
   /// **'Open source licenses'**
   String get openSourceLicenses;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:144
-  ///
-  /// In en, this message translates to:
-  /// **'Open the Play Store to install the latest Auno Player build'**
-  String get openThePlayStoreToInstall;
 
   /// lib/features/player/screens/full_player_screen.dart:616
   ///
@@ -9720,12 +8780,6 @@ abstract class AppLocalizations {
   /// **'Output'**
   String get output;
 
-  /// lib/features/settings/screens/casting_settings_screen.dart:120
-  ///
-  /// In en, this message translates to:
-  /// **'Output Device'**
-  String get outputDevice;
-
   /// lib/features/settings/screens/bluetooth_settings_screen.dart:408
   ///
   /// In en, this message translates to:
@@ -9786,29 +8840,11 @@ abstract class AppLocalizations {
   /// **'Passthrough'**
   String get passthrough;
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:456
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get password;
-
   /// lib/features/player/screens/lyrics_sync_screen.dart:623
   ///
   /// In en, this message translates to:
   /// **'Paste or type the song lyrics here — one line per row'**
   String get pasteOrTypeTheSongLyrics;
-
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:741
-  ///
-  /// In en, this message translates to:
-  /// **'Paste your ListenBrainz token'**
-  String get pasteYourListenbrainzToken;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:259
-  ///
-  /// In en, this message translates to:
-  /// **'Patch Notes'**
-  String get patchNotes;
 
   /// lib/widgets/common/mini_player_bar.dart:262
   ///
@@ -10014,12 +9050,6 @@ abstract class AppLocalizations {
   /// **'Play next'**
   String get playNext;
 
-  /// lib/features/settings/screens/privacy_policy_screen.dart:76
-  ///
-  /// In en, this message translates to:
-  /// **'Play Store updates use Google Play In-App Update API (governed by Google\'s privacy policies). Patch notes are fetched from GitHub Releases API without sending personal data.'**
-  String get playStoreUpdatesUseGooglePlay;
-
   /// lib/features/settings/screens/playback_display_settings_screen.dart:28
   ///
   /// In en, this message translates to:
@@ -10194,12 +9224,6 @@ abstract class AppLocalizations {
   /// **'Edit Metadata'**
   String get playerMenuEditMetadata;
 
-  /// Full-player song actions sheet; Taglish calls this album art.
-  ///
-  /// In en, this message translates to:
-  /// **'Refresh Motion Art'**
-  String get playerMenuRefreshAlbumArt;
-
   /// Full-player song actions sheet; Taglish uses supplied wording.
   ///
   /// In en, this message translates to:
@@ -10307,12 +9331,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter a playlist name'**
   String get pleaseEnterAPlaylistName;
-
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:584
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter your ListenBrainz user token.'**
-  String get pleaseEnterYourListenbrainzUserToken;
 
   /// Orbit settings profile for windows that are taller than they are wide.
   ///
@@ -10506,12 +9524,6 @@ abstract class AppLocalizations {
   /// **'Progress Bar'**
   String get progressBar;
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:372
-  ///
-  /// In en, this message translates to:
-  /// **'Protocol'**
-  String get protocol;
-
   /// lib/features/menu/screens/menu_screen.dart:1783
   ///
   /// In en, this message translates to:
@@ -10698,18 +9710,6 @@ abstract class AppLocalizations {
   /// **'Reconnect Now'**
   String get reconnectNow;
 
-  /// lib/features/settings/screens/app_info_settings_screen.dart:614
-  ///
-  /// In en, this message translates to:
-  /// **'Reconnect to the internet to scan for updates'**
-  String get reconnectToTheInternetToScan;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:159
-  ///
-  /// In en, this message translates to:
-  /// **'Reconnect to Wi-Fi or mobile data so Auno Player can scan again'**
-  String get reconnectToWiFiOrMobile;
-
   /// lib/widgets/uac2/uac2_connection_manager.dart:72
   ///
   /// In en, this message translates to:
@@ -10728,12 +9728,6 @@ abstract class AppLocalizations {
   /// **'Recorded'**
   String get recorded;
 
-  /// lib/features/albums/screens/album_detail_screen.dart:365
-  ///
-  /// In en, this message translates to:
-  /// **'Refresh Apple Music'**
-  String get refreshAppleMusic;
-
   /// lib/features/settings/screens/uac2_settings_screen.dart:443
   ///
   /// In en, this message translates to:
@@ -10746,23 +9740,11 @@ abstract class AppLocalizations {
   /// **'Refresh devices'**
   String get refreshDevices2;
 
-  /// lib/features/settings/screens/casting_settings_screen.dart:257
-  ///
-  /// In en, this message translates to:
-  /// **'Refresh outputs'**
-  String get refreshOutputs;
-
   /// lib/features/settings/screens/interface_settings_screen.dart:206
   ///
   /// In en, this message translates to:
   /// **'Refresh Rate'**
   String get refreshRate;
-
-  /// lib/features/albums/screens/album_detail_screen.dart:402
-  ///
-  /// In en, this message translates to:
-  /// **'Refreshing Apple Music data'**
-  String get refreshingAppleMusicData;
 
   /// lib/features/settings/screens/uac2_settings_screen.dart:704
   ///
@@ -10883,18 +9865,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove selected'**
   String get removeSelected;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:327
-  ///
-  /// In en, this message translates to:
-  /// **'Remove server?'**
-  String get removeServer;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:520
-  ///
-  /// In en, this message translates to:
-  /// **'Remove server'**
-  String get removeServer2;
 
   /// lib/features/songs/screens/songs_screen.dart:1629
   ///
@@ -11316,12 +10286,6 @@ abstract class AppLocalizations {
   /// **'Rip Source'**
   String get ripSource;
 
-  /// lib/services/sources/upnp_service.dart:239
-  ///
-  /// In en, this message translates to:
-  /// **'Root'**
-  String get root;
-
   /// lib/features/player/widgets/album_art_box.dart:704
   ///
   /// In en, this message translates to:
@@ -11351,18 +10315,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Routes Bluetooth through the Rust engine'**
   String get routesBluetoothThroughTheRustEngine;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:612
-  ///
-  /// In en, this message translates to:
-  /// **'Run another Play Store update scan right now'**
-  String get runAnotherPlayStoreUpdateScan;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:613
-  ///
-  /// In en, this message translates to:
-  /// **'Run another update scan right now'**
-  String get runAnotherUpdateScanRightNow;
 
   /// lib/features/settings/screens/uac2_preferences_screen.dart:794
   ///
@@ -11399,12 +10351,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'S-Curve'**
   String get sCurve;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:90
-  ///
-  /// In en, this message translates to:
-  /// **'Samba · Windows share'**
-  String get sambaWindowsShareTransportPending;
 
   /// lib/features/settings/widgets/mini_player_customization.dart:370
   ///
@@ -11465,12 +10411,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save Changes'**
   String get saveChanges;
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:656
-  ///
-  /// In en, this message translates to:
-  /// **'Save & Connect'**
-  String get saveConnect;
 
   /// lib/features/player/screens/lyrics_sync_screen.dart:2040
   ///
@@ -11670,12 +10610,6 @@ abstract class AppLocalizations {
   /// **'Scan failed. Please try again.'**
   String get scanFailedPleaseTryAgain;
 
-  /// lib/features/settings/screens/casting_settings_screen.dart:75
-  ///
-  /// In en, this message translates to:
-  /// **'Scan for devices'**
-  String get scanForDevices;
-
   /// lib/widgets/common/floating_scan_progress.dart:489
   ///
   /// In en, this message translates to:
@@ -11742,12 +10676,6 @@ abstract class AppLocalizations {
   /// **'Search'**
   String get search;
 
-  /// lib/features/albums/widgets/identify_album_sheet.dart:241
-  ///
-  /// In en, this message translates to:
-  /// **'Search Again'**
-  String get searchAgain;
-
   /// lib/features/player/widgets/online_lyrics_search_sheet.dart:618
   ///
   /// In en, this message translates to:
@@ -11759,12 +10687,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search artists...'**
   String get searchArtists;
-
-  /// lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:479
-  ///
-  /// In en, this message translates to:
-  /// **'Search failed'**
-  String get searchFailed;
 
   /// lib/features/search/screens/search_screen.dart:220
   ///
@@ -11789,12 +10711,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search Online'**
   String get searchOnline;
-
-  /// lib/features/settings/screens/widgets/autoeq_search_sheet.dart:414
-  ///
-  /// In en, this message translates to:
-  /// **'Search online'**
-  String get searchOnline2;
 
   /// lib/features/player/widgets/inline_lyrics_panel.dart:424
   ///
@@ -11850,24 +10766,6 @@ abstract class AppLocalizations {
   /// **'Search your library'**
   String get searchYourLibrary;
 
-  /// lib/features/settings/screens/casting_settings_screen.dart:75
-  ///
-  /// In en, this message translates to:
-  /// **'Searching…'**
-  String get searching;
-
-  /// lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:469
-  ///
-  /// In en, this message translates to:
-  /// **'Searching online'**
-  String get searchingOnline;
-
-  /// lib/features/settings/screens/casting_settings_screen.dart:205
-  ///
-  /// In en, this message translates to:
-  /// **'Searching the local network…'**
-  String get searchingTheLocalNetwork;
-
   /// lib/features/settings/screens/bottom_bar_settings_screen.dart:93
   ///
   /// In en, this message translates to:
@@ -11886,12 +10784,6 @@ abstract class AppLocalizations {
   /// **'See all {count}'**
   String seeAll2(Object count);
 
-  /// lib/features/settings/screens/app_info_settings_screen.dart:624
-  ///
-  /// In en, this message translates to:
-  /// **'See what is new in this update'**
-  String get seeWhatIsNewInThis;
-
   /// lib/features/favorites/screens/favorites_screen.dart:182
   ///
   /// In en, this message translates to:
@@ -11909,12 +10801,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'1. Select a line and edit its timestamp directly, or use \"Use Current Time\".\n2. In the word timeline, drag a boundary to stretch or shrink the segment before it — edits snap to 10ms.\n3. Tap letters in the inspector to split a word into separately timed syllables (slow-then-fast pacing), then drag their boundaries.\n4. Drag the last boundary (or use Length ±) to retime the next line. Use Auto-fill to seed evenly spaced words.\n5. Use the shift controls to move all stamped lyrics together.\n6. Save to generate the final `.lrc` file.'**
   String get selectALineAndEdit;
-
-  /// lib/features/albums/widgets/identify_album_sheet.dart:580
-  ///
-  /// In en, this message translates to:
-  /// **'Select a release'**
-  String get selectARelease;
 
   /// lib/features/favorites/screens/favorites_screen.dart:263
   ///
@@ -11988,24 +10874,6 @@ abstract class AppLocalizations {
   /// **'Serial Number'**
   String get serialNumber;
 
-  /// lib/features/playlists/screens/playlists_screen.dart:481
-  ///
-  /// In en, this message translates to:
-  /// **'Server playlist sync failed: {e}'**
-  String serverPlaylistSyncFailed(Object e);
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:442
-  ///
-  /// In en, this message translates to:
-  /// **'Server URL'**
-  String get serverUrl;
-
-  /// lib/features/settings/screens/casting_settings_screen.dart:107
-  ///
-  /// In en, this message translates to:
-  /// **'Session'**
-  String get session;
-
   /// lib/features/player/widgets/song_actions_sheet.dart:220
   ///
   /// In en, this message translates to:
@@ -12053,12 +10921,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Share failed: {e}'**
   String shareFailed(Object e);
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:500
-  ///
-  /// In en, this message translates to:
-  /// **'Shared Secret'**
-  String get sharedSecret;
 
   /// lib/features/settings/screens/orbit_settings_screen.dart:159
   ///
@@ -12119,12 +10981,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show album artwork on the mini player'**
   String get showAlbumArtworkOnTheMini;
-
-  /// lib/features/settings/widgets/apple_music_settings_tile.dart
-  ///
-  /// In en, this message translates to:
-  /// **'Show Apple Music biographies, similar artists, top songs, album notes, and artist portraits.'**
-  String get showAppleMusicBiographiesRecommendationsAnd;
 
   /// lib/features/player/widgets/player_layout_sheet.dart:256
   ///
@@ -12221,12 +11077,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show other artists on album pages'**
   String get showOtherArtistsOnAlbumPages;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:765
-  ///
-  /// In en, this message translates to:
-  /// **'Show password'**
-  String get showPassword;
 
   /// lib/features/settings/screens/ui_customization_settings_screen.dart:78
   ///
@@ -12425,30 +11275,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Shuffle songs in current list'**
   String get shuffleSongsInCurrentList;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:355
-  ///
-  /// In en, this message translates to:
-  /// **'Sign-in Failed — Retry'**
-  String get signInFailedRetry;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:360
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in with Tidal'**
-  String get signInWithTidal;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:98
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in with your account · HiFi lossless'**
-  String get signInWithYourAccountHifi;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:419
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in with your own Tidal account. HiFi lossless (FLAC/ALAC) plays through the bit-perfect engine; HiRes/MQA and Atmos are gated by Tidal and will show an error instead of playing.'**
-  String get signInWithYourOwnTidal;
 
   /// lib/features/recap/widgets/replay_card_options.dart:10
   ///
@@ -12714,23 +11540,11 @@ abstract class AppLocalizations {
   /// **'Verified in log'**
   String get signalVerifiedInLog;
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:353
-  ///
-  /// In en, this message translates to:
-  /// **'Signed in'**
-  String get signedIn;
-
   /// lib/features/settings/screens/visualizer_settings_screen.dart:95
   ///
   /// In en, this message translates to:
   /// **'Silky smooth Bézier curves — fluid and organic'**
   String get silkySmoothBZierCurvesFluid;
-
-  /// lib/features/artists/screens/artist_detail_screen.dart:730
-  ///
-  /// In en, this message translates to:
-  /// **'Similar Artists'**
-  String get similarArtists;
 
   /// lib/features/player/screens/lyrics_sync_screen.dart:901
   ///
@@ -12810,114 +11624,6 @@ abstract class AppLocalizations {
   /// **'Slope'**
   String get slope;
 
-  /// No description provided for @smbInvalidServerUrl.
-  ///
-  /// In en, this message translates to:
-  /// **'Use smb://server/share or smb://server/share/folder. Enter credentials in the username and password fields, not in the URL.'**
-  String get smbInvalidServerUrl;
-
-  /// No description provided for @smbSigningRequired.
-  ///
-  /// In en, this message translates to:
-  /// **'The server requires SMB signing. Use an account permitted by the server\'s security policy; guest access may not be allowed.'**
-  String get smbSigningRequired;
-
-  /// No description provided for @smbCacheWriteFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not save the SMB download. Check free storage on the phone, then retry.'**
-  String get smbCacheWriteFailed;
-
-  /// No description provided for @smbDownloadIncomplete.
-  ///
-  /// In en, this message translates to:
-  /// **'The SMB download did not finish. Check the connection and retry; no partial file will be played.'**
-  String get smbDownloadIncomplete;
-
-  /// No description provided for @smbPathNotFound.
-  ///
-  /// In en, this message translates to:
-  /// **'The SMB folder or file was not found. Check the folder in the server URL or sync the library again.'**
-  String get smbPathNotFound;
-
-  /// No description provided for @smbDecodeFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'The SMB file was downloaded, but playback could not start. Try the same file locally in Auno Player and check the selected audio output.'**
-  String get smbDecodeFailed;
-
-  /// No description provided for @smbOperationFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'The SMB operation failed. Run Test Connection and check the SMB stage/code in the log before retrying.'**
-  String get smbOperationFailed;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Access denied. Check that the account can read this share.'**
-  String get smbAccessDenied;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'The server rejected the username or password. Check the account — Samba may map unknown users to guest.'**
-  String get smbAuthFailed;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Connection refused. Check that file sharing is enabled and port 445 is reachable.'**
-  String get smbConnectionRefused;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Could not reach the server. Check the IP address, then that the phone is on the same network.'**
-  String get smbCouldNotReach;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Could not resolve the server name. Try the IP address instead — Android cannot resolve NetBIOS/.local names.'**
-  String get smbHostNotResolved;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Missing server address — use smb://host/share (e.g. smb://nas/music).'**
-  String get smbMissingServerAddress;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Missing share name — use smb://host/share (e.g. smb://nas/music).'**
-  String get smbMissingShareName;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'The server stopped answering. Check the server, then retry.'**
-  String get smbServerUnresponsive;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'The server answered but the share was not found. Check the share name in the URL.'**
-  String get smbShareNotFound;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:405
-  ///
-  /// In en, this message translates to:
-  /// **'SMB2/3 shares connect through the built-in client. Enter the share URL (smb://host/share) and sign in if the server asks for it.'**
-  String get smbSharesCanBeAddedNow;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Timed out. Use the server IP (not a NetBIOS/.local name), check port 445, and that the phone is on the same network.'**
-  String get smbTimedOut;
-
   /// lib/features/settings/screens/visualizer_settings_screen.dart:177
   ///
   /// In en, this message translates to:
@@ -12960,12 +11666,6 @@ abstract class AppLocalizations {
   /// **'Solid'**
   String get solid;
 
-  /// lib/features/settings/screens/support_flick_screen.dart:136
-  ///
-  /// In en, this message translates to:
-  /// **'Solo Developer'**
-  String get soloDeveloper;
-
   /// lib/widgets/common/offline_notice.dart:185
   ///
   /// In en, this message translates to:
@@ -12989,12 +11689,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{{count} song} other{{count} songs}}'**
   String song2(int count);
-
-  /// lib/features/playlists/screens/playlists_screen.dart:593
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{{count} song} other{{count} songs}} · {server}'**
-  String song3(int count, Object server);
 
   /// lib/features/songs/widgets/song_actions_button.dart:29
   ///
@@ -13145,12 +11839,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{{count} song} other{{count} songs}}'**
   String songsCount(int count);
-
-  /// lib/features/settings/screens/network_sources_screen.dart:406
-  ///
-  /// In en, this message translates to:
-  /// **'{arg1} songs found'**
-  String songsFound(Object arg1);
 
   /// lib/features/settings/screens/library_settings_screen.dart:1600
   ///
@@ -13374,12 +12062,6 @@ abstract class AppLocalizations {
   /// **'Stop at the end of the current list'**
   String get stopAtTheEndOfThe;
 
-  /// lib/features/settings/screens/casting_settings_screen.dart:112
-  ///
-  /// In en, this message translates to:
-  /// **'Stop Casting'**
-  String get stopCasting;
-
   /// lib/widgets/uac2/uac2_stream_config.dart:207
   ///
   /// In en, this message translates to:
@@ -13433,24 +12115,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Storage Permissions'**
   String get storagePermissions;
-
-  /// lib/features/playlists/screens/playlists_screen.dart:372
-  ///
-  /// In en, this message translates to:
-  /// **'Store on'**
-  String get storeOn;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:61
-  ///
-  /// In en, this message translates to:
-  /// **'Stored as a salted hash, never in plaintext'**
-  String get storedAsASaltedHashNever;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:93
-  ///
-  /// In en, this message translates to:
-  /// **'Stored base64-encoded — required for NTLM sign-in'**
-  String get storedEncodedPlaybackUnavailableInThis;
 
   /// lib/models/song.dart:376
   ///
@@ -13524,53 +12188,11 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{{count} subfolder} other{{count} subfolders}}'**
   String subfolderCount(int count);
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:57
-  ///
-  /// In en, this message translates to:
-  /// **'Subsonic'**
-  String get subsonic;
-
-  /// lib/features/settings/screens/settings_screen.dart:94
-  ///
-  /// In en, this message translates to:
-  /// **'Subsonic servers, sync, and streaming'**
-  String get subsonicServersSyncAndStreaming;
-
   /// lib/models/album_color_mode.dart:22
   ///
   /// In en, this message translates to:
   /// **'Subtle'**
   String get subtle;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:703
-  ///
-  /// In en, this message translates to:
-  /// **'Support'**
-  String get support;
-
-  /// Buy Me a Coffee donation option subtitle on the Support Auno Player screen.
-  ///
-  /// In en, this message translates to:
-  /// **'Support development on Buy Me a Coffee'**
-  String get supportDevelopmentOnBuyMeACoffee;
-
-  /// lib/features/settings/screens/support_flick_screen.dart:213
-  ///
-  /// In en, this message translates to:
-  /// **'Support development on Ko-fi'**
-  String get supportDevelopmentOnKoFi;
-
-  /// lib/features/menu/screens/menu_screen.dart:367
-  ///
-  /// In en, this message translates to:
-  /// **'Support Auno Player'**
-  String get supportFlick;
-
-  /// lib/features/recap/screens/replay_studio_screen.dart:775
-  ///
-  /// In en, this message translates to:
-  /// **'Support Auno Player on Ko-fi'**
-  String get supportFlickOnKoFi;
 
   /// lib/features/recap/screens/replay_studio_screen.dart:674
   ///
@@ -13662,53 +12284,17 @@ abstract class AppLocalizations {
   /// **'Sync'**
   String get sync;
 
-  /// lib/features/settings/screens/network_sources_screen.dart:112
-  ///
-  /// In en, this message translates to:
-  /// **'Sync failed: {e}'**
-  String syncFailed(Object e);
-
-  /// lib/features/settings/screens/network_sources_screen.dart:285
-  ///
-  /// In en, this message translates to:
-  /// **'Sync now'**
-  String get syncNow;
-
-  /// lib/features/playlists/screens/playlists_screen.dart:144
-  ///
-  /// In en, this message translates to:
-  /// **'Sync Server Playlists'**
-  String get syncServerPlaylists;
-
   /// lib/features/player/widgets/online_lyrics_search_sheet.dart:568
   ///
   /// In en, this message translates to:
   /// **'Synced'**
   String get synced;
 
-  /// lib/features/settings/screens/network_sources_screen.dart:318
-  ///
-  /// In en, this message translates to:
-  /// **'Synced {arg1}'**
-  String synced2(Object arg1);
-
   /// lib/features/player/widgets/online_lyrics_search_sheet.dart:377
   ///
   /// In en, this message translates to:
   /// **'Synced LRC'**
   String get syncedLrc;
-
-  /// lib/features/playlists/screens/playlists_screen.dart:473
-  ///
-  /// In en, this message translates to:
-  /// **'Synced {count, plural, =1{{count} playlist} other{{count} playlists}} from servers'**
-  String syncedPlaylistFromServers(int count);
-
-  /// lib/features/settings/screens/network_sources_screen.dart:365
-  ///
-  /// In en, this message translates to:
-  /// **'Syncing…'**
-  String get syncing;
 
   /// lib/models/song.dart:308
   ///
@@ -13806,12 +12392,6 @@ abstract class AppLocalizations {
   /// **'Test: {arg1}'**
   String test(Object arg1);
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:360
-  ///
-  /// In en, this message translates to:
-  /// **'Test Connection'**
-  String get testConnection;
-
   /// lib/features/settings/widgets/mini_player_customization.dart:229
   ///
   /// In en, this message translates to:
@@ -13847,12 +12427,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The app does not knowingly collect any information from anyone, regardless of age.'**
   String get theAppDoesNotKnowinglyCollect;
-
-  /// lib/features/settings/screens/privacy_policy_screen.dart:66
-  ///
-  /// In en, this message translates to:
-  /// **'The app queries public APIs (MusicBrainz/Cover Art Archive, iTunes, Deezer) to find matching album art. Search queries use local music metadata. Downloaded images are cached locally.'**
-  String get theAppQueriesPublicApisMusicbrainz;
 
   /// lib/features/menu/screens/menu_screen.dart:473
   ///
@@ -13902,12 +12476,6 @@ abstract class AppLocalizations {
   /// **'This clears your current day streak and any unlocked streak milestones. This cannot be undone.'**
   String get thisClearsYourCurrentDayStreak;
 
-  /// lib/features/playlists/screens/playlists_screen.dart:383
-  ///
-  /// In en, this message translates to:
-  /// **'This device'**
-  String get thisDevice;
-
   /// lib/features/folders/screens/folders_screen.dart:1370
   ///
   /// In en, this message translates to:
@@ -13950,12 +12518,6 @@ abstract class AppLocalizations {
   /// **'This song has no file path and cannot be edited.'**
   String get thisSongHasNoFilePath;
 
-  /// lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:491
-  ///
-  /// In en, this message translates to:
-  /// **'This song is missing album metadata, so online matching is limited.'**
-  String get thisSongIsMissingAlbumMetadata;
-
   /// lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:412
   ///
   /// In en, this message translates to:
@@ -13991,120 +12553,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Thunder Road'**
   String get thunderRoad;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:97
-  ///
-  /// In en, this message translates to:
-  /// **'Tidal'**
-  String get tidal;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Tidal rejected the app sign-in key. It rotates these — the built-in key may be out of date (a known limitation of the unofficial path).'**
-  String get tidalAppKeyRejected;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Could not reach Tidal (HTTP {status}). Check your connection.'**
-  String tidalCouldNotReach(int status);
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Track {trackId} is encrypted (HiRes/MQA). Only unencrypted HiFi lossless is supported.'**
-  String tidalEncryptedTrack(String trackId);
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Could not decode the Tidal manifest for track {trackId}: {error}'**
-  String tidalManifestDecodeFailed(String trackId, String error);
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Track {trackId} has no stream URL in its manifest.'**
-  String tidalManifestNoStream(String trackId);
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'No playable stream for this track.'**
-  String get tidalNoPlayableStream;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Tidal did not return a sign-in code.'**
-  String get tidalNoSignInCode;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'No Tidal sign-in. Tap \"Sign in with Tidal\".'**
-  String get tidalNotSignedIn;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Couldn\'t open the browser automatically. Open this link on any device to finish signing in, then tap Sign in again:\n\n{uri}'**
-  String tidalOpenLinkManually(String uri);
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Tidal session expired. Please sign in again.'**
-  String get tidalSessionExpired;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Tidal sign-in was denied.'**
-  String get tidalSignInDenied;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'The Tidal sign-in code expired. Try again.'**
-  String get tidalSignInExpired;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Tidal refused the sign-in. Try again.'**
-  String get tidalSignInRefused;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Timed out waiting for Tidal sign-in.'**
-  String get tidalSignInTimedOut;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Tidal token refresh failed.'**
-  String get tidalTokenRefreshFailed;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Too many Tidal requests. Wait a moment and try again.'**
-  String get tidalTooManyRequests;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Tidal is unavailable right now. Try again shortly.'**
-  String get tidalUnavailable;
-
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Track {trackId} uses an unsupported Tidal format (HiRes/MQA/Atmos). Only unencrypted HiFi lossless is supported.'**
-  String tidalUnsupportedFormat(String trackId);
 
   /// lib/features/settings/screens/library_settings_screen.dart:1030
   ///
@@ -14195,12 +12643,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Top artists'**
   String get topArtists;
-
-  /// lib/features/recap/screens/listening_recap_screen.dart:456
-  ///
-  /// In en, this message translates to:
-  /// **'Top Songs'**
-  String get topSongs;
 
   /// lib/features/recap/widgets/replay_poster.dart:16
   ///
@@ -14334,12 +12776,6 @@ abstract class AppLocalizations {
   /// **'{trackCount} tracks • {arg1}'**
   String tracks7(Object trackCount, Object arg1);
 
-  /// lib/features/albums/widgets/identify_album_sheet.dart:458
-  ///
-  /// In en, this message translates to:
-  /// **'{arg1} tracks'**
-  String tracks8(Object arg1);
-
   /// lib/features/menu/screens/menu_screen.dart:1156
   ///
   /// In en, this message translates to:
@@ -14409,12 +12845,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try original search'**
   String get tryOriginalSearch;
-
-  /// lib/features/songs/widgets/album_art_picker_bottom_sheet.dart:492
-  ///
-  /// In en, this message translates to:
-  /// **'Try picking a local image if the release metadata is uncommon.'**
-  String get tryPickingALocalImageIf;
 
   /// lib/features/settings/screens/audio_settings_screen.dart:307
   ///
@@ -14512,18 +12942,6 @@ abstract class AppLocalizations {
   /// **'Ultra'**
   String get ultra;
 
-  /// lib/providers/update_check_provider.dart:177
-  ///
-  /// In en, this message translates to:
-  /// **'Unable to check for updates right now.'**
-  String get unableToCheckForUpdatesRight;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:300
-  ///
-  /// In en, this message translates to:
-  /// **'Unable to load patch notes right now.'**
-  String get unableToLoadPatchNotesRight;
-
   /// lib/features/settings/screens/library_settings_screen.dart:220
   ///
   /// In en, this message translates to:
@@ -14614,12 +13032,6 @@ abstract class AppLocalizations {
   /// **'Unknown Folder'**
   String get unknownFolder;
 
-  /// l10n pass: user-visible service error
-  ///
-  /// In en, this message translates to:
-  /// **'Unknown Last.fm error'**
-  String get unknownLastFmError;
-
   /// lib/services/playlist_service.dart:688
   ///
   /// In en, this message translates to:
@@ -14680,108 +13092,6 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{{count} upcoming song} other{{count} upcoming songs}}'**
   String upcomingSong(int count);
 
-  /// lib/features/menu/screens/menu_screen.dart:1247
-  ///
-  /// In en, this message translates to:
-  /// **'Update'**
-  String get update;
-
-  /// lib/features/menu/screens/menu_screen.dart:1226
-  ///
-  /// In en, this message translates to:
-  /// **'Update Available'**
-  String get updateAvailable;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:85
-  ///
-  /// In en, this message translates to:
-  /// **'Update available on the Play Store.'**
-  String get updateAvailableOnThePlayStore;
-
-  /// lib/features/menu/screens/menu_screen.dart:1269
-  ///
-  /// In en, this message translates to:
-  /// **'Update notice hidden.'**
-  String get updateNoticeHidden;
-
-  /// GitHub update banner for stable releases.
-  ///
-  /// In en, this message translates to:
-  /// **'A newer Auno Player build is available on GitHub.'**
-  String get aNewerFlickBuildOnGithub;
-
-  /// GitHub update banner title for pre-releases.
-  ///
-  /// In en, this message translates to:
-  /// **'Beta Update Available'**
-  String get betaUpdateAvailable;
-
-  /// Explains that the offered beta build is for testing.
-  ///
-  /// In en, this message translates to:
-  /// **'A pre-release build is available for testing.'**
-  String get betaUpdateSubtitle;
-
-  /// Action label for downloading a pre-release APK.
-  ///
-  /// In en, this message translates to:
-  /// **'Download Beta'**
-  String get downloadBetaUpdate;
-
-  /// Subtitle for downloading a pre-release APK.
-  ///
-  /// In en, this message translates to:
-  /// **'Get the beta build from GitHub.'**
-  String get getBetaUpdate;
-
-  /// Toast shown when a GitHub update is available.
-  ///
-  /// In en, this message translates to:
-  /// **'Update available on GitHub.'**
-  String get updateAvailableOnGithub;
-
-  /// Settings section for choosing stable or beta updates.
-  ///
-  /// In en, this message translates to:
-  /// **'Update Channel'**
-  String get updateChannel;
-
-  /// Update channel option for stable releases only.
-  ///
-  /// In en, this message translates to:
-  /// **'Stable releases'**
-  String get updateChannelStable;
-
-  /// Explains the stable update channel.
-  ///
-  /// In en, this message translates to:
-  /// **'Only offer fully released Auno Player builds.'**
-  String get updateChannelStableSubtitle;
-
-  /// Update channel option for pre-releases only.
-  ///
-  /// In en, this message translates to:
-  /// **'Pre-releases'**
-  String get updateChannelBeta;
-
-  /// Explains the beta update channel.
-  ///
-  /// In en, this message translates to:
-  /// **'Only offer beta builds for testing.'**
-  String get updateChannelBetaSubtitle;
-
-  /// Update channel option for both release types.
-  ///
-  /// In en, this message translates to:
-  /// **'Stable and pre-releases'**
-  String get updateChannelBoth;
-
-  /// Explains the combined update channel.
-  ///
-  /// In en, this message translates to:
-  /// **'Show update notices for both channels.'**
-  String get updateChannelBothSubtitle;
-
   /// lib/features/playlists/screens/playlist_detail_screen.dart:438
   ///
   /// In en, this message translates to:
@@ -14799,12 +13109,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Updated album art for \"{arg1}\".'**
   String updatedAlbumArtFor2(Object arg1);
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:602
-  ///
-  /// In en, this message translates to:
-  /// **'Updates'**
-  String get updates;
 
   /// lib/features/settings/screens/settings_screen.dart:267
   ///
@@ -14835,12 +13139,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Upload logs as a link?'**
   String get uploadLogsAsALink;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:81
-  ///
-  /// In en, this message translates to:
-  /// **'UPnP / DLNA'**
-  String get upnpDlna;
 
   /// lib/features/player/widgets/bit_perfect_indicator.dart:1010
   ///
@@ -14895,12 +13193,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'USB DAC auto bit-perfect offers reset.'**
   String get usbDacAutoBitPerfectOffers;
-
-  /// lib/features/settings/screens/support_flick_screen.dart:175
-  ///
-  /// In en, this message translates to:
-  /// **'USB DACs, headphones, and reference gear to test and improve playback quality.'**
-  String get usbDacsHeadphonesAndReferenceGear;
 
   /// lib/features/settings/screens/privacy_policy_screen.dart:54
   ///
@@ -15040,18 +13332,6 @@ abstract class AppLocalizations {
   /// **'Use the verified direct USB path and disable software DSP controls that would break bit-perfect playback on an external USB DAC.'**
   String get useTheVerifiedDirectUsbPath;
 
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:740
-  ///
-  /// In en, this message translates to:
-  /// **'User Token'**
-  String get userToken;
-
-  /// lib/features/settings/screens/network_server_edit_screen.dart:450
-  ///
-  /// In en, this message translates to:
-  /// **'Username'**
-  String get username;
-
   /// lib/features/settings/screens/library_settings_screen.dart:251
   ///
   /// In en, this message translates to:
@@ -15105,12 +13385,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Version {kAppVersion}'**
   String version(Object kAppVersion);
-
-  /// lib/features/whats_new/widgets/whats_new_bottom_sheet.dart:126
-  ///
-  /// In en, this message translates to:
-  /// **'Version {arg1}'**
-  String version2(Object arg1);
 
   /// lib/features/settings/screens/visualizer_settings_screen.dart:71
   ///
@@ -15400,23 +13674,11 @@ abstract class AppLocalizations {
   /// **'{arg1}w ago'**
   String wAgo(Object arg1);
 
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:978
-  ///
-  /// In en, this message translates to:
-  /// **'Waiting for browser authorization...'**
-  String get waitingForBrowserAuthorization;
-
   /// lib/features/settings/screens/uac2_preferences_screen.dart:1110
   ///
   /// In en, this message translates to:
   /// **'Waiting for playback'**
   String get waitingForPlayback;
-
-  /// lib/features/albums/widgets/identify_album_sheet.dart:537
-  ///
-  /// In en, this message translates to:
-  /// **'was: {arg1}'**
-  String was(Object arg1);
 
   /// lib/features/settings/screens/visualizer_settings_screen.dart:86
   ///
@@ -15460,12 +13722,6 @@ abstract class AppLocalizations {
   /// **'We’ll keep your {kept, plural, =1{{kept} checked version} other{{kept} checked versions}} and remove the other {removed, plural, =1{{removed} copy} other{{removed} copies}} from your library. Audio files on disk are not deleted.'**
   String weLlKeepYourCheckedVersion(int kept, int removed);
 
-  /// lib/features/settings/screens/network_server_edit_screen.dart:73
-  ///
-  /// In en, this message translates to:
-  /// **'WebDAV'**
-  String get webdav;
-
   /// lib/data/repositories/recently_played_repository.dart:15
   ///
   /// In en, this message translates to:
@@ -15489,12 +13745,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What it shows'**
   String get whatItShows;
-
-  /// lib/features/whats_new/widgets/whats_new_bottom_sheet.dart:22
-  ///
-  /// In en, this message translates to:
-  /// **'What\'s New'**
-  String get whatSNew;
 
   /// lib/features/manual/data/manual_data.dart
   ///
@@ -15520,12 +13770,6 @@ abstract class AppLocalizations {
   /// **'Where the focal song sits vertically'**
   String get whereTheFocalSongSitsVertically;
 
-  /// lib/features/settings/screens/support_flick_screen.dart:161
-  ///
-  /// In en, this message translates to:
-  /// **'Where Your Money Goes'**
-  String get whereYourMoneyGoes;
-
   /// lib/models/song.dart:371
   ///
   /// In en, this message translates to:
@@ -15549,12 +13793,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Whole album'**
   String get wholeAlbum;
-
-  /// lib/features/settings/screens/support_flick_screen.dart:131
-  ///
-  /// In en, this message translates to:
-  /// **'Why Donate'**
-  String get whyDonate;
 
   /// lib/features/settings/screens/equalizer_screen.dart:3493
   ///
@@ -15688,18 +13926,6 @@ abstract class AppLocalizations {
   /// **'Yesterday'**
   String get yesterday;
 
-  /// lib/features/settings/screens/app_info_settings_screen.dart:168
-  ///
-  /// In en, this message translates to:
-  /// **'You already have the latest Auno Player release'**
-  String get youAlreadyHaveTheLatestFlick;
-
-  /// lib/features/settings/screens/app_info_settings_screen.dart:167
-  ///
-  /// In en, this message translates to:
-  /// **'You already have the latest Play Store release'**
-  String get youAlreadyHaveTheLatestPlay;
-
   /// lib/features/settings/screens/bluetooth_settings_screen.dart:612
   ///
   /// In en, this message translates to:
@@ -15790,12 +14016,6 @@ abstract class AppLocalizations {
   /// **'Your listening history is still yours. Try loading it again.'**
   String get yourListeningHistoryIsStillYours;
 
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:136
-  ///
-  /// In en, this message translates to:
-  /// **'Your listens will remain on ListenBrainz, but Auno Player will stop submitting them.'**
-  String get yourListensWillRemainOnListenbrainz;
-
   /// lib/features/settings/screens/logs_screen.dart:130
   ///
   /// In en, this message translates to:
@@ -15813,18 +14033,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your most replayed track'**
   String get yourMostReplayedTrack;
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:837
-  ///
-  /// In en, this message translates to:
-  /// **'Your music is being scrobbled'**
-  String get yourMusicIsBeingScrobbled;
-
-  /// lib/features/settings/widgets/listenbrainz_settings_tile.dart:267
-  ///
-  /// In en, this message translates to:
-  /// **'Your music is being submitted'**
-  String get yourMusicIsBeingSubmitted;
 
   /// lib/features/recap/widgets/replay_poster.dart:108
   ///
@@ -15855,12 +14063,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your Playlists'**
   String get yourPlaylists;
-
-  /// lib/features/settings/widgets/lastfm_settings_tile.dart:198
-  ///
-  /// In en, this message translates to:
-  /// **'Your scrobbling history will remain on Last.fm, but Auno Player will stop sending scrobbles.'**
-  String get yourScrobblingHistoryWillRemainOn;
 
   /// lib/features/menu/screens/menu_screen.dart:1420
   ///
@@ -15927,6 +14129,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Read-only measurements from the source file.'**
   String get audioAnalysisSubtitle;
+
+  /// Song action tile that opens the local audio inspector.
+  ///
+  /// In en, this message translates to:
+  /// **'Detail & Audio Analysis'**
+  String get detailAndAudioAnalysis;
 
   /// lib/features/player/widgets/audio_signal_report.dart
   ///
@@ -16105,14 +14313,20 @@ abstract class AppLocalizations {
   /// lib/features/player/widgets/audio_analysis_sheet.dart
   ///
   /// In en, this message translates to:
-  /// **'Side / mid'**
-  String get audioAnalysisSideMid;
-
-  /// lib/features/player/widgets/audio_analysis_sheet.dart
-  ///
-  /// In en, this message translates to:
   /// **'Integrated loudness'**
   String get audioAnalysisIntegratedLoudness;
+
+  String get audioAnalysisNullTestSection;
+  String get audioAnalysisNullTestResidual;
+  String get audioAnalysisNullTestVerdict;
+  String get audioAnalysisNullTestMono;
+  String get audioAnalysisNullTestBalanced;
+  String get audioAnalysisNullTestWide;
+  String get audioAnalysisNullTestNote;
+  String get batchEditKeepExisting;
+  String batchEditSomeSkipped(Object count);
+  String batchEditUpdated(Object count);
+  String batchEditPartial(Object arg1, Object arg2);
 
   /// lib/features/player/widgets/audio_analysis_sheet.dart
   ///
@@ -16227,6 +14441,204 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Measured from a separate source-file decode. Some formats include decoder padding, which can affect duration and silence measurements. Playback, DSP, and tags are unchanged.'**
   String get audioAnalysisSourceNote;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Codec'**
+  String get audioAnalysisCodec;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Container'**
+  String get audioAnalysisContainer;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Bitrate'**
+  String get audioAnalysisBitrate;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Channel layout'**
+  String get audioAnalysisChannelLayout;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'DSD / Hi-Res'**
+  String get audioAnalysisHiResSection;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'DSD variant'**
+  String get audioAnalysisDsdVariant;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'DoP capable'**
+  String get audioAnalysisDopCapable;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get audioAnalysisDopYes;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get audioAnalysisDopNo;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Hi-Res source'**
+  String get audioAnalysisHiResBadge;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Full decoding is unavailable for this format. Metadata and integrity are shown instead.'**
+  String get audioAnalysisMetadataOnlyNote;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Integrity & tags'**
+  String get audioAnalysisIntegritySection;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Full-file read passed'**
+  String get audioAnalysisIntegrityOk;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Full-file read failed'**
+  String get audioAnalysisIntegrityFailed;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Tag completeness'**
+  String get audioAnalysisTagCompleteness;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Output path'**
+  String get audioAnalysisOutputSection;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Native / bit-perfect path'**
+  String get audioAnalysisBitPerfectPath;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'The selected output path may resample playback.'**
+  String get audioAnalysisResampleWarning;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Save local report'**
+  String get audioAnalysisSaveReport;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Report saved to Documents/AunoPlayer'**
+  String get audioAnalysisReportSaved;
+
+  /// lib/features/player/widgets/audio_analysis_sheet.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the report.'**
+  String get audioAnalysisReportFailed;
+
+  /// Listening recap insights.
+  ///
+  /// In en, this message translates to:
+  /// **'Actual listening'**
+  String get recapActualListeningLabel;
+
+  /// Listening recap insights.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} day streak'**
+  String recapStreakDays(int days);
+
+  /// Listening recap insights.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening clock'**
+  String get recapListeningClock;
+
+  /// Listening recap insights.
+  ///
+  /// In en, this message translates to:
+  /// **'Time spent listening in each hour of the day'**
+  String get recapListeningClockHint;
+
+  /// Listening recap insights.
+  ///
+  /// In en, this message translates to:
+  /// **'{hour}:00'**
+  String recapHourLabel(int hour);
+
+  /// Listening recap insights.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening personality'**
+  String get recapPersonality;
+
+  /// Listening recap insights.
+  ///
+  /// In en, this message translates to:
+  /// **'Night owl'**
+  String get recapPersonalityNightOwl;
+
+  /// Listening recap insights.
+  ///
+  /// In en, this message translates to:
+  /// **'Completionist'**
+  String get recapPersonalityCompletionist;
+
+  /// Listening recap insights.
+  ///
+  /// In en, this message translates to:
+  /// **'Explorer'**
+  String get recapPersonalityExplorer;
+
+  /// Listening recap insights.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced listener'**
+  String get recapPersonalityBalanced;
+
+  /// Listening recap insights.
+  ///
+  /// In en, this message translates to:
+  /// **'First listen this period'**
+  String get recapFirstListened;
+
+  /// Listening recap insights.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculated on this device'**
+  String get recapLocalOnlyStats;
 }
 
 class _AppLocalizationsDelegate
@@ -16240,7 +14652,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en', 'es', 'tl', 'zh'].contains(locale.languageCode);
+      <String>['en', 'es', 'id', 'tl', 'zh'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -16265,6 +14677,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsEn();
     case 'es':
       return AppLocalizationsEs();
+    case 'id':
+      return AppLocalizationsId();
     case 'tl':
       return AppLocalizationsTl();
     case 'zh':

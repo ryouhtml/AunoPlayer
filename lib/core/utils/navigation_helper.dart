@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:auno_player/core/constants/app_constants.dart';
+import 'package:auno_player/core/motion/app_motion.dart';
 import 'package:auno_player/core/navigation/root_navigator.dart';
 import 'package:auno_player/features/player/screens/full_player_screen.dart';
 import 'package:auno_player/features/queue/screens/queue_screen.dart';
@@ -8,6 +9,11 @@ import 'package:auno_player/features/recap/screens/listening_recap_screen.dart';
 
 /// Helper class to prevent duplicate navigation to FullPlayerScreen
 class NavigationHelper {
+  /// Local duration for the library-to-player art zoom. Flutter's Hero flight
+  /// is parented to the destination route animation, so this also drives the
+  /// zoom. Kept local to avoid changing AppConstants globally.
+  static const Duration heroArtworkDuration = Duration(milliseconds: 320);
+
   // Track if navigation is in progress to prevent double navigation
   static bool _isNavigating = false;
   static Timer? _navigationTimer;
@@ -86,7 +92,7 @@ class NavigationHelper {
 
             const begin = Offset(0.0, 1.0);
             const end = Offset.zero;
-            const curve = Curves.easeOutCubic;
+            const curve = AppMotionCurves.fluidDeceleration;
 
             var tween = Tween(
               begin: begin,
@@ -98,7 +104,11 @@ class NavigationHelper {
               child: child,
             );
           },
-          transitionDuration: AppConstants.animationNormal,
+          // Hero flight is parented to this route animation; 320ms gives the
+          // art zoom its own pacing without touching AppConstants globally.
+          transitionDuration: AppConstants.animationNormal == Duration.zero
+              ? Duration.zero
+              : heroArtworkDuration,
           opaque: false,
           barrierColor: Colors.black,
           settings: const RouteSettings(name: '/full_player'),

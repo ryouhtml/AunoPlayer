@@ -58,7 +58,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import androidx.mediarouter.media.MediaRouter
 import android.provider.OpenableColumns
 import android.provider.Settings
 import android.util.Log
@@ -104,9 +103,6 @@ class MainActivity: FlutterActivity() {
     private val OVERLAY_CHANNEL = "com.aunoplayer.auno/overlay"
     private val BLUETOOTH_CHANNEL = "com.aunoplayer.auno/bluetooth"
     private val BLUETOOTH_EVENT_CHANNEL = "com.aunoplayer.auno/bluetooth_events"
-    private val CAST_CHANNEL = "com.aunoplayer.auno/cast"
-    private val CAST_EVENT_CHANNEL = "com.aunoplayer.auno/cast_events"
-    private val DLNA_ROUTE_CHANNEL = "com.aunoplayer.auno/dlna_route"
     private val DIAGNOSTICS_CHANNEL = "com.aunoplayer.auno/diagnostics"
     private val LOCKER_PACKAGE = "com.mossapps.locker"
     private val LOCKER_RETURN_URI = "locker://return?source=flick"
@@ -170,9 +166,6 @@ class MainActivity: FlutterActivity() {
     private var developerMode: Boolean = false
     private var bluetoothEventSink: EventChannel.EventSink? = null
     private var aclReceiver: BroadcastReceiver? = null
-    private var castController: CastController? = null
-    private var castEventSink: EventChannel.EventSink? = null
-    private var dlnaRouteProvider: DlnaRouteProvider? = null
 
     // Load the Rust shared library before calling into native startup hooks.
     init {
@@ -717,10 +710,6 @@ class MainActivity: FlutterActivity() {
                             else -> null
                         }
                     }
-                    val isCasting = call.argument<Boolean>("isCasting") ?: false
-                    val castDeviceName = call.argument<String>("castDeviceName")
-                    val castVolume = call.argument<Int>("castVolume")
-
                     val intent = Intent(this, MusicNotificationService::class.java).apply {
                         putExtra("title", title)
                         putExtra("artist", artist)
@@ -730,9 +719,6 @@ class MainActivity: FlutterActivity() {
                         putExtra("position", position)
                         putExtra("isShuffle", isShuffle)
                         putExtra("isFavorite", isFavorite)
-                        putExtra("isCasting", isCasting)
-                        castDeviceName?.let { putExtra("castDeviceName", it) }
-                        castVolume?.let { putExtra("castVolume", it) }
                         color?.let { putExtra("color", it) }
                     }
                     
@@ -772,10 +758,6 @@ class MainActivity: FlutterActivity() {
                             else -> null
                         }
                     }
-                    val isCasting = call.argument<Boolean>("isCasting")
-                    val castDeviceName = call.argument<String>("castDeviceName")
-                    val castVolume = call.argument<Int>("castVolume")
-
                     val intent = Intent(this, MusicNotificationService::class.java).apply {
                         title?.let { putExtra("title", it) }
                         artist?.let { putExtra("artist", it) }
@@ -785,9 +767,6 @@ class MainActivity: FlutterActivity() {
                         position?.let { putExtra("position", it) }
                         isShuffle?.let { putExtra("isShuffle", it) }
                         isFavorite?.let { putExtra("isFavorite", it) }
-                        isCasting?.let { putExtra("isCasting", it) }
-                        castDeviceName?.let { putExtra("castDeviceName", it) }
-                        castVolume?.let { putExtra("castVolume", it) }
                         color?.let { putExtra("color", it) }
                     }
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -1110,92 +1089,6 @@ class MainActivity: FlutterActivity() {
             }
         )
 
-        // Chromecast: discovery via MediaRouter, control via RemoteMediaClient.
-        if (castController == null) {
-            castController = CastController(this)
-            castController!!.start()
-        }
-        castController?.onEvent = { event -> emitCastEvent(event) }
-
-        // DLNA renderers as system MediaRouter routes.
-        if (dlnaRouteProvider == null) {
-            dlnaRouteProvider = DlnaRouteProvider(applicationContext)
-            MediaRouter.getInstance(this).addProvider(dlnaRouteProvider!!)
-        }
-        DlnaRouteRegistry.onRouteSelected = { id ->
-            val name = DlnaRouteRegistry.routes.firstOrNull { it.id == id }?.name ?: ""
-            emitCastEvent(mapOf("event" to "dlnaRouteSelected", "id" to id, "name" to name))
-        }
-        DlnaRouteRegistry.onRouteUnselected = { id ->
-            emitCastEvent(mapOf("event" to "dlnaRouteUnselected", "id" to id))
-        }
-        DlnaRouteRegistry.onVolumeSet = { _, volume ->
-            emitCastEvent(mapOf("event" to "dlnaVolume", "volume" to volume / 100.0))
-        }
-
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CAST_CHANNEL).setMethodCallHandler { call, result ->
-            val cc = castController
-            when (call.method) {
-                "discover" -> result.success(cc?.discover())
-                "connect" -> {
-                    cc?.connect(call.argument<String>("id") ?: "")
-                    result.success(null)
-                }
-                "disconnect" -> { cc?.disconnect(); result.success(null) }
-                "load" -> {
-                    cc?.load(
-                        call.argument<String>("url") ?: "",
-                        call.argument<String>("title"),
-                        call.argument<String>("artist"),
-                    )
-                    result.success(null)
-                }
-                "play" -> { cc?.play(); result.success(null) }
-                "pause" -> { cc?.pause(); result.success(null) }
-                "stop" -> { cc?.stop(); result.success(null) }
-                "seek" -> { cc?.seek((call.argument<Int>("position") ?: 0).toLong()); result.success(null) }
-                "setVolume" -> { cc?.setVolume((call.argument<Double>("volume") ?: 1.0)); result.success(null) }
-                "getVolume" -> { cc?.getVolume().let { result.success(it) } }
-                "getOutputRoutes" -> result.success(cc?.getOutputRoutes())
-                "selectOutputRoute" -> result.success(cc?.selectOutputRoute(call.argument<String>("id") ?: ""))
-                else -> result.notImplemented()
-            }
-        }
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, DLNA_ROUTE_CHANNEL).setMethodCallHandler { call, result ->
-            when (call.method) {
-                "publishRoutes" -> {
-                    val routes = (call.argument<List<Map<String, Any>>>("routes") ?: emptyList())
-                        .mapNotNull { m ->
-                            val id = m["id"] as? String ?: return@mapNotNull null
-                            DlnaRouteRegistry.Route(id, (m["name"] as? String) ?: id)
-                        }
-                    DlnaRouteRegistry.publish(routes)
-                    result.success(null)
-                }
-                "selectRoute" -> {
-                    val id = call.argument<String>("id") ?: ""
-                    trySelectDlnaRoute(id, attempts = 4, result)
-                }
-                "unselectRoute" -> {
-                    if (DlnaRouteRegistry.selectedId != null) {
-                        MediaRouter.getInstance(this).selectRoute(MediaRouter.getInstance(this).defaultRoute)
-                    }
-                    result.success(null)
-                }
-                else -> result.notImplemented()
-            }
-        }
-        EventChannel(flutterEngine.dartExecutor.binaryMessenger, CAST_EVENT_CHANNEL).setStreamHandler(
-            object : EventChannel.StreamHandler {
-                override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
-                    castEventSink = events
-                }
-                override fun onCancel(arguments: Any?) {
-                    castEventSink = null
-                }
-            }
-        )
-
         // Audio processing channel for Android native AudioEffect counterparts.
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, EQUALIZER_CHANNEL).setMethodCallHandler { call, result ->
             if (!justAudioProcessingController.handle(call, result)) {
@@ -1253,6 +1146,7 @@ class MainActivity: FlutterActivity() {
             when (call.method) {
                 "getProcessExitInfo" -> result.success(getProcessExitInfo())
                 "getBuildFlavor" -> result.success(BuildConfig.FLAVOR)
+                "getDeviceMemoryInfo" -> result.success(getDeviceMemoryInfo())
                 else -> result.notImplemented()
             }
         }
@@ -1454,29 +1348,6 @@ class MainActivity: FlutterActivity() {
         val uri = intent.data?.toString() ?: return
         val dispatch = widgetLaunchInbox.offer(uri) ?: return
         widgetChannel?.invokeMethod("dispatch", dispatch)
-    }
-
-    private fun emitCastEvent(event: Map<String, Any?>) {
-        runOnUiThread { castEventSink?.success(event) }
-    }
-
-    // ponytail: after publish(), MediaRouter assigns provider routes a mangled
-    // unique id ("<provider>_<descriptorId>"); routes may not be visible the
-    // instant Dart asks us to select, so retry briefly.
-    private fun trySelectDlnaRoute(udn: String, attempts: Int, result: MethodChannel.Result) {
-        val router = MediaRouter.getInstance(this)
-        val route = router.routes.firstOrNull {
-            it.playbackType == MediaRouter.RouteInfo.PLAYBACK_TYPE_REMOTE &&
-                (it.id.endsWith("_$udn") || it.id == udn)
-        }
-        if (route != null) {
-            router.selectRoute(route)
-            result.success(true)
-        } else if (attempts > 1) {
-            Handler(mainLooper).postDelayed({ trySelectDlnaRoute(udn, attempts - 1, result) }, 250)
-        } else {
-            result.success(false)
-        }
     }
 
     private fun handleExternalPlaybackIntent(intent: Intent?) {
@@ -4739,6 +4610,20 @@ class MainActivity: FlutterActivity() {
             "audioFocusHeld" to (directUsbFocusGain != null),
             "audioFocusGain" to directUsbFocusGain,
             "rustAudioStateJson" to nativeGetRustAudioDebugStateJson(),
+        )
+    }
+
+    private fun getDeviceMemoryInfo(): Map<String, Any?> {
+        val activityManager =
+            getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager
+        if (activityManager == null) {
+            return mapOf("totalBytes" to 0L, "isLowRamDevice" to false)
+        }
+        val info = ActivityManager.MemoryInfo()
+        activityManager.getMemoryInfo(info)
+        return mapOf(
+            "totalBytes" to info.totalMem,
+            "isLowRamDevice" to activityManager.isLowRamDevice,
         )
     }
 

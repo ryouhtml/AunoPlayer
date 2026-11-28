@@ -10,6 +10,7 @@ import 'package:auno_player/features/recap/screens/replay_studio_screen.dart';
 import 'package:auno_player/features/recap/widgets/replay_artwork.dart';
 import 'package:auno_player/features/recap/widgets/replay_card_options.dart';
 import 'package:auno_player/features/recap/widgets/replay_graphics.dart';
+import 'package:auno_player/features/recap/widgets/replay_insights.dart';
 import 'package:auno_player/features/recap/widgets/replay_poster.dart';
 import 'package:auno_player/features/recap/widgets/replay_sections.dart';
 import 'package:auno_player/features/recap/widgets/replay_style.dart';
@@ -18,6 +19,7 @@ import 'package:auno_player/models/song.dart';
 import 'package:auno_player/models/nav_bar_config.dart';
 import 'package:auno_player/providers/app_preferences_provider.dart';
 import 'package:auno_player/services/color_extraction_service.dart';
+import 'package:auno_player/services/listening_stats_service.dart';
 import 'package:auno_player/widgets/navigation/flick_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -49,10 +51,48 @@ class _Repository implements RecentlyPlayedRepository {
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
+class _FailingStats implements ListeningStatsService {
+  @override
+  Future<Map<ListeningRecapPeriod, ListeningRecap>> getRecaps({
+    required Set<ListeningRecapPeriod> periods,
+    DateTime? now,
+  }) async {
+    throw StateError('no event storage in widget tests');
+  }
+
+  @override
+  Future<void> clearEvents() async {}
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+class _Stats implements ListeningStatsService {
+  _Stats(this.recaps);
+
+  final Map<ListeningRecapPeriod, ListeningRecap> recaps;
+
+  @override
+  Future<Map<ListeningRecapPeriod, ListeningRecap>> getRecaps({
+    required Set<ListeningRecapPeriod> periods,
+    DateTime? now,
+  }) async => {
+    for (final entry in recaps.entries)
+      if (periods.contains(entry.key)) entry.key: entry.value,
+  };
+
+  @override
+  Future<void> clearEvents() async {}
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
 ListeningRecap _fixture(
   ListeningRecapPeriod period, {
   bool longText = false,
   String? art,
+  bool insights = false,
 }) {
   final date = DateTime(2026, 10, 9);
   final songs = List.generate(
@@ -128,15 +168,28 @@ ListeningRecap _fixture(
     topSongs: songs,
     topArtists: artists,
     topAlbums: [album],
+    actualListenedMs: insights ? 512000 : null,
+    streakDays: insights ? 4 : null,
+    hourBuckets: insights
+        ? {for (var hour = 0; hour < 24; hour++) hour: 1000 + hour * 100}
+        : null,
+    firstListenedAt: insights ? date : null,
+    listeningPersonality: insights ? 'nightOwl' : null,
   );
 }
 
 Map<ListeningRecapPeriod, ListeningRecap> _all({
   bool longText = false,
   String? art,
+  bool insights = false,
 }) => {
   for (final period in ListeningRecapPeriod.values)
-    period: _fixture(period, longText: longText, art: art),
+    period: _fixture(
+      period,
+      longText: longText,
+      art: art,
+      insights: insights,
+    ),
 };
 
 final _screenKey = GlobalKey();
@@ -149,6 +202,7 @@ Future<void> _pump(
   bool reducedMotion = true,
   bool floatingNav = false,
   Locale locale = kFallbackLocale,
+  ListeningStatsService? statsService,
 }) async {
   SharedPreferences.setMockInitialValues({});
   tester.view.devicePixelRatio = 1;
@@ -240,7 +294,10 @@ Future<void> _pump(
             ),
           );
         },
-        home: ListeningRecapScreen(repository: repository),
+        home: ListeningRecapScreen(
+          repository: repository,
+          statsService: statsService ?? _FailingStats(),
+        ),
       ),
     ),
   );
@@ -326,6 +383,32 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Your next favorite\nis waiting.'), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('listening insights show real event stats and personality', (
+    tester,
+  ) async {
+    final data = _all(insights: true);
+    final repository = _Repository(data);
+    await _pump(tester, repository, statsService: _Stats(data));
+
+    await tester.scrollUntilVisible(
+      find.text(l10n.recapListeningClock),
+      300,
+      scrollable: find
+          .descendant(
+            of: find.byType(ListView).first,
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ReplayInsights), findsOneWidget);
+    expect(find.text(l10n.recapActualListeningLabel), findsOneWidget);
+    expect(find.text(l10n.recapStreakDays(4)), findsOneWidget);
+    expect(find.text(l10n.recapPersonalityNightOwl), findsOneWidget);
+    expect(find.text(l10n.recapLocalOnlyStats), findsOneWidget);
   });
 
   testWidgets('Taglish replay is fully English, including dates and studio', (
@@ -956,7 +1039,6 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Export CSV'), findsOneWidget);
       expect(find.text('Export TXT'), findsOneWidget);
-      expect(find.text('Support Auno Player on Ko-fi'), findsOneWidget);
       expect(tester.takeException(), isNull);
     },
   );

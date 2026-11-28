@@ -1,21 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar_community/isar.dart';
-import 'package:auno_player/data/database.dart';
 import 'package:auno_player/models/playlist.dart';
 import 'package:auno_player/models/song.dart';
 import 'package:auno_player/services/player_service.dart';
 import 'package:auno_player/services/playlist_service.dart';
-import 'package:auno_player/services/sources/network_source_service.dart';
-import 'package:auno_player/services/sources/subsonic_service.dart';
 
 final playlistServiceProvider = Provider<PlaylistService>((ref) {
   return PlaylistService.instance;
-});
-
-final networkServersProvider = FutureProvider<List<NetworkServerEntity>>((ref) async {
-  return await Database.networkServers.where().findAll();
 });
 
 class PlaylistsState {
@@ -61,30 +53,16 @@ class PlaylistsNotifier extends AsyncNotifier<PlaylistsState> {
     return PlaylistsState(playlists: playlists, isLoading: false);
   }
 
-  Future<Playlist?> createPlaylist(String name, {int? serverId}) async {
+  Future<Playlist?> createPlaylist(String name) async {
     if (name.trim().isEmpty) return null;
 
     final service = ref.read(playlistServiceProvider);
-    final playlist = await service.createPlaylist(name.trim(), serverId: serverId);
+    final playlist = await service.createPlaylist(name.trim());
     if (ref.mounted) {
       ref.invalidateSelf();
     }
 
     return playlist;
-  }
-
-  /// Re-pull playlists from every Subsonic server. Returns the synced count.
-  Future<int> syncServerPlaylists() async {
-    final servers = await Database.networkServers.where().findAll();
-    var synced = 0;
-    for (final server
-        in servers.where((s) => s.protocol == NetworkProtocol.subsonic)) {
-      synced += await SubsonicService.instance.syncPlaylists(server);
-    }
-    if (ref.mounted) {
-      ref.invalidateSelf();
-    }
-    return synced;
   }
 
   Future<bool> deletePlaylist(String id) async {

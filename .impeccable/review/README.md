@@ -39,9 +39,9 @@ The playback capture also includes the follow-up vinyl clipping fix. The full
 record now stays inside the artboard throughout its entrance; two graphics
 regressions check four artwork sizes with standard and reduced motion.
 
-The full Flutter suite reports 1,078 passing tests and one unrelated load
-failure in `test/services/webdav_sync_integration_test.dart`: the host Isar Core
-binary is 3.4.1 while the dependency requires 3.3.2. Dependencies were not changed.
+The full Flutter suite reports 1,078 passing tests and one unrelated Isar Core
+load failure: the host binary is 3.4.1 while the dependency requires 3.3.2.
+Dependencies were not changed.
 
 Capture harness: `/tmp/opencode/flick_onboarding_capture_test.dart`.
 These review PNGs are not app assets.

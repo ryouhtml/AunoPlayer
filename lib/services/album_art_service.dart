@@ -7,13 +7,12 @@ import 'package:image/image.dart' as img;
 import 'package:path_provider/path_provider.dart';
 
 import '../core/utils/dev_log.dart';
-import '../data/database.dart';
+import '../data/entities/song_entity.dart';
 import '../data/repositories/artist_repository.dart';
 import '../data/repositories/song_repository.dart';
 import '../src/rust/api/scanner.dart' as rust_scanner;
 import 'music_folder_service.dart';
 import 'player_service.dart';
-import 'sources/network_source_service.dart';
 
 class AlbumArtService {
   AlbumArtService._();
@@ -48,7 +47,7 @@ class AlbumArtService {
     String? existingPath,
     required String audioSourcePath,
   }) async {
-    if (audioSourcePath.isEmpty) {
+    if (audioSourcePath.isEmpty || !_isLocalAudioSource(audioSourcePath)) {
       return null;
     }
 
@@ -57,10 +56,7 @@ class AlbumArtService {
     }
 
     final future = _inFlightResolutions.putIfAbsent(audioSourcePath, () async {
-      final raw = await _loadArtworkBytes(
-        audioSourcePath,
-        existingPath: existingPath,
-      );
+      final raw = await _loadArtworkBytes(audioSourcePath);
       if (raw == null || raw.isEmpty) {
         await _persistArtworkPath(audioSourcePath, null);
         return null;
@@ -84,7 +80,9 @@ class AlbumArtService {
   Future<String?> resolveArtistArtworkPath({
     required String audioSourcePath,
   }) async {
-    if (audioSourcePath.isEmpty) return null;
+    if (audioSourcePath.isEmpty || !_isLocalAudioSource(audioSourcePath)) {
+      return null;
+    }
 
     final future = _inFlightArtistResolutions.putIfAbsent(
       audioSourcePath,
@@ -119,8 +117,8 @@ class AlbumArtService {
 
   /// Resolves artwork for [songs] that have no usable pointer yet. Safe to
   /// run detached after a scan: already-resolved songs short-circuit on the
-  /// [resolveArtworkPath] existence check, network songs are skipped (their
-  /// covers resolve lazily via the marker).
+  /// [resolveArtworkPath] existence check, and stale network rows are skipped
+  /// instead of being treated as local files.
   ///
   /// [onProgress] reports `(completed, total)` after every song, including
   /// skipped and failed ones, so callers can show a deterministic count.
@@ -133,10 +131,9 @@ class AlbumArtService {
     onProgress?.call(completed, total);
     for (final song in songs) {
       try {
+        if (song.sourceType != null) continue;
         final path = song.filePath;
         if (path.isEmpty) continue;
-        final scheme = Uri.tryParse(path)?.scheme;
-        if (isSupportedNetworkProtocol(scheme)) continue;
         // One unreadable/corrupt file must not abort artwork backfill for the
         // rest of the folder.
         try {
@@ -230,43 +227,12 @@ class AlbumArtService {
       return false;
     }
 
-    if (path.startsWith('http')) {
-      return true;
-    }
-
     return File(path).exists();
   }
 
-  /// Fetch raw artwork bytes. Network songs resolve through their protocol
-  /// service's cover endpoint using the `<proto>-cover://<marker>` stored in
-  /// the entity's albumArtPath. Local songs try embedded art first, then fall
-  /// back to a nearby folder cover (`cover.jpg`, `folder.png`, …).
-  Future<Uint8List?> _loadArtworkBytes(
-    String audioSourcePath, {
-    String? existingPath,
-  }) async {
-    final uri = Uri.tryParse(audioSourcePath);
-    if (uri != null && isSupportedNetworkProtocol(uri.scheme)) {
-      final service = networkSourceServiceFor(uri.scheme);
-      final marker =
-          existingPath != null && existingPath.startsWith(service.coverScheme)
-          ? existingPath.substring(service.coverScheme.length)
-          : null;
-      if (marker == null || marker.isEmpty) return null;
-
-      final serverId = int.tryParse(uri.host);
-      if (serverId == null) return null;
-      final server = await Database.networkServers.get(serverId);
-      if (server == null) return null;
-
-      try {
-        final bytes = await service.getCoverArt(server, marker);
-        return Uint8List.fromList(bytes);
-      } catch (e) {
-        return null;
-      }
-    }
-
+  /// Fetch raw artwork bytes from local sources: embedded art first, then a
+  /// nearby folder cover (`cover.jpg`, `folder.png`, …).
+  Future<Uint8List?> _loadArtworkBytes(String audioSourcePath) async {
     final embedded = await _loadEmbeddedArtworkBytes(audioSourcePath);
     if (embedded != null && embedded.isNotEmpty) {
       return embedded;
@@ -442,6 +408,15 @@ class AlbumArtService {
     return _rustOnlyArtExtensions.contains(_extensionOf(path));
   }
 
+  /// Only filesystem paths, `file:` URIs and Android SAF `content:` URIs are
+  /// local. Stale network rows in the library must never be read as files.
+  bool _isLocalAudioSource(String source) {
+    final scheme = Uri.tryParse(source)?.scheme;
+    if (scheme == null || scheme.isEmpty) return true;
+    final lower = scheme.toLowerCase();
+    return lower == 'file' || lower == 'content';
+  }
+
   String _plainPathOf(String source) {
     if (source.startsWith('file://')) {
       return Uri.tryParse(source)?.toFilePath() ?? source;
@@ -464,15 +439,7 @@ class AlbumArtService {
     String? albumArtPath,
   ) async {
     try {
-      // Network songs keep their cover-art marker in the DB so a cache
-      // eviction can always re-resolve; only the in-memory playlist is
-      // updated with the resolved local path.
-      final isNetwork = isSupportedNetworkProtocol(
-        Uri.tryParse(audioSourcePath)?.scheme,
-      );
-      if (!isNetwork) {
-        await _songRepository.updateAlbumArtPath(audioSourcePath, albumArtPath);
-      }
+      await _songRepository.updateAlbumArtPath(audioSourcePath, albumArtPath);
       if (albumArtPath != null) {
         PlayerService().syncAlbumArtPaths(
           filePaths: [audioSourcePath],
@@ -494,8 +461,7 @@ const int _artworkMaxDimension = 1000;
 const int _artworkPassthroughBytes = 512 * 1024;
 const int _artworkJpegQuality = 85;
 
-/// Sibling cover stems, matching the SMB/WebDAV scanners so local folders
-/// behave the same.
+/// Sibling cover stems used by the local folder scanner.
 const List<String> _folderCoverStems = [
   'cover',
   'folder',

@@ -245,26 +245,19 @@ void main() {
         strings.tracksLikedSongsPlaylists(0, 0, 0),
         '0 na kanta\n0 mga paborito mo\n0 playlist',
       );
-      expect(strings.updateAvailable, 'Yun oh! May bagong update na naman!');
       expect(strings.playingLabel, 'Tumutugtog');
       expect(strings.nowPlaying, 'Kasalukuyang tumutugtog');
-      expect(
-        strings.filipinoDonationNote,
-        'Donations will help me a lot! Hehehe. Sana masarap ulam mo lagi!',
-      );
       expect(
         strings.configureYourMusicExperience,
         'Dito mo ayusin mga configuration ng settings mo.',
       );
       expect(strings.addedToFavorites, 'Goods, na sa favorites mo na.');
       expect(strings.removedFromFavorites3, 'Okay, naalis na po.');
-      expect(strings.aboutThem, 'Tungkol sa kanila');
       expect(
         <String>[
           strings.playerMenuAddToQueue,
           strings.playerMenuAddToPlaylist,
           strings.playerMenuSetAlbumArt,
-          strings.playerMenuRefreshAlbumArt,
           strings.playerMenuEditMetadata,
           strings.playerMenuSleepTimer,
           strings.playerMenuShare,
@@ -273,7 +266,6 @@ void main() {
           'Dagdag ba natin sa queue mo?',
           'Dagdag ba natin sa playlist mo?',
           'Lagyan natin ng album art para di blangko.',
-          'Refresh natin yung album art.',
           'May babaguhin ka ba sa metadata?',
           'Sleep timer?',
           'Share mo?',
@@ -297,12 +289,7 @@ void main() {
         strings.englishForFilipino.playerMenuAddToQueue,
         en['playerMenuAddToQueue'],
       );
-      expect(
-        strings.englishForFilipino.playerMenuRefreshAlbumArt,
-        en['playerMenuRefreshAlbumArt'],
-      );
       expect(strings.englishForFilipino.settings, en['settings']);
-      expect(strings.englishForFilipino.soloDeveloper, en['soloDeveloper']);
       expect(strings.search, filipino['search']);
       final englishCopy = strings.englishForFilipino;
       expect(

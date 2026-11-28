@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auno_player/src/rust/frb_generated.dart';
 import 'package:auno_player/app/app.dart';
@@ -11,6 +13,7 @@ import 'package:auno_player/services/display_mode_service.dart';
 import 'package:auno_player/services/external_playback_service.dart';
 import 'package:auno_player/services/permission_service.dart';
 import 'package:auno_player/services/player_service.dart';
+import 'package:auno_player/services/playback_clock.dart';
 import 'package:auno_player/services/playback_cache_maintenance.dart';
 import 'package:auno_player/services/process_exit_diagnostics_service.dart';
 import 'package:auno_player/services/uac2_preferences_service.dart';
@@ -23,6 +26,24 @@ import 'package:auno_player/src/rust/api/logging.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Edge-to-edge now playing: artwork reaches y = 0 behind a transparent
+  // status bar, and the navigation bar blends into the ambient gradient.
+  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarDividerColor: Colors.transparent,
+    ),
+  );
+
+  // 2–4 GB devices cannot afford Flutter's default 100 MB / 1000-entry image
+  // cache. Album art is downsampled at every call site; this is the hard
+  // ceiling that keeps a large library scroll from thrashing the heap.
+  final imageCache = PaintingBinding.instance.imageCache;
+  imageCache.maximumSize = 80;
+  imageCache.maximumSizeBytes = 35 << 20;
 
   // Snapshot install freshness before anything can write to the preference
   // store: new installations start on the adaptive refresh-rate default.
@@ -57,6 +78,9 @@ Future<void> main() async {
   unawaited(ProcessExitDiagnosticsService().reportPreviousExits());
 
   await Database.init();
+
+  // Frame-driven position derived from the engine's 50 ms anchor ticks.
+  PlaybackClock.instance.attach(PlayerService());
 
   final externalPlaybackHandled = await ExternalPlaybackService().initialize();
   if (!externalPlaybackHandled) {

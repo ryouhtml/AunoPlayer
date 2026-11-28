@@ -6,9 +6,21 @@
 import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-/// User-facing preference for the Android low-level audio API that Oboe wraps.
+
+            
+
+            
+
+            /// User-facing preference for the Android low-level audio API that Oboe wraps.
 /// `Auto` lets Oboe choose (AAudio then OpenSL ES); the explicit variants force
 /// that API first, with `Unspecified` as a safety net so audio still plays if the
 /// chosen API is unavailable (e.g. AAudio on API 26). Bluetooth always defers to
 /// Oboe's default since exclusive mode is wrong for the mixer path.
-enum AudioApiPreference { auto, aAudio, openSles }
+enum AudioApiPreference {
+                    auto,
+aAudio,
+openSles,
+                    ;
+                    
+                }
+            

@@ -97,7 +97,6 @@ Widget _host(
     playlistsProvider.overrideWith(() => _FixturePlaylists(playlistError)),
     navBarConfigProvider.overrideWith(_NavBarWithoutSearch.new),
     currentSongProvider.overrideWithValue(null),
-    isCastingProvider.overrideWithValue(false),
   ],
   child: MaterialApp(
     theme: AppTheme.darkTheme,

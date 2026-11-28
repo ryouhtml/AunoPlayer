@@ -37,6 +37,12 @@ class SongRepository {
     return songs;
   }
 
+  /// Get one song by its MediaStore/Isar id.
+  Future<Song?> getSongById(int id) async {
+    final entity = await _isar.songEntitys.get(id);
+    return entity == null ? null : _entityToSong(entity);
+  }
+
   /// Get songs by folder URI.
   Future<List<Song>> getSongsByFolder(String folderUri) async {
     final entities = await _isar.songEntitys
@@ -403,7 +409,7 @@ class SongRepository {
   }
 
   /// Persist probed audio format for songs whose sync couldn't read tags
-  /// (SMB/WebDAV). Only fills missing fields, leaving identity and edits intact.
+  /// (legacy network rows). Only fills missing fields, leaving identity and edits intact.
   Future<void> updateAudioFormat(
     String filePath, {
     int? sampleRate,
@@ -734,7 +740,7 @@ class SongRepository {
   }
 
   /// Build a resolution string from entity properties. Null when the source
-  /// sync had no audio metrics (SMB/WebDAV) — callers hide the chip instead
+  /// sync had no audio metrics — callers hide the chip instead
   /// of showing a placeholder.
   String? _buildResolutionString(SongEntity entity) {
     final parts = <String>[];
