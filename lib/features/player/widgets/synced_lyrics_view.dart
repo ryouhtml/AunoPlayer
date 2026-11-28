@@ -138,7 +138,9 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView>
   }
 
   void _onPositionChanged() {
-    if (!widget.active) return;
+    // Strip mode drives its own ValueListenableBuilder; the full-list spring
+    // state is never initialized there.
+    if (widget.strip || !widget.active) return;
     final position = _positionNotifier.value;
     final deltaMs = position.inMilliseconds - _lastTickPosition.inMilliseconds;
     _lastTickPosition = position;
