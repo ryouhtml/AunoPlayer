@@ -12,6 +12,7 @@ import 'package:auno_player/widgets/common/flick_artwork_placeholder.dart';
 import 'package:auno_player/features/songs/widgets/album_art_picker_bottom_sheet.dart';
 import 'package:auno_player/features/songs/widgets/metadata_editor_bottom_sheet.dart';
 import 'package:auno_player/providers/providers.dart';
+import 'package:auno_player/features/player/widgets/audio_analysis_sheet.dart';
 import 'package:auno_player/features/player/widgets/share/share_bottom_sheet.dart';
 import 'package:auno_player/features/player/widgets/song_metadata_sheet.dart';
 import 'package:auno_player/features/player/widgets/add_to_playlist_sheet.dart';
@@ -251,6 +252,16 @@ class SongActionsSheet extends ConsumerWidget {
                           SongMetadataSheet.show(context, activeSong);
                         },
                       ),
+                      if (audioAnalysisUnavailableReason(activeSong) == null)
+                        _buildSongActionTile(
+                          context: sheetContext,
+                          icon: Icons.analytics_outlined,
+                          label: l10n.analyzeTrack,
+                          onTap: () {
+                            Navigator.pop(sheetContext);
+                            showAudioAnalysisSheet(context, activeSong);
+                          },
+                        ),
                       _buildSongActionTile(
                         context: sheetContext,
                         icon: LucideIcons.fileText,

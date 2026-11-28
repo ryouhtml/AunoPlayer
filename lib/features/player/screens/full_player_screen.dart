@@ -1695,6 +1695,24 @@ class _FullPlayerScreenState extends ConsumerState<FullPlayerScreen>
                   showTimeLabels: !_isLyricsMode,
                 ),
               ),
+              // Active-line strip: tap opens the full lyrics view. The panel
+              // loads through the same lyrics engine (local or online).
+              if (!_isLyricsMode &&
+                  !_isVisualizationMode &&
+                  !_isImmersiveFullView)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: InlineLyricsPanel(
+                    song: song,
+                    playerService: _playerService,
+                    lyricsService: _lyricsService,
+                    albumColor: albumColor,
+                    positionNotifier: _throttledPositionNotifier,
+                    active: true,
+                    strip: true,
+                    onStripTap: () => _setLyricsMode(!_isLyricsMode),
+                  ),
+                ),
               // Original bottom spacing: immersive 24-40, artworkCard directorySpacing 24-40
               SizedBox(height: context.responsive(24.0, 32.0, 40.0)),
             ],

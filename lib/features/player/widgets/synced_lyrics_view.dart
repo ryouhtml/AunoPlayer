@@ -42,6 +42,12 @@ class SyncedLyricsView extends ConsumerStatefulWidget {
   /// False for peek stages: renders statically without following playback.
   final bool active;
 
+  /// Compact one-line presentation under the transport controls. Reads the
+  /// same [lyrics] and [positionNotifier] as the scrolling list — no second
+  /// parser and no inferred timing.
+  final bool strip;
+  final VoidCallback? onStripTap;
+
   const SyncedLyricsView({
     super.key,
     required this.playerService,
@@ -50,6 +56,8 @@ class SyncedLyricsView extends ConsumerStatefulWidget {
     this.albumColor,
     this.positionNotifier,
     this.active = true,
+    this.strip = false,
+    this.onStripTap,
   });
 
   @override
@@ -556,8 +564,69 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView>
     );
   }
 
+  Widget _buildStrip(BuildContext context) {
+    final alignment = resolveLyricsAlignment(
+      ref.watch(appPreferencesProvider).lyricsTextAlign,
+    );
+    return ValueListenableBuilder<Duration>(
+      valueListenable: _positionNotifier,
+      builder: (context, position, _) {
+        var index = widget.lyricsService.findCurrentLineIndex(
+          widget.lyrics,
+          position,
+        );
+        // Plain lyrics carry no timing. Showing the first line is display,
+        // not an inferred timestamp — no line is ever auto-timed.
+        if (index < 0 && widget.lyrics.lines.isNotEmpty) index = 0;
+        final text = index >= 0 && index < widget.lyrics.lines.length
+            ? widget.lyrics.lines[index].text
+            : '';
+        return Semantics(
+          button: true,
+          label: context.l10n.showLyrics,
+          child: GestureDetector(
+            onTap: widget.onStripTap,
+            behavior: HitTestBehavior.opaque,
+            child: Container(
+              height: 44,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.06),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      text,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: alignment,
+                      style: const TextStyle(
+                        fontFamily: 'GoogleSansFlex',
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const Icon(
+                    Icons.keyboard_arrow_up_rounded,
+                    size: 18,
+                    color: Colors.white70,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (widget.strip) return _buildStrip(context);
     final alignment = resolveLyricsAlignment(
       ref.watch(appPreferencesProvider).lyricsTextAlign,
     );

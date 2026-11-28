@@ -26,6 +26,11 @@ class InlineLyricsPanel extends ConsumerStatefulWidget {
   final ValueNotifier<Duration>? positionNotifier;
   final bool active;
 
+  /// Renders a compact active-line strip under the transport controls instead
+  /// of the full panel. Uses the same repository load as the full view.
+  final bool strip;
+  final VoidCallback? onStripTap;
+
   const InlineLyricsPanel({super.key,
     required this.playerService,
     required this.lyricsService,
@@ -33,6 +38,8 @@ class InlineLyricsPanel extends ConsumerStatefulWidget {
     this.albumColor,
     this.positionNotifier,
     this.active = true,
+    this.strip = false,
+    this.onStripTap,
   });
 
   @override
@@ -380,6 +387,24 @@ class _InlineLyricsPanelState extends ConsumerState<InlineLyricsPanel> {
   }
 
   Widget _buildBody(BuildContext context) {
+    if (widget.strip) {
+      if (_isLoading) return const SizedBox(height: 44);
+      final stripLyrics = _lyricsData;
+      if (stripLyrics == null || stripLyrics.lines.isEmpty) {
+        return const SizedBox.shrink();
+      }
+      return SyncedLyricsView(
+        playerService: widget.playerService,
+        lyricsService: widget.lyricsService,
+        lyrics: stripLyrics,
+        albumColor: widget.albumColor,
+        positionNotifier: widget.positionNotifier,
+        active: widget.active,
+        strip: true,
+        onStripTap: widget.onStripTap,
+      );
+    }
+
     if (_isLoading) {
       return const Center(
         child: CircularProgressIndicator(color: AppColors.accent),
