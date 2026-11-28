@@ -17,8 +17,7 @@ import 'package:auno_player/features/player/widgets/inline_lyrics_panel.dart';
 import 'package:auno_player/features/player/widgets/lyrics_mode_waveform_strip.dart';
 import 'package:auno_player/features/player/widgets/visualizer_art_box.dart';
 import 'package:auno_player/features/player/widgets/waveform_layer.dart';
-import 'package:auno_player/widgets/common/cached_image_widget.dart';
-import 'package:auno_player/widgets/common/flick_artwork_placeholder.dart';
+import 'package:auno_player/widgets/common/marquee_widget.dart';
 
 /// Which part of the stage a layout needs.
 ///
@@ -172,7 +171,12 @@ class SongStage extends ConsumerWidget {
       layoutBuilder: (currentChild, previousChildren) {
         return Stack(
           fit: StackFit.expand,
-          children: [...previousChildren, ?currentChild],
+          children: [
+            ...previousChildren.map(
+              (child) => HeroMode(enabled: false, child: child),
+            ),
+            ?currentChild,
+          ],
         );
       },
       transitionBuilder: (Widget child, Animation<double> animation) {
@@ -284,6 +288,25 @@ class SongStage extends ConsumerWidget {
   // Immersive
   // ---------------------------------------------------------------------------
 
+  Widget _buildImmersiveArtwork(
+    BuildContext context, {
+    bool fullBleed = false,
+  }) {
+    final size = context.responsive(76.0, 84.0, 92.0) * immersiveFullViewScale;
+    return _heroWrapped(
+      AlbumArtBox(
+        song: song,
+        size: fullBleed ? null : size,
+        playerService: playerService,
+        onRotationEnabledChanged: onRotationEnabledChanged,
+        initialVinyl: vinylMode,
+        onVinylChanged: onVinylChanged,
+        showFrame: false,
+        fullBleed: fullBleed,
+      ),
+    );
+  }
+
   Widget _buildImmersiveLayout(BuildContext context) {
     final layout = lyricsMode
         ? KeyedSubtree(
@@ -330,6 +353,12 @@ class SongStage extends ConsumerWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          bottom: context.responsive(12.0, 14.0, 16.0),
+                        ),
+                        child: _buildImmersiveArtwork(context),
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: context.responsive(12.0, 16.0, 20.0),
@@ -444,7 +473,9 @@ class SongStage extends ConsumerWidget {
         return Stack(
           fit: StackFit.expand,
           children: [
-            ...previousChildren,
+            ...previousChildren.map(
+              (child) => HeroMode(enabled: false, child: child),
+            ),
             ...?currentChild == null ? null : [currentChild],
           ],
         );
@@ -466,108 +497,48 @@ class SongStage extends ConsumerWidget {
   }
 
   Widget _buildImmersiveFullViewLayout(BuildContext context) {
-    final artworkSize =
-        context.responsive(56.0, 60.0, 64.0) * immersiveFullViewScale;
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(
-          context.responsive(16.0, 20.0, 24.0),
-          0,
-          context.responsive(16.0, 20.0, 24.0),
-          context.responsive(20.0, 24.0, 28.0),
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: _buildImmersiveArtwork(context, fullBleed: true),
         ),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 560),
-          child: Container(
-            padding: EdgeInsets.all(
-              context.responsive(10.0, 12.0, 14.0) * immersiveFullViewScale,
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(
+              context.responsive(16.0, 20.0, 24.0),
+              0,
+              context.responsive(16.0, 20.0, 24.0),
+              context.responsive(20.0, 24.0, 28.0),
             ),
-            decoration: BoxDecoration(
-              color: const Color(0xFF121212).withValues(alpha: 0.72),
-              borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
-            ),
-            child: Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                    18 * immersiveFullViewScale,
-                  ),
-                  child: SizedBox(
-                    width: artworkSize,
-                    height: artworkSize,
-                    child: CachedImageWidget(
-                      imagePath: song.albumArt,
-                      audioSourcePath: song.filePath,
-                      fit: BoxFit.cover,
-                      placeholder: Container(
-                        color: Colors.white.withValues(alpha: 0.05),
-                        child: FlickArtworkPlaceholder(
-                          size: artworkSize * 0.44,
-                          opacity: 0.92,
-                        ),
-                      ),
-                      errorWidget: Container(
-                        color: Colors.white.withValues(alpha: 0.05),
-                        child: FlickArtworkPlaceholder(
-                          size: artworkSize * 0.44,
-                          opacity: 0.92,
-                        ),
-                      ),
-                    ),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 560),
+              child: Container(
+                padding: EdgeInsets.all(
+                  context.responsive(10.0, 12.0, 14.0) *
+                      immersiveFullViewScale,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF121212).withValues(alpha: 0.72),
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.08),
                   ),
                 ),
-                SizedBox(width: context.responsive(12.0, 14.0, 16.0)),
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (immersiveShowTitle)
-                        Text(
-                          song.title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontFamily: 'GoogleSansFlex',
-                            fontSize: context.responsiveText(
-                              context.responsive(18.0, 19.0, 21.0) *
-                                  immersiveTextScale,
-                            ),
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                            height: 1.12,
-                          ),
-                        ),
-                      if (immersiveShowTitle && immersiveShowArtist)
-                        SizedBox(height: context.responsive(6.0, 7.0, 8.0)),
-                      if (immersiveShowArtist)
-                        GestureDetector(
-                          onTap: () => onNavigateToArtistDetail(song),
-                          child: Text(
-                            song.artist,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontFamily: 'GoogleSansFlex',
-                              fontSize: context.responsiveText(
-                                context.responsive(13.0, 14.0, 15.0) *
-                                    immersiveTextScale,
-                              ),
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white.withValues(alpha: 0.78),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
+                child: ImmersiveMetadataRow(
+                  song: song,
+                  showTitle: immersiveShowTitle,
+                  showArtist: immersiveShowArtist,
+                  textScale: immersiveTextScale,
+                  onNavigateToArtistDetail: onNavigateToArtistDetail,
                 ),
-              ],
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 
@@ -693,7 +664,9 @@ class SongStage extends ConsumerWidget {
                     return Stack(
                       fit: StackFit.expand,
                       children: [
-                        ...previousChildren,
+                        ...previousChildren.map(
+                          (child) => HeroMode(enabled: false, child: child),
+                        ),
                         ...?currentChild == null ? null : [currentChild],
                       ],
                     );
@@ -1046,5 +1019,154 @@ class SongStage extends ConsumerWidget {
         currentSong: song,
       ),
     );
+  }
+}
+
+/// Compact metadata strip used by the immersive full-view overlay.
+///
+/// Badges only render values that exist on [Song]; no bitrate or container
+/// detail is inferred.
+class ImmersiveMetadataRow extends StatelessWidget {
+  const ImmersiveMetadataRow({
+    super.key,
+    required this.song,
+    required this.onNavigateToArtistDetail,
+    this.showTitle = true,
+    this.showArtist = true,
+    this.textScale = 1.0,
+  });
+
+  final Song song;
+  final void Function(Song song) onNavigateToArtistDetail;
+  final bool showTitle;
+  final bool showArtist;
+  final double textScale;
+
+  @override
+  Widget build(BuildContext context) {
+    final codec = song.fileType.trim().isEmpty
+        ? null
+        : song.fileType.toUpperCase();
+    final detail = _detailLabel(song);
+
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (showTitle)
+                MarqueeWidget(
+                  child: Text(
+                    song.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
+                    style: TextStyle(
+                      fontFamily: 'GoogleSansFlex',
+                      fontSize: context.responsiveText(
+                        context.responsive(18.0, 19.0, 21.0) * textScale,
+                      ),
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                      height: 1.12,
+                    ),
+                  ),
+                ),
+              if (showTitle && showArtist)
+                SizedBox(height: context.responsive(6.0, 7.0, 8.0)),
+              if (showArtist)
+                GestureDetector(
+                  onTap: () => onNavigateToArtistDetail(song),
+                  child: Text(
+                    song.artist,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontFamily: 'GoogleSansFlex',
+                      fontSize: context.responsiveText(
+                        context.responsive(13.0, 14.0, 15.0) * textScale,
+                      ),
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white.withValues(alpha: 0.78),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+        if (codec != null || detail != null) ...[
+          SizedBox(width: context.responsive(8.0, 10.0, 12.0)),
+          Flexible(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                if (codec != null) _badge(context, codec),
+                if (codec != null && detail != null)
+                  SizedBox(height: context.responsive(4.0, 5.0, 6.0)),
+                if (detail != null)
+                  Text(
+                    detail,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                      fontFamily: 'GoogleSansFlex',
+                      fontSize: context.responsive(9.0, 10.0, 11.0),
+                      color: Colors.white.withValues(alpha: 0.72),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _badge(BuildContext context, String label) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: context.responsive(4.0, 5.0, 6.0),
+        vertical: 2,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.2),
+        borderRadius: BorderRadius.circular(3),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontFamily: 'GoogleSansFlex',
+          fontSize: context.responsive(9.0, 10.0, 11.0),
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  static String? _detailLabel(Song song) {
+    final dsdLabel = song.dsdRateLabel;
+    if (song.isDsd && dsdLabel.isNotEmpty) return dsdLabel;
+
+    final resolution = song.resolution;
+    if (resolution != null && resolution.trim().isNotEmpty) return resolution;
+
+    final bits = song.bitDepth;
+    final rate = song.sampleRate;
+    if (bits != null && rate != null) {
+      return '${bits}-bit/${_khzLabel(rate)}';
+    }
+    if (bits != null) return '${bits}-bit';
+    if (rate != null) return _khzLabel(rate);
+    return null;
+  }
+
+  static String _khzLabel(int rate) {
+    final khz = rate / 1000.0;
+    if (khz == khz.roundToDouble()) return '${khz.round()}kHz';
+    return '${khz.toStringAsFixed(1)}kHz';
   }
 }

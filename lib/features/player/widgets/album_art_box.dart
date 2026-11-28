@@ -21,6 +21,10 @@ class AlbumArtBox extends ConsumerStatefulWidget {
   final ValueChanged<bool>? onVinylChanged;
   final bool showFrame;
 
+  /// Renders artwork edge-to-edge (~56% of screen height) with a bottom fade.
+  /// Gesture recognizers and artwork loading are identical to the framed box.
+  final bool fullBleed;
+
   const AlbumArtBox({
     super.key,
     required this.song,
@@ -30,6 +34,7 @@ class AlbumArtBox extends ConsumerStatefulWidget {
     this.initialVinyl = false,
     this.onVinylChanged,
     this.showFrame = true,
+    this.fullBleed = false,
   });
 
   @override
@@ -349,8 +354,152 @@ class _AlbumArtBoxState extends ConsumerState<AlbumArtBox>
     );
   }
 
+  Widget _buildFullBleed(BuildContext context) {
+    final screen = MediaQuery.sizeOf(context);
+    final width = screen.width;
+    final height = screen.height * 0.56;
+    final minSide = math.min(width, height);
+    final iconSize = math.max(52.0, minSide * 0.24);
+    final surface = Theme.of(context).colorScheme.surface;
+
+    _rotationRecognizer.discCenter = () => Offset(width / 2, height / 2);
+
+    return RawGestureDetector(
+      behavior: HitTestBehavior.opaque,
+      gestures: {
+        DoubleTapGestureRecognizer:
+            GestureRecognizerFactoryWithHandlers<DoubleTapGestureRecognizer>(
+              () => _doubleTapRecognizer,
+              (_) {},
+            ),
+        TapGestureRecognizer:
+            GestureRecognizerFactoryWithHandlers<TapGestureRecognizer>(
+              () => _singleTapRecognizer,
+              (_) {},
+            ),
+        if (_isRotationEnabled)
+          _RotationSeekRecognizer:
+              GestureRecognizerFactoryWithHandlers<_RotationSeekRecognizer>(
+                () => _rotationRecognizer,
+                (_) {},
+              ),
+      },
+      child: SizedBox(
+        width: width,
+        height: height,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            AnimatedBuilder(
+              animation: Listenable.merge([
+                _morphController,
+                _spinController,
+                _seekAngleController,
+                _outlineController,
+                _userRotationOffset,
+              ]),
+              builder: (context, _) {
+                final rawT = Curves.easeInOutCubic.transform(
+                  _morphController.value,
+                );
+                final t = rawT.isFinite ? rawT.clamp(0.0, 1.0) : 0.0;
+                final rawAngle =
+                    _spinController.value * 2 * math.pi * t +
+                    _seekAngleController.value +
+                    _userRotationOffset.value;
+                final spinAngle = rawAngle.isFinite ? rawAngle : 0.0;
+
+                return Transform.rotate(
+                  angle: spinAngle,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      if (t > 0.001)
+                        Center(
+                          child: Opacity(
+                            opacity: t,
+                            child: SizedBox(
+                              width: minSide,
+                              height: minSide,
+                              child: CustomPaint(
+                                painter: _VinylDiscPainter(
+                                  labelRatio: _labelRatio,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ClipRect(
+                        child: SizedBox.expand(
+                          child: _buildArtContent(
+                            iconSize: iconSize,
+                            t: t,
+                          ),
+                        ),
+                      ),
+                      if (t > 0.35)
+                        Center(
+                          child: IgnorePointer(
+                            child: Container(
+                              width: minSide * 0.045,
+                              height: minSide * 0.045,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: const Color(0xFF050505).withValues(
+                                  alpha: t,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(
+                                      alpha: 0.55 * t,
+                                    ),
+                                    blurRadius: 2,
+                                    offset: const Offset(0, 0.5),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      if (_isVinyl && _outlineController.value > 0)
+                        Positioned.fill(
+                          child: CustomPaint(
+                            painter: _VinylOutlinePainter(
+                              progress: _outlineController.value,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            IgnorePointer(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      surface.withValues(alpha: 0.24),
+                      Colors.transparent,
+                      surface.withValues(alpha: 0.96),
+                    ],
+                    stops: const [0.0, 0.38, 1.0],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (widget.fullBleed) return _buildFullBleed(context);
+
     final double resolvedSize =
         widget.size ?? context.responsive(280.0, 320.0, 360.0);
 
