@@ -184,4 +184,54 @@ void main() {
         orderedEquals(Matrix4.identity().storage));
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('wheel artwork uses the canonical Hero tag with easeOutCubic', (
+    tester,
+  ) async {
+    setView(tester);
+    await pumpWheel(tester);
+
+    final hero = tester.widget<Hero>(
+      find.byWidgetPredicate(
+        (widget) => widget is Hero && widget.tag == 'song_art_wheel-1',
+      ),
+    );
+    expect(hero.curve, Curves.easeOutCubic);
+    expect(hero.transitionOnUserGestures, isTrue);
+
+    final orbit = tester.widget<OrbitScroll>(find.byType(OrbitScroll));
+    expect(orbit.heroTagForSong, isNotNull);
+    expect(orbit.heroTagForSong!(_songs[1]), 'song_art_wheel-1');
+    expect(
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is Hero &&
+            (widget.tag as String).startsWith('song-art-'),
+      ),
+      findsNothing,
+    );
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('reduce motion suppresses artwork Heroes', (tester) async {
+    setView(tester);
+    await pumpWheel(tester, reduceMotion: true);
+    expect(find.byType(Hero), findsNothing);
+
+    await pumpWheel(tester, disableAnimations: true);
+    expect(find.byType(Hero), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('selection mode suppresses artwork Heroes and tags', (
+    tester,
+  ) async {
+    setView(tester);
+    await pumpWheel(tester, isSelectionMode: true);
+
+    expect(find.byType(Hero), findsNothing);
+    final orbit = tester.widget<OrbitScroll>(find.byType(OrbitScroll));
+    expect(orbit.heroTagForSong, isNull);
+    expect(tester.takeException(), isNull);
+  });
 }

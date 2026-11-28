@@ -147,6 +147,7 @@ class SongStage extends ConsumerWidget {
     return Hero(
       tag: tag,
       transitionOnUserGestures: true,
+      curve: Curves.easeOutCubic,
       child: child,
     );
   }

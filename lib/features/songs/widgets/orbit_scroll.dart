@@ -95,6 +95,10 @@ class OrbitScroll extends StatefulWidget {
   /// Optional label attached to each card for screen readers.
   final String Function(int index)? itemSemanticsLabel;
 
+  /// Optional Hero tag for a song's artwork. Only the library wheel supplies
+  /// this; previews and non-playable surfaces leave it null.
+  final Object? Function(Song song)? heroTagForSong;
+
   /// Extra bottom room the path ribbon may paint through without letting the
   /// card stage or gesture surface move into the bottom bars.
   final double pathOverflowBottom;
@@ -140,6 +144,7 @@ class OrbitScroll extends StatefulWidget {
     this.opacityForDistance,
     this.itemTransform,
     this.itemSemanticsLabel,
+    this.heroTagForSong,
     this.pathOverflowBottom = 0.0,
     this.paintOverflowTop = 0.0,
     this.horizontalPaintOverflow = EdgeInsets.zero,
@@ -892,6 +897,7 @@ class _OrbitScrollState extends State<OrbitScroll>
         onOpenActions: widget.isSelectionMode
             ? null
             : () => widget.onSongActions?.call(actualIndex),
+        heroTag: widget.heroTagForSong?.call(widget.songs[actualIndex]),
       );
 
       final matrix = widget.itemTransform?.call(diff);

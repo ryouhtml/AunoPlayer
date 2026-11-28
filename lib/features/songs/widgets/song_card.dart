@@ -70,6 +70,10 @@ class SongCard extends StatefulWidget {
   /// the affordance is hidden (e.g. selection mode or compact previews).
   final VoidCallback? onOpenActions;
 
+  /// Hero tag for the artwork's zoom into the full player. Null disables the
+  /// Hero (selection mode, reduce motion, and non-library previews).
+  final Object? heroTag;
+
   const SongCard({
     super.key,
     required this.song,
@@ -91,6 +95,7 @@ class SongCard extends StatefulWidget {
     this.artworkAbove = false,
     this.backgroundStyle = OrbitCardBackgroundStyle.blackGradient,
     this.onOpenActions,
+    this.heroTag,
   });
 
   @override
@@ -363,11 +368,14 @@ class _SongCardState extends State<SongCard> {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              _buildRawImage(
-                widget.song.albumArt ?? '',
-                audioSourcePath: widget.song.filePath,
-                artSize:
-                    widget.isSelected ? widget.artSizeLarge : widget.artSizeBase,
+              _artworkHero(
+                _buildRawImage(
+                  widget.song.albumArt ?? '',
+                  audioSourcePath: widget.song.filePath,
+                  artSize: widget.isSelected
+                      ? widget.artSizeLarge
+                      : widget.artSizeBase,
+                ),
               ),
               // Hairline frame keeps the cover edge visible on bright artwork.
               DecoratedBox(
@@ -413,12 +421,14 @@ class _SongCardState extends State<SongCard> {
                         borderRadius: BorderRadius.circular(
                           AppConstants.radiusMd,
                         ),
-                        child: _buildRawImage(
-                          widget.song.albumArt ?? '',
-                          audioSourcePath: widget.song.filePath,
-                          artSize: math.max(
-                            artSize,
-                            constraints.maxWidth,
+                        child: _artworkHero(
+                          _buildRawImage(
+                            widget.song.albumArt ?? '',
+                            audioSourcePath: widget.song.filePath,
+                            artSize: math.max(
+                              artSize,
+                              constraints.maxWidth,
+                            ),
                           ),
                         ),
                       ),
@@ -702,6 +712,21 @@ class _SongCardState extends State<SongCard> {
           colors: [tint, Color.lerp(tint, Colors.black, 0.72)!],
         ),
       ),
+    );
+  }
+
+  /// Wraps the thumbnail with the shared Hero tag used by the full player.
+  /// Without a tag the image renders unchanged (preview, multiselect, reduced
+  /// motion). `transitionOnUserGestures` keeps the flight alive during the
+  /// preceding tap-scale feedback.
+  Widget _artworkHero(Widget child) {
+    final tag = widget.heroTag;
+    if (tag == null) return child;
+    return Hero(
+      tag: tag,
+      transitionOnUserGestures: true,
+      curve: Curves.easeOutCubic,
+      child: child,
     );
   }
 

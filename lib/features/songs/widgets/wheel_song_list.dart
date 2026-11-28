@@ -151,6 +151,11 @@ class WheelSongList extends StatelessWidget {
         final song = songs[index];
         return '${l10n.play}: ${song.title} — ${song.artist}';
       },
+      // No Hero flight during multiselect or reduced motion; both keep the
+      // plain artwork so a tap cannot zoom into the player.
+      heroTagForSong: reduced || isSelectionMode
+          ? null
+          : (song) => 'song_art_${song.id}',
     );
   }
 }
