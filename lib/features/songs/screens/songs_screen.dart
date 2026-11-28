@@ -22,6 +22,7 @@ import 'package:auno_player/core/utils/string_sort_utils.dart';
 import 'package:auno_player/models/song.dart';
 import 'package:auno_player/models/song_view_mode.dart';
 import 'package:auno_player/features/songs/widgets/orbit_scroll.dart';
+import 'package:auno_player/features/songs/widgets/wheel_song_list.dart';
 import 'package:auno_player/features/songs/widgets/drum_scroll_item.dart';
 import 'package:auno_player/features/songs/widgets/song_fast_index_overlay.dart';
 import 'package:auno_player/features/songs/widgets/song_actions_bottom_sheet.dart';
@@ -475,7 +476,7 @@ class _SongsScreenState extends ConsumerState<SongsScreen>
           );
         }
       },
-      child: OrbitScroll(
+      child: WheelSongList(
         scrollDirection: landscape ? Axis.horizontal : Axis.vertical,
         controller: _orbitScrollController,
         songs: songs,

@@ -83,6 +83,18 @@ class OrbitScroll extends StatefulWidget {
   final bool showGlow;
   final OrbitCardBackgroundStyle cardBackgroundStyle;
 
+  /// Optional distance-driven overrides used by the cylindrical wheel.
+  /// Distances are absolute card offsets from the focused index.
+  final double Function(double distance)? scaleForDistance;
+  final double Function(double distance)? opacityForDistance;
+
+  /// Optional per-card 3D transform. Receives a signed distance so cards
+  /// above and below the focus can tilt in opposite directions.
+  final Matrix4? Function(double distance)? itemTransform;
+
+  /// Optional label attached to each card for screen readers.
+  final String Function(int index)? itemSemanticsLabel;
+
   /// Extra bottom room the path ribbon may paint through without letting the
   /// card stage or gesture surface move into the bottom bars.
   final double pathOverflowBottom;
@@ -124,6 +136,10 @@ class OrbitScroll extends StatefulWidget {
     this.showPath = true,
     this.showGlow = true,
     this.cardBackgroundStyle = OrbitCardBackgroundStyle.blackGradient,
+    this.scaleForDistance,
+    this.opacityForDistance,
+    this.itemTransform,
+    this.itemSemanticsLabel,
     this.pathOverflowBottom = 0.0,
     this.paintOverflowTop = 0.0,
     this.horizontalPaintOverflow = EdgeInsets.zero,
@@ -204,7 +220,10 @@ class _OrbitScrollState extends State<OrbitScroll>
         oldWidget.centerYRatio != widget.centerYRatio ||
         oldWidget.cardArtSize != widget.cardArtSize ||
         oldWidget.cardWidthRatio != widget.cardWidthRatio ||
-        oldWidget.scrollDirection != widget.scrollDirection) {
+        oldWidget.scrollDirection != widget.scrollDirection ||
+        oldWidget.scaleForDistance != widget.scaleForDistance ||
+        oldWidget.opacityForDistance != widget.opacityForDistance ||
+        oldWidget.itemTransform != widget.itemTransform) {
       _transformCache.clear();
       _positionCache.clear();
     }
@@ -814,32 +833,21 @@ class _OrbitScrollState extends State<OrbitScroll>
         final position = _calculateItemPosition(diff, centerX, centerY, radius);
         final distanceFromCenter = diff.abs();
 
-        double scale;
-        if (distanceFromCenter < 1.0) {
-          // Bell-shaped ease between the selected and adjacent cards. Endpoints
-          // match the previous linear map so persisted scale preferences and
-          // the depth slider keep their exact meaning.
-          scale =
-              adjacentScale +
-              (widget.selectedScale - adjacentScale) *
-                  AppMotionMath.bell(distanceFromCenter);
-        } else if (distanceFromCenter < 2.0) {
-          scale =
-              distantScale +
-              (adjacentScale - distantScale) *
-                  AppMotionMath.bell(distanceFromCenter - 1.0);
-        } else {
-          scale = distantScale - (distanceFromCenter - 2.0) * 0.12;
-        }
-        scale = scale.clamp(0.0, math.max(1.25, widget.selectedScale));
+        final scaleOverride = widget.scaleForDistance;
+        final opacityOverride = widget.opacityForDistance;
+        final scale = scaleOverride != null
+            ? scaleOverride(distanceFromCenter)
+                .clamp(0.0, math.max(1.25, widget.selectedScale))
+                .toDouble()
+            : _defaultScale(distanceFromCenter, adjacentScale, distantScale);
 
         if (scale < 0.1) continue;
 
-        // Focus falls off over the visible window instead of a fixed slope, so
-        // wide and narrow layouts fade consistently.
         final focusSpan = math.max(2.0, widget.visibleItems / 2.0);
         final focus = AppMotionMath.bell(distanceFromCenter / focusSpan);
-        final opacity = AppMotionMath.lerpBell(focus, 0.28, 1.0);
+        final opacity = opacityOverride != null
+            ? opacityOverride(distanceFromCenter).clamp(0.0, 1.0).toDouble()
+            : AppMotionMath.lerpBell(focus, 0.28, 1.0);
         final isSelected = distanceFromCenter < 0.4;
 
         transform = _ItemTransform(
@@ -850,6 +858,58 @@ class _OrbitScrollState extends State<OrbitScroll>
         );
 
         _transformCache[cacheKey] = transform;
+      }
+
+      Widget card = SongCard(
+        song: widget.songs[actualIndex],
+        scale: transform.scale,
+        opacity: transform.opacity,
+        isSelected: transform.isSelected,
+        // Horizontal drags browse songs here, never queue/favorite.
+        // Those actions remain in the existing long-press song menu.
+        swipeActionsEnabled:
+            widget.swipeActionsEnabled &&
+            widget.scrollDirection == Axis.vertical,
+        isSelectionMode: widget.isSelectionMode,
+        isMultiSelected: widget.selectedIds.contains(
+          widget.songs[actualIndex].id,
+        ),
+        artSizeBase: widget.cardArtSize,
+        artSizeLarge: widget.cardArtSize * 1.5625,
+        cardWidthRatio: widget.cardWidthRatio,
+        artworkAbove: horizontal,
+        width: cardWidth,
+        height: cardHeight,
+        artResolutionMultiplier: widget.artResolutionMultiplier,
+        backgroundStyle: widget.cardBackgroundStyle,
+        onTap: () {
+          AppHaptics.tap();
+          _animateTo(actualIndex.toDouble());
+          widget.onSongSelected?.call(actualIndex);
+        },
+        onSwipeLeft: () => widget.onSongSwipedLeft?.call(actualIndex),
+        onSwipeRight: () => widget.onSongSwipedRight?.call(actualIndex),
+        onOpenActions: widget.isSelectionMode
+            ? null
+            : () => widget.onSongActions?.call(actualIndex),
+      );
+
+      final matrix = widget.itemTransform?.call(diff);
+      if (matrix != null) {
+        card = Transform(
+          alignment: Alignment.center,
+          transform: matrix,
+          child: card,
+        );
+      }
+
+      final semanticsLabel = widget.itemSemanticsLabel?.call(actualIndex);
+      if (semanticsLabel != null) {
+        card = Semantics(
+          label: semanticsLabel,
+          button: true,
+          child: card,
+        );
       }
 
       items.add(
@@ -863,45 +923,38 @@ class _OrbitScrollState extends State<OrbitScroll>
           top: transform.position.y,
           child: FractionalTranslation(
             translation: const Offset(-0.5, -0.5),
-            child: SongCard(
-              song: widget.songs[actualIndex],
-              scale: transform.scale,
-              opacity: transform.opacity,
-              isSelected: transform.isSelected,
-              // Horizontal drags browse songs here, never queue/favorite.
-              // Those actions remain in the existing long-press song menu.
-              swipeActionsEnabled:
-                  widget.swipeActionsEnabled &&
-                  widget.scrollDirection == Axis.vertical,
-              isSelectionMode: widget.isSelectionMode,
-              isMultiSelected: widget.selectedIds.contains(
-                widget.songs[actualIndex].id,
-              ),
-              artSizeBase: widget.cardArtSize,
-              artSizeLarge: widget.cardArtSize * 1.5625,
-              cardWidthRatio: widget.cardWidthRatio,
-              artworkAbove: horizontal,
-              width: cardWidth,
-              height: cardHeight,
-              artResolutionMultiplier: widget.artResolutionMultiplier,
-              backgroundStyle: widget.cardBackgroundStyle,
-              onTap: () {
-                AppHaptics.tap();
-                _animateTo(actualIndex.toDouble());
-                widget.onSongSelected?.call(actualIndex);
-              },
-              onSwipeLeft: () => widget.onSongSwipedLeft?.call(actualIndex),
-              onSwipeRight: () => widget.onSongSwipedRight?.call(actualIndex),
-              onOpenActions: widget.isSelectionMode
-                  ? null
-                  : () => widget.onSongActions?.call(actualIndex),
-            ),
+            child: card,
           ),
         ),
       );
     }
 
     return items;
+  }
+
+  double _defaultScale(
+    double distanceFromCenter,
+    double adjacentScale,
+    double distantScale,
+  ) {
+    double scale;
+    if (distanceFromCenter < 1.0) {
+      // Bell-shaped ease between the selected and adjacent cards. Endpoints
+      // match the previous linear map so persisted scale preferences and
+      // the depth slider keep their exact meaning.
+      scale =
+          adjacentScale +
+          (widget.selectedScale - adjacentScale) *
+              AppMotionMath.bell(distanceFromCenter);
+    } else if (distanceFromCenter < 2.0) {
+      scale =
+          distantScale +
+          (adjacentScale - distantScale) *
+              AppMotionMath.bell(distanceFromCenter - 1.0);
+    } else {
+      scale = distantScale - (distanceFromCenter - 2.0) * 0.12;
+    }
+    return scale.clamp(0.0, math.max(1.25, widget.selectedScale)).toDouble();
   }
 
   _Position _calculateItemPosition(
