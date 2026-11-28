@@ -13,14 +13,35 @@ import 'package:auno_player/widgets/common/surface_icon_button.dart';
 import 'package:auno_player/l10n/l10n.dart';
 import 'package:auno_player/widgets/common/baybayin_text.dart';
 
-class QueueScreen extends ConsumerStatefulWidget {
+class QueueScreen extends ConsumerWidget {
   const QueueScreen({super.key});
 
   @override
-  ConsumerState<QueueScreen> createState() => _QueueScreenState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: BlurredSongBackground(
+        child: SafeArea(
+          bottom: false,
+          child: QueuePanel(onClose: () => Navigator.of(context).pop()),
+        ),
+      ),
+    );
+  }
 }
 
-class _QueueScreenState extends ConsumerState<QueueScreen> {
+/// Reusable queue body. The route keeps its own back header; the full player
+/// embeds this without a Scaffold or a Navigator.pop().
+class QueuePanel extends ConsumerStatefulWidget {
+  final VoidCallback? onClose;
+
+  const QueuePanel({super.key, this.onClose});
+
+  @override
+  ConsumerState<QueuePanel> createState() => _QueuePanelState();
+}
+
+class _QueuePanelState extends ConsumerState<QueuePanel> {
   bool _selectionMode = false;
   final Set<String> _selectedKeys = {};
 
@@ -96,24 +117,20 @@ class _QueueScreenState extends ConsumerState<QueueScreen> {
     final upNext = ref.watch(upNextProvider);
     final currentSong = ref.watch(currentSongProvider);
 
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: BlurredSongBackground(
-        child: SafeArea(
-          bottom: false,
-          child: Column(
-          children: [
-            if (_selectionMode)
-              _buildSelectionHeader(upNext.length + queue.length)
-            else
-              _Header(
-                queueCount: upNext.length + queue.length,
-                canClear: upNext.isNotEmpty || queue.isNotEmpty,
-                onClear: () async {
-                  await ref.read(playerProvider.notifier).clearAllUpcoming();
-                },
-                onSelectMode: () => _enterSelectionMode(null),
-              ),
+    return Column(
+      children: [
+        if (_selectionMode)
+          _buildSelectionHeader(upNext.length + queue.length)
+        else
+          _Header(
+            queueCount: upNext.length + queue.length,
+            canClear: upNext.isNotEmpty || queue.isNotEmpty,
+            onClose: widget.onClose,
+            onClear: () async {
+              await ref.read(playerProvider.notifier).clearAllUpcoming();
+            },
+            onSelectMode: () => _enterSelectionMode(null),
+          ),
             Expanded(
               child: upNext.isEmpty && currentSong == null
                   ? const _EmptyQueue()
@@ -309,10 +326,7 @@ class _QueueScreenState extends ConsumerState<QueueScreen> {
                       ],
                     ),
             ),
-          ],
-        ),
-      ),
-      ),
+      ],
     );
   }
 
@@ -383,12 +397,14 @@ class _QueueScreenState extends ConsumerState<QueueScreen> {
 class _Header extends StatelessWidget {
   final int queueCount;
   final bool canClear;
+  final VoidCallback? onClose;
   final Future<void> Function() onClear;
   final VoidCallback onSelectMode;
 
   const _Header({
     required this.queueCount,
     required this.canClear,
+    this.onClose,
     required this.onClear,
     required this.onSelectMode,
   });
@@ -404,7 +420,7 @@ class _Header extends StatelessWidget {
         children: [
           SurfaceIconButton.icon(
             icon: LucideIcons.chevronLeft,
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: onClose,
             iconColor: context.adaptiveTextPrimary,
           ),
           const SizedBox(width: AppConstants.spacingMd),
