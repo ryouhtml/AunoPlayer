@@ -601,7 +601,7 @@ class _SyncedLyricsViewState extends ConsumerState<SyncedLyricsView>
                       text,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      textAlign: alignment,
+                      textAlign: alignment.textAlign,
                       style: const TextStyle(
                         fontFamily: 'GoogleSansFlex',
                         fontSize: 14,
