@@ -112,9 +112,7 @@ void main() {
 
     expect(tapped, [1]);
     expect(
-      find.byWidgetPredicate(
-        (widget) => widget is Semantics && (widget.label?.contains('Wheel Song 1') ?? false),
-      ),
+      find.bySemanticsLabel(RegExp('Wheel Song 1')),
       findsOneWidget,
     );
     expect(tester.takeException(), isNull);
